@@ -7,7 +7,7 @@ public class JournalTable {
 
         JournalTable jt = new JournalTable();
         //jt.CreateJournalTable();
-        //jt.insert(2, "test2");
+        jt.insert(12345678, "test2");
     }
 
     public static void CreateJournalTable() throws SQLException {
@@ -23,7 +23,7 @@ public class JournalTable {
                 String jtable = "CREATE TABLE Journal " + //Creating the table "UserTable"
                                 "(ISSN      INT     NOT NULL, "+ //Creating the different fields
                                 "NAME       TEXT    NOT NULL, "+
-                                " PRIMARY KEY (ISSN))";
+                                "PRIMARY KEY (ISSN))";
 
                 stmt.executeUpdate(jtable);
             }
@@ -57,9 +57,14 @@ public class JournalTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String journal = "INSERT INTO Journal (ISSN, NAME) VALUES (" + ISSN + ",  '" + name + "')";
-                //System.out.println(journal);
-                stmt.executeUpdate(journal);
+                if ((String.valueOf(ISSN)).length() == 8 ) {
+
+                    String journal = "INSERT INTO Journal (ISSN, NAME) VALUES (" + ISSN + ",  '" + name + "')";
+                    //System.out.println(journal);
+                    stmt.executeUpdate(journal);
+                } else {
+                    System.out.println("Invalid ISSN");
+                }
             }
             catch (SQLException ex) {
                 ex.printStackTrace();
