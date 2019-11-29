@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="596.0" prefWidth="783.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controllers.ReviewPanelController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="619.0" prefWidth="783.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <VBox prefHeight="477.0" prefWidth="783.0" BorderPane.alignment="CENTER">
          <children>
@@ -21,97 +21,49 @@
                   <Insets />
                </VBox.margin>
             </Separator>
-            <HBox prefHeight="100.0" prefWidth="783.0">
+            <HBox prefHeight="108.0" prefWidth="783.0">
                <children>
                   <VBox prefHeight="100.0" prefWidth="325.0">
                      <children>
-                        <Label text="Journal Of Computer Science">
+                        <Label text="Article 1">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label prefHeight="23.0" prefWidth="256.0" text="ISSN: 473856547" />
-                        <Label prefHeight="23.0" prefWidth="256.0" text="Review ID: 431674613" />
-                        <Label prefHeight="23.0" prefWidth="256.0" text="Status: Review In Progress" />
+                        <Label prefHeight="23.0" prefWidth="256.0" text="Submission ID: 473856547" />
+                        <Label prefHeight="23.0" prefWidth="256.0" text="Role: Main Author" />
+                        <Label prefHeight="23.0" prefWidth="256.0" text="Status: Accepted" />
                      </children>
                      <HBox.margin>
                         <Insets left="18.0" top="5.0" />
                      </HBox.margin>
                   </VBox>
                   <Region prefHeight="100.0" prefWidth="160.0" HBox.hgrow="ALWAYS" />
-                  <VBox prefHeight="94.0" prefWidth="156.0">
+                  <VBox prefHeight="124.0" prefWidth="141.0">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#handleViewArticle" prefHeight="27.0" prefWidth="148.0" text="View Article">
+                        <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="120.0" text="View Article">
                            <VBox.margin>
                               <Insets bottom="5.0" />
                            </VBox.margin>
                         </Button>
-                     </children>
-                     <HBox.margin>
-                        <Insets right="10.0" top="14.0" />
-                     </HBox.margin>
-                  </VBox>
-                  <VBox prefHeight="94.0" prefWidth="166.0">
-                     <children>
-                        <Button mnemonicParsing="false" onAction="#handleInitialVerdict" prefHeight="27.0" prefWidth="148.0" text="Submit Initial Verdict">
-                           <VBox.margin>
-                              <Insets bottom="5.0" />
-                           </VBox.margin>
-                        </Button>
-                        <Button mnemonicParsing="false" onAction="#handleViewResponse" prefHeight="27.0" prefWidth="148.0" text="View Response">
+                        <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="120.0" text="Respond">
                            <VBox.margin>
                               <Insets top="6.0" />
                            </VBox.margin>
                         </Button>
                      </children>
                      <HBox.margin>
-                        <Insets right="10.0" top="14.0" />
+                        <Insets top="14.0" />
                      </HBox.margin>
                   </VBox>
-               </children>
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </HBox>
-            <Separator prefWidth="200.0" />
-            <HBox prefHeight="100.0" prefWidth="783.0">
-               <children>
-                  <VBox prefHeight="100.0" prefWidth="325.0">
+                  <VBox prefHeight="124.0" prefWidth="141.0">
                      <children>
-                        <Label text="Journal Of Computer Science">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                        <Label prefHeight="23.0" prefWidth="256.0" text="ISSN: 473856547" />
-                        <Label prefHeight="23.0" prefWidth="256.0" text="Review ID: 431674613" />
-                        <Label prefHeight="23.0" prefWidth="256.0" text="Status: Review In Progress" />
-                     </children>
-                     <HBox.margin>
-                        <Insets left="18.0" top="5.0" />
-                     </HBox.margin>
-                  </VBox>
-                  <Region prefHeight="100.0" prefWidth="160.0" HBox.hgrow="ALWAYS" />
-                  <VBox prefHeight="94.0" prefWidth="156.0">
-                     <children>
-                        <Button mnemonicParsing="false" onAction="#handleViewArticle" prefHeight="27.0" prefWidth="148.0" text="View Article">
+                        <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="132.0" text="View Initial Verdict">
                            <VBox.margin>
                               <Insets bottom="5.0" />
                            </VBox.margin>
                         </Button>
-                     </children>
-                     <HBox.margin>
-                        <Insets right="10.0" top="14.0" />
-                     </HBox.margin>
-                  </VBox>
-                  <VBox prefHeight="94.0" prefWidth="166.0">
-                     <children>
-                        <Button mnemonicParsing="false" onAction="#handleInitialVerdict" prefHeight="27.0" prefWidth="148.0" text="Submit Initial Verdict">
-                           <VBox.margin>
-                              <Insets bottom="5.0" />
-                           </VBox.margin>
-                        </Button>
-                        <Button mnemonicParsing="false" onAction="#handleViewResponse" prefHeight="27.0" prefWidth="148.0" text="View Response">
+                        <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="132.0" text="View Final Verdict">
                            <VBox.margin>
                               <Insets top="6.0" />
                            </VBox.margin>
@@ -124,44 +76,49 @@
                </children>
             </HBox>
             <Separator prefWidth="200.0" />
-            <HBox prefHeight="100.0" prefWidth="783.0">
+            <HBox prefHeight="108.0" prefWidth="783.0">
                <children>
                   <VBox prefHeight="100.0" prefWidth="325.0">
                      <children>
-                        <Label text="Journal Of Computer Science">
+                        <Label text="Article 2">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label prefHeight="23.0" prefWidth="256.0" text="ISSN: 473856547" />
-                        <Label prefHeight="23.0" prefWidth="256.0" text="Review ID: 431674613" />
-                        <Label prefHeight="23.0" prefWidth="256.0" text="Status: Review In Progress" />
+                        <Label prefHeight="23.0" prefWidth="256.0" text="Submission ID: 473856547" />
+                        <Label prefHeight="23.0" prefWidth="256.0" text="Role: Main Author" />
+                        <Label prefHeight="23.0" prefWidth="256.0" text="Status: Accepted" />
                      </children>
                      <HBox.margin>
                         <Insets left="18.0" top="5.0" />
                      </HBox.margin>
                   </VBox>
                   <Region prefHeight="100.0" prefWidth="160.0" HBox.hgrow="ALWAYS" />
-                  <VBox prefHeight="94.0" prefWidth="156.0">
+                  <VBox prefHeight="124.0" prefWidth="141.0">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#handleViewArticle" prefHeight="27.0" prefWidth="148.0" text="View Article">
+                        <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="120.0" text="View Article">
                            <VBox.margin>
                               <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="120.0" text="Respond">
+                           <VBox.margin>
+                              <Insets top="6.0" />
                            </VBox.margin>
                         </Button>
                      </children>
                      <HBox.margin>
-                        <Insets right="10.0" top="14.0" />
+                        <Insets top="14.0" />
                      </HBox.margin>
                   </VBox>
-                  <VBox prefHeight="94.0" prefWidth="166.0">
+                  <VBox prefHeight="124.0" prefWidth="141.0">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#handleInitialVerdict" prefHeight="27.0" prefWidth="148.0" text="Submit Initial Verdict">
+                        <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="132.0" text="View Initial Verdict">
                            <VBox.margin>
                               <Insets bottom="5.0" />
                            </VBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#handleViewResponse" prefHeight="27.0" prefWidth="148.0" text="View Response">
+                        <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="132.0" text="View Final Verdict">
                            <VBox.margin>
                               <Insets top="6.0" />
                            </VBox.margin>
@@ -174,29 +131,46 @@
                </children>
             </HBox>
             <Separator prefWidth="200.0" />
-            <HBox prefHeight="100.0" prefWidth="783.0">
+            <HBox prefHeight="108.0" prefWidth="783.0">
                <children>
                   <VBox prefHeight="100.0" prefWidth="325.0">
                      <children>
-                        <Label text="Journal Of Computer Science">
+                        <Label text="Article 3">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label prefHeight="23.0" prefWidth="256.0" text="ISSN: 473856547" />
-                        <Label prefHeight="23.0" prefWidth="256.0" text="Review ID: 431674613" />
-                        <Label prefHeight="23.0" prefWidth="256.0" text="Status: Review In Progress" />
+                        <Label prefHeight="23.0" prefWidth="256.0" text="Submission ID: 473856547" />
+                        <Label prefHeight="23.0" prefWidth="256.0" text="Role: Co-Author" />
+                        <Label prefHeight="23.0" prefWidth="256.0" text="Status: Accepted" />
                      </children>
                      <HBox.margin>
                         <Insets left="18.0" top="5.0" />
                      </HBox.margin>
                   </VBox>
                   <Region prefHeight="100.0" prefWidth="160.0" HBox.hgrow="ALWAYS" />
-                  <VBox prefHeight="94.0" prefWidth="156.0">
+                  <VBox prefHeight="124.0" prefWidth="141.0">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#handleViewArticle" prefHeight="27.0" prefWidth="148.0" text="View Article">
+                        <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="120.0" text="View Article">
                            <VBox.margin>
                               <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </Button>
+                     </children>
+                     <HBox.margin>
+                        <Insets top="14.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox prefHeight="124.0" prefWidth="141.0">
+                     <children>
+                        <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="132.0" text="View Initial Verdict">
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="132.0" text="View Final Verdict">
+                           <VBox.margin>
+                              <Insets top="6.0" />
                            </VBox.margin>
                         </Button>
                      </children>
@@ -204,14 +178,47 @@
                         <Insets right="10.0" top="14.0" />
                      </HBox.margin>
                   </VBox>
-                  <VBox prefHeight="94.0" prefWidth="166.0">
+               </children>
+            </HBox>
+            <Separator prefWidth="200.0" />
+            <HBox prefHeight="108.0" prefWidth="783.0">
+               <children>
+                  <VBox prefHeight="100.0" prefWidth="325.0">
                      <children>
-                        <Button mnemonicParsing="false" onAction="#handleInitialVerdict" prefHeight="27.0" prefWidth="148.0" text="Submit Initial Verdict">
+                        <Label text="Article 4">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label prefHeight="23.0" prefWidth="256.0" text="Submission ID: 473856547" />
+                        <Label prefHeight="23.0" prefWidth="256.0" text="Role: Co-Author" />
+                        <Label prefHeight="23.0" prefWidth="256.0" text="Status: Accepted" />
+                     </children>
+                     <HBox.margin>
+                        <Insets left="18.0" top="5.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <Region prefHeight="100.0" prefWidth="160.0" HBox.hgrow="ALWAYS" />
+                  <VBox prefHeight="124.0" prefWidth="141.0">
+                     <children>
+                        <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="120.0" text="View Article">
                            <VBox.margin>
                               <Insets bottom="5.0" />
                            </VBox.margin>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#handleViewResponse" prefHeight="27.0" prefWidth="148.0" text="View Response">
+                     </children>
+                     <HBox.margin>
+                        <Insets top="14.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox prefHeight="124.0" prefWidth="141.0">
+                     <children>
+                        <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="132.0" text="View Initial Verdict">
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="132.0" text="View Final Verdict">
                            <VBox.margin>
                               <Insets top="6.0" />
                            </VBox.margin>
@@ -238,7 +245,7 @@
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Your Reviews">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Your Submissions">
                <HBox.margin>
                   <Insets bottom="30.0" right="30.0" top="30.0" />
                </HBox.margin>
@@ -249,19 +256,19 @@
             <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
             <VBox prefHeight="99.0" prefWidth="202.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#handleNewReview" prefHeight="27.0" prefWidth="145.0" text="Select New Reviews">
+                  <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="120.0" text="New Submission">
                      <VBox.margin>
-                        <Insets top="20.0" />
+                        <Insets top="10.0" />
                      </VBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#handleLogOut" prefHeight="27.0" prefWidth="145.0" text="Log Out">
+                  <Button mnemonicParsing="false" prefWidth="120.0" text="Log Out">
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin>
                   </Button>
                </children>
                <HBox.margin>
-                  <Insets />
+                  <Insets top="5.0" />
                </HBox.margin>
             </VBox>
          </children>
