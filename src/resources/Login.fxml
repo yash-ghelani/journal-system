@@ -13,13 +13,13 @@
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="539.0" prefWidth="711.0" style="-fx-background-color: #333639 #333639;" VBox.vgrow="ALWAYS">
          <children>
-            <TextField layoutX="92.0" layoutY="164.0" prefHeight="35.0" prefWidth="205.0" promptText="Login ID" style="-fx-background-color: #ffffff;" styleClass="login-input" fx:id="login" />
+            <TextField layoutX="92.0" layoutY="164.0" fx:id="loginID" prefHeight="35.0" prefWidth="205.0" promptText="Login ID" style="-fx-background-color: #ffffff;" styleClass="login-input" />
             <Text fill="WHITE" layoutX="92.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login" wrappingWidth="133.76953125">
                <font>
                   <Font size="45.0" />
                </font>
             </Text>
-            <Button layoutX="92.0" layoutY="309.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="83.0" style="-fx-background-color: rgb(73,90,246);" text="Sign In" textFill="WHITE" fx:id="signin" onAction="#signedin" />
+            <Button layoutX="92.0" layoutY="309.0" onAction="#handleSignIn" mnemonicParsing="false" prefHeight="24.0" prefWidth="83.0" style="-fx-background-color: rgb(73,90,246);" text="Sign In" textFill="WHITE" />
             <Line endX="-100.0" endY="452.0" layoutX="482.0" layoutY="33.0" startX="-100.0" stroke="#f8f8f8" />
             <Button layoutX="433.0" layoutY="164.0" mnemonicParsing="false" onAction="#handleReader" prefHeight="56.0" prefWidth="222.0" style="-fx-background-color: rgb(73,90,246);" text="  I am a Reader" textAlignment="RIGHT" textFill="WHITE">
                <font>
@@ -31,7 +31,7 @@
                   <Font size="20.0" />
                </font>
             </Button>
-            <PasswordField layoutX="92.0" layoutY="231.0" prefHeight="35.0" prefWidth="205.0" promptText="Password" style="-fx-background-color: #ffffff;" fx:id="password" />
+            <PasswordField layoutX="92.0" layoutY="231.0" prefHeight="35.0" prefWidth="205.0" promptText="Password" style="-fx-background-color: #ffffff;" />
          </children>
     </AnchorPane>
   </children>
