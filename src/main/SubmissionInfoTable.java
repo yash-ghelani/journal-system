@@ -1,15 +1,15 @@
 package main;
 import java.sql.*;
 import java.util.*;
-public class ArticleTable {
+public class SubmissionInfoTable {
 
     public static void main (String args[]) throws SQLException {
 
-        ArticleTable at = new ArticleTable();
-        at.CreateArticleTable();
+        SubmissionInfoTable sit = new SubmissionInfoTable();
+        sit.CreateSubmissionInfoTable();
     }
 
-    public static void CreateArticleTable() throws SQLException {
+    public static void CreateSubmissionInfoTable() throws SQLException {
 
         Connection con = null; // a Connection object
         try {
@@ -19,16 +19,12 @@ public class ArticleTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String initialise = "CREATE TABLE Articles " + //Creating the table
-                                    "(ArticleID             INT    NOT NULL AUTO_INCREMENT, "+ //Creating the different fields
-                                    "EditionID              INT    NOT NULL, "+
-                                    "SubmissionID           INT    NOT NULL, "+
-                                    "Title                  TEXT   NOT NULL, "+
-                                    "PageRange              TEXT   NOT NULL, "+
-                                    "Abstract               TEXT   NOT NULL, "+
-                                    "PRIMARY KEY (ArticleID), "+
-                                    "FOREIGN KEY (EditionID) REFERENCES Edition(EditionID), "+
-                                    "FOREIGN KEY (SubmissionID) REFERENCES Submisisons(SubmissionID))";
+                String initialise = "CREATE TABLE SubmissionInfo " + //Creating the table
+                        "(SubmissionInfoID      INT             NOT NULL AUTO_INCREMENT, "+ //Creating the different fields
+                        "SubmissionID           INT             NOT NULL, "+ //Creating the different fields
+                        "AuthorID               INT             NOT NULL, "+
+                        "AuthorType             BOOLEAN         NOT NULL, "+
+                        "PRIMARY KEY (SubmissionInfoID))";
 
                 stmt.executeUpdate(initialise);
             }
@@ -54,7 +50,7 @@ public class ArticleTable {
 
     }
 
-    public static void Insert(int editionID, int submissionID, String title, String pageRange, String abstractText ) throws SQLException {
+    public static void Insert(int submissionID, int authorID, boolean type) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -62,8 +58,8 @@ public class ArticleTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String newEdition = "INSERT INTO Articles (EditionID, SubmissionID, Title, PageRange, Abstract) "+
-                                    " VALUES ('" + editionID + "',  '" + submissionID + "',  '" + title + "',  '" + pageRange + "',  '" + abstractText + "')";
+                String newEdition = "INSERT INTO SubmissionInfo (SubmissionID, AuthorID, AuthorType) "+
+                                    " VALUES ('" + submissionID + "',  '" + authorID + "',  '" +  type + "')";
                 stmt.executeUpdate(newEdition);
             }
             catch (SQLException ex) {
@@ -84,7 +80,7 @@ public class ArticleTable {
 
     //====================================================================================================================
 
-    public static void UpdateEdition(int articleID, int editionID ) throws SQLException {
+    public static void UpdateSubmission(int submissionInfoID, int submissionID) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -92,7 +88,8 @@ public class ArticleTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String newEdition = "UPDATE Articles SET EditionID = '"+editionID+"' WHERE ArticleID = " + articleID;
+                String newEdition = "UPDATE SubmissionInfo SET SubmissionID = '" + submissionID +
+                                    "' WHERE SubmissionInfoID = " + submissionInfoID;
                 stmt.executeUpdate(newEdition);
             }
             catch (SQLException ex) {
@@ -112,7 +109,7 @@ public class ArticleTable {
         }
     }
 
-    public static void UpdateSubmission(int articleID, int submissionID) throws SQLException {
+    public static void UpdateAuthor(int submissionInfoID, int authorID) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -120,7 +117,8 @@ public class ArticleTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String newEdition = "UPDATE Articles SET SubmissionID = '"+submissionID+"' WHERE ArticleID = " + articleID;
+                String newEdition = "UPDATE SubmissionInfo SET AuthorID = '" + authorID +
+                        "' WHERE SubmissionInfoID = " + submissionInfoID;
                 stmt.executeUpdate(newEdition);
             }
             catch (SQLException ex) {
@@ -140,7 +138,7 @@ public class ArticleTable {
         }
     }
 
-    public static void UpdateTitle(int articleID, int title) throws SQLException {
+    public static void UpdateAuthorType(int submissionInfoID, int type) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -148,63 +146,8 @@ public class ArticleTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String newEdition = "UPDATE Articles SET Title = '"+title+"' WHERE ArticleID = " + articleID;
-                stmt.executeUpdate(newEdition);
-            }
-            catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-            finally {
-                if (stmt != null)
-                    stmt.close();
-            }
-
-        }
-        catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        finally {
-            if (con != null) con.close();
-        }
-    }
-
-    public static void UpdatePageRange(int articleID, int pageRange) throws SQLException {
-        Connection con = null; // connection to a database
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
-            // use the open connection
-            Statement stmt = null;
-            try {
-                stmt = con.createStatement();
-                String newEdition = "UPDATE Articles SET PageRange = '"+pageRange+"' WHERE ArticleID = " + articleID;
-                stmt.executeUpdate(newEdition);
-            }
-            catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-            finally {
-                if (stmt != null)
-                    stmt.close();
-            }
-
-        }
-        catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        finally {
-            if (con != null) con.close();
-        }
-    }
-
-    public static void UpdateAbstract(int articleID, int abstractText) throws SQLException {
-        Connection con = null; // connection to a database
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
-            // use the open connection
-            Statement stmt = null;
-            try {
-                stmt = con.createStatement();
-                String newEdition = "UPDATE Articles SET Abstract = '"+abstractText+"' WHERE ArticleID = " + articleID;
+                String newEdition = "UPDATE SubmissionInfo SET AuthorType = '" + type +
+                        "' WHERE SubmissionInfoID = " + submissionInfoID;
                 stmt.executeUpdate(newEdition);
             }
             catch (SQLException ex) {
@@ -226,7 +169,7 @@ public class ArticleTable {
 
     //==================================================================================================================
 
-    public static void Delete(int articleID) throws SQLException {
+    public static void Delete(int submissionInfoID) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -234,7 +177,7 @@ public class ArticleTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String newEdition = "DELETE FROM Article WHERE ArticleID = " + articleID;
+                String newEdition = "DELETE FROM SubmissionInfo WHERE SubmissionInfoID = " + submissionInfoID;
                 stmt.executeUpdate(newEdition);
             }
             catch (SQLException ex) {
@@ -255,4 +198,5 @@ public class ArticleTable {
 
     }
 }
+
 

@@ -20,9 +20,9 @@ public class SubmissionTable {
             try {
                 stmt = con.createStatement();
                 String initialise = "CREATE TABLE Submissions " + //Creating the table
-                                    "(SubmissionID          INT         NOT NULL AUTO_INCREMENT, "+ //Creating the different fields
-                                    "PDF                    VARCHAR     NOT NULL, "+
-                                    "EditorVerdict          TEXT        NOT NULL, "+
+                                    "(SubmissionID          INT             NOT NULL AUTO_INCREMENT, "+ //Creating the different fields
+                                    "PDF                    NVARCHAR(255)   NOT NULL, "+
+                                    "EditorVerdict          TEXT            NOT NULL, "+
                                     "PRIMARY KEY (SubmissionID))";
 
                 stmt.executeUpdate(initialise);
