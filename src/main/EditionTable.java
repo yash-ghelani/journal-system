@@ -6,7 +6,11 @@ public class EditionTable {
     public static void main (String args[]) throws SQLException {
 
         EditionTable et = new EditionTable();
-        et.CreateEditionTable();
+//        et.CreateEditionTable();
+//        et.Insert(2, 3);
+//        et.UpdateMonth(1, 4);
+//        et.UpdateVolume(1, 4);
+
     }
 
     public static void CreateEditionTable() throws SQLException {
@@ -19,13 +23,12 @@ public class EditionTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String initialise =
-                        "CREATE TABLE Edition " + //Creating the table
-                        "(EditionID             INT    NOT NULL AUTO_INCREMENT, "+ //Creating the different fields
-                        "VolumeID               INT    NOT NULL, "+
-                        "PublicationMonth       INT    NOT NULL, "+
-                        "PRIMARY KEY (EditionID), "+
-                        "FOREIGN KEY (VolumeID) REFERENCES Volume(VolumeID))";
+                String initialise = "CREATE TABLE Edition " + //Creating the table
+                                    "(EditionID             INT    NOT NULL AUTO_INCREMENT, "+ //Creating the different fields
+                                    "VolumeID               INT    NOT NULL, "+
+                                    "PublicationMonth       INT    NOT NULL, "+
+                                    "PRIMARY KEY (EditionID), "+
+                                    "FOREIGN KEY (VolumeID) REFERENCES Volume(VolumeID))";
 
                 stmt.executeUpdate(initialise);
             }
@@ -98,6 +101,64 @@ public class EditionTable {
                 } else {
                     System.out.println("Invalid Month");
                 }
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+
+    }
+
+    public static void UpdateVolume(int editionID, int volumeID ) throws SQLException {
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String newEdition = "UPDATE Edition SET VolumeID = '"+volumeID+"' WHERE EditionID = " + editionID;
+                stmt.executeUpdate(newEdition);
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+
+    }
+
+    public static void Delete(int editionID) throws SQLException {
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String newEdition = "DELETE FROM Edition WHERE EditionID = " + editionID;
+                stmt.executeUpdate(newEdition);
             }
             catch (SQLException ex) {
                 ex.printStackTrace();

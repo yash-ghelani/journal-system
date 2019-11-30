@@ -59,7 +59,7 @@ public class JournalTable {
                 stmt = con.createStatement();
                 if ((String.valueOf(ISSN)).length() == 8 ) {
 
-                    String journal = "INSERT INTO Journal (ISSN, NAME) VALUES (" + ISSN + ",  '" + name + "')";
+                    String journal = "INSERT INTO Journal (ISSN, NAME) VALUES ('" + ISSN + "',  '" + name + "')";
                     //System.out.println(journal);
                     stmt.executeUpdate(journal);
                 } else {
