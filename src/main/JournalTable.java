@@ -7,7 +7,8 @@ public class JournalTable {
 
         JournalTable jt = new JournalTable();
         //jt.CreateJournalTable();
-        jt.insert(12345678, "test2");
+        //jt.Insert(12345678, "test2");
+        //jt.Delete(12345678);
     }
 
     public static void CreateJournalTable() throws SQLException {
@@ -22,7 +23,7 @@ public class JournalTable {
                 stmt = con.createStatement();
                 String jtable = "CREATE TABLE Journal " + //Creating the table "UserTable"
                                 "(ISSN      INT     NOT NULL, "+ //Creating the different fields
-                                "NAME       TEXT    NOT NULL, "+
+                                "Name       TEXT    NOT NULL, " +
                                 "PRIMARY KEY (ISSN))";
 
                 stmt.executeUpdate(jtable);
@@ -49,7 +50,7 @@ public class JournalTable {
 
     }
 
-    public static void insert(int ISSN, String name ) throws SQLException {
+    public static void Insert(int ISSN, String name ) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -57,14 +58,11 @@ public class JournalTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                if ((String.valueOf(ISSN)).length() == 8 ) {
 
-                    String journal = "INSERT INTO Journal (ISSN, NAME) VALUES (" + ISSN + ",  '" + name + "')";
-                    //System.out.println(journal);
-                    stmt.executeUpdate(journal);
-                } else {
-                    System.out.println("Invalid ISSN");
-                }
+                String journal = "INSERT INTO Journal (ISSN, Name) VALUES ('" + ISSN + "',  '" + name + "')";
+                //System.out.println(journal);
+                stmt.executeUpdate(journal);
+
             }
             catch (SQLException ex) {
                 ex.printStackTrace();
@@ -83,4 +81,66 @@ public class JournalTable {
         }
 
     }
+
+    public static void Delete(int issn) throws SQLException {
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+
+                String journal = "DELETE FROM Journal WHERE ISSN = " + issn;
+                //System.out.println(journal);
+                stmt.executeUpdate(journal);
+
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+
+    }
+
+    public static void UpdateName(int issn, String name) throws SQLException {
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+
+                String journal = "UPDATE Journal SET Name = " + name + " WHERE ISSN = " + issn;
+                //System.out.println(journal);
+                stmt.executeUpdate(journal);
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+    }
+
 }
