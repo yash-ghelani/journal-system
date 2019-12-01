@@ -20,13 +20,13 @@ public class SubmissionInfoTable {
             try {
                 stmt = con.createStatement();
                 String initialise = "CREATE TABLE SubmissionInfo " + //Creating the table
-                        "(SubmissionInfoID      INT             NOT NULL AUTO_INCREMENT, "+ //Creating the different fields
-                        "SubmissionID           INT             NOT NULL, "+ //Creating the different fields
-                        "AuthorID               INT             NOT NULL, "+
-                        "AuthorType             BOOLEAN         NOT NULL, "+
-                        "PRIMARY KEY (SubmissionInfoID), "+
-                        "FOREIGN KEY (SubmissionID) REFERENCES Submissions(SubmissionID), "+
-                        "FOREIGN KEY (AuthorID) REFERENCES Author(AuthorID))";
+                                    "(SubmissionInfoID      INT             NOT NULL AUTO_INCREMENT, "+ //Creating the different fields
+                                    "SubmissionID           INT             NOT NULL, "+ //Creating the different fields
+                                    "AuthorID               INT             NOT NULL, "+
+                                    "AuthorType             BOOLEAN         NOT NULL, "+
+                                    "PRIMARY KEY (SubmissionInfoID), "+
+                                    "FOREIGN KEY (SubmissionID) REFERENCES Submissions(SubmissionID), "+
+                                    "FOREIGN KEY (AuthorID) REFERENCES Author(AuthorID))";
 
                 stmt.executeUpdate(initialise);
             }
@@ -198,6 +198,107 @@ public class SubmissionInfoTable {
             if (con != null) con.close();
         }
 
+    }
+
+    //=================================================================================================================
+
+    public int SelectSubmissionID(int submissionInfoID) throws SQLException {
+        int fin = 0;
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String query = "SELECT SubmissionID FROM SubmissionInfo WHERE SubmissionInfoID = " + submissionInfoID;
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    fin = res.getInt("SubmissionID");
+                }
+                res.close();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+        return fin;
+    }
+
+    public int SelectAuthorID(int submissionInfoID) throws SQLException {
+        int fin = 0;
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String query = "SELECT AuthorID FROM SubmissionInfo WHERE SubmissionInfoID = " + submissionInfoID;
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    fin = res.getInt("AuthorID");
+                }
+                res.close();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+        return fin;
+    }
+
+    public boolean SelectAuthorType(int submissionInfoID) throws SQLException {
+        boolean fin = false;
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String query = "SELECT AuthorType FROM SubmissionInfo WHERE SubmissionInfoID = " + submissionInfoID;
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    fin = res.getBoolean("AuthorType");
+                }
+                res.close();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+        return fin;
     }
 }
 

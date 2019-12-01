@@ -6,7 +6,7 @@ public class EditionTable {
     public static void main (String args[]) throws SQLException {
 
         EditionTable et = new EditionTable();
-//        et.CreateEditionTable();
+        et.CreateEditionTable();
 //        et.Insert(2, 3);
 //        et.UpdateMonth(1, 4);
 //        et.UpdateVolume(1, 4);
@@ -176,5 +176,73 @@ public class EditionTable {
             if (con != null) con.close();
         }
 
+    }
+
+    //=================================================================================================================
+
+    public int SelectVolumeID(int editionID) throws SQLException {
+        int fin = 0;
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String query = "SELECT VolumeID FROM Edition WHERE EditionID = " + editionID;
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    fin = res.getInt("VolumeID");
+                }
+                res.close();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+        return fin;
+    }
+
+    public String SelectPublicationMonth(int editionID) throws SQLException {
+        String fin = null;
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String query = "SELECT PublicationMonth FROM Edition WHERE EditionID = " + editionID;
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    fin = res.getString("PublicationMonth");
+                }
+                res.close();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+        return fin;
     }
 }
