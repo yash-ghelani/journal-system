@@ -261,7 +261,7 @@ public class ReviewTable {
     }
 
     public int SelectSubmissionInfoID(int id) throws SQLException {
-        int fin = null;
+        int fin = 0;
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -293,7 +293,7 @@ public class ReviewTable {
         return fin;
     }
 
-    public String SelectSummery(int id) throws SQLException {
+    public String SelectSummary(int id) throws SQLException {
         String fin = null;
         Connection con = null; // connection to a database
         try {
