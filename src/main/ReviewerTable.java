@@ -6,7 +6,7 @@ public class ReviewerTable {
     public static void main(String args[]) throws SQLException {
 
         ReviewerTable rt = new ReviewerTable();
-        rt.CreateReviewerTable();
+        //rt.CreateReviewerTable();
         //vt.Insert(12345678, 2018);
     }
 

@@ -6,7 +6,7 @@ public class EditorTable {
     public static void main(String args[]) throws SQLException {
 
         EditorTable rt = new EditorTable();
-        rt.CreateEditorTable();
+        //rt.CreateEditorTable();
         //vt.Insert(12345678, 2018);
     }
 

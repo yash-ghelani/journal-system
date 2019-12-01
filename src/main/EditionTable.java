@@ -6,7 +6,7 @@ public class EditionTable {
     public static void main (String args[]) throws SQLException {
 
         EditionTable et = new EditionTable();
-        et.CreateEditionTable();
+        //et.CreateEditionTable();
 //        et.Insert(2, 3);
 //        et.UpdateMonth(1, 4);
 //        et.UpdateVolume(1, 4);
