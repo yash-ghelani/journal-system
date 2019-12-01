@@ -89,4 +89,8 @@ public class Controller {
 
 
     }
+
+    public void handleSignIn(ActionEvent actionEvent) {
+
+    }
 }
