@@ -9,6 +9,7 @@ public class JournalTable {
         //jt.CreateJournalTable();
         //jt.Insert(12345678, "test2");
         //jt.Delete(12345678);
+        System.out.println(jt.SelectName(12345678));
     }
 
     public static void CreateJournalTable() throws SQLException {
@@ -122,9 +123,7 @@ public class JournalTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-
                 String journal = "UPDATE Journal SET Name = " + name + " WHERE ISSN = " + issn;
-                //System.out.println(journal);
                 stmt.executeUpdate(journal);
             }
             catch (SQLException ex) {
@@ -143,4 +142,36 @@ public class JournalTable {
         }
     }
 
+    public String SelectName(int issn) throws SQLException {
+        String fin = null;
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String query = "SELECT Name FROM Journal WHERE ISSN = " + issn;
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    fin = res.getString("Name");
+                }
+                res.close();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+        return fin;
+    }
 }
