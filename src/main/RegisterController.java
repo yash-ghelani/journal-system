@@ -18,6 +18,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.*;
 
 public class RegisterController extends Main {
@@ -47,25 +49,21 @@ public class RegisterController extends Main {
 
     String [] sql ={"Drop"};
 
+    public void initialize() {
+        List<String> list = new ArrayList<String>();
+        list.add("Mr.");
+        list.add("Ms.");
+        list.add("Dr.");
+        list.add("Prof.");
+        ObservableList obList = FXCollections.observableList(list);
+        prefix.setItems(obList);
 
-    public void handlePrefix(ActionEvent action) throws IOException {
-        prefix.setValue("D");
-        prefix.getItems().addAll(
-                "Mr.",
-                "Ms.",
-                "Prof",
-                "Dr"
-        );
-        prefix.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> System.out.println(oldValue));
+        List<String> rolesList = new ArrayList<String>();
+        rolesList.add("Author");
+        rolesList.add("Editor");
+        ObservableList rlList = FXCollections.observableList(rolesList);
+        roles.setItems(rlList);
     }
-
-    public void handleRoles(ActionEvent action) throws IOException {
-        roles.getItems().addAll(
-                "Author",
-                "Editor"
-        );
-    }
-
 
         public void handleRegisterSuccess(ActionEvent action) throws IOException {
         // first name
