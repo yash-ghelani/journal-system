@@ -116,6 +116,12 @@ public class RegisterController extends Main {
 
         if (!l[0].isEmpty() && !l[1].isEmpty() && !l[2].isEmpty() && !l[3].isEmpty()&& !l[4].isEmpty()){
 
+            if (roleValue == "Author") {
+                AuthorTable.Insert(prefixValue, firstName.getText(), lastName.getText(), university.getText(), emailField.getText(), Integer.toString(passWordField.getText().hashCode()));
+            } else {
+                EditorTable.Insert(prefixValue, firstName.getText(), lastName.getText(), university.getText(), emailField.getText(), Integer.toString(passWordField.getText().hashCode()));
+            }
+
             URL url = new File("src/resources/login.fxml").toURI().toURL();
             Parent view = FXMLLoader.load(url);
             Scene viewScene = new Scene(view);
