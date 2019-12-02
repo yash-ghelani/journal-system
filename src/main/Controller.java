@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.stage.Stage;
 
@@ -22,11 +23,11 @@ public class Controller {
     String [] kin = new String [2];
 
     @FXML
-
     private javafx.scene.control.TextField login;
 
     @FXML
     private PasswordField password;
+
 
 
     public void handleRegister(javafx.event.ActionEvent event) throws IOException {

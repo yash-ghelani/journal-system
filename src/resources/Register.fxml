@@ -13,18 +13,19 @@
    <children>
       <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="520.0" prefWidth="479.0" style="-fx-background-color: #333639 #333639;" VBox.vgrow="ALWAYS">
          <children>
-            <TextField layoutX="113.0" layoutY="182.0" prefHeight="35.0" prefWidth="205.0" promptText="First Name" fx:id ="firstName" style="-fx-background-color: #ffffff;" />
+            <TextField fx:id="firstName" layoutX="113.0" layoutY="222.0" prefHeight="35.0" prefWidth="205.0" promptText="First Name" style="-fx-background-color: #ffffff;" />
             <Text fill="WHITE" layoutX="110.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Register" wrappingWidth="211.0">
                <font>
                   <Font size="45.0" />
                </font>
             </Text>
-            <TextField layoutX="113.0" layoutY="240.0" prefHeight="35.0" prefWidth="205.0" promptText="Last Name" fx:id ="lastName" style="-fx-background-color: #ffffff;" />
-            <Button layoutX="113.0" layoutY="472.0" mnemonicParsing="false" onAction="#handleRegisterSuccess" prefHeight="35.0" prefWidth="83.0" style="-fx-background-color: rgb(73,90,246);" text="Register" textAlignment="CENTER" textFill="WHITE" fx:id = "submitR" />
-            <TextField layoutX="113.0" layoutY="298.0" prefHeight="35.0" prefWidth="205.0" promptText="Current University" fx:id ="university" style="-fx-background-color: #ffffff;" />
-            <TextField layoutX="113.0" layoutY="356.0" prefHeight="35.0" prefWidth="205.0" promptText="Email Address" fx:id ="emailField" style="-fx-background-color: #ffffff;" />
-            <ChoiceBox layoutX="113.0" id="choiceBox" layoutY="134.0" prefHeight="28.0" prefWidth="93.0" />
-            <PasswordField layoutX="113.0" layoutY="414.0" prefHeight="35.0" prefWidth="205.0" promptText="Password" fx:id ="passWordField" />
+            <TextField fx:id="lastName" layoutX="113.0" layoutY="277.0" prefHeight="35.0" prefWidth="205.0" promptText="Last Name" style="-fx-background-color: #ffffff;" />
+            <Button fx:id="submitR" layoutX="110.0" layoutY="500.0" mnemonicParsing="false" onAction="#handleRegisterSuccess" prefHeight="35.0" prefWidth="83.0" style="-fx-background-color: rgb(73,90,246);" text="Register" textAlignment="CENTER" textFill="WHITE" />
+            <TextField fx:id="university" layoutX="113.0" layoutY="335.0" prefHeight="35.0" prefWidth="205.0" promptText="Current University" style="-fx-background-color: #ffffff;" />
+            <TextField fx:id="emailField" layoutX="113.0" layoutY="390.0" prefHeight="35.0" prefWidth="205.0" promptText="Email Address" style="-fx-background-color: #ffffff;" />
+            <ChoiceBox fx:id="prefix" id="choiceBox" onAction="#handlePrefix" layoutX="113.0" layoutY="134.0" prefHeight="28.0" prefWidth="93.0" />
+            <PasswordField fx:id="passWordField" layoutX="113.0" layoutY="445.0" prefHeight="35.0" prefWidth="205.0" promptText="Password" />
+            <ChoiceBox fx:id="roles" id="choiceBox" onAction="#handleRoles" layoutX="113.0" layoutY="176.0" prefHeight="28.0" prefWidth="158.0" />
          </children>
       </AnchorPane>
    </children>

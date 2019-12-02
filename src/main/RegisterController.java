@@ -12,6 +12,7 @@ import javafx.stage.*;
 import javafx.event.*;
 import javafx.css.*;
 import javafx.scene.control.*;
+import javafx.scene.control.ComboBox;
 
 import java.io.File;
 import java.io.IOException;
@@ -38,10 +39,35 @@ public class RegisterController extends Main {
     @FXML
     private PasswordField passWordField;
 
+    @FXML
+    private ChoiceBox prefix;
+
+    @FXML
+    private ChoiceBox roles;
+
     String [] sql ={"Drop"};
 
 
-    public void handleRegisterSuccess(ActionEvent action) throws IOException {
+    public void handlePrefix(ActionEvent action) throws IOException {
+        prefix.setValue("D");
+        prefix.getItems().addAll(
+                "Mr.",
+                "Ms.",
+                "Prof",
+                "Dr"
+        );
+        prefix.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue) -> System.out.println(oldValue));
+    }
+
+    public void handleRoles(ActionEvent action) throws IOException {
+        roles.getItems().addAll(
+                "Author",
+                "Editor"
+        );
+    }
+
+
+        public void handleRegisterSuccess(ActionEvent action) throws IOException {
         // first name
         if (firstName.getText().isEmpty()){
             firstName.setStyle("-fx-prompt-text-fill : red;");
@@ -86,6 +112,10 @@ public class RegisterController extends Main {
             passWordField.clear();
             passWordField.setPromptText("must be 6 letters and above");
         }
+
+        String prefixValue = (String) prefix.getValue();
+        String roleValue = (String) roles.getValue();
+
         if (!l[0].isEmpty() && !l[1].isEmpty() && !l[2].isEmpty() && !l[3].isEmpty()&& !l[4].isEmpty()){
 
             URL url = new File("src/resources/login.fxml").toURI().toURL();
@@ -97,6 +127,8 @@ public class RegisterController extends Main {
             window.setScene(viewScene);
 
         }
+
+
     }
 
 
