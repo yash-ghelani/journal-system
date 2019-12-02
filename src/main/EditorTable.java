@@ -57,7 +57,7 @@ public class EditorTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String insert = "INSERT INTO Editor (ITitle, Name, Surname, Affiliation, Email, Password) "+
+                String insert = "INSERT INTO Editor (Title, Name, Surname, Affiliation, Email, Password) "+
                                 " VALUES ('"+ title + "', '" + name + "', '" + surname + "','"+ affiliation + "','" + email + "','" + password + "')";
                 //System.out.println(journal);
                 stmt.executeUpdate(insert);
