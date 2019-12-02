@@ -7,7 +7,6 @@ public class EditorTable {
 
         EditorTable rt = new EditorTable();
         //rt.CreateEditorTable();
-        //vt.Insert(12345678, 2018);
     }
 
     public static void CreateEditorTable() throws SQLException {
@@ -21,15 +20,13 @@ public class EditorTable {
             try {
                 stmt = con.createStatement();
                 String jtable = "CREATE TABLE Editor " + //Creating the table "UserTable"
-                        "(EditorID               INT                 AUTO_INCREMENT, " +
-                        "ISSN                    INT                 NOT NULL," + //Creating the different fields
+                        "(EditorID               INT                 AUTO_INCREMENT, " + //Creating the different fields
                         "Title                   TEXT                NOT NULL, " +
                         "Name                    TEXT                NOT NULL, " +
                         "Surname                 TEXT                NOT NULL, " +
                         "Affiliation             TEXT                NOT NULL, " +
                         "Email                   NVARCHAR(320)        NOT NULL," +
                         "Password                NVARCHAR(100)        NOT NULL," +
-                        "FOREIGN KEY (ISSN) REFERENCES Journal(ISSN)," +
                         "PRIMARY KEY (EditorID))";
 
                 stmt.executeUpdate(jtable);
@@ -52,7 +49,7 @@ public class EditorTable {
 
     }
 
-    public static void Insert(int issn, String title, String name, String surname, String affiliation, String email, String password) throws SQLException {
+    public static void Insert(String title, String name, String surname, String affiliation, String email, String password) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -60,10 +57,10 @@ public class EditorTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String journal = "INSERT INTO Editor (ISSN, Title, Name, Surname, Affiliation, Email, Password) VALUES ("+issn+",'" + title + "', '" + name + "', '" + surname + "',''"+
-                        affiliation + "','" + email + "','" + password + "')";
+                String insert = "INSERT INTO Editor (ITitle, Name, Surname, Affiliation, Email, Password) "+
+                                " VALUES ('"+ title + "', '" + name + "', '" + surname + "','"+ affiliation + "','" + email + "','" + password + "')";
                 //System.out.println(journal);
-                stmt.executeUpdate(journal);
+                stmt.executeUpdate(insert);
             } catch (SQLException ex) {
                 ex.printStackTrace();
             } finally {
@@ -85,33 +82,6 @@ public class EditorTable {
             try {
                 stmt = con.createStatement();
                 String journal = "DELETE FROM Editor WHERE EditorID = " + id;
-                //System.out.println(journal);
-                stmt.executeUpdate(journal);
-            }
-            catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-            finally {
-                if (stmt != null)
-                    stmt.close();
-            }
-        }
-        catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        finally {
-            if (con != null) con.close();
-        }
-    }
-    public static void UpdateISSN(int id, int issn) throws SQLException {
-        Connection con = null; // connection to a database
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
-            // use the open connection
-            Statement stmt = null;
-            try {
-                stmt = con.createStatement();
-                String journal = "UPDATE Editor SET ISSN = '" + issn + "' WHERE EditorID = " + id;
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
             }

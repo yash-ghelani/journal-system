@@ -1,0 +1,223 @@
+package main;
+import java.sql.*;
+import java.util.*;
+public class JournalInfoTable {
+
+    public static void main(String args[]) throws SQLException {
+
+        JournalInfoTable jit = new JournalInfoTable();
+        jit.CreateJournalInfoTable();
+    }
+
+    public static void CreateJournalInfoTable() throws SQLException {
+
+        Connection con = null; // a Connection object
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            //=========================================================================================================
+
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String jtable = "CREATE TABLE JournalInfo " + //Creating the table "UserTable"
+                        "(JournalInfoID         INT     AUTO_INCREMENT, " + //Creating the different fields
+                        "ISSN                   INT     NOT NULL, " +
+                        "EditorID               INT     NOT NULL, " +
+                        "PRIMARY KEY (JournalInfoID), "+
+                        "FOREIGN KEY (ISSN) REFERENCES Journal(ISSN), "+
+                        "FOREIGN KEY (EditorID) REFERENCES Editor(EditorID))";
+
+                stmt.executeUpdate(jtable);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            } finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+
+
+            //=========================================================================================================
+        } catch (Exception e) {
+            //e.printStackTrace();
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+
+        } finally {
+            if (con != null) con.close();
+        }
+
+    }
+
+    public static void Insert(int issn, int editorID) throws SQLException {
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String insert = "INSERT INTO Editor (ISSN, EditorID) "+
+                                " VALUES ('"+ issn + "','" + editorID + "')";
+                //System.out.println(journal);
+                stmt.executeUpdate(insert);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            } finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (con != null) con.close();
+        }
+    }
+    public static void Delete(int id) throws SQLException {
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String journal = "DELETE FROM Editor WHERE EditorID = " + id;
+                //System.out.println(journal);
+                stmt.executeUpdate(journal);
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+    }
+
+    public static void UpdateISSN(int id, int issn) throws SQLException {
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String journal = "UPDATE JournalInfo SET ISSN = '" + issn + "' WHERE JournalInfoID = " + id;
+                //System.out.println(journal);
+                stmt.executeUpdate(journal);
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+    }
+
+    public static void UpdateEditor(int id, int editorID) throws SQLException {
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String journal = "UPDATE JournalInfo SET EditorID = '" + editorID + "' WHERE JournalInfoID = " + id;
+                //System.out.println(journal);
+                stmt.executeUpdate(journal);
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+    }
+
+    public int SelectISSN(int id) throws SQLException {
+        int fin = 0;
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String query = "SELECT ISSN FROM JournalInfo WHERE JournalInfoID = " + id;
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    fin = res.getInt("ISSN");
+                }
+                res.close();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+        return fin;
+    }
+
+    public int SelectEditor(int id) throws SQLException {
+        int fin = 0;
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String query = "SELECT EditorID FROM JournalInfo WHERE JournalInfoID = " + id;
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    fin = res.getInt("EditorID");
+                }
+                res.close();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+        return fin;
+    }
+}
