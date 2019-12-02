@@ -6,7 +6,7 @@ public class EditorInfoTable {
     public static void main (String args[]) throws SQLException {
 
         EditorInfoTable et = new EditorInfoTable();
-        //et.CreateEditorInfoTable();
+        et.CreateEditorInfoTable();
 
     }
 

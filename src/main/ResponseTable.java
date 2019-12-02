@@ -6,7 +6,7 @@ public class ResponseTable {
     public static void main (String args[]) throws SQLException {
 
         ResponseTable et = new ResponseTable();
-        //et.CreateResponseTable();
+        et.CreateResponseTable();
         //et.Insert(12345678, 2018);
     }
 

@@ -6,7 +6,7 @@ public class ErrorTable {
     public static void main (String args[]) throws SQLException {
 
         ErrorTable et = new ErrorTable();
-        //et.CreateErrorTable();
+        et.CreateErrorTable();
         //et.Insert(12345678, 2018);
     }
 

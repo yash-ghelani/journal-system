@@ -5,8 +5,8 @@ public class EditorTable {
 
     public static void main(String args[]) throws SQLException {
 
-        EditorTable rt = new EditorTable();
-        //rt.CreateEditorTable();
+        EditorTable et = new EditorTable();
+        et.CreateEditorTable();
     }
 
     public static void CreateEditorTable() throws SQLException {
@@ -266,39 +266,6 @@ public class EditorTable {
         finally {
             if (con != null) con.close();
         }
-    }
-
-    public int SelectISSN(int id) throws SQLException {
-        int fin = 0;
-        Connection con = null; // connection to a database
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
-            // use the open connection
-            Statement stmt = null;
-            try {
-                stmt = con.createStatement();
-                String query = "SELECT ISSN FROM Editor WHERE EditorID = " + id;
-                ResultSet res = stmt.executeQuery(query);
-                while (res.next()) {
-                    fin = res.getInt("ISSN");
-                }
-                res.close();
-            }
-            catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-            finally {
-                if (stmt != null)
-                    stmt.close();
-            }
-        }
-        catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        finally {
-            if (con != null) con.close();
-        }
-        return fin;
     }
 
     public String SelectTitle(int id) throws SQLException {

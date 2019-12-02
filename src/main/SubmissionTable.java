@@ -6,7 +6,7 @@ public class SubmissionTable {
     public static void main (String args[]) throws SQLException {
 
         SubmissionTable st = new SubmissionTable();
-        //st.CreateSubmissionTable();
+        st.CreateSubmissionTable();
     }
 
     public static void CreateSubmissionTable() throws SQLException {

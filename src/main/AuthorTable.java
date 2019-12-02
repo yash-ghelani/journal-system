@@ -6,7 +6,7 @@ public class AuthorTable {
     public static void main(String args[]) throws SQLException {
 
         AuthorTable rt = new AuthorTable();
-        //rt.CreateAuthorTable();
+        rt.CreateAuthorTable();
         //vt.Insert(12345678, 2018);
     }
 

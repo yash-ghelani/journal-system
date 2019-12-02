@@ -6,7 +6,7 @@ public class ReviewTable {
     public static void main (String args[]) throws SQLException {
 
         ReviewTable rt = new ReviewTable();
-        //rt.CreateReviewTable();
+        rt.CreateReviewTable();
         //vt.Insert(12345678, 2018);
     }
 

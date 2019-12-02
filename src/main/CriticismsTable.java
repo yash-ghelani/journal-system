@@ -6,7 +6,7 @@ public class CriticismsTable {
     public static void main (String args[]) throws SQLException {
 
         CriticismsTable ct = new CriticismsTable();
-        //ct.CreateCriticismsTable();
+        ct.CreateCriticismsTable();
         //ct.Insert(12345678, 2018);
     }
 

@@ -6,7 +6,7 @@ public class ArticleTable {
     public static void main (String args[]) throws SQLException {
 
         ArticleTable at = new ArticleTable();
-        //at.CreateArticleTable();
+        at.CreateArticleTable();
     }
 
     public static void CreateArticleTable() throws SQLException {
@@ -28,7 +28,7 @@ public class ArticleTable {
                                     "Abstract               TEXT   NOT NULL, "+
                                     "PRIMARY KEY (ArticleID), "+
                                     "FOREIGN KEY (EditionID) REFERENCES Edition(EditionID), "+
-                                    "FOREIGN KEY (SubmissionID) REFERENCES Submisisons(SubmissionID))";
+                                    "FOREIGN KEY (SubmissionID) REFERENCES Submissions(SubmissionID))";
 
                 stmt.executeUpdate(initialise);
             }
