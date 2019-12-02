@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="connectorj">
-    <CLASSES>
-      <root url="jar://$PATH_TO_SQL$!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
