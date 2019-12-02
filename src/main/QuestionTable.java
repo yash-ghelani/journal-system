@@ -6,8 +6,7 @@ public class QuestionTable {
     public static void main (String args[]) throws SQLException {
 
         QuestionTable et = new QuestionTable();
-        et.CreateQuestionTable();
-        //et.Insert(12345678, 2018);
+        //et.CreateQuestionTable();
     }
 
     public static void CreateQuestionTable() throws SQLException {

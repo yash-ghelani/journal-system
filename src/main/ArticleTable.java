@@ -6,7 +6,7 @@ public class ArticleTable {
     public static void main (String args[]) throws SQLException {
 
         ArticleTable at = new ArticleTable();
-        at.CreateArticleTable();
+        //at.CreateArticleTable();
     }
 
     public static void CreateArticleTable() throws SQLException {

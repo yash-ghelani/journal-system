@@ -6,8 +6,8 @@ public class VolumeTable {
     public static void main (String args[]) throws SQLException {
 
         VolumeTable vt = new VolumeTable();
-        vt.CreateVolumeTable();
-        //vt.Insert(12345678, 2018);
+        //vt.CreateVolumeTable();
+//        vt.Insert(12345678, 2018);
     }
 
     public static void CreateVolumeTable() throws SQLException {
@@ -61,7 +61,6 @@ public class VolumeTable {
                 stmt = con.createStatement();
 
                 String journal = "INSERT INTO Volume (ISSN, PublicationYear) VALUES (" + issn +"," + year+ ")";
-                System.out.println(journal);
                 stmt.executeUpdate(journal);
 
             }
