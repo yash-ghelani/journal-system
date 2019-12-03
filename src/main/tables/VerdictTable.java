@@ -1,15 +1,16 @@
-package main;
+package main.tables;
 import java.sql.*;
-import java.util.*;
-public class QuestionTable {
+
+public class VerdictTable {
 
     public static void main (String args[]) throws SQLException {
 
-        QuestionTable et = new QuestionTable();
-        //et.CreateQuestionTable();
+        VerdictTable vt = new VerdictTable();
+        vt.CreateVerdictTable();
+        //vt.Insert(12345678, 2018);
     }
 
-    public static void CreateQuestionTable() throws SQLException {
+    public static void CreateVerdictTable() throws SQLException {
 
         Connection con = null; // a Connection object
         try {
@@ -19,11 +20,11 @@ public class QuestionTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String jtable = "CREATE TABLE Question " + //Creating the table "UserTable"
-                        "(QuestionID               INT     NOT NULL    AUTO_INCREMENT, "+ //Creating the different fields
-                        "ReviewID                  INT     NOT NULL, "+
-                        "QuestionText              TEXT    NOT NULL, " +
-                        "PRIMARY KEY (QuestionID), " +
+                String jtable = "CREATE TABLE Verdict " + //Creating the table "UserTable"
+                        "(VerdictID         INT     NOT NULL    AUTO_INCREMENT, "+ //Creating the different fields
+                        "ReviewID           INT     NOT NULL, "+
+                        "ReviewerVerdict    TEXT    NOT NULL, " +
+                        "PRIMARY KEY (VerdictID), " +
                         "FOREIGN KEY (ReviewID) REFERENCES Review(ReviewID))";
 
                 stmt.executeUpdate(jtable);
@@ -50,7 +51,7 @@ public class QuestionTable {
 
     }
 
-    public static void Insert(int reviewid, String question ) throws SQLException {
+    public static void Insert(int reviewid, String reviewerverdict ) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -59,7 +60,7 @@ public class QuestionTable {
             try {
                 stmt = con.createStatement();
 
-                String journal = "INSERT INTO Question ( ReviewID, QuestionText) VALUES (" + reviewid +",'" + question + "')";
+                String journal = "INSERT INTO Verdict ( ReviewID, PublicationYear) VALUES (" + reviewid +",'" + reviewerverdict + "')";
                 System.out.println(journal);
                 stmt.executeUpdate(journal);
 
@@ -81,7 +82,7 @@ public class QuestionTable {
         }
     }
 
-    public static void Delete(int id) throws SQLException {
+    public static void Delete(int verdictid) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -89,7 +90,7 @@ public class QuestionTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String journal = "DELETE FROM Question WHERE QuesionID = " + id;
+                String journal = "DELETE FROM Verdict WHERE VerdictID = " + verdictid;
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
             }
@@ -112,7 +113,7 @@ public class QuestionTable {
 
 
 
-    public static void UpdateReviewID(int questionid, int reviewid) throws SQLException {
+    public static void UpdateReviewID(int verdictid, int reviewid) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -121,7 +122,7 @@ public class QuestionTable {
             try {
                 stmt = con.createStatement();
 
-                String journal = "UPDATE Question SET ReviewID = " + reviewid + " WHERE QuestionID= " + questionid;
+                String journal = "UPDATE Verdict SET ReviewID = " + reviewid + " WHERE VerdictID= " + verdictid;
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
             }
@@ -141,7 +142,7 @@ public class QuestionTable {
         }
     }
 
-    public static void UpdateQuestionText(int id, String question) throws SQLException {
+    public static void UpdateReviewerVerdict(int verdictid, String rv) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -150,7 +151,7 @@ public class QuestionTable {
             try {
                 stmt = con.createStatement();
 
-                String journal = "UPDATE Question SET QuestionText = '" + question + "' WHERE QuestionID= " + id;
+                String journal = "UPDATE Verdict SET ReviewerVerdict = '" + rv + "' WHERE VerdictID= " + verdictid;
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
             }
@@ -179,7 +180,7 @@ public class QuestionTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "SELECT ReviewID FROM Question WHERE QuestionID = " + id;
+                String query = "SELECT ReviewID FROM Verdict WHERE VerdictID = " + id;
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     fin = res.getInt("ReviewID");
@@ -203,7 +204,7 @@ public class QuestionTable {
         return fin;
     }
 
-    public String SelectQuestionText(int id) throws SQLException {
+    public String SelectReviewerVerdict(int id) throws SQLException {
         String fin = null;
         Connection con = null; // connection to a database
         try {
@@ -212,10 +213,10 @@ public class QuestionTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "SELECT QuestionText FROM Question WHERE QuestionID = " + id;
+                String query = "SELECT ReviewerVerdict FROM Verdict WHERE VerdictID = " + id;
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
-                    fin = res.getString("QuestionText");
+                    fin = res.getString("ReviewerVerdict");
                 }
                 res.close();
             }
@@ -236,4 +237,3 @@ public class QuestionTable {
         return fin;
     }
 }
-

@@ -1,16 +1,15 @@
-package main;
+package main.tables;
 import java.sql.*;
-import java.util.*;
-public class ResponseTable {
 
-    public static void main (String args[]) throws SQLException {
+public class JournalInfoTable {
 
-        ResponseTable et = new ResponseTable();
-        et.CreateResponseTable();
-        //et.Insert(12345678, 2018);
+    public static void main(String args[]) throws SQLException {
+
+        JournalInfoTable jit = new JournalInfoTable();
+        jit.CreateJournalInfoTable();
     }
 
-    public static void CreateResponseTable() throws SQLException {
+    public static void CreateJournalInfoTable() throws SQLException {
 
         Connection con = null; // a Connection object
         try {
@@ -20,38 +19,35 @@ public class ResponseTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String jtable = "CREATE TABLE Response " + //Creating the table "UserTable"
-                        "(ResponseID               INT     NOT NULL    AUTO_INCREMENT, "+ //Creating the different fields
-                        "QuestionID                INT     NOT NULL, "+
-                        "ResponseText                  TEXT    NOT NULL, " +
-                        "PRIMARY KEY (ResponseID), " +
-                        "FOREIGN KEY (QuestionID) REFERENCES Question(QuestionID))";
+                String jtable = "CREATE TABLE JournalInfo " + //Creating the table "UserTable"
+                        "(JournalInfoID         INT     AUTO_INCREMENT, " + //Creating the different fields
+                        "ISSN                   INT     NOT NULL, " +
+                        "EditorID               INT     NOT NULL, " +
+                        "PRIMARY KEY (JournalInfoID), "+
+                        "FOREIGN KEY (ISSN) REFERENCES Journal(ISSN), "+
+                        "FOREIGN KEY (EditorID) REFERENCES Editor(EditorID))";
 
                 stmt.executeUpdate(jtable);
-            }
-            catch (SQLException ex) {
+            } catch (SQLException ex) {
                 ex.printStackTrace();
-            }
-            finally {
+            } finally {
                 if (stmt != null)
                     stmt.close();
             }
 
 
             //=========================================================================================================
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             //e.printStackTrace();
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
 
-        }
-        finally {
+        } finally {
             if (con != null) con.close();
         }
 
     }
 
-    public static void Insert(int questionid, String response ) throws SQLException {
+    public static void Insert(int issn, int editorID) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -59,29 +55,22 @@ public class ResponseTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-
-                String journal = "INSERT INTO Response ( QuestionID, ResponseText) VALUES (" + questionid +",'" + response + "')";
-                System.out.println(journal);
-                stmt.executeUpdate(journal);
-
-            }
-            catch (SQLException ex) {
+                String insert = "INSERT INTO Editor (ISSN, EditorID) "+
+                                " VALUES ('"+ issn + "','" + editorID + "')";
+                //System.out.println(journal);
+                stmt.executeUpdate(insert);
+            } catch (SQLException ex) {
                 ex.printStackTrace();
-            }
-            finally {
+            } finally {
                 if (stmt != null)
                     stmt.close();
             }
-
-        }
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             ex.printStackTrace();
-        }
-        finally {
+        } finally {
             if (con != null) con.close();
         }
     }
-
     public static void Delete(int id) throws SQLException {
         Connection con = null; // connection to a database
         try {
@@ -90,7 +79,7 @@ public class ResponseTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String journal = "DELETE FROM Response WHERE ResponseID = " + id;
+                String journal = "DELETE FROM Editor WHERE EditorID = " + id;
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
             }
@@ -110,10 +99,7 @@ public class ResponseTable {
         }
     }
 
-
-
-
-    public static void UpdateQuestionID(int responseid, int questionid) throws SQLException {
+    public static void UpdateISSN(int id, int issn) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -121,8 +107,7 @@ public class ResponseTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-
-                String journal = "UPDATE Response SET QuestionID = " + questionid + " WHERE ResponseID= " + responseid;
+                String journal = "UPDATE JournalInfo SET ISSN = '" + issn + "' WHERE JournalInfoID = " + id;
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
             }
@@ -142,7 +127,7 @@ public class ResponseTable {
         }
     }
 
-    public static void UpdateResponse(int id, String response) throws SQLException {
+    public static void UpdateEditor(int id, int editorID) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -150,8 +135,7 @@ public class ResponseTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-
-                String journal = "UPDATE Response SET ResponseText = '" + response + "' WHERE ResponseID= " + id;
+                String journal = "UPDATE JournalInfo SET EditorID = '" + editorID + "' WHERE JournalInfoID = " + id;
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
             }
@@ -171,7 +155,7 @@ public class ResponseTable {
         }
     }
 
-    public int SelectQuestionID(int id) throws SQLException {
+    public int SelectISSN(int id) throws SQLException {
         int fin = 0;
         Connection con = null; // connection to a database
         try {
@@ -180,10 +164,10 @@ public class ResponseTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "SELECT QuestionID FROM Response WHERE ResponseID = " + id;
+                String query = "SELECT ISSN FROM JournalInfo WHERE JournalInfoID = " + id;
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
-                    fin = res.getInt("QuestionID");
+                    fin = res.getInt("ISSN");
                 }
                 res.close();
             }
@@ -204,8 +188,8 @@ public class ResponseTable {
         return fin;
     }
 
-    public String SelectResponseText(int id) throws SQLException {
-        String fin = null;
+    public int SelectEditor(int id) throws SQLException {
+        int fin = 0;
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -213,10 +197,10 @@ public class ResponseTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "SELECT ResponseText FROM Response WHERE ResponseID = " + id;
+                String query = "SELECT EditorID FROM JournalInfo WHERE JournalInfoID = " + id;
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
-                    fin = res.getString("ResponseText");
+                    fin = res.getInt("EditorID");
                 }
                 res.close();
             }
@@ -237,4 +221,3 @@ public class ResponseTable {
         return fin;
     }
 }
-

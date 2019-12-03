@@ -1,4 +1,4 @@
-package main;
+package main.tables;
 import java.sql.*;
 import java.util.*;
 public class FindDrivers {

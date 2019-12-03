@@ -1,16 +1,16 @@
-package main;
+package main.tables;
 import java.sql.*;
-import java.util.*;
-public class VerdictTable {
+
+public class ArticleInfoTable {
 
     public static void main (String args[]) throws SQLException {
 
-        VerdictTable vt = new VerdictTable();
-        vt.CreateVerdictTable();
-        //vt.Insert(12345678, 2018);
+        ArticleInfoTable ait = new ArticleInfoTable();
+        //ait.CreateArticleInfoTable();
+//        ait.Insert(1,1);
     }
 
-    public static void CreateVerdictTable() throws SQLException {
+    public static void CreateArticleInfoTable() throws SQLException {
 
         Connection con = null; // a Connection object
         try {
@@ -20,14 +20,15 @@ public class VerdictTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String jtable = "CREATE TABLE Verdict " + //Creating the table "UserTable"
-                        "(VerdictID         INT     NOT NULL    AUTO_INCREMENT, "+ //Creating the different fields
-                        "ReviewID           INT     NOT NULL, "+
-                        "ReviewerVerdict    TEXT    NOT NULL, " +
-                        "PRIMARY KEY (VerdictID), " +
-                        "FOREIGN KEY (ReviewID) REFERENCES Review(ReviewID))";
+                String initialise = "CREATE TABLE ArticleInfo " + //Creating the table
+                                    "(ArticleInfoID         INT    NOT NULL AUTO_INCREMENT, "+ //Creating the different fields
+                                    "ArticleID              INT    NOT NULL, "+ //Creating the different fields
+                                    "AuthorID               INT    NOT NULL, "+
+                                    "PRIMARY KEY (ArticleInfoID), "+
+                                    "FOREIGN KEY (ArticleID) REFERENCES Articles(ArticleID), "+
+                                    "FOREIGN KEY (AuthorID) REFERENCES Author(AuthorID))";
 
-                stmt.executeUpdate(jtable);
+                stmt.executeUpdate(initialise);
             }
             catch (SQLException ex) {
                 ex.printStackTrace();
@@ -51,7 +52,7 @@ public class VerdictTable {
 
     }
 
-    public static void Insert(int reviewid, String reviewerverdict ) throws SQLException {
+    public static void Insert(int articleID, int authorID) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -59,11 +60,38 @@ public class VerdictTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
+                String newEdition = "INSERT INTO ArticleInfo (ArticleID, AuthorID) "+
+                                    "VALUES ('" + articleID + "',  '" + authorID + "')";
+                stmt.executeUpdate(newEdition);
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+    }
 
-                String journal = "INSERT INTO Verdict ( ReviewID, PublicationYear) VALUES (" + reviewid +",'" + reviewerverdict + "')";
-                System.out.println(journal);
-                stmt.executeUpdate(journal);
+    //====================================================================================================================
 
+    public static void UpdateArticle(int articleInfoID, int articleID) throws SQLException {
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String newEdition = "UPDATE ArticleInfo SET ArticleID = '" + articleID + "' WHERE ArticleInfoID = " + articleInfoID;
+                stmt.executeUpdate(newEdition);
             }
             catch (SQLException ex) {
                 ex.printStackTrace();
@@ -82,7 +110,7 @@ public class VerdictTable {
         }
     }
 
-    public static void Delete(int verdictid) throws SQLException {
+    public static void UpdateAuthor(int articleInfoID, int authorID) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -90,9 +118,8 @@ public class VerdictTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String journal = "DELETE FROM Verdict WHERE VerdictID = " + verdictid;
-                //System.out.println(journal);
-                stmt.executeUpdate(journal);
+                String newEdition = "UPDATE ArticleInfo SET AuthorID = '" + authorID + "' WHERE ArticleInfoID = " + articleInfoID;
+                stmt.executeUpdate(newEdition);
             }
             catch (SQLException ex) {
                 ex.printStackTrace();
@@ -101,6 +128,7 @@ public class VerdictTable {
                 if (stmt != null)
                     stmt.close();
             }
+
         }
         catch (SQLException ex) {
             ex.printStackTrace();
@@ -110,10 +138,9 @@ public class VerdictTable {
         }
     }
 
+    //==================================================================================================================
 
-
-
-    public static void UpdateReviewID(int verdictid, int reviewid) throws SQLException {
+    public static void Delete(int articleInfoID) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -121,10 +148,8 @@ public class VerdictTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-
-                String journal = "UPDATE Verdict SET ReviewID = " + reviewid + " WHERE VerdictID= " + verdictid;
-                //System.out.println(journal);
-                stmt.executeUpdate(journal);
+                String newEdition = "DELETE FROM ArticleInfo WHERE ArticleInfoID = " + articleInfoID;
+                stmt.executeUpdate(newEdition);
             }
             catch (SQLException ex) {
                 ex.printStackTrace();
@@ -133,6 +158,7 @@ public class VerdictTable {
                 if (stmt != null)
                     stmt.close();
             }
+
         }
         catch (SQLException ex) {
             ex.printStackTrace();
@@ -140,38 +166,12 @@ public class VerdictTable {
         finally {
             if (con != null) con.close();
         }
+
     }
 
-    public static void UpdateReviewerVerdict(int verdictid, String rv) throws SQLException {
-        Connection con = null; // connection to a database
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
-            // use the open connection
-            Statement stmt = null;
-            try {
-                stmt = con.createStatement();
+    //=================================================================================================================
 
-                String journal = "UPDATE Verdict SET ReviewerVerdict = '" + rv + "' WHERE VerdictID= " + verdictid;
-                //System.out.println(journal);
-                stmt.executeUpdate(journal);
-            }
-            catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-            finally {
-                if (stmt != null)
-                    stmt.close();
-            }
-        }
-        catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        finally {
-            if (con != null) con.close();
-        }
-    }
-
-    public int SelectReviewID(int id) throws SQLException {
+    public int SelectArticleID(int articleInfoID) throws SQLException {
         int fin = 0;
         Connection con = null; // connection to a database
         try {
@@ -180,10 +180,10 @@ public class VerdictTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "SELECT ReviewID FROM Verdict WHERE VerdictID = " + id;
+                String query = "SELECT ArticleID FROM ArticleInfo WHERE ArticleInfoID = " + articleInfoID;
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
-                    fin = res.getInt("ReviewID");
+                    fin = res.getInt("ArticleID");
                 }
                 res.close();
             }
@@ -204,8 +204,8 @@ public class VerdictTable {
         return fin;
     }
 
-    public String SelectReviewerVerdict(int id) throws SQLException {
-        String fin = null;
+    public int SelectAuthorID(int articleInfoID) throws SQLException {
+        int fin = 0;
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -213,10 +213,10 @@ public class VerdictTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "SELECT ReviewerVerdict FROM Verdict WHERE VerdictID = " + id;
+                String query = "SELECT AuthorID FROM ArticleInfo WHERE ArticleInfoID = " + articleInfoID;
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
-                    fin = res.getString("ReviewerVerdict");
+                    fin = res.getInt("AuthorIDs");
                 }
                 res.close();
             }
@@ -237,3 +237,4 @@ public class VerdictTable {
         return fin;
     }
 }
+

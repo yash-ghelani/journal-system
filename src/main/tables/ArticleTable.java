@@ -1,16 +1,15 @@
-package main;
+package main.tables;
 import java.sql.*;
-import java.util.*;
-public class AuthorTable {
 
-    public static void main(String args[]) throws SQLException {
+public class ArticleTable {
 
-        AuthorTable rt = new AuthorTable();
-        rt.CreateAuthorTable();
-        //vt.Insert(12345678, 2018);
+    public static void main (String args[]) throws SQLException {
+
+        ArticleTable at = new ArticleTable();
+        //at.CreateArticleTable();
     }
 
-    public static void CreateAuthorTable() throws SQLException {
+    public static void CreateArticleTable() throws SQLException {
 
         Connection con = null; // a Connection object
         try {
@@ -20,37 +19,42 @@ public class AuthorTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String jtable = "CREATE TABLE Author " + //Creating the table "UserTable"
-                        "(AuthorID               INT                 AUTO_INCREMENT, " + //Creating the different fields
-                        "Title                   TEXT                NOT NULL, " +
-                        "Name                    TEXT                NOT NULL, " +
-                        "Surname                 TEXT                NOT NULL, " +
-                        "Affiliation             TEXT                NOT NULL, " +
-                        "Email                   NVARCHAR(320)        NOT NULL," +
-                        "Password                NVARCHAR(100)        NOT NULL," +
-                        "PRIMARY KEY (AuthorID))";
+                String initialise = "CREATE TABLE Articles " + //Creating the table
+                                    "(ArticleID             INT    NOT NULL AUTO_INCREMENT, "+ //Creating the different fields
+                                    "EditionID              INT    NOT NULL, "+
+                                    "SubmissionID           INT    NOT NULL, "+
+                                    "Title                  TEXT   NOT NULL, "+
+                                    "PageRange              TEXT   NOT NULL, "+
+                                    "Abstract               TEXT   NOT NULL, "+
+                                    "PRIMARY KEY (ArticleID), "+
+                                    "FOREIGN KEY (EditionID) REFERENCES Edition(EditionID), "+
+                                    "FOREIGN KEY (SubmissionID) REFERENCES Submissions(SubmissionID))";
 
-                stmt.executeUpdate(jtable);
-            } catch (SQLException ex) {
+                stmt.executeUpdate(initialise);
+            }
+            catch (SQLException ex) {
                 ex.printStackTrace();
-            } finally {
+            }
+            finally {
                 if (stmt != null)
                     stmt.close();
             }
 
 
             //=========================================================================================================
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             //e.printStackTrace();
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 
-        } finally {
+        }
+        finally {
             if (con != null) con.close();
         }
 
     }
 
-    public static void Insert(String title, String name, String surname, String affiliation, String email, String password) throws SQLException {
+    public static void Insert(int editionID, int submissionID, String title, String pageRange, String abstractText ) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -58,23 +62,29 @@ public class AuthorTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String journal = "INSERT INTO Author (Title, Name, Surname, Affiliation, Email, Password) VALUES ('" + title + "', '" + name + "', '" + surname + "',''" + affiliation + "','" + email + "','" + password + "')";
-                //System.out.println(journal);
-                stmt.executeUpdate(journal);
-            } catch (SQLException ex) {
+                String newEdition = "INSERT INTO Articles (EditionID, SubmissionID, Title, PageRange, Abstract) "+
+                                    " VALUES ('" + editionID + "',  '" + submissionID + "',  '" + title + "',  '" + pageRange + "',  '" + abstractText + "')";
+                stmt.executeUpdate(newEdition);
+            }
+            catch (SQLException ex) {
                 ex.printStackTrace();
-            } finally {
+            }
+            finally {
                 if (stmt != null)
                     stmt.close();
             }
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex) {
             ex.printStackTrace();
-        } finally {
+        }
+        finally {
             if (con != null) con.close();
         }
     }
 
-    public static void Delete(int id) throws SQLException {
+    //====================================================================================================================
+
+    public static void UpdateEdition(int articleID, int editionID ) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -82,23 +92,27 @@ public class AuthorTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String journal = "DELETE FROM Author WHERE AuthorID = " + id;
-                //System.out.println(journal);
-                stmt.executeUpdate(journal);
-            } catch (SQLException ex) {
+                String newEdition = "UPDATE Articles SET EditionID = '"+editionID+"' WHERE ArticleID = " + articleID;
+                stmt.executeUpdate(newEdition);
+            }
+            catch (SQLException ex) {
                 ex.printStackTrace();
-            } finally {
+            }
+            finally {
                 if (stmt != null)
                     stmt.close();
             }
-        } catch (SQLException ex) {
+
+        }
+        catch (SQLException ex) {
             ex.printStackTrace();
-        } finally {
+        }
+        finally {
             if (con != null) con.close();
         }
     }
 
-    public static void UpdateTitle(int id, String title) throws SQLException {
+    public static void UpdateSubmission(int articleID, int submissionID) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -106,23 +120,27 @@ public class AuthorTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String journal = "UPDATE Author SET Title = '" + title + "'  WHERE AuthorID = " + id;
-                //System.out.println(journal);
-                stmt.executeUpdate(journal);
-            } catch (SQLException ex) {
+                String newEdition = "UPDATE Articles SET SubmissionID = '"+submissionID+"' WHERE ArticleID = " + articleID;
+                stmt.executeUpdate(newEdition);
+            }
+            catch (SQLException ex) {
                 ex.printStackTrace();
-            } finally {
+            }
+            finally {
                 if (stmt != null)
                     stmt.close();
             }
-        } catch (SQLException ex) {
+
+        }
+        catch (SQLException ex) {
             ex.printStackTrace();
-        } finally {
+        }
+        finally {
             if (con != null) con.close();
         }
     }
 
-    public static void UpdateName(int id, String name) throws SQLException {
+    public static void UpdateTitle(int articleID, int title) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -130,23 +148,27 @@ public class AuthorTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String journal = "UPDATE Author SET Name = '" + name + "'  WHERE AuthorID = " + id;
-                //System.out.println(journal);
-                stmt.executeUpdate(journal);
-            } catch (SQLException ex) {
+                String newEdition = "UPDATE Articles SET Title = '"+title+"' WHERE ArticleID = " + articleID;
+                stmt.executeUpdate(newEdition);
+            }
+            catch (SQLException ex) {
                 ex.printStackTrace();
-            } finally {
+            }
+            finally {
                 if (stmt != null)
                     stmt.close();
             }
-        } catch (SQLException ex) {
+
+        }
+        catch (SQLException ex) {
             ex.printStackTrace();
-        } finally {
+        }
+        finally {
             if (con != null) con.close();
         }
     }
 
-    public static void UpdateSurname(int id, String surname) throws SQLException {
+    public static void UpdatePageRange(int articleID, int pageRange) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -154,23 +176,27 @@ public class AuthorTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String journal = "UPDATE Author SET Surname = '" + surname + "' WHERE AuthorID = " + id;
-                //System.out.println(journal);
-                stmt.executeUpdate(journal);
-            } catch (SQLException ex) {
+                String newEdition = "UPDATE Articles SET PageRange = '"+pageRange+"' WHERE ArticleID = " + articleID;
+                stmt.executeUpdate(newEdition);
+            }
+            catch (SQLException ex) {
                 ex.printStackTrace();
-            } finally {
+            }
+            finally {
                 if (stmt != null)
                     stmt.close();
             }
-        } catch (SQLException ex) {
+
+        }
+        catch (SQLException ex) {
             ex.printStackTrace();
-        } finally {
+        }
+        finally {
             if (con != null) con.close();
         }
     }
 
-    public static void UpdateAffiliation(int id, String affiliation) throws SQLException {
+    public static void UpdateAbstract(int articleID, int abstractText) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -178,23 +204,29 @@ public class AuthorTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String journal = "UPDATE Author SET Affiliation = '" + affiliation + "' WHERE AuthorID = " + id;
-                //System.out.println(journal);
-                stmt.executeUpdate(journal);
-            } catch (SQLException ex) {
+                String newEdition = "UPDATE Articles SET Abstract = '"+abstractText+"' WHERE ArticleID = " + articleID;
+                stmt.executeUpdate(newEdition);
+            }
+            catch (SQLException ex) {
                 ex.printStackTrace();
-            } finally {
+            }
+            finally {
                 if (stmt != null)
                     stmt.close();
             }
-        } catch (SQLException ex) {
+
+        }
+        catch (SQLException ex) {
             ex.printStackTrace();
-        } finally {
+        }
+        finally {
             if (con != null) con.close();
         }
     }
 
-    public static void UpdateEmail(int id, String email) throws SQLException {
+    //==================================================================================================================
+
+    public static void Delete(int articleID) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -202,23 +234,31 @@ public class AuthorTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String journal = "UPDATE Author SET Email = '" + email + "' WHERE AuthorID=" + id;
-                //System.out.println(journal);
-                stmt.executeUpdate(journal);
-            } catch (SQLException ex) {
+                String newEdition = "DELETE FROM Article WHERE ArticleID = " + articleID;
+                stmt.executeUpdate(newEdition);
+            }
+            catch (SQLException ex) {
                 ex.printStackTrace();
-            } finally {
+            }
+            finally {
                 if (stmt != null)
                     stmt.close();
             }
-        } catch (SQLException ex) {
+
+        }
+        catch (SQLException ex) {
             ex.printStackTrace();
-        } finally {
+        }
+        finally {
             if (con != null) con.close();
         }
+
     }
 
-    public static void UpdatePassword(int id, String password) throws SQLException {
+    //=================================================================================================================
+
+    public int SelectEditionID(int articleID) throws SQLException {
+        int fin = 0;
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -226,22 +266,64 @@ public class AuthorTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String journal = "UPDATE Author SET Password = '" + password + "'WHERE AuthorID=" + id;
-                //System.out.println(journal);
-                stmt.executeUpdate(journal);
-            } catch (SQLException ex) {
+                String query = "SELECT EditionID FROM Articles WHERE ArticleID = " + articleID;
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    fin = res.getInt("EditionID");
+                }
+                res.close();
+            }
+            catch (SQLException ex) {
                 ex.printStackTrace();
-            } finally {
+            }
+            finally {
                 if (stmt != null)
                     stmt.close();
             }
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex) {
             ex.printStackTrace();
-        } finally {
+        }
+        finally {
             if (con != null) con.close();
         }
+        return fin;
     }
-    public String SelectTitle(int id) throws SQLException {
+
+    public int SelectSubmissionID(int articleID) throws SQLException {
+        int fin = 0;
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String query = "SELECT SubmissionID FROM Articles WHERE ArticleID = " + articleID;
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    fin = res.getInt("SubmissionID");
+                }
+                res.close();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+        return fin;
+    }
+
+    public String SelectTitle(int articleID) throws SQLException {
         String fin = null;
         Connection con = null; // connection to a database
         try {
@@ -250,7 +332,7 @@ public class AuthorTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "SELECT Title FROM Author WHERE AuthorID = " + id;
+                String query = "SELECT Title FROM Articles WHERE ArticleID = " + articleID;
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     fin = res.getString("Title");
@@ -273,7 +355,8 @@ public class AuthorTable {
         }
         return fin;
     }
-    public String SelectName(int id) throws SQLException {
+
+    public String SelectPageRange(int articleID) throws SQLException {
         String fin = null;
         Connection con = null; // connection to a database
         try {
@@ -282,10 +365,10 @@ public class AuthorTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "SELECT Name FROM Author WHERE AuthorID = " + id;
+                String query = "SELECT PageRange FROM Articles WHERE ArticleID = " + articleID;
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
-                    fin = res.getString("Name");
+                    fin = res.getString("PageRange");
                 }
                 res.close();
             }
@@ -306,7 +389,7 @@ public class AuthorTable {
         return fin;
     }
 
-    public String SelectSurname(int id) throws SQLException {
+    public String SelectAbstract(int articleID) throws SQLException {
         String fin = null;
         Connection con = null; // connection to a database
         try {
@@ -315,10 +398,10 @@ public class AuthorTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "SELECT Surname FROM Author WHERE AuthorID = " + id;
+                String query = "SELECT Abstract FROM Articles WHERE ArticleID = " + articleID;
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
-                    fin = res.getString("Surname");
+                    fin = res.getString("Abstract");
                 }
                 res.close();
             }
@@ -339,103 +422,6 @@ public class AuthorTable {
         return fin;
     }
 
-    public String SelectAffiliation(int id) throws SQLException {
-        String fin = null;
-        Connection con = null; // connection to a database
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
-            // use the open connection
-            Statement stmt = null;
-            try {
-                stmt = con.createStatement();
-                String query = "SELECT Affiliation FROM Author WHERE AuthorID = " + id;
-                ResultSet res = stmt.executeQuery(query);
-                while (res.next()) {
-                    fin = res.getString("Affiliation");
-                }
-                res.close();
-            }
-            catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-            finally {
-                if (stmt != null)
-                    stmt.close();
-            }
-        }
-        catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        finally {
-            if (con != null) con.close();
-        }
-        return fin;
-    }
-
-    public String SelectEmail(int id) throws SQLException {
-        String fin = null;
-        Connection con = null; // connection to a database
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
-            // use the open connection
-            Statement stmt = null;
-            try {
-                stmt = con.createStatement();
-                String query = "SELECT Email FROM Author WHERE AuthorID = " + id;
-                ResultSet res = stmt.executeQuery(query);
-                while (res.next()) {
-                    fin = res.getString("Email");
-                }
-                res.close();
-            }
-            catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-            finally {
-                if (stmt != null)
-                    stmt.close();
-            }
-        }
-        catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        finally {
-            if (con != null) con.close();
-        }
-        return fin;
-    }
-
-    public String SelectPassword(int id) throws SQLException {
-        String fin = null;
-        Connection con = null; // connection to a database
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
-            // use the open connection
-            Statement stmt = null;
-            try {
-                stmt = con.createStatement();
-                String query = "SELECT Password FROM Author WHERE AuthorID = " + id;
-                ResultSet res = stmt.executeQuery(query);
-                while (res.next()) {
-                    fin = res.getString("Password");
-                }
-                res.close();
-            }
-            catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-            finally {
-                if (stmt != null)
-                    stmt.close();
-            }
-        }
-        catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        finally {
-            if (con != null) con.close();
-        }
-        return fin;
-    }
 
 }
+

@@ -1,16 +1,19 @@
-package main;
+package main.tables;
 import java.sql.*;
-import java.util.*;
-public class ArticleInfoTable {
+
+public class EditionTable {
 
     public static void main (String args[]) throws SQLException {
 
-        ArticleInfoTable ait = new ArticleInfoTable();
-        //ait.CreateArticleInfoTable();
-//        ait.Insert(1,1);
+        EditionTable et = new EditionTable();
+        //et.CreateEditionTable();
+//        et.Insert(1, 3);
+//        et.Insert(1, 6);
+//        et.Insert(1, 9);
+
     }
 
-    public static void CreateArticleInfoTable() throws SQLException {
+    public static void CreateEditionTable() throws SQLException {
 
         Connection con = null; // a Connection object
         try {
@@ -20,13 +23,12 @@ public class ArticleInfoTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String initialise = "CREATE TABLE ArticleInfo " + //Creating the table
-                                    "(ArticleInfoID         INT    NOT NULL AUTO_INCREMENT, "+ //Creating the different fields
-                                    "ArticleID              INT    NOT NULL, "+ //Creating the different fields
-                                    "AuthorID               INT    NOT NULL, "+
-                                    "PRIMARY KEY (ArticleInfoID), "+
-                                    "FOREIGN KEY (ArticleID) REFERENCES Articles(ArticleID), "+
-                                    "FOREIGN KEY (AuthorID) REFERENCES Author(AuthorID))";
+                String initialise = "CREATE TABLE Edition " + //Creating the table
+                                    "(EditionID             INT    NOT NULL AUTO_INCREMENT, "+ //Creating the different fields
+                                    "VolumeID               INT    NOT NULL, "+
+                                    "PublicationMonth       INT    NOT NULL, "+
+                                    "PRIMARY KEY (EditionID), "+
+                                    "FOREIGN KEY (VolumeID) REFERENCES Volume(VolumeID))";
 
                 stmt.executeUpdate(initialise);
             }
@@ -52,7 +54,7 @@ public class ArticleInfoTable {
 
     }
 
-    public static void Insert(int articleID, int authorID) throws SQLException {
+    public static void Insert(int volumeID, int month ) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -60,38 +62,12 @@ public class ArticleInfoTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String newEdition = "INSERT INTO ArticleInfo (ArticleID, AuthorID) "+
-                                    "VALUES ('" + articleID + "',  '" + authorID + "')";
-                stmt.executeUpdate(newEdition);
-            }
-            catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-            finally {
-                if (stmt != null)
-                    stmt.close();
-            }
-        }
-        catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        finally {
-            if (con != null) con.close();
-        }
-    }
-
-    //====================================================================================================================
-
-    public static void UpdateArticle(int articleInfoID, int articleID) throws SQLException {
-        Connection con = null; // connection to a database
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
-            // use the open connection
-            Statement stmt = null;
-            try {
-                stmt = con.createStatement();
-                String newEdition = "UPDATE ArticleInfo SET ArticleID = '" + articleID + "' WHERE ArticleInfoID = " + articleInfoID;
-                stmt.executeUpdate(newEdition);
+                if (month<12 || month>0) {
+                    String newEdition = "INSERT INTO Edition (VolumeID, PublicationMonth) VALUES ('" + volumeID + "',  '" + month + "')";
+                    stmt.executeUpdate(newEdition);
+                } else {
+                    System.out.println("Invalid Month");
+                }
             }
             catch (SQLException ex) {
                 ex.printStackTrace();
@@ -108,9 +84,10 @@ public class ArticleInfoTable {
         finally {
             if (con != null) con.close();
         }
+
     }
 
-    public static void UpdateAuthor(int articleInfoID, int authorID) throws SQLException {
+    public static void UpdateMonth(int editionID, int month ) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -118,7 +95,40 @@ public class ArticleInfoTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String newEdition = "UPDATE ArticleInfo SET AuthorID = '" + authorID + "' WHERE ArticleInfoID = " + articleInfoID;
+                if (month<12 || month>0) {
+                    String newEdition = "UPDATE Edition SET PublicationMonth = '"+month+"' WHERE EditionID = " + editionID;
+                    stmt.executeUpdate(newEdition);
+                } else {
+                    System.out.println("Invalid Month");
+                }
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+
+    }
+
+    public static void UpdateVolume(int editionID, int volumeID ) throws SQLException {
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String newEdition = "UPDATE Edition SET VolumeID = '"+volumeID+"' WHERE EditionID = " + editionID;
                 stmt.executeUpdate(newEdition);
             }
             catch (SQLException ex) {
@@ -136,11 +146,10 @@ public class ArticleInfoTable {
         finally {
             if (con != null) con.close();
         }
+
     }
 
-    //==================================================================================================================
-
-    public static void Delete(int articleInfoID) throws SQLException {
+    public static void Delete(int editionID) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -148,7 +157,7 @@ public class ArticleInfoTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String newEdition = "DELETE FROM ArticleInfo WHERE ArticleInfoID = " + articleInfoID;
+                String newEdition = "DELETE FROM Edition WHERE EditionID = " + editionID;
                 stmt.executeUpdate(newEdition);
             }
             catch (SQLException ex) {
@@ -171,7 +180,7 @@ public class ArticleInfoTable {
 
     //=================================================================================================================
 
-    public int SelectArticleID(int articleInfoID) throws SQLException {
+    public int SelectVolumeID(int editionID) throws SQLException {
         int fin = 0;
         Connection con = null; // connection to a database
         try {
@@ -180,10 +189,10 @@ public class ArticleInfoTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "SELECT ArticleID FROM ArticleInfo WHERE ArticleInfoID = " + articleInfoID;
+                String query = "SELECT VolumeID FROM Edition WHERE EditionID = " + editionID;
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
-                    fin = res.getInt("ArticleID");
+                    fin = res.getInt("VolumeID");
                 }
                 res.close();
             }
@@ -204,8 +213,8 @@ public class ArticleInfoTable {
         return fin;
     }
 
-    public int SelectAuthorID(int articleInfoID) throws SQLException {
-        int fin = 0;
+    public String SelectPublicationMonth(int editionID) throws SQLException {
+        String fin = null;
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -213,10 +222,10 @@ public class ArticleInfoTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "SELECT AuthorID FROM ArticleInfo WHERE ArticleInfoID = " + articleInfoID;
+                String query = "SELECT PublicationMonth FROM Edition WHERE EditionID = " + editionID;
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
-                    fin = res.getInt("AuthorIDs");
+                    fin = res.getString("PublicationMonth");
                 }
                 res.close();
             }
@@ -237,4 +246,3 @@ public class ArticleInfoTable {
         return fin;
     }
 }
-

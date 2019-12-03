@@ -1,16 +1,20 @@
-package main;
+package main.tables;
 import java.sql.*;
-import java.util.*;
-public class CriticismsTable {
+
+public class JournalTable {
 
     public static void main (String args[]) throws SQLException {
 
-        CriticismsTable ct = new CriticismsTable();
-        ct.CreateCriticismsTable();
-        //ct.Insert(12345678, 2018);
+        JournalTable jt = new JournalTable();
+
+        //jt.CreateJournalTable();
+        //jt.Insert(12345678, "test2");
+        //jt.Delete(12345678);
+        //System.out.println(jt.SelectName(12345679));
+
     }
 
-    public static void CreateCriticismsTable() throws SQLException {
+    public static void CreateJournalTable() throws SQLException {
 
         Connection con = null; // a Connection object
         try {
@@ -20,12 +24,10 @@ public class CriticismsTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String jtable = "CREATE TABLE Criticisms " + //Creating the table "UserTable"
-                        "(CritID            INT     NOT NULL    AUTO_INCREMENT, "+ //Creating the different fields
-                        "ReviewID           INT     NOT NULL, "+
-                        "Criticism          TEXT    NOT NULL, " +
-                        "PRIMARY KEY (CritID), " +
-                        "FOREIGN KEY (ReviewID) REFERENCES Review(ReviewID))";
+                String jtable = "CREATE TABLE Journal " + //Creating the table "UserTable"
+                                "(ISSN      INT     NOT NULL, "+ //Creating the different fields
+                                "Name       TEXT    NOT NULL, " +
+                                "PRIMARY KEY (ISSN))";
 
                 stmt.executeUpdate(jtable);
             }
@@ -51,7 +53,7 @@ public class CriticismsTable {
 
     }
 
-    public static void Insert(int reviewid, String criticism ) throws SQLException {
+    public static void Insert(int ISSN, String name ) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -60,39 +62,10 @@ public class CriticismsTable {
             try {
                 stmt = con.createStatement();
 
-                String journal = "INSERT INTO Criticisms ( ReviewID, Criticism) VALUES (" + reviewid +",'" + criticism + "')";
-                System.out.println(journal);
-                stmt.executeUpdate(journal);
-
-            }
-            catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-            finally {
-                if (stmt != null)
-                    stmt.close();
-            }
-
-        }
-        catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        finally {
-            if (con != null) con.close();
-        }
-    }
-
-    public static void Delete(int id) throws SQLException {
-        Connection con = null; // connection to a database
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
-            // use the open connection
-            Statement stmt = null;
-            try {
-                stmt = con.createStatement();
-                String journal = "DELETE FROM Criticisms WHERE CritID = " + id;
+                String journal = "INSERT INTO Journal (ISSN, Name) VALUES ('" + ISSN + "',  '" + name + "')";
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
+
             }
             catch (SQLException ex) {
                 ex.printStackTrace();
@@ -101,6 +74,7 @@ public class CriticismsTable {
                 if (stmt != null)
                     stmt.close();
             }
+
         }
         catch (SQLException ex) {
             ex.printStackTrace();
@@ -108,12 +82,10 @@ public class CriticismsTable {
         finally {
             if (con != null) con.close();
         }
+
     }
 
-
-
-
-    public static void UpdateReviewID(int critid, int reviewid) throws SQLException {
+    public static void Delete(int issn) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -122,8 +94,38 @@ public class CriticismsTable {
             try {
                 stmt = con.createStatement();
 
-                String journal = "UPDATE Criticisms SET ReviewID = " + reviewid + " WHERE CritID= " + critid;
+                String journal = "DELETE FROM Journal WHERE ISSN = " + issn;
                 //System.out.println(journal);
+                stmt.executeUpdate(journal);
+
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+
+    }
+
+    public static void UpdateName(int issn, String name) throws SQLException {
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String journal = "UPDATE Journal SET Name = " + name + " WHERE ISSN = " + issn;
                 stmt.executeUpdate(journal);
             }
             catch (SQLException ex) {
@@ -142,69 +144,7 @@ public class CriticismsTable {
         }
     }
 
-    public static void UpdateCriticism(int id, String crit) throws SQLException {
-        Connection con = null; // connection to a database
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
-            // use the open connection
-            Statement stmt = null;
-            try {
-                stmt = con.createStatement();
-
-                String journal = "UPDATE Criticisms SET Critisism = '" + crit + "' WHERE CritID= " + id;
-                //System.out.println(journal);
-                stmt.executeUpdate(journal);
-            }
-            catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-            finally {
-                if (stmt != null)
-                    stmt.close();
-            }
-        }
-        catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        finally {
-            if (con != null) con.close();
-        }
-    }
-
-    public int SelectReviewID(int id) throws SQLException {
-        int fin = 0;
-        Connection con = null; // connection to a database
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
-            // use the open connection
-            Statement stmt = null;
-            try {
-                stmt = con.createStatement();
-                String query = "SELECT ReviewID FROM Criticisms WHERE CritID = " + id;
-                ResultSet res = stmt.executeQuery(query);
-                while (res.next()) {
-                    fin = res.getInt("ReviewID");
-                }
-                res.close();
-            }
-            catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-            finally {
-                if (stmt != null)
-                    stmt.close();
-            }
-        }
-        catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        finally {
-            if (con != null) con.close();
-        }
-        return fin;
-    }
-
-    public String SelectCriticism(int id) throws SQLException {
+    public String SelectName(int issn) throws SQLException {
         String fin = null;
         Connection con = null; // connection to a database
         try {
@@ -213,10 +153,10 @@ public class CriticismsTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "SELECT Criticism FROM Criticisms WHERE CritID = " + id;
+                String query = "SELECT Name FROM Journal WHERE ISSN = " + issn;
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
-                    fin = res.getString("Criticism");
+                    fin = res.getString("Name");
                 }
                 res.close();
             }
@@ -237,4 +177,3 @@ public class CriticismsTable {
         return fin;
     }
 }
-
