@@ -73,7 +73,13 @@ public class LoginController {
 
             if(!loginID.getText().isEmpty() && !Password.getText().isEmpty()) {
                 if (isEditor && isAuthor && isReviewer) {
+                    URL url = new File("src/resources/EAR.fxml").toURI().toURL();
+                    Parent view = FXMLLoader.load(url);
+                    Scene viewScene = new Scene(view);
 
+                    Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+                    window.setResizable(true);
+                    window.setScene(viewScene);
                 } else if (isEditor && isAuthor && !isReviewer) {
                     URL url = new File("src/resources/EA.fxml").toURI().toURL();
                     Parent view = FXMLLoader.load(url);

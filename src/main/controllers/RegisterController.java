@@ -68,38 +68,49 @@ public class RegisterController extends Main {
 
     public void handleRegisterSuccess(ActionEvent action) throws IOException, SQLException {
         // first name
+        boolean validFirstName = false;
         if (firstName.getText().isEmpty()) {
             firstName.setStyle("-fx-prompt-text-fill : red;");
         } else
             l[0] = firstName.getText();
+        validFirstName = true;
         // last name
+        boolean validLastName = false;
         if (lastName.getText().isEmpty()) {
             lastName.setStyle("-fx-prompt-text-fill : red;");
         } else
             l[1] = lastName.getText();
+        validLastName = true;
         // university
+        boolean validUniversityName = false;
         if (university.getText().isEmpty()) {
             university.setStyle("-fx-prompt-text-fill : red;");
         } else
             l[2] = university.getText();
-
+            validUniversityName = true;
         //emailField
+        boolean validEmail = false;
         if (emailField.getText().isEmpty()) {
             emailField.setStyle("-fx-prompt-text-fill : red;");
-        } else if (Pattern.matches("[a-zA-Z]+[@][a-zA-z]+[.][A-Za-z.]+", emailField.getText())) {
+            //} else if (Pattern.matches("[a-zA-Z]+[@][a-zA-z]+[.][A-Za-z.]+", emailField.getText())) {
+        } else if (Pattern.matches("[A-Za-z.]+[@][a-zA-z]+[.][A-Za-z.]+", emailField.getText())) {
             l[3] = emailField.getText();
+            validEmail = true;
         }
         //else if (!Pattern.matches("[a-zA-Z]+[@][a-zA-z]+[.][A-Za-z.]+",emailField.getText())){
         else if (!Pattern.matches("[A-Za-z.]+[@][a-zA-z]+[.][A-Za-z.]+", emailField.getText())) {
             emailField.setStyle("-fx-prompt-text-fill : red;");
             emailField.clear();
             emailField.setPromptText("not valid email type");
+
         }
         // password
+        boolean validPassword = false;
         if (passWordField.getText().isEmpty()) {
             passWordField.setStyle("-fx-prompt-text-fill : red;");
         } else if (Pattern.matches("[a-zA-Z0-9[^\\dA-Za-zA-Za-z0-9]]{6,}", passWordField.getText())) {
             l[4] = passWordField.getText();
+            validPassword = true;
             // System.out.println("N");
         } else if (!Pattern.matches("[a-zA-Z0-9[^\\dA-Za-zA-Za-z0-9]]{6,}", passWordField.getText())) {
             passWordField.setStyle("-fx-prompt-text-fill : red;");
@@ -110,12 +121,13 @@ public class RegisterController extends Main {
         String prefixValue = (String) prefix.getValue();
         String roleValue = (String) roles.getValue();
 
-        if (prefix != null && roles != null && firstName != null && lastName != null && university != null && emailField != null && passWordField != null){
+        if (prefix != null && roles != null && firstName != null && lastName != null && university != null && emailField != null && passWordField != null
+        && validFirstName && validLastName && validUniversityName && validEmail && validPassword){
 
             if (roleValue == "Author") {
                 try {
                     AuthorTable.Insert(prefixValue, firstName.getText(), lastName.getText(), university.getText(), emailField.getText(), Integer.toString(passWordField.getText().hashCode()));
-
+                    //AuthorTable.Insert(prefixValue, l[0],l[1],l[2],l[3],l[4]);
                     URL url = new File("src/resources/login.fxml").toURI().toURL();
                     Parent view = FXMLLoader.load(url);
                     Scene viewScene = new Scene(view);
