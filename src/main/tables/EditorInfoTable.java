@@ -1,16 +1,16 @@
-package main;
+package main.tables;
 import java.sql.*;
-import java.util.*;
-public class ReviewTable {
+
+public class EditorInfoTable {
 
     public static void main (String args[]) throws SQLException {
 
-        ReviewTable rt = new ReviewTable();
-        rt.CreateReviewTable();
-        //vt.Insert(12345678, 2018);
+        EditorInfoTable et = new EditorInfoTable();
+        et.CreateEditorInfoTable();
+
     }
 
-    public static void CreateReviewTable() throws SQLException {
+    public static void CreateEditorInfoTable() throws SQLException {
 
         Connection con = null; // a Connection object
         try {
@@ -20,17 +20,18 @@ public class ReviewTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String jtable = "CREATE TABLE Review " + //Creating the table "UserTable"
-                        "(ReviewID              INT     AUTO_INCREMENT, "+ //Creating the different fields
-                        "ReviewerID             INT, "+
-                        "SubmissionInfoID       INT, "+
-                        "Summery                TEXT, "+
-                        "Verdict                BOOLEAN, "+
-                        "PRIMARY KEY (ReviewID), " +
-                        "FOREIGN KEY (ReviewerID) REFERENCES Reviewer(ReviewerID), " +
-                        "FOREIGN KEY (SubmissionInfoID) REFERENCES SubmissionInfo(SubmissionInfoID))";
+                String initialise = "CREATE TABLE EditorInfo " + //Creating the table
+                                    "(EditorInfoID    INT       NOT NULL AUTO_INCREMENT, "+ //Creating the different fields
+                                    "EditorID         INT       NOT NULL, "+
+                                    "SubmissionID     INT       NOT NULL, "+
+                                    "ReviewID         INT       NOT NULL, "+
+                                    "EditorType       BOOLEAN   NOT NULL, "+
+                                    "PRIMARY KEY (EditorInfoID), "+
+                                    "FOREIGN KEY (EditorID) REFERENCES Editor(EditorID), "+
+                                    "FOREIGN KEY (ReviewID) REFERENCES Review(ReviewID), "+
+                                    "FOREIGN KEY (SubmissionID) REFERENCES Submissions(SubmissionID))";
 
-                stmt.executeUpdate(jtable);
+                stmt.executeUpdate(initialise);
             }
             catch (SQLException ex) {
                 ex.printStackTrace();
@@ -54,9 +55,7 @@ public class ReviewTable {
 
     }
 
-
-
-    public static void Insert(int reviewerid, int submissioninfoid, String summery, Boolean verdict ) throws SQLException {
+    public static void Insert(int editorID, int submissionID, int reviewID, boolean editorType) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -64,11 +63,9 @@ public class ReviewTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-
-                String journal = "INSERT INTO Review (ReviewerID, SubmissionInfoID, Summery, Verdict) VALUES (" + reviewerid +"," + submissioninfoid + ", '" + summery + "', " + verdict +")";
-                System.out.println(journal);
-                stmt.executeUpdate(journal);
-
+                String newEdition = "INSERT INTO EditorInfoTable (EditorID, SubmissionID, ReviewID, EditorType) " +
+                                    "VALUES ('" + editorID + "',  '" + submissionID + "',  '"+ reviewID  + "',  '" + editorType + "')";
+                stmt.executeUpdate(newEdition);
             }
             catch (SQLException ex) {
                 ex.printStackTrace();
@@ -85,9 +82,10 @@ public class ReviewTable {
         finally {
             if (con != null) con.close();
         }
+
     }
 
-    public static void Delete(int reviewid) throws SQLException {
+    public static void UpdateEditor(int editorInfoID, int editorID ) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -95,9 +93,8 @@ public class ReviewTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String journal = "DELETE FROM Review WHERE ReviewID = " + reviewid;
-                //System.out.println(journal);
-                stmt.executeUpdate(journal);
+                String newEdition = "UPDATE EditorInfo SET EditorID = '"+editorID+"' WHERE EditorInfoID = " + editorInfoID;
+                stmt.executeUpdate(newEdition);
             }
             catch (SQLException ex) {
                 ex.printStackTrace();
@@ -106,6 +103,7 @@ public class ReviewTable {
                 if (stmt != null)
                     stmt.close();
             }
+
         }
         catch (SQLException ex) {
             ex.printStackTrace();
@@ -113,10 +111,10 @@ public class ReviewTable {
         finally {
             if (con != null) con.close();
         }
+
     }
 
-
-    public static void UpdateSummery(String summery) throws SQLException {
+    public static void UpdateSubmission(int editorInfoID, int submissionID ) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -124,9 +122,8 @@ public class ReviewTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String journal = "UPDATE Review SET Summery = '" + summery + "'";
-                //System.out.println(journal);
-                stmt.executeUpdate(journal);
+                String newEdition = "UPDATE EditorInfo SET SubmissionID = '"+submissionID+"' WHERE EditorInfoID = " + editorInfoID;
+                stmt.executeUpdate(newEdition);
             }
             catch (SQLException ex) {
                 ex.printStackTrace();
@@ -135,6 +132,7 @@ public class ReviewTable {
                 if (stmt != null)
                     stmt.close();
             }
+
         }
         catch (SQLException ex) {
             ex.printStackTrace();
@@ -142,9 +140,10 @@ public class ReviewTable {
         finally {
             if (con != null) con.close();
         }
+
     }
 
-    public static void UpdateVerdict(Boolean verdict) throws SQLException {
+    public static void UpdateReview(int editorInfoID, int reviewID ) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -152,9 +151,8 @@ public class ReviewTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String journal = "UPDATE Review SET verdict = '" + verdict + "'";
-                //System.out.println(journal);
-                stmt.executeUpdate(journal);
+                String newEdition = "UPDATE EditorInfo SET ReviewID = '"+reviewID+"' WHERE EditorInfoID = " + editorInfoID;
+                stmt.executeUpdate(newEdition);
             }
             catch (SQLException ex) {
                 ex.printStackTrace();
@@ -163,6 +161,7 @@ public class ReviewTable {
                 if (stmt != null)
                     stmt.close();
             }
+
         }
         catch (SQLException ex) {
             ex.printStackTrace();
@@ -170,9 +169,10 @@ public class ReviewTable {
         finally {
             if (con != null) con.close();
         }
+
     }
 
-    public static void UpdateReviewerID(int id) throws SQLException {
+    public static void UpdateType(int editorInfoID, int type ) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -180,9 +180,8 @@ public class ReviewTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String journal = "UPDATE Review SET ReviewerID = " + id;
-                //System.out.println(journal);
-                stmt.executeUpdate(journal);
+                String newEdition = "UPDATE EditorInfo SET EditorType = '"+type+"' WHERE EditorInfoID = " + editorInfoID;
+                stmt.executeUpdate(newEdition);
             }
             catch (SQLException ex) {
                 ex.printStackTrace();
@@ -191,6 +190,7 @@ public class ReviewTable {
                 if (stmt != null)
                     stmt.close();
             }
+
         }
         catch (SQLException ex) {
             ex.printStackTrace();
@@ -198,8 +198,10 @@ public class ReviewTable {
         finally {
             if (con != null) con.close();
         }
+
     }
-    public static void UpdateSubmissionInfoID(int id) throws SQLException {
+
+    public static void Delete(int editorInfoID) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -207,9 +209,8 @@ public class ReviewTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String journal = "UPDATE Review SET SubmissionInfoID = " + id;
-                //System.out.println(journal);
-                stmt.executeUpdate(journal);
+                String newEdition = "DELETE FROM EditorInfo WHERE EditorInfoID = " + editorInfoID;
+                stmt.executeUpdate(newEdition);
             }
             catch (SQLException ex) {
                 ex.printStackTrace();
@@ -218,6 +219,7 @@ public class ReviewTable {
                 if (stmt != null)
                     stmt.close();
             }
+
         }
         catch (SQLException ex) {
             ex.printStackTrace();
@@ -225,9 +227,12 @@ public class ReviewTable {
         finally {
             if (con != null) con.close();
         }
+
     }
 
-    public int SelectReviewerID(int id) throws SQLException {
+    //=================================================================================================================
+
+    public int SelectEditorID(int editorInfoID) throws SQLException {
         int fin = 0;
         Connection con = null; // connection to a database
         try {
@@ -236,10 +241,10 @@ public class ReviewTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "SELECT ReviewerID FROM Review WHERE ReviewID = " + id;
+                String query = "SELECT EditorID FROM EditorInfo WHERE EditorInfoID = " + editorInfoID;
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
-                    fin = res.getInt("ReviewerID");
+                    fin = res.getInt("EditorID");
                 }
                 res.close();
             }
@@ -260,7 +265,7 @@ public class ReviewTable {
         return fin;
     }
 
-    public int SelectSubmissionInfoID(int id) throws SQLException {
+    public int SelectSubmissionID(int editorInfoID) throws SQLException {
         int fin = 0;
         Connection con = null; // connection to a database
         try {
@@ -269,10 +274,10 @@ public class ReviewTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "SELECT SubmissionInfoID FROM Review WHERE ReviewID = " + id;
+                String query = "SELECT SubmissionID FROM EditorInfo WHERE EditorInfoID = " + editorInfoID;
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
-                    fin = res.getInt("SubmissionInfoID");
+                    fin = res.getInt("SubmissionID");
                 }
                 res.close();
             }
@@ -293,8 +298,8 @@ public class ReviewTable {
         return fin;
     }
 
-    public String SelectSummary(int id) throws SQLException {
-        String fin = null;
+    public int SelectReviewID(int editorInfoID) throws SQLException {
+        int fin = 0;
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -302,10 +307,10 @@ public class ReviewTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "SELECT Summery FROM Review WHERE ReviewID = " + id;
+                String query = "SELECT ReviewID FROM EditorInfo WHERE EditorInfoID = " + editorInfoID;
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
-                    fin = res.getString("Summery");
+                    fin = res.getInt("ReviewID");
                 }
                 res.close();
             }
@@ -326,7 +331,7 @@ public class ReviewTable {
         return fin;
     }
 
-    public boolean SelectVerdict(int id) throws SQLException {
+    public boolean SelectEditorType(int editorInfoID) throws SQLException {
         boolean fin = false;
         Connection con = null; // connection to a database
         try {
@@ -335,10 +340,10 @@ public class ReviewTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "SELECT Verdict FROM Review WHERE ReviewID = " + id;
+                String query = "SELECT EditorType FROM EditorInfo WHERE EditorInfoID = " + editorInfoID;
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
-                    fin = res.getBoolean("Verdict");
+                    fin = res.getBoolean("EditorType");
                 }
                 res.close();
             }

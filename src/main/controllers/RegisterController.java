@@ -2,25 +2,13 @@ package main.controllers;
 
 import javafx.fxml.FXML;
 import javafx.collections.*;
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.*;
-import javafx.scene.control.Button;
-import javafx.util.*;
-import javafx.scene.*;
-import javafx.stage.*;
 import javafx.event.*;
-import javafx.css.*;
 import javafx.scene.control.*;
-import javafx.scene.control.ComboBox;
-import main.AuthorTable;
-import main.EditorTable;
+import main.tables.AuthorTable;
+import main.tables.EditorTable;
 import main.Main;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;

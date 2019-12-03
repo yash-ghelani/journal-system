@@ -1,20 +1,16 @@
-package main;
+package main.tables;
 import java.sql.*;
-import java.util.*;
-public class JournalTable {
+
+public class ErrorTable {
 
     public static void main (String args[]) throws SQLException {
 
-        JournalTable jt = new JournalTable();
-
-        //jt.CreateJournalTable();
-        //jt.Insert(12345678, "test2");
-        //jt.Delete(12345678);
-        //System.out.println(jt.SelectName(12345679));
-
+        ErrorTable et = new ErrorTable();
+        et.CreateErrorTable();
+        //et.Insert(12345678, 2018);
     }
 
-    public static void CreateJournalTable() throws SQLException {
+    public static void CreateErrorTable() throws SQLException {
 
         Connection con = null; // a Connection object
         try {
@@ -24,10 +20,12 @@ public class JournalTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String jtable = "CREATE TABLE Journal " + //Creating the table "UserTable"
-                                "(ISSN      INT     NOT NULL, "+ //Creating the different fields
-                                "Name       TEXT    NOT NULL, " +
-                                "PRIMARY KEY (ISSN))";
+                String jtable = "CREATE TABLE Errors " + //Creating the table "UserTable"
+                        "(ErrorID               INT     NOT NULL    AUTO_INCREMENT, "+ //Creating the different fields
+                        "ReviewID               INT     NOT NULL, "+
+                        "Error                  TEXT    NOT NULL, " +
+                        "PRIMARY KEY (ErrorID), " +
+                        "FOREIGN KEY (ReviewID) REFERENCES Review(ReviewID))";
 
                 stmt.executeUpdate(jtable);
             }
@@ -53,7 +51,7 @@ public class JournalTable {
 
     }
 
-    public static void Insert(int ISSN, String name ) throws SQLException {
+    public static void Insert(int reviewid, String error ) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -62,10 +60,39 @@ public class JournalTable {
             try {
                 stmt = con.createStatement();
 
-                String journal = "INSERT INTO Journal (ISSN, Name) VALUES ('" + ISSN + "',  '" + name + "')";
+                String journal = "INSERT INTO Errors ( ReviewID, Criticism) VALUES (" + reviewid +",'" + error + "')";
+                System.out.println(journal);
+                stmt.executeUpdate(journal);
+
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+    }
+
+    public static void Delete(int id) throws SQLException {
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String journal = "DELETE FROM Errors WHERE ErrorID = " + id;
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
-
             }
             catch (SQLException ex) {
                 ex.printStackTrace();
@@ -74,7 +101,6 @@ public class JournalTable {
                 if (stmt != null)
                     stmt.close();
             }
-
         }
         catch (SQLException ex) {
             ex.printStackTrace();
@@ -82,10 +108,12 @@ public class JournalTable {
         finally {
             if (con != null) con.close();
         }
-
     }
 
-    public static void Delete(int issn) throws SQLException {
+
+
+
+    public static void UpdateReviewID(int errorid, int reviewid) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -94,10 +122,9 @@ public class JournalTable {
             try {
                 stmt = con.createStatement();
 
-                String journal = "DELETE FROM Journal WHERE ISSN = " + issn;
+                String journal = "UPDATE Errors SET ReviewID = " + reviewid + " WHERE ErrorID= " + errorid;
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
-
             }
             catch (SQLException ex) {
                 ex.printStackTrace();
@@ -106,7 +133,6 @@ public class JournalTable {
                 if (stmt != null)
                     stmt.close();
             }
-
         }
         catch (SQLException ex) {
             ex.printStackTrace();
@@ -114,10 +140,9 @@ public class JournalTable {
         finally {
             if (con != null) con.close();
         }
-
     }
 
-    public static void UpdateName(int issn, String name) throws SQLException {
+    public static void UpdateError(int id, String error) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -125,7 +150,9 @@ public class JournalTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String journal = "UPDATE Journal SET Name = " + name + " WHERE ISSN = " + issn;
+
+                String journal = "UPDATE Errors SET Error = '" + error + "' WHERE ErrorID= " + id;
+                //System.out.println(journal);
                 stmt.executeUpdate(journal);
             }
             catch (SQLException ex) {
@@ -144,7 +171,40 @@ public class JournalTable {
         }
     }
 
-    public String SelectName(int issn) throws SQLException {
+    public int SelectReviewID(int id) throws SQLException {
+        int fin = 0;
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String query = "SELECT ReviewID FROM Errors WHERE ErrorID = " + id;
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    fin = res.getInt("ReviewID");
+                }
+                res.close();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+        return fin;
+    }
+
+    public String SelectError(int id) throws SQLException {
         String fin = null;
         Connection con = null; // connection to a database
         try {
@@ -153,10 +213,10 @@ public class JournalTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "SELECT Name FROM Journal WHERE ISSN = " + issn;
+                String query = "SELECT Error FROM Errors WHERE ErrorID = " + id;
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
-                    fin = res.getString("Name");
+                    fin = res.getString("Error");
                 }
                 res.close();
             }
@@ -177,3 +237,4 @@ public class JournalTable {
         return fin;
     }
 }
+
