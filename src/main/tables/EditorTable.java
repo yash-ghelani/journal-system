@@ -6,7 +6,7 @@ public class EditorTable {
     public static void main(String args[]) throws SQLException {
 
         EditorTable et = new EditorTable();
-//        et.CreateEditorTable();
+        et.CreateEditorTable();
     }
 
     public static void CreateEditorTable() throws SQLException {
@@ -27,6 +27,7 @@ public class EditorTable {
                         "Affiliation             TEXT                NOT NULL, " +
                         "Email                   NVARCHAR(320)        NOT NULL," +
                         "Password                NVARCHAR(100)        NOT NULL," +
+                        "Temp                    BOOLEAN             NOT NULL," +
                         "PRIMARY KEY (EditorID))";
 
                 stmt.executeUpdate(jtable);
@@ -49,7 +50,7 @@ public class EditorTable {
 
     }
 
-    public static void Insert(String title, String name, String surname, String affiliation, String email, String password) throws SQLException {
+    public static void Insert(String title, String name, String surname, String affiliation, String email, String password, boolean temp) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -57,10 +58,10 @@ public class EditorTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String insert = "INSERT INTO Editor (Title, Name, Surname, Affiliation, Email, Password) "+
-                                " VALUES ('"+ title + "', '" + name + "', '" + surname + "','"+ affiliation + "','" + email + "','" + password + "')";
+                String journal = "INSERT INTO Editor (Title, Name, Surname, Affiliation, Email, Password, Temp) "+
+                        " VALUES ('" + title + "', '" + name + "', '" + surname + "','" + affiliation + "','" + email + "','" + password + "','"+ temp+"')";
                 //System.out.println(journal);
-                stmt.executeUpdate(insert);
+                stmt.executeUpdate(journal);
             } catch (SQLException e) {
                 System.err.println( e.getClass().getName() + ": " + e.getMessage() );
                 System.out.println("Selection failed");
@@ -75,6 +76,7 @@ public class EditorTable {
             if (con != null) con.close();
         }
     }
+
     public static void Delete(int id) throws SQLException {
         Connection con = null; // connection to a database
         try {
@@ -270,6 +272,30 @@ public class EditorTable {
         }
     }
 
+    public static void UpdateTemp(int id) throws SQLException {
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String journal = "UPDATE Editor SET Temp = false WHERE AuthorID=" + id;
+                //System.out.println(journal);
+                stmt.executeUpdate(journal);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            } finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (con != null) con.close();
+        }
+    }
+
     public String SelectTitle(int id) throws SQLException {
         String fin = null;
         Connection con = null; // connection to a database
@@ -447,6 +473,39 @@ public class EditorTable {
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     fin = res.getString("Password");
+                }
+                res.close();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+        return fin;
+    }
+
+    public boolean SelectTemp(int id) throws SQLException {
+        boolean fin = true;
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String query = "SELECT Temp FROM Editor WHERE EditorID = " + id;
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    fin = res.getBoolean("Temp");
                 }
                 res.close();
             }

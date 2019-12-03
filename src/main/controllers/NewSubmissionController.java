@@ -11,10 +11,12 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import javafx.event.*;
+import main.tables.AuthorTable;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 
 public class NewSubmissionController {
 
@@ -42,7 +44,8 @@ public class NewSubmissionController {
         window.setScene(viewScene);
     }
 
-    public void handleRegister(ActionEvent actionEvent) {
-        idLab.setText(String.valueOf((email.getText()).hashCode()));
+    public void handleRegister(ActionEvent actionEvent) throws SQLException {
+        idLab.setText("Temporary password: " + Math.abs((email.getText()).hashCode()));
+//        AuthorTable.Insert("temp","temp","temp","temp", email.getText(), String.valueOf(Math.abs((email.getText()).hashCode())));
     }
 }

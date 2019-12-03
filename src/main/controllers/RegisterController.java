@@ -126,7 +126,7 @@ public class RegisterController extends Main {
 
             if (roleValue == "Author") {
                 try {
-                    AuthorTable.Insert(prefixValue, firstName.getText(), lastName.getText(), university.getText(), emailField.getText(), Integer.toString(passWordField.getText().hashCode()));
+                    AuthorTable.Insert(prefixValue, firstName.getText(), lastName.getText(), university.getText(), emailField.getText(), Integer.toString(passWordField.getText().hashCode()),false);
                     //AuthorTable.Insert(prefixValue, l[0],l[1],l[2],l[3],l[4]);
                     URL url = new File("src/resources/login.fxml").toURI().toURL();
                     Parent view = FXMLLoader.load(url);
@@ -143,7 +143,7 @@ public class RegisterController extends Main {
 
             } else if (roleValue == "Editor") {
                 try {
-                    EditorTable.Insert(prefixValue, firstName.getText(), lastName.getText(), university.getText(), emailField.getText(), Integer.toString(passWordField.getText().hashCode()));
+                    EditorTable.Insert(prefixValue, firstName.getText(), lastName.getText(), university.getText(), emailField.getText(), Integer.toString(passWordField.getText().hashCode()),false);
 
                     URL url = new File("src/resources/login.fxml").toURI().toURL();
                     Parent view = FXMLLoader.load(url);
@@ -157,7 +157,7 @@ public class RegisterController extends Main {
                     System.out.println("Selection failed");
                 }
             } else if (roleValue == "Reviewer") {
-                ReviewerTable.Insert(prefixValue, firstName.getText(), lastName.getText(), university.getText(), emailField.getText(), Integer.toString(passWordField.getText().hashCode()));
+                ReviewerTable.Insert(prefixValue, firstName.getText(), lastName.getText(), university.getText(), emailField.getText(), Integer.toString(passWordField.getText().hashCode()),false);
 
                 URL url = new File("src/resources/login.fxml").toURI().toURL();
                 Parent view = FXMLLoader.load(url);
