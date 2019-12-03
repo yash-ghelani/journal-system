@@ -61,14 +61,16 @@ public class EditorTable {
                                 " VALUES ('"+ title + "', '" + name + "', '" + surname + "','"+ affiliation + "','" + email + "','" + password + "')";
                 //System.out.println(journal);
                 stmt.executeUpdate(insert);
-            } catch (SQLException ex) {
-                ex.printStackTrace();
+            } catch (SQLException e) {
+                System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+                System.out.println("Selection failed");
             } finally {
                 if (stmt != null)
                     stmt.close();
             }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+        } catch (SQLException e) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.out.println("Selection failed");
         } finally {
             if (con != null) con.close();
         }
@@ -463,5 +465,43 @@ public class EditorTable {
             if (con != null) con.close();
         }
         return fin;
+    }
+
+    public static boolean ValidateEmailAndPassword(String email, String password) throws SQLException {
+        int id = 0;
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String query = "SELECT EditorID FROM Editor WHERE Email = '" + email + "' AND Password = '" + password + "'";
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    id = res.getInt("EditorID");
+                }
+                res.close();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+
+        if (id == 0) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }

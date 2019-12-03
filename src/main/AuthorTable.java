@@ -58,17 +58,19 @@ public class AuthorTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String journal = "INSERT INTO Author (Title, Name, Surname, Affiliation, Email, Password) VALUES ('" + title + "', '" + name + "', '" + surname + "',''" + affiliation + "','" + email + "','" + password + "')";
+                String journal = "INSERT INTO Author (Title, Name, Surname, Affiliation, Email, Password) VALUES ('" + title + "', '" + name + "', '" + surname + "','" + affiliation + "','" + email + "','" + password + "')";
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
-            } catch (SQLException ex) {
-                ex.printStackTrace();
+            } catch (SQLException e) {
+                System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+                System.out.println("Selection failed");
             } finally {
                 if (stmt != null)
                     stmt.close();
             }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+        } catch (SQLException e) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.out.println("Selection failed");
         } finally {
             if (con != null) con.close();
         }
@@ -372,7 +374,7 @@ public class AuthorTable {
         return fin;
     }
 
-    public String SelectEmail(int id) throws SQLException {
+    public static String SelectEmail(int id) throws SQLException {
         String fin = null;
         Connection con = null; // connection to a database
         try {
@@ -436,6 +438,44 @@ public class AuthorTable {
             if (con != null) con.close();
         }
         return fin;
+    }
+
+    public static boolean ValidateEmailAndPassword(String email, String password) throws SQLException {
+        int id = 0;
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String query = "SELECT AuthorID FROM Author WHERE Email = '" + email + "' AND Password = '" + password + "'";
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    id = res.getInt("AuthorID");
+                }
+                res.close();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+
+        if (id == 0) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
 }
