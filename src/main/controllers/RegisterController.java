@@ -7,6 +7,7 @@ import javafx.scene.control.*;
 import main.tables.AuthorTable;
 import main.tables.EditorTable;
 import main.Main;
+import main.tables.ReviewerTable;
 
 import java.io.IOException;
 import java.sql.SQLException;

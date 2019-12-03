@@ -9,6 +9,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.stage.Stage;
+import main.tables.AuthorTable;
+import main.tables.EditorTable;
+import main.tables.ReviewerTable;
 
 
 import java.awt.*;
