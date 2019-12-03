@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Text?>
 
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="210.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" fx:controller="main.controllers.EARController" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="210.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
@@ -31,9 +31,9 @@
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
                   <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                  <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="200.0" text="Reviewer" />
+                  <Button mnemonicParsing="false" onAction="#handleEARReviewer" prefHeight="27.0" prefWidth="200.0" text="Reviewer" />
                   <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                  <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="200.0" text="Author" />
+                  <Button mnemonicParsing="false" onAction="#handleEARAuthor" prefHeight="27.0" prefWidth="200.0" text="Author" />
                   <Region prefHeight="200.0" prefWidth="200.0" />
                </children>
             </HBox>

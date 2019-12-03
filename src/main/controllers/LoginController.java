@@ -91,7 +91,13 @@ public class LoginController {
 
     }
 
-    public void handleSignIn(ActionEvent actionEvent) {
+    public void handleSignIn(ActionEvent action) throws IOException{
+        URL url = new File("src/resources/EAR.fxml").toURI().toURL();
+        Parent view = FXMLLoader.load(url);
+        Scene viewScene = new Scene(view);
 
+        Stage window = (Stage)((Node)action.getSource()).getScene().getWindow();
+        window.setResizable(true);
+        window.setScene(viewScene);
     }
 }
