@@ -6,7 +6,7 @@ public class EditorTable {
     public static void main(String args[]) throws SQLException {
 
         EditorTable et = new EditorTable();
-        et.CreateEditorTable();
+//        et.CreateEditorTable();
     }
 
     public static void CreateEditorTable() throws SQLException {
