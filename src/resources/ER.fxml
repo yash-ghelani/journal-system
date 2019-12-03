@@ -32,7 +32,7 @@
                   <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
                   <Button mnemonicParsing="false" onAction="#handleEAREditor" prefHeight="27.0" prefWidth="200.0" text="Editor" />
                   <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                  <Button mnemonicParsing="false" onAction="#handleEARAuthor" prefHeight="27.0" prefWidth="200.0" text="Reviewer" />
+                  <Button mnemonicParsing="false" onAction="#handleEARReviewer" prefHeight="27.0" prefWidth="200.0" text="Reviewer" />
                   <Region prefHeight="200.0" prefWidth="200.0" />
                </children>
             </HBox>
