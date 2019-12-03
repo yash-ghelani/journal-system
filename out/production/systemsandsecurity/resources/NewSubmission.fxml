@@ -12,14 +12,14 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane prefHeight="373.0" prefWidth="1044.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controllers.ReaderController">
+<BorderPane prefHeight="373.0" prefWidth="1044.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controllers.NewSubmissionController">
    <top>
       <VBox prefHeight="45.0" prefWidth="825.0" BorderPane.alignment="CENTER">
          <children>
             <HBox prefHeight="45.0" prefWidth="825.0">
                <children>
                   <Region prefHeight="45.0" prefWidth="491.0" HBox.hgrow="ALWAYS" />
-                  <Button mnemonicParsing="false" onAction="#handleLogOut" text="Cancel">
+                  <Button mnemonicParsing="false" onAction="#handleCancel" text="Cancel">
                      <HBox.margin>
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                      </HBox.margin>
@@ -85,7 +85,7 @@
             <HBox prefHeight="57.0" prefWidth="1044.0">
                <children>
                   <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                  <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="998.0" text="Submit ">
+                  <Button mnemonicParsing="false" onAction="#handleSubmit" prefHeight="27.0" prefWidth="998.0" text="Submit ">
                      <HBox.margin>
                         <Insets top="31.0" />
                      </HBox.margin>

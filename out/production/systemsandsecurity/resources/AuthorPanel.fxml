@@ -139,12 +139,12 @@
             <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
             <VBox prefHeight="99.0" prefWidth="202.0">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="120.0" text="New Submission">
+                  <Button mnemonicParsing="false" onAction="#handleNewSubmission" prefHeight="27.0" prefWidth="120.0" text="New Submission">
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefWidth="120.0" text="Log Out">
+                  <Button mnemonicParsing="false" onAction="#handleLogOut" prefWidth="120.0" text="Log Out">
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin>
