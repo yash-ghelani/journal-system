@@ -18,6 +18,10 @@ import java.net.URL;
 
 public class NewSubmissionController {
 
+    @FXML
+    public Label idLab;
+    public TextField email;
+
     public void handleCancel (ActionEvent event) throws IOException {
         URL url = new File("src/resources/AuthorPanel.fxml").toURI().toURL();
         Parent view = FXMLLoader.load(url);
@@ -36,5 +40,9 @@ public class NewSubmissionController {
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
 
         window.setScene(viewScene);
+    }
+
+    public void handleRegister(ActionEvent actionEvent) {
+        idLab.setText(String.valueOf((email.getText()).hashCode()));
     }
 }

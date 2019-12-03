@@ -60,9 +60,9 @@
             <HBox prefHeight="47.0" prefWidth="1044.0">
                <children>
                   <Region prefHeight="100.0" prefWidth="86.0" />
-                  <TextField prefHeight="27.0" prefWidth="572.0" promptText="Co-Author Email" />
+                  <TextField fx:id="email" prefHeight="27.0" prefWidth="572.0" promptText="Co-Author Email" />
                   <Region prefHeight="38.0" prefWidth="79.0" />
-                  <Button mnemonicParsing="false" prefWidth="200.0" text="Register" />
+                  <Button mnemonicParsing="false" onAction="#handleRegister" prefWidth="200.0" text="Register" />
                   <Region layoutX="668.0" layoutY="10.0" prefHeight="25.0" prefWidth="109.0" />
                </children>
                <VBox.margin>
@@ -74,7 +74,7 @@
                   <Region minHeight="-Infinity" minWidth="-Infinity" prefHeight="61.0" prefWidth="88.0" />
                   <VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="253.0" prefWidth="567.0">
                      <children>
-                        <Label text="Tempory Password: ">
+                        <Label fx:id="idLab" text="Temporary Password: ">
                            <VBox.margin>
                               <Insets top="9.0" />
                            </VBox.margin></Label>
