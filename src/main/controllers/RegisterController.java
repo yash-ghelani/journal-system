@@ -1,4 +1,4 @@
-package main;
+package main.controllers;
 
 import javafx.fxml.FXML;
 import javafx.collections.*;
@@ -13,6 +13,9 @@ import javafx.event.*;
 import javafx.css.*;
 import javafx.scene.control.*;
 import javafx.scene.control.ComboBox;
+import main.AuthorTable;
+import main.EditorTable;
+import main.Main;
 
 import java.io.File;
 import java.io.IOException;

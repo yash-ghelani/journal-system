@@ -1,4 +1,4 @@
-package main;
+package main.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class LoginController {
+public class Controller {
 
    // public Button button;
 
