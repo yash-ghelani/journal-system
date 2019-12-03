@@ -58,7 +58,7 @@ public class ReviewerTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String journal = "INSERT INTO Reviewer (Title, Name, Surname, Affiliation, Email, Password) VALUES ('" + title + "', '" + name + "', '" + surname + "',''"+
+                String journal = "INSERT INTO Reviewer (Title, Name, Surname, Affiliation, Email, Password) VALUES ('" + title + "', '" + name + "', '" + surname + "','"+
                 affiliation + "','" + email + "','" + password + "')";
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);

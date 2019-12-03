@@ -67,29 +67,59 @@ public class LoginController {
 
     public void handleSignIn(ActionEvent event) throws IOException, SQLException {
 
+        boolean isAuthor = AuthorTable.ValidateEmailAndPassword(loginID.getText(), Integer.toString(Password.getText().hashCode()));
+        boolean isEditor = EditorTable.ValidateEmailAndPassword(loginID.getText(), Integer.toString(Password.getText().hashCode()));
+        boolean isReviewer = ReviewerTable.ValidateEmailAndPassword(loginID.getText(), Integer.toString(Password.getText().hashCode()));
+
             if(!loginID.getText().isEmpty() && !Password.getText().isEmpty()) {
-                if (AuthorTable.ValidateEmailAndPassword(loginID.getText(), Integer.toString(Password.getText().hashCode()))) {
-                    URL url = new File("src/resources/AuthorPanel.fxml").toURI().toURL();
+                if (isEditor && isAuthor && isReviewer) {
+
+                } else if (isEditor && isAuthor && !isReviewer) {
+                    URL url = new File("src/resources/EA.fxml").toURI().toURL();
                     Parent view = FXMLLoader.load(url);
                     Scene viewScene = new Scene(view);
 
-                    Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
                     window.setResizable(true);
                     window.setScene(viewScene);
-                } else if (EditorTable.ValidateEmailAndPassword(loginID.getText(), Integer.toString(Password.getText().hashCode()))) {
+                } else if (isEditor && !isAuthor && isReviewer) {
+                    URL url = new File("src/resources/ER.fxml").toURI().toURL();
+                    Parent view = FXMLLoader.load(url);
+                    Scene viewScene = new Scene(view);
+
+                    Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+                    window.setResizable(true);
+                    window.setScene(viewScene);
+                }  else if (!isEditor && isReviewer && isAuthor) {
+                    URL url = new File("src/resources/RA.fxml").toURI().toURL();
+                    Parent view = FXMLLoader.load(url);
+                    Scene viewScene = new Scene(view);
+
+                    Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+                    window.setResizable(true);
+                    window.setScene(viewScene);
+                } else if (isEditor && !isAuthor && !isReviewer) {
                     URL url = new File("src/resources/EditorPanel.fxml").toURI().toURL();
                     Parent view = FXMLLoader.load(url);
                     Scene viewScene = new Scene(view);
 
-                    Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
                     window.setResizable(true);
                     window.setScene(viewScene);
-                } else if (ReviewerTable.ValidateEmailAndPassword(loginID.getText(), Integer.toString(Password.getText().hashCode()))) {
+                } else if (!isEditor && isAuthor && !isReviewer) {
+                    URL url = new File("src/resources/AuthorPanel.fxml").toURI().toURL();
+                    Parent view = FXMLLoader.load(url);
+                    Scene viewScene = new Scene(view);
+
+                    Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+                    window.setResizable(true);
+                    window.setScene(viewScene);
+                } else if (!isEditor && !isAuthor && isReviewer) {
                     URL url = new File("src/resources/ReviewPanel.fxml").toURI().toURL();
                     Parent view = FXMLLoader.load(url);
                     Scene viewScene = new Scene(view);
 
-                    Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                    Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
                     window.setResizable(true);
                     window.setScene(viewScene);
                 }

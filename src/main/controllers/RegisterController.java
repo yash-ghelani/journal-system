@@ -3,13 +3,20 @@ package main.controllers;
 import javafx.fxml.FXML;
 import javafx.collections.*;
 import javafx.event.*;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 import main.tables.AuthorTable;
 import main.tables.EditorTable;
 import main.Main;
 import main.tables.ReviewerTable;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -109,7 +116,14 @@ public class RegisterController extends Main {
                 try {
                     AuthorTable.Insert(prefixValue, firstName.getText(), lastName.getText(), university.getText(), emailField.getText(), Integer.toString(passWordField.getText().hashCode()));
 
-                    handleRegisterSuccess(action);
+                    URL url = new File("src/resources/login.fxml").toURI().toURL();
+                    Parent view = FXMLLoader.load(url);
+                    Scene viewScene = new Scene(view);
+
+                    Stage window = (Stage) ((Node) action.getSource()).getScene().getWindow();
+                    window.setResizable(true);
+                    window.setScene(viewScene);
+
                 } catch (SQLException e) {
                     System.err.println(e.getClass().getName() + ": " + e.getMessage());
                     System.out.println("Selection failed");
@@ -119,7 +133,13 @@ public class RegisterController extends Main {
                 try {
                     EditorTable.Insert(prefixValue, firstName.getText(), lastName.getText(), university.getText(), emailField.getText(), Integer.toString(passWordField.getText().hashCode()));
 
-                    handleRegisterSuccess(action);
+                    URL url = new File("src/resources/login.fxml").toURI().toURL();
+                    Parent view = FXMLLoader.load(url);
+                    Scene viewScene = new Scene(view);
+
+                    Stage window = (Stage) ((Node) action.getSource()).getScene().getWindow();
+                    window.setResizable(true);
+                    window.setScene(viewScene);
                 } catch (SQLException e) {
                     System.err.println(e.getClass().getName() + ": " + e.getMessage());
                     System.out.println("Selection failed");
@@ -127,7 +147,13 @@ public class RegisterController extends Main {
             } else if (roleValue == "Reviewer") {
                 ReviewerTable.Insert(prefixValue, firstName.getText(), lastName.getText(), university.getText(), emailField.getText(), Integer.toString(passWordField.getText().hashCode()));
 
-                handleRegisterSuccess(action);
+                URL url = new File("src/resources/login.fxml").toURI().toURL();
+                Parent view = FXMLLoader.load(url);
+                Scene viewScene = new Scene(view);
+
+                Stage window = (Stage) ((Node) action.getSource()).getScene().getWindow();
+                window.setResizable(true);
+                window.setScene(viewScene);
 
             } else {
                 System.out.println("Not all fields filled in");
