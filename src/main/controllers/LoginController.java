@@ -61,79 +61,6 @@ public class LoginController {
         window.setScene(viewScene);
     }
 
-<<<<<<< HEAD
-    public void signedin(ActionEvent action) throws IOException {
-
-        kin[0]= "king";
-
-        kin[1] = "Good12";
-
-        if (!login.getText().equals(kin[0])) {
-            login.clear();
-            login.setStyle("-fx-prompt-text-fill :red");
-            login.setPromptText("invalid username");
-        }
-
-
-        if (!password.getText().equals(kin[1])) {
-            password.clear();
-            password.setStyle("-fx-prompt-text-fill :red");
-            password.setPromptText("invalid password");
-        }
-
-        if (login.getText().equals(kin[0]) && password.getText().equals(kin[1])){
-            URL url = new File("src/resources/sample.fxml").toURI().toURL();
-            Parent view = FXMLLoader.load(url);
-            Scene viewScene = new Scene(view);
-
-            Stage window = (Stage)((Node)action.getSource()).getScene().getWindow();
-            window.setResizable(true);
-            window.setScene(viewScene);
-        }
-
-
-    }
-
-    public void handleSignIn(ActionEvent action) throws IOException{
-        URL url = new File("src/resources/EAR.fxml").toURI().toURL();
-        Parent view = FXMLLoader.load(url);
-        Scene viewScene = new Scene(view);
-
-        Stage window = (Stage)((Node)action.getSource()).getScene().getWindow();
-        window.setResizable(true);
-        window.setScene(viewScene);
-=======
-//    public void signedin(ActionEvent action) throws IOException {
-//
-//        kin[0]= "king";
-//
-//        kin[1] = "Good12";
-//
-//        if (!login.getText().equals(kin[0])) {
-//            login.clear();
-//            login.setStyle("-fx-prompt-text-fill :red");
-//            login.setPromptText("invalid username");
-//        }
-//
-//
-//        if (!password.getText().equals(kin[1])) {
-//            password.clear();
-//            password.setStyle("-fx-prompt-text-fill :red");
-//            password.setPromptText("invalid password");
-//        }
-//
-//        if (login.getText().equals(kin[0]) && password.getText().equals(kin[1])){
-//            URL url = new File("src/resources/sample.fxml").toURI().toURL();
-//            Parent view = FXMLLoader.load(url);
-//            Scene viewScene = new Scene(view);
-//
-//            Stage window = (Stage)((Node)action.getSource()).getScene().getWindow();
-//            window.setResizable(true);
-//            window.setScene(viewScene);
-//        }
-//
-//
-//    }
 
     public void handleSignIn(ActionEvent event) throws IOException, SQLException {
 
@@ -167,6 +94,5 @@ public class LoginController {
                 loginID.setStyle("-fx-prompt-text-fill :red");
                 Password.setStyle("-fx-prompt-text-fill :red");
             }
->>>>>>> 162811e19c3a00dc41ec0a042cfea500bc16af4a
     }
 }
