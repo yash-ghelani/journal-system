@@ -28,7 +28,7 @@ public class AuthorTable {
                         "Affiliation             TEXT                NOT NULL, " +
                         "Email                   NVARCHAR(320)       NOT NULL," +
                         "Password                NVARCHAR(100)       NOT NULL," +
-                        "Temp                    BOOLEAN             NOT NULL," +
+                        "Temp                    INT             NOT NULL," +
                         "PRIMARY KEY (AuthorID))";
 
                 stmt.executeUpdate(jtable);
@@ -51,7 +51,7 @@ public class AuthorTable {
 
     }
 
-    public static void Insert(String title, String name, String surname, String affiliation, String email, String password, boolean temp) throws SQLException {
+    public static void Insert(String title, String name, String surname, String affiliation, String email, String password, int temp) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");

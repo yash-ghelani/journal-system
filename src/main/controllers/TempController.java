@@ -143,7 +143,7 @@ public class TempController extends Main {
                     EditorTable.UpdateAffiliation(Integer.valueOf(roleValue[1]),university.getText());
                     EditorTable.UpdateEmail(Integer.valueOf(roleValue[1]),emailField.getText());
                     EditorTable.UpdatePassword(Integer.valueOf(roleValue[1]),Integer.toString(passWordField.getText().hashCode()));
-                    EditorTable.UpdateTemp(Integer.valueOf(roleValue[1]),false);
+                    EditorTable.UpdateTemp(Integer.valueOf(roleValue[1]),0);
 
                     RegisterController.loadLogin(action);
                 } catch (SQLException e) {
@@ -159,7 +159,7 @@ public class TempController extends Main {
                     ReviewerTable.UpdateAffiliation(Integer.valueOf(roleValue[1]),university.getText());
                     ReviewerTable.UpdateEmail(Integer.valueOf(roleValue[1]),emailField.getText());
                     ReviewerTable.UpdatePassword(Integer.valueOf(roleValue[1]),Integer.toString(passWordField.getText().hashCode()));
-                    ReviewerTable.UpdateTemp(Integer.valueOf(roleValue[1]),false);
+                    ReviewerTable.UpdateTemp(Integer.valueOf(roleValue[1]),0);
 
                     RegisterController.loadLogin(action);
                 } catch (SQLException e) {

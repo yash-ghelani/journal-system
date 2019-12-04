@@ -28,7 +28,7 @@ public class ReviewerTable {
                         "Affiliation             TEXT                NOT NULL, " +
                         "Email                   NVARCHAR(320)        NOT NULL," +
                         "Password                NVARCHAR(100)        NOT NULL," +
-                        "Temp                    BOOLEAN             NOT NULL," +
+                        "Temp                    INT             NOT NULL," +
                         "Count                   INT                  NOT NULL," +
                         "PRIMARY KEY (ReviewerID))";
 
@@ -52,7 +52,7 @@ public class ReviewerTable {
 
     }
 
-    public static void Insert(String title, String name, String surname, String affiliation, String email, String password, boolean temp, int count) throws SQLException {
+    public static void Insert(String title, String name, String surname, String affiliation, String email, String password, int temp, int count) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -274,7 +274,7 @@ public class ReviewerTable {
         }
     }
 
-    public static void UpdateTemp(int id, boolean temp) throws SQLException {
+    public static void UpdateTemp(int id, int temp) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -495,8 +495,8 @@ public class ReviewerTable {
         return fin;
     }
 
-    public boolean SelectTemp(int id) throws SQLException {
-        boolean fin = true;
+    public int SelectTemp(int id) throws SQLException {
+        int fin = 0;
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -507,7 +507,7 @@ public class ReviewerTable {
                 String query = "SELECT Temp FROM Reviewer WHERE ReviewerID = " + id;
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
-                    fin = res.getBoolean("Temp");
+                    fin = res.getInt("Temp");
                 }
                 res.close();
             }
