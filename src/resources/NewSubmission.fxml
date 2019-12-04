@@ -74,7 +74,7 @@
                   <Region minHeight="-Infinity" minWidth="-Infinity" prefHeight="61.0" prefWidth="88.0" />
                   <VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="253.0" prefWidth="567.0">
                      <children>
-                        <Label fx:id="idLab" text="Temporary Password: ">
+                        <Label fx:id="idLab" text="Temporary Login: ">
                            <VBox.margin>
                               <Insets top="9.0" />
                            </VBox.margin></Label>
