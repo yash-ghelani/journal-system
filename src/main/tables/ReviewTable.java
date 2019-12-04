@@ -66,7 +66,6 @@ public class ReviewTable {
                 stmt = con.createStatement();
 
                 String journal = "INSERT INTO Review (ReviewerID, SubmissionInfoID, Summery, Verdict) VALUES (" + reviewerid +"," + submissioninfoid + ", '" + summery + "', '" + verdict +"')";
-                System.out.println(journal);
                 stmt.executeUpdate(journal);
 
             }
@@ -383,6 +382,39 @@ public class ReviewTable {
         finally {
             if (con != null) con.close();
         }
+    }
+
+    public static int SelectReviewID(int reviewerid, int submissionid, String summary, String verdict) throws SQLException {
+        int fin = 0;
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String query = "SELECT ReviewID FROM Review WHERE ReviewerID = " + reviewerid + " AND SubmissionID = " + submissionid + " AND Summery = '" + summary +"' AND Verdict = '" + verdict + "'";
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    fin = res.getInt("ReviewID");
+                }
+                res.close();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+        return fin;
     }
 
 }

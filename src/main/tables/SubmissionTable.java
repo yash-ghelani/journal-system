@@ -22,7 +22,8 @@ public class SubmissionTable {
                 String initialise = "CREATE TABLE Submissions " + //Creating the table
                                     "(SubmissionID          INT             NOT NULL AUTO_INCREMENT, "+ //Creating the different fields
                                     "PDF                    NVARCHAR(255)   NOT NULL, "+
-                                    "EditorVerdict          TEXT            NOT NULL, "+
+                                    "EditorVerdict          TEXT," +
+                                    "InitialTitle           TEXT,"+
                                     "PRIMARY KEY (SubmissionID))";
 
                 stmt.executeUpdate(initialise);

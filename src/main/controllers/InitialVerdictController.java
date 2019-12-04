@@ -14,12 +14,15 @@ import javafx.stage.Stage;
 
 import javafx.event.*;
 import main.Main;
+import main.tables.CriticismsTable;
+import main.tables.ErrorTable;
 import main.tables.ReviewerTable;
 import main.tables.ReviewTable;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,17 +86,22 @@ public class InitialVerdictController {
         window.setScene(viewScene);
     }
 
-    public void handleSubmit(ActionEvent actionEvent) {
-        int dummySubmissionInfo = 1234;
-        boolean verdict;
+    public void handleSubmit(ActionEvent actionEvent) throws SQLException {
+
+        int dummySubmissionInfo = 1234; //Currently using a dummy submissioninfoid
+
         String summary = reviewSummary.getText();
-//        if (finalVerdict.getValue() == null) {
-//            System.out.println(finalVerdict.getValue());
-//        }
 
-        //ReviewTable.Insert(Main.IDs[2], dummySubmissionInfo, summary, verdict);
+        ReviewTable.Insert(Main.IDs[2], dummySubmissionInfo, summary, (String) finalVerdict.getValue());
+        int reviewid = ReviewTable.SelectReviewID(Main.IDs[2], dummySubmissionInfo, summary, (String) finalVerdict.getValue());
 
-        //System.out.println(crits);
-        //System.out.println(errors);
+        for (int i = 0 ; i < errors.size() ; i++) {
+            ErrorTable.Insert(reviewid, errors.get(i));
+        }
+
+        for (int i = 0 ; i < crits.size(); i++) {
+            CriticismsTable.Insert(reviewid, crits.get(i));
+        }
+
     }
 }
