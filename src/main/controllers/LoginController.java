@@ -142,4 +142,14 @@ public class LoginController {
             Password.setStyle("-fx-prompt-text-fill :red");
         }
     }
+
+    public void handleChangePassword(ActionEvent event) throws IOException {
+        URL url = new File("src/resources/UpdateTempUser.fxml").toURI().toURL();
+        Parent view = FXMLLoader.load(url);
+        Scene viewScene = new Scene(view);
+
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+        window.setScene(viewScene);
+    }
 }
