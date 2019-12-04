@@ -9,10 +9,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import main.tables.AuthorTable;
-import main.tables.EditorTable;
+import main.tables.*;
 import main.Main;
-import main.tables.ReviewerTable;
 
 import java.io.File;
 import java.io.IOException;
@@ -126,6 +124,8 @@ public class TempController extends Main {
                     AuthorTable.UpdateEmail(Integer.valueOf(roleValue[1]),emailField.getText());
                     AuthorTable.UpdatePassword(Integer.valueOf(roleValue[1]),Integer.toString(passWordField.getText().hashCode()));
                     AuthorTable.UpdateTemp(Integer.valueOf(roleValue[1]),false);
+
+                    System.out.println(roleValue[0]+" "+firstName.getText()+" "+lastName.getText()+" "+university.getText()+" "+emailField.getText()+" "+ passWordField.getText().hashCode() +" "+ false);
 
                     URL url = new File("src/resources/login.fxml").toURI().toURL();
                     Parent view = FXMLLoader.load(url);

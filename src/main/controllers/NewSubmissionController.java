@@ -45,7 +45,7 @@ public class NewSubmissionController {
     }
 
     public void handleRegister(ActionEvent actionEvent) throws SQLException {
-        idLab.setText("Temporary Username: " + email.getText()+ " Password: " + Math.abs((email.getText()).hashCode()));
+        idLab.setText("Temporary Username: " + email.getText()+ "\n Temporary Password: " + Math.abs((email.getText()).hashCode()));
         AuthorTable.Insert("temp","temp","user","temp", email.getText(), String.valueOf(Math.abs((email.getText()).hashCode())), true);
     }
 }
