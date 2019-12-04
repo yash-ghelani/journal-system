@@ -119,21 +119,15 @@ public class RegisterController extends Main {
 
         String prefixValue = (String) prefix.getValue();
         String roleValue = (String) roles.getValue();
+        boolean temp = false;
 
         if (prefix != null && roles != null && firstName != null && lastName != null && university != null && emailField != null && passWordField != null
         && validFirstName && validLastName && validUniversityName && validEmail && validPassword){
 
             if (roleValue == "Author") {
                 try {
-                    AuthorTable.Insert(prefixValue, firstName.getText(), lastName.getText(), university.getText(), emailField.getText(), Integer.toString(passWordField.getText().hashCode()),false);
-                    //AuthorTable.Insert(prefixValue, l[0],l[1],l[2],l[3],l[4]);
-                    URL url = new File("src/resources/login.fxml").toURI().toURL();
-                    Parent view = FXMLLoader.load(url);
-                    Scene viewScene = new Scene(view);
-
-                    Stage window = (Stage) ((Node) action.getSource()).getScene().getWindow();
-                    window.setResizable(true);
-                    window.setScene(viewScene);
+                    AuthorTable.Insert(prefixValue, firstName.getText(), lastName.getText(), university.getText(), emailField.getText(), Integer.toString(passWordField.getText().hashCode()),temp);
+                    loadLogin(action);
 
                 } catch (SQLException e) {
                     System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -142,33 +136,30 @@ public class RegisterController extends Main {
 
             } else if (roleValue == "Editor") {
                 try {
-                    EditorTable.Insert(prefixValue, firstName.getText(), lastName.getText(), university.getText(), emailField.getText(), Integer.toString(passWordField.getText().hashCode()),false);
+                    EditorTable.Insert(prefixValue, firstName.getText(), lastName.getText(), university.getText(), emailField.getText(), Integer.toString(passWordField.getText().hashCode()),temp);
 
-                    URL url = new File("src/resources/login.fxml").toURI().toURL();
-                    Parent view = FXMLLoader.load(url);
-                    Scene viewScene = new Scene(view);
-
-                    Stage window = (Stage) ((Node) action.getSource()).getScene().getWindow();
-                    window.setResizable(true);
-                    window.setScene(viewScene);
+                    loadLogin(action);
                 } catch (SQLException e) {
                     System.err.println(e.getClass().getName() + ": " + e.getMessage());
                     System.out.println("Selection failed");
                 }
             } else if (roleValue == "Reviewer") {
                 ReviewerTable.Insert(prefixValue, firstName.getText(), lastName.getText(), university.getText(), emailField.getText(), Integer.toString(passWordField.getText().hashCode()),false, 0);
-
-                URL url = new File("src/resources/login.fxml").toURI().toURL();
-                Parent view = FXMLLoader.load(url);
-                Scene viewScene = new Scene(view);
-
-                Stage window = (Stage) ((Node) action.getSource()).getScene().getWindow();
-                window.setResizable(true);
-                window.setScene(viewScene);
+                loadLogin(action);
 
             } else {
                 System.out.println("Not all fields filled in");
             }
         }
+    }
+
+    static void loadLogin(ActionEvent action) throws IOException {
+        URL url = new File("src/resources/login.fxml").toURI().toURL();
+        Parent view = FXMLLoader.load(url);
+        Scene viewScene = new Scene(view);
+
+        Stage window = (Stage) ((Node) action.getSource()).getScene().getWindow();
+        window.setResizable(true);
+        window.setScene(viewScene);
     }
 }
