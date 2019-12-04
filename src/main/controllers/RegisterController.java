@@ -9,10 +9,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import main.tables.AuthorTable;
-import main.tables.EditorTable;
+import main.tables.*;
 import main.Main;
-import main.tables.ReviewerTable;
+
 
 import java.io.File;
 import java.io.IOException;

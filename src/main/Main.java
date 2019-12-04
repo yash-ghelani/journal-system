@@ -5,8 +5,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import main.tables.AuthorTable;
-
 
 import java.io.File;
 import java.net.URL;
