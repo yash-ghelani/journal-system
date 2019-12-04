@@ -26,8 +26,9 @@ public class AuthorTable {
                         "Name                    TEXT                NOT NULL, " +
                         "Surname                 TEXT                NOT NULL, " +
                         "Affiliation             TEXT                NOT NULL, " +
-                        "Email                   NVARCHAR(320)        NOT NULL," +
-                        "Password                NVARCHAR(100)        NOT NULL," +
+                        "Email                   NVARCHAR(320)       NOT NULL," +
+                        "Password                NVARCHAR(100)       NOT NULL," +
+                        "Temp                    BOOLEAN             NOT NULL," +
                         "PRIMARY KEY (AuthorID))";
 
                 stmt.executeUpdate(jtable);
@@ -50,7 +51,7 @@ public class AuthorTable {
 
     }
 
-    public static void Insert(String title, String name, String surname, String affiliation, String email, String password) throws SQLException {
+    public static void Insert(String title, String name, String surname, String affiliation, String email, String password, boolean temp) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -58,7 +59,8 @@ public class AuthorTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String journal = "INSERT INTO Author (Title, Name, Surname, Affiliation, Email, Password) VALUES ('" + title + "', '" + name + "', '" + surname + "','" + affiliation + "','" + email + "','" + password + "')";
+                String journal = "INSERT INTO Author (Title, Name, Surname, Affiliation, Email, Password, Temp) "+
+                                " VALUES ('" + title + "', '" + name + "', '" + surname + "','" + affiliation + "','" + email + "','" + password + "','"+ temp+"')";
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
             } catch (SQLException e) {
@@ -243,6 +245,31 @@ public class AuthorTable {
             if (con != null) con.close();
         }
     }
+
+    public static void UpdateTemp(int id, boolean temp) throws SQLException {
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String journal = "UPDATE Author SET Temp = "+ temp +" WHERE AuthorID=" + id;
+                //System.out.println(journal);
+                stmt.executeUpdate(journal);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            } finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (con != null) con.close();
+        }
+    }
+
     public String SelectTitle(int id) throws SQLException {
         String fin = null;
         Connection con = null; // connection to a database
@@ -420,6 +447,39 @@ public class AuthorTable {
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     fin = res.getString("Password");
+                }
+                res.close();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+        return fin;
+    }
+
+    public boolean SelectTemp(int id) throws SQLException {
+        boolean fin = true;
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String query = "SELECT Temp FROM Author WHERE AuthorID = " + id;
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    fin = res.getBoolean("Temp");
                 }
                 res.close();
             }

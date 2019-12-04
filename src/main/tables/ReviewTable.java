@@ -24,7 +24,7 @@ public class ReviewTable {
                         "(ReviewID              INT     AUTO_INCREMENT, "+ //Creating the different fields
                         "ReviewerID             INT, "+
                         "SubmissionInfoID       INT, "+
-                        "Summery                TEXT, "+
+                        "Summary                TEXT, "+
                         "Verdict                TEXT, "+
                         "PRIMARY KEY (ReviewID), " +
                         "FOREIGN KEY (ReviewerID) REFERENCES Reviewer(ReviewerID), " +
@@ -56,7 +56,7 @@ public class ReviewTable {
 
 
 
-    public static void Insert(int reviewerid, int submissioninfoid, String summery, String verdict ) throws SQLException {
+    public static void Insert(int reviewerid, int submissioninfoid, String Summary, String verdict ) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -65,7 +65,10 @@ public class ReviewTable {
             try {
                 stmt = con.createStatement();
 
-                String journal = "INSERT INTO Review (ReviewerID, SubmissionInfoID, Summery, Verdict) VALUES (" + reviewerid +"," + submissioninfoid + ", '" + summery + "', '" + verdict +"')";
+
+                String journal = "INSERT INTO Review (ReviewerID, SubmissionInfoID, Summary, Verdict) VALUES (" + reviewerid +"," + submissioninfoid + ", '" + Summary + "', '" + verdict +"')";
+                System.out.println(journal);
+
                 stmt.executeUpdate(journal);
 
             }
@@ -115,7 +118,7 @@ public class ReviewTable {
     }
 
 
-    public static void UpdateSummery(String summery) throws SQLException {
+    public static void UpdateSummary(String Summary) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -123,7 +126,7 @@ public class ReviewTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String journal = "UPDATE Review SET Summery = '" + summery + "'";
+                String journal = "UPDATE Review SET Summary = '" + Summary + "'";
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
             }
@@ -301,10 +304,10 @@ public class ReviewTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "SELECT Summery FROM Review WHERE ReviewID = " + id;
+                String query = "SELECT Summary FROM Review WHERE ReviewID = " + id;
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
-                    fin = res.getString("Summery");
+                    fin = res.getString("Summary");
                 }
                 res.close();
             }
@@ -325,7 +328,7 @@ public class ReviewTable {
         return fin;
     }
 
-    public String SelectVerdict(int id) throws SQLException {
+    public static String SelectVerdict(int id) throws SQLException {
         String fin = null;
         Connection con = null; // connection to a database
         try {
@@ -357,6 +360,7 @@ public class ReviewTable {
         }
         return fin;
     }
+
 
     public static void DeleteTable() throws SQLException {
         Connection con = null;
@@ -393,7 +397,7 @@ public class ReviewTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "SELECT ReviewID FROM Review WHERE ReviewerID = " + reviewerid + " AND SubmissionID = " + submissionid + " AND Summery = '" + summary +"' AND Verdict = '" + verdict + "'";
+                String query = "SELECT ReviewID FROM Review WHERE ReviewerID = " + reviewerid + " AND SubmissionID = " + submissionid + " AND Summary = '" + summary +"' AND Verdict = '" + verdict + "'";
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     fin = res.getInt("ReviewID");

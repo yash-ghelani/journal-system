@@ -10,9 +10,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.stage.Stage;
 import main.Main;
-import main.tables.AuthorTable;
-import main.tables.EditorTable;
-import main.tables.ReviewerTable;
+import main.tables.*;
 
 
 import java.awt.*;
@@ -137,6 +135,29 @@ public class LoginController {
                 window.setResizable(true);
                 window.setScene(viewScene);
             }
+        }else {
+            loginID.setStyle("-fx-prompt-text-fill :red");
+            Password.setStyle("-fx-prompt-text-fill :red");
+        }
+    }
+
+    public void handleChangePassword(ActionEvent event) throws IOException, SQLException {
+
+        String login = loginID.getText();
+        String password = Integer.toString(Password.getText().hashCode());
+
+        Main.IDs[0] = AuthorTable.getID(login, password);
+        Main.IDs[1] = EditorTable.getID(login, password);
+        Main.IDs[2] = ReviewerTable.getID(login, password);
+
+        if(!loginID.getText().isEmpty() && !Password.getText().isEmpty()) {
+            URL url = new File("src/resources/UpdateTempUser.fxml").toURI().toURL();
+            Parent view = FXMLLoader.load(url);
+            Scene viewScene = new Scene(view);
+
+            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+            window.setScene(viewScene);
         }else {
             loginID.setStyle("-fx-prompt-text-fill :red");
             Password.setStyle("-fx-prompt-text-fill :red");

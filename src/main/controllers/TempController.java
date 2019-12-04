@@ -12,7 +12,6 @@ import javafx.stage.Stage;
 import main.tables.*;
 import main.Main;
 
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -21,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.*;
 
-public class RegisterController extends Main {
+public class TempController extends Main {
 
     String[] l = new String[5];
 
@@ -43,9 +42,6 @@ public class RegisterController extends Main {
     @FXML
     private ChoiceBox prefix;
 
-    @FXML
-    private ChoiceBox roles;
-
     String[] sql = {"Drop"};
 
     public void initialize() {
@@ -57,15 +53,9 @@ public class RegisterController extends Main {
         ObservableList obList = FXCollections.observableList(list);
         prefix.setItems(obList);
 
-        List<String> rolesList = new ArrayList<String>();
-        rolesList.add("Author");
-        rolesList.add("Editor");
-        rolesList.add("Reviewer");
-        ObservableList rlList = FXCollections.observableList(rolesList);
-        roles.setItems(rlList);
     }
 
-    public void handleRegisterSuccess(ActionEvent action) throws IOException, SQLException {
+    public void handleUpdate(ActionEvent action) throws IOException, SQLException {
         // first name
         boolean validFirstName = false;
         if (firstName.getText().isEmpty()) {
@@ -86,7 +76,7 @@ public class RegisterController extends Main {
             university.setStyle("-fx-prompt-text-fill : red;");
         } else
             l[2] = university.getText();
-            validUniversityName = true;
+        validUniversityName = true;
         //emailField
         boolean validEmail = false;
         if (emailField.getText().isEmpty()) {
@@ -118,15 +108,25 @@ public class RegisterController extends Main {
         }
 
         String prefixValue = (String) prefix.getValue();
-        String roleValue = (String) roles.getValue();
 
-        if (prefix != null && roles != null && firstName != null && lastName != null && university != null && emailField != null && passWordField != null
-        && validFirstName && validLastName && validUniversityName && validEmail && validPassword){
+        String [] roleValue = getRole(Main.IDs);
 
-            if (roleValue == "Author") {
+        if (prefix != null && firstName != null && lastName != null && university != null && emailField != null && passWordField != null
+                && validFirstName && validLastName && validUniversityName && validEmail && validPassword){
+
+            if (roleValue[0] == "Author") {
                 try {
-                    AuthorTable.Insert(prefixValue, firstName.getText(), lastName.getText(), university.getText(), emailField.getText(), Integer.toString(passWordField.getText().hashCode()),false);
-                    //AuthorTable.Insert(prefixValue, l[0],l[1],l[2],l[3],l[4]);
+
+                    AuthorTable.UpdateTitle(Integer.valueOf(roleValue[1]),prefixValue);
+                    AuthorTable.UpdateName(Integer.valueOf(roleValue[1]), firstName.getText());
+                    AuthorTable.UpdateSurname(Integer.valueOf(roleValue[1]),lastName.getText());
+                    AuthorTable.UpdateAffiliation(Integer.valueOf(roleValue[1]),university.getText());
+                    AuthorTable.UpdateEmail(Integer.valueOf(roleValue[1]),emailField.getText());
+                    AuthorTable.UpdatePassword(Integer.valueOf(roleValue[1]),Integer.toString(passWordField.getText().hashCode()));
+                    AuthorTable.UpdateTemp(Integer.valueOf(roleValue[1]),false);
+
+                    System.out.println(roleValue[0]+" "+firstName.getText()+" "+lastName.getText()+" "+university.getText()+" "+emailField.getText()+" "+ passWordField.getText().hashCode() +" "+ false);
+
                     URL url = new File("src/resources/login.fxml").toURI().toURL();
                     Parent view = FXMLLoader.load(url);
                     Scene viewScene = new Scene(view);
@@ -140,9 +140,16 @@ public class RegisterController extends Main {
                     System.out.println("Selection failed");
                 }
 
-            } else if (roleValue == "Editor") {
+            } else if (roleValue[0] == "Editor") {
                 try {
-                    EditorTable.Insert(prefixValue, firstName.getText(), lastName.getText(), university.getText(), emailField.getText(), Integer.toString(passWordField.getText().hashCode()),false);
+
+                    EditorTable.UpdateTitle(Integer.valueOf(roleValue[1]),prefixValue);
+                    EditorTable.UpdateName(Integer.valueOf(roleValue[1]), firstName.getText());
+                    EditorTable.UpdateSurname(Integer.valueOf(roleValue[1]),lastName.getText());
+                    EditorTable.UpdateAffiliation(Integer.valueOf(roleValue[1]),university.getText());
+                    EditorTable.UpdateEmail(Integer.valueOf(roleValue[1]),emailField.getText());
+                    EditorTable.UpdatePassword(Integer.valueOf(roleValue[1]),Integer.toString(passWordField.getText().hashCode()));
+                    EditorTable.UpdateTemp(Integer.valueOf(roleValue[1]),false);
 
                     URL url = new File("src/resources/login.fxml").toURI().toURL();
                     Parent view = FXMLLoader.load(url);
@@ -155,20 +162,43 @@ public class RegisterController extends Main {
                     System.err.println(e.getClass().getName() + ": " + e.getMessage());
                     System.out.println("Selection failed");
                 }
-            } else if (roleValue == "Reviewer") {
-                ReviewerTable.Insert(prefixValue, firstName.getText(), lastName.getText(), university.getText(), emailField.getText(), Integer.toString(passWordField.getText().hashCode()),false);
+            } else if (roleValue[0] == "Reviewer") {
 
-                URL url = new File("src/resources/login.fxml").toURI().toURL();
-                Parent view = FXMLLoader.load(url);
-                Scene viewScene = new Scene(view);
+                try {
+                    ReviewerTable.UpdateTitle(Integer.valueOf(roleValue[1]),prefixValue);
+                    ReviewerTable.UpdateName(Integer.valueOf(roleValue[1]), firstName.getText());
+                    ReviewerTable.UpdateSurname(Integer.valueOf(roleValue[1]),lastName.getText());
+                    ReviewerTable.UpdateAffiliation(Integer.valueOf(roleValue[1]),university.getText());
+                    ReviewerTable.UpdateEmail(Integer.valueOf(roleValue[1]),emailField.getText());
+                    ReviewerTable.UpdatePassword(Integer.valueOf(roleValue[1]),Integer.toString(passWordField.getText().hashCode()));
+                    ReviewerTable.UpdateTemp(Integer.valueOf(roleValue[1]),false);
 
-                Stage window = (Stage) ((Node) action.getSource()).getScene().getWindow();
-                window.setResizable(true);
-                window.setScene(viewScene);
+                    URL url = new File("src/resources/login.fxml").toURI().toURL();
+                    Parent view = FXMLLoader.load(url);
+                    Scene viewScene = new Scene(view);
+
+                    Stage window = (Stage) ((Node) action.getSource()).getScene().getWindow();
+                    window.setResizable(true);
+                    window.setScene(viewScene);
+                } catch (SQLException e) {
+                    System.err.println(e.getClass().getName() + ": " + e.getMessage());
+                    System.out.println("Selection failed");
+                }
 
             } else {
                 System.out.println("Not all fields filled in");
             }
+        }
+    }
+
+    public String[] getRole(int [] IDs){
+
+        if (IDs[0] == 0 && IDs[1] == 0 && IDs[2] != 0){
+            return new String[] {"Reviewer", String.valueOf(IDs[2])};
+        } else if (IDs[0] == 0 && IDs[1] != 0 && IDs[2] == 0) {
+            return new String[] {"Editor", String.valueOf(IDs[1])};
+        } else {
+            return new String[] {"Author", String.valueOf(IDs[0])};
         }
     }
 }
