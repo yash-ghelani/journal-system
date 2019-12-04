@@ -5,6 +5,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import main.tables.AuthorTable;
 
 
 import java.io.File;
@@ -24,6 +25,7 @@ public class Main extends Application {
         primaryStage.show();
     }
 
+    public static int IDs[];
 
     public static void main(String[] args) {
         launch(args);
