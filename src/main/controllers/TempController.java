@@ -127,13 +127,7 @@ public class TempController extends Main {
 
                     System.out.println(roleValue[0]+" "+firstName.getText()+" "+lastName.getText()+" "+university.getText()+" "+emailField.getText()+" "+ passWordField.getText().hashCode() +" "+ false);
 
-                    URL url = new File("src/resources/login.fxml").toURI().toURL();
-                    Parent view = FXMLLoader.load(url);
-                    Scene viewScene = new Scene(view);
-
-                    Stage window = (Stage) ((Node) action.getSource()).getScene().getWindow();
-                    window.setResizable(true);
-                    window.setScene(viewScene);
+                    RegisterController.loadLogin(action);
 
                 } catch (SQLException e) {
                     System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -151,13 +145,7 @@ public class TempController extends Main {
                     EditorTable.UpdatePassword(Integer.valueOf(roleValue[1]),Integer.toString(passWordField.getText().hashCode()));
                     EditorTable.UpdateTemp(Integer.valueOf(roleValue[1]),false);
 
-                    URL url = new File("src/resources/login.fxml").toURI().toURL();
-                    Parent view = FXMLLoader.load(url);
-                    Scene viewScene = new Scene(view);
-
-                    Stage window = (Stage) ((Node) action.getSource()).getScene().getWindow();
-                    window.setResizable(true);
-                    window.setScene(viewScene);
+                    RegisterController.loadLogin(action);
                 } catch (SQLException e) {
                     System.err.println(e.getClass().getName() + ": " + e.getMessage());
                     System.out.println("Selection failed");
@@ -173,13 +161,7 @@ public class TempController extends Main {
                     ReviewerTable.UpdatePassword(Integer.valueOf(roleValue[1]),Integer.toString(passWordField.getText().hashCode()));
                     ReviewerTable.UpdateTemp(Integer.valueOf(roleValue[1]),false);
 
-                    URL url = new File("src/resources/login.fxml").toURI().toURL();
-                    Parent view = FXMLLoader.load(url);
-                    Scene viewScene = new Scene(view);
-
-                    Stage window = (Stage) ((Node) action.getSource()).getScene().getWindow();
-                    window.setResizable(true);
-                    window.setScene(viewScene);
+                    RegisterController.loadLogin(action);
                 } catch (SQLException e) {
                     System.err.println(e.getClass().getName() + ": " + e.getMessage());
                     System.out.println("Selection failed");
