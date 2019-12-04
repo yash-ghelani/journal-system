@@ -28,7 +28,7 @@
             <Separator prefHeight="0.0" prefWidth="124.0" />
             <HBox prefHeight="110.0" prefWidth="721.0">
                <children>
-                  <Region prefHeight="67.0" prefWidth="133.0" />
+                  <Region prefHeight="67.0" prefWidth="80.0" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Article" wrappingWidth="218.2060546875">
                      <font>
                         <Font size="36.0" />
@@ -37,12 +37,12 @@
                         <Insets bottom="8.0" left="13.0" right="8.0" top="6.0" />
                      </HBox.margin>
                   </Text>
-                  <Region prefHeight="169.0" prefWidth="339.0" HBox.hgrow="ALWAYS" />
-                  <VBox prefHeight="91.0" prefWidth="501.0">
+                  <Region prefHeight="67.0" prefWidth="502.0" HBox.hgrow="ALWAYS" />
+                  <VBox prefHeight="67.0" prefWidth="228.0">
                      <children>
                         <Label prefHeight="17.0" prefWidth="446.0" text="Review ID: 523245641">
                            <VBox.margin>
-                              <Insets top="10.0" />
+                              <Insets top="20.0" />
                            </VBox.margin>
                         </Label>
                         <Label prefHeight="21.0" prefWidth="312.0" text="Submission ID: 42342345" />
@@ -70,7 +70,10 @@
             <HBox prefHeight="78.0" prefWidth="1044.0">
                <children>
                   <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                  <TextField fx:id="typoError" prefHeight="27.0" prefWidth="650.0" />
+                  <TextField fx:id="typoError" prefHeight="27.0" prefWidth="650.0">
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin></TextField>
                   <Region prefHeight="67.0" prefWidth="316.0" HBox.hgrow="ALWAYS" />
                   <Button mnemonicParsing="false" onAction="#handleTypoError" prefHeight="27.0" prefWidth="240.0" text="Add Error" />
                   <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
@@ -101,7 +104,10 @@
             <HBox prefHeight="78.0" prefWidth="1044.0">
                <children>
                   <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                  <TextField fx:id="criticism" prefHeight="27.0" prefWidth="650.0" />
+                  <TextField fx:id="criticism" prefHeight="27.0" prefWidth="650.0">
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin></TextField>
                   <Region prefHeight="67.0" prefWidth="316.0" HBox.hgrow="ALWAYS" />
                   <Button mnemonicParsing="false" onAction="#handleAddCriticism" prefHeight="27.0" prefWidth="240.0" text="Add Criticism" />
                   <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
