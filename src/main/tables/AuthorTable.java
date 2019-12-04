@@ -246,7 +246,7 @@ public class AuthorTable {
         }
     }
 
-    public static void UpdateTemp(int id) throws SQLException {
+    public static void UpdateTemp(int id, boolean temp) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -254,7 +254,7 @@ public class AuthorTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String journal = "UPDATE Author SET Temp = false WHERE AuthorID=" + id;
+                String journal = "UPDATE Author SET Temp = "+ temp +" WHERE AuthorID=" + id;
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
             } catch (SQLException ex) {
