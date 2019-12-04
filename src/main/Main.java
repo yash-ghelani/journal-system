@@ -25,7 +25,7 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-    public static int IDs[];
+    public static int IDs[] = new int[3];
 
     public static void main(String[] args) {
         launch(args);
