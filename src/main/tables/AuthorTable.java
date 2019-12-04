@@ -254,7 +254,7 @@ public class AuthorTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String journal = "UPDATE Author SET Temp = "+ temp +" WHERE AuthorID=" + id;
+                String journal = "UPDATE Author SET Temp = '"+ temp +"' WHERE AuthorID=" + id;
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
             } catch (SQLException ex) {

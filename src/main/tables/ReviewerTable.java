@@ -29,6 +29,7 @@ public class ReviewerTable {
                         "Email                   NVARCHAR(320)        NOT NULL," +
                         "Password                NVARCHAR(100)        NOT NULL," +
                         "Temp                    BOOLEAN             NOT NULL," +
+                        "Count                   INT                  NOT NULL," +
                         "PRIMARY KEY (ReviewerID))";
 
                 stmt.executeUpdate(jtable);
@@ -51,7 +52,7 @@ public class ReviewerTable {
 
     }
 
-    public static void Insert(String title, String name, String surname, String affiliation, String email, String password, boolean temp) throws SQLException {
+    public static void Insert(String title, String name, String surname, String affiliation, String email, String password, boolean temp, int count) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -59,8 +60,8 @@ public class ReviewerTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String journal = "INSERT INTO Reviewer (Title, Name, Surname, Affiliation, Email, Password, Temp) "+
-                        " VALUES ('" + title + "', '" + name + "', '" + surname + "','" + affiliation + "','" + email + "','" + password + "','"+ temp+"')";
+                String journal = "INSERT INTO Reviewer (Title, Name, Surname, Affiliation, Email, Password, Temp, Count) "+
+                        " VALUES ('" + title + "', '" + name + "', '" + surname + "','" + affiliation + "','" + email + "','" + password + "','"+ temp+"'," + count + ")";
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
             } catch (SQLException e) {
