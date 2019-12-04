@@ -13,6 +13,9 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import javafx.event.*;
+import main.Main;
+import main.tables.ReviewerTable;
+import main.tables.ReviewTable;
 
 import java.io.File;
 import java.io.IOException;
@@ -81,8 +84,18 @@ public class InitialVerdictController {
     }
 
     public void handleSubmit(ActionEvent actionEvent) {
+        int dummySubmissionInfo = 1234;
+        boolean verdict;
         String summary = reviewSummary.getText();
-        String verdict = (String) finalVerdict.getValue();
+//        if (finalVerdict.getValue() == "Champion") {
+//            verdict = true;
+//        } else if (finalVerdict.getValue() == "Detractor") {
+//            verdict = false;
+//        } else {
+//
+//        }
+
+        //ReviewTable.Insert(Main.IDs[2], dummySubmissionInfo, summary, verdict);
 
         //System.out.println(crits);
         //System.out.println(errors);

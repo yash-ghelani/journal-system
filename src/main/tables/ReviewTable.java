@@ -25,7 +25,7 @@ public class ReviewTable {
                         "ReviewerID             INT, "+
                         "SubmissionInfoID       INT, "+
                         "Summery                TEXT, "+
-                        "Verdict                BOOLEAN, "+
+                        "Verdict                TEXT, "+
                         "PRIMARY KEY (ReviewID), " +
                         "FOREIGN KEY (ReviewerID) REFERENCES Reviewer(ReviewerID), " +
                         "FOREIGN KEY (SubmissionInfoID) REFERENCES SubmissionInfo(SubmissionInfoID))";
@@ -56,7 +56,7 @@ public class ReviewTable {
 
 
 
-    public static void Insert(int reviewerid, int submissioninfoid, String summery, Boolean verdict ) throws SQLException {
+    public static void Insert(int reviewerid, int submissioninfoid, String summery, String verdict ) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -65,7 +65,7 @@ public class ReviewTable {
             try {
                 stmt = con.createStatement();
 
-                String journal = "INSERT INTO Review (ReviewerID, SubmissionInfoID, Summery, Verdict) VALUES (" + reviewerid +"," + submissioninfoid + ", '" + summery + "', " + verdict +")";
+                String journal = "INSERT INTO Review (ReviewerID, SubmissionInfoID, Summery, Verdict) VALUES (" + reviewerid +"," + submissioninfoid + ", '" + summery + "', '" + verdict +"')";
                 System.out.println(journal);
                 stmt.executeUpdate(journal);
 
@@ -144,7 +144,7 @@ public class ReviewTable {
         }
     }
 
-    public static void UpdateVerdict(Boolean verdict) throws SQLException {
+    public static void UpdateVerdict(String verdict) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -326,8 +326,8 @@ public class ReviewTable {
         return fin;
     }
 
-    public boolean SelectVerdict(int id) throws SQLException {
-        boolean fin = false;
+    public String SelectVerdict(int id) throws SQLException {
+        String fin = null;
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -338,7 +338,7 @@ public class ReviewTable {
                 String query = "SELECT Verdict FROM Review WHERE ReviewID = " + id;
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
-                    fin = res.getBoolean("Verdict");
+                    fin = res.getString("Verdict");
                 }
                 res.close();
             }
@@ -357,6 +357,32 @@ public class ReviewTable {
             if (con != null) con.close();
         }
         return fin;
+    }
+
+    public static void DeleteTable() throws SQLException {
+        Connection con = null;
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String newEdition = "DROP TABLE Review";
+                stmt.executeUpdate(newEdition);
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
     }
 
 }

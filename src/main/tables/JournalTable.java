@@ -176,4 +176,30 @@ public class JournalTable {
         }
         return fin;
     }
+
+    public static void DeleteTable() throws SQLException {
+        Connection con = null;
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String newEdition = "DROP TABLE Journal";
+                stmt.executeUpdate(newEdition);
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+    }
 }
