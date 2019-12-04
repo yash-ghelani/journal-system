@@ -126,7 +126,7 @@ public class RegisterController extends Main {
 
             if (roleValue == "Author") {
                 try {
-                    AuthorTable.Insert(prefixValue, firstName.getText(), lastName.getText(), university.getText(), emailField.getText(), Integer.toString(passWordField.getText().hashCode()),temp);
+                    AuthorTable.Insert(prefixValue, firstName.getText(), lastName.getText(), university.getText(), emailField.getText(), Integer.toString(passWordField.getText().hashCode()),0);
                     loadLogin(action);
 
                 } catch (SQLException e) {
@@ -136,7 +136,7 @@ public class RegisterController extends Main {
 
             } else if (roleValue == "Editor") {
                 try {
-                    EditorTable.Insert(prefixValue, firstName.getText(), lastName.getText(), university.getText(), emailField.getText(), Integer.toString(passWordField.getText().hashCode()),temp);
+                    EditorTable.Insert(prefixValue, firstName.getText(), lastName.getText(), university.getText(), emailField.getText(), Integer.toString(passWordField.getText().hashCode()),0);
 
                     loadLogin(action);
                 } catch (SQLException e) {
@@ -144,7 +144,7 @@ public class RegisterController extends Main {
                     System.out.println("Selection failed");
                 }
             } else if (roleValue == "Reviewer") {
-                ReviewerTable.Insert(prefixValue, firstName.getText(), lastName.getText(), university.getText(), emailField.getText(), Integer.toString(passWordField.getText().hashCode()),false, 0);
+                ReviewerTable.Insert(prefixValue, firstName.getText(), lastName.getText(), university.getText(), emailField.getText(), Integer.toString(passWordField.getText().hashCode()),0, 0);
                 loadLogin(action);
 
             } else {
