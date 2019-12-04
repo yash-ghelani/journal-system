@@ -11,12 +11,12 @@ import main.tables.AuthorTable;
 import java.io.File;
 import java.net.URL;
 
-public class Main extends Application {
+public class Main<IDs> extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
 
-        URL url = new File("src/resources/login.fxml").toURI().toURL();
+        URL url = new File("src/resources/Login.fxml").toURI().toURL();
         Parent root = FXMLLoader.load(url);
         primaryStage.setTitle("Publisher");
         primaryStage.setScene(new Scene(root, 710, 526));
@@ -25,7 +25,7 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-    public static int IDs[];
+    public static int IDs[] = new int[3];
 
     public static void main(String[] args) {
         launch(args);

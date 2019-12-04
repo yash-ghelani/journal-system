@@ -87,12 +87,8 @@ public class InitialVerdictController {
         int dummySubmissionInfo = 1234;
         boolean verdict;
         String summary = reviewSummary.getText();
-//        if (finalVerdict.getValue() == "Champion") {
-//            verdict = true;
-//        } else if (finalVerdict.getValue() == "Detractor") {
-//            verdict = false;
-//        } else {
-//
+//        if (finalVerdict.getValue() == null) {
+//            System.out.println(finalVerdict.getValue());
 //        }
 
         //ReviewTable.Insert(Main.IDs[2], dummySubmissionInfo, summary, verdict);
