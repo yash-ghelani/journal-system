@@ -14,10 +14,7 @@ import javafx.stage.Stage;
 
 import javafx.event.*;
 import main.Main;
-import main.tables.CriticismsTable;
-import main.tables.ErrorTable;
-import main.tables.ReviewerTable;
-import main.tables.ReviewTable;
+import main.tables.*;
 
 import java.io.File;
 import java.io.IOException;
