@@ -465,13 +465,16 @@ public class ReviewTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "SELECT ReviewerID FROM Review WHERE SubmissionInfoID = " + id;
+                String query = "SELECT ReviewID FROM Review WHERE SubmissionInfoID = " + id;
                 ResultSet res = stmt.executeQuery(query);
-                //if (rs.next() == false) { System.out.println("ResultSet in empty in Java"); } else { do { String data = rs.getString("emp_name"); System.out.println(data); } while (rs.next()); }
-
-
-            //catch (SQLException ex) {
-              //  ex.printStackTrace();
+                while (res.next()) {
+                    int dn = res.getInt("ReviewID");
+                    fin++;
+                }
+                res.close();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
             }
             finally {
                 if (stmt != null)

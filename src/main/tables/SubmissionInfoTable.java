@@ -414,8 +414,6 @@ public class SubmissionInfoTable {
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     fin = res.getInt("SubmissionInfoID");
-
-
                 }
                 res.close();
             }
