@@ -86,7 +86,6 @@ public class RegisterController extends Main {
             } else if (roles.getValue() == "Editor") {
                 try {
                     EditorTable.Insert((String) prefix.getValue(), firstName.getText(), lastName.getText(), affiliation.getText(), emailField.getText(), Integer.toString(passWordField.getText().hashCode()),0);
-
                     loadLogin(action);
                 } catch (SQLException e) {
                     System.err.println(e.getClass().getName() + ": " + e.getMessage());
