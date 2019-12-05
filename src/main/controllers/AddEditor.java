@@ -8,7 +8,7 @@ import javafx.event.*;
 
 public class AddEditor {
 
-    static String [] editorn_p= new String[2];
+    String [] editorn_p = {"@£$%N","@£$%N"};
     @FXML
 
     private TextField textName;
@@ -17,15 +17,33 @@ public class AddEditor {
 
     private PasswordField passField;
 
-    public void actionAdd(ActionEvent actionEvent){
-        if (textName.getText().toString().equals(null)||passField.getText().equals(null)){
+    public void actionAdd(ActionEvent actionEvent) throws NullPointerException{
+
+        if (textName.getText().isEmpty()){
+            textName.setStyle("-fx-prompt-text-fill:red;");
 
         }
-        else {
+        else if(!textName.getText().isEmpty()) {
             editorn_p[0] = textName.getText();
-            editorn_p[1]= passField.getText();
+
         }
-        Retire.k.add(new EditorP (editorn_p[0],"Editor"));
+
+        if (passField.getText().isEmpty()){
+            passField.setStyle("-fx-prompt-text-fill:red;");
+        }
+        else {
+           editorn_p[1] = passField.getText();
+        }
+
+        if (!editorn_p[0].equals("@£$%N") && !editorn_p[1].equals("@£$%N")) {
+            if (Retire.k.size()<4)
+            Retire.k.add(new EditorP(editorn_p[0], "Editor"));
+            else {}
+
+        }
+        else   {
+           //nothing
+        }
    }
 
 }
