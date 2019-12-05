@@ -119,7 +119,7 @@ public class ReviewTable {
     }
 
 
-    public static void UpdateSummary(String Summary) throws SQLException {
+    public static void UpdateSummary(int id, String Summary) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -127,7 +127,7 @@ public class ReviewTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String journal = "UPDATE Review SET Summary = '" + Summary + "'";
+                String journal = "UPDATE Review SET Summary = '" + Summary + "' WHERE SubmissionInfoID = " + id;
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
             }
@@ -147,7 +147,7 @@ public class ReviewTable {
         }
     }
 
-    public static void UpdateVerdict(String verdict) throws SQLException {
+    public static void UpdateVerdict(int id, String verdict) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -155,7 +155,7 @@ public class ReviewTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String journal = "UPDATE Review SET verdict = '" + verdict + "'";
+                String journal = "UPDATE Review SET verdict = '" + verdict + "' WHERE SubmissionInfoID = " + id;
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
             }
@@ -398,7 +398,7 @@ public class ReviewTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "SELECT ReviewID FROM Review WHERE ReviewerID = " + reviewerid + " AND SubmissionID = " + submissionid + " AND Summary = '" + summary +"' AND Verdict = '" + verdict + "'";
+                String query = "SELECT ReviewID FROM Review WHERE ReviewerID = " + reviewerid + " AND SubmissionInfoID = " + submissionid + " AND Summary = '" + summary +"' AND Verdict = '" + verdict + "'";
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     fin = res.getInt("ReviewID");
@@ -424,6 +424,7 @@ public class ReviewTable {
 
     public static ArrayList<Integer> selectListOfSubmissionID(int id) throws SQLException {
         ArrayList<Integer> list = new ArrayList<Integer>();
+
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -431,7 +432,7 @@ public class ReviewTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "SELECT SubmissionInfoID FROM Review WHERE ReviewerID = " + id;
+                String query = "SELECT SubmissionInfoID FROM Review WHERE ReviewerID = " + id + " AND Summary = 'null' AND Verdict = 'null'";
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     int fin = res.getInt("SubmissionInfoID");
@@ -456,7 +457,8 @@ public class ReviewTable {
         return list;
     }
 
-    public static int CheckReviewID(int id) throws SQLException {
+
+    public static int selectReviewID(int id) throws SQLException {
         int fin = 0;
         Connection con = null; // connection to a database
         try {
@@ -465,13 +467,16 @@ public class ReviewTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "SELECT ReviewerID FROM Review WHERE SubmissionInfoID = " + id;
+                String query = "SELECT ReviewID FROM Review WHERE SubmissionInfoID = " + id;
                 ResultSet res = stmt.executeQuery(query);
-                //if (rs.next() == false) { System.out.println("ResultSet in empty in Java"); } else { do { String data = rs.getString("emp_name"); System.out.println(data); } while (rs.next()); }
+                while (res.next()) {
+                    fin = res.getInt("ReviewID");
+                }
+                res.close();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
 
-
-            //catch (SQLException ex) {
-              //  ex.printStackTrace();
             }
             finally {
                 if (stmt != null)
@@ -486,7 +491,5 @@ public class ReviewTable {
         }
         return fin;
     }
-
-
 
 }

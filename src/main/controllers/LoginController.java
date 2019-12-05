@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import main.Main;
 import main.tables.*;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.regex.Pattern;
 
 public class LoginController {
 
@@ -32,7 +34,12 @@ public class LoginController {
     @FXML
     private PasswordField Password;
 
+    @FXML
+    private Text errorLabel;
 
+    public void initialize(){
+        errorLabel.setVisible(false);
+    }
 
     public void handleRegister(javafx.event.ActionEvent event) throws IOException {
         URL url = new File("src/resources/Register.fxml").toURI().toURL();
@@ -77,7 +84,7 @@ public class LoginController {
         Main.IDs[1] = EditorTable.getID(login, password);
         Main.IDs[2] = ReviewerTable.getID(login, password);
 
-        if(!loginID.getText().isEmpty() && !Password.getText().isEmpty()) {
+        if(Pattern.matches("[A-Za-z.]+[@][a-zA-z]+[.][A-Za-z.]+", loginID.getText()) && Pattern.matches("[a-zA-Z0-9[^\\dA-Za-zA-Za-z0-9]]{6,}", Password.getText())) {
             if (isEditor && isAuthor && isReviewer) {
                 URL url = new File("src/resources/EAR.fxml").toURI().toURL();
                 Parent view = FXMLLoader.load(url);
@@ -135,11 +142,22 @@ public class LoginController {
                 window.setResizable(true);
                 window.setScene(viewScene);
             }
-        }else {
+        } else if (!isAuthor || !isEditor || !isReviewer) {
+
             loginID.setStyle("-fx-border-color: red; -fx-border-width: 2px;-fx-prompt-text-fill : red;");
             Password.setStyle("-fx-border-color: red; -fx-border-width: 2px;-fx-prompt-text-fill : red;");
             loginID.clear();
             Password.clear();
+            errorLabel.setVisible(true);
+
+        } else {
+
+            loginID.setStyle("-fx-border-color: red; -fx-border-width: 2px;-fx-prompt-text-fill : red;");
+            Password.setStyle("-fx-border-color: red; -fx-border-width: 2px;-fx-prompt-text-fill : red;");
+            loginID.clear();
+            Password.clear();
+            errorLabel.setVisible(true);
+
         }
     }
 
@@ -152,17 +170,22 @@ public class LoginController {
         Main.IDs[1] = EditorTable.getID(login, password);
         Main.IDs[2] = ReviewerTable.getID(login, password);
 
-        if(!loginID.getText().isEmpty() && !Password.getText().isEmpty()) {
+        boolean isAuthor = AuthorTable.ValidateEmailAndPassword(login, password);
+        boolean isEditor = EditorTable.ValidateEmailAndPassword(login, password);
+        boolean isReviewer = ReviewerTable.ValidateEmailAndPassword(login, password);
+
+        if(!loginID.getText().isEmpty() && !Password.getText().isEmpty() && (isAuthor || isEditor || isReviewer)) {
             URL url = new File("src/resources/UpdateTempUser.fxml").toURI().toURL();
             Parent view = FXMLLoader.load(url);
             Scene viewScene = new Scene(view);
-
             Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-
             window.setScene(viewScene);
-        }else {
+        } else {
             loginID.setStyle("-fx-prompt-text-fill :red");
             Password.setStyle("-fx-prompt-text-fill :red");
+            loginID.clear();
+            Password.clear();
+            errorLabel.setVisible(true);
         }
     }
 }

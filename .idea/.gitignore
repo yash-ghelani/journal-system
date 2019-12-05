@@ -1,10 +1,13 @@
 # Default ignored files
 /workspace.xml
 /uiDesigner.xml
-/misc.xml
-/vcs.xml
+misc.xml
+vcs.xml
+modules.xml
 /libraries
-/out
+out/
 systemsandsecurity.iml
 # Datasource local storage ignored files
 /dataSources/
+dataSources.xml
+dataSources.local.xml
