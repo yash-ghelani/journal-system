@@ -68,7 +68,7 @@ public class AuthorPanelController{
     public void handleLoadArticles (ActionEvent event) throws IOException, SQLException {
 
         List<Integer> submissions = SubmissionInfoTable.SelectWhichSubmissionID(Main.IDs[0]);
-        System.out.println(submissions);
+        //System.out.println(submissions);
 
         for(int i =0; i<submissions.size(); i++) {
 

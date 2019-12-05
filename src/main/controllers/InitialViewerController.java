@@ -16,29 +16,10 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
-public class InitialFinalViewerController {
+public class InitialViewerController {
 
-    public void handleInitialViewer(ActionEvent action) throws IOException{
-        URL url = new File("src/resources/Respond.fxml").toURI().toURL();
-        Parent view = FXMLLoader.load(url);
-        Scene viewScene = new Scene(view);
 
-        Stage window = (Stage)((Node)action.getSource()).getScene().getWindow();
-        window.setResizable(true);
-        window.setScene(viewScene);
-    }
-
-    public void handleFinalViewer(ActionEvent action) throws IOException{
-        URL url = new File("src/resources/Respond.fxml").toURI().toURL();
-        Parent view = FXMLLoader.load(url);
-        Scene viewScene = new Scene(view);
-
-        Stage window = (Stage)((Node)action.getSource()).getScene().getWindow();
-        window.setResizable(true);
-        window.setScene(viewScene);
-    }
-
-    public void handleInitialFinalCancel(ActionEvent action) throws IOException{
+    public void handleInitialCancel(ActionEvent action) throws IOException{
         URL url = new File("src/resources/AuthorPanel.fxml").toURI().toURL();
         Parent view = FXMLLoader.load(url);
         Scene viewScene = new Scene(view);
@@ -46,5 +27,21 @@ public class InitialFinalViewerController {
         Stage window = (Stage)((Node)action.getSource()).getScene().getWindow();
         window.setResizable(true);
         window.setScene(viewScene);
+    }
+
+    public void handleInitialViewer1(ActionEvent actionEvent) throws IOException {
+        URL url = new File("src/resources/Respond.fxml").toURI().toURL();
+        Parent view = FXMLLoader.load(url);
+        Scene viewScene = new Scene(view);
+
+        Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        window.setResizable(true);
+        window.setScene(viewScene);
+    }
+
+    public void handleInitialViewer2(ActionEvent actionEvent) {
+    }
+
+    public void handleInitialViewer3(ActionEvent actionEvent) {
     }
 }
