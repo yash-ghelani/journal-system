@@ -33,6 +33,9 @@ public class RegisterController extends Main {
     private TextField emailField;
 
     @FXML
+    private TextField affiliation;
+
+    @FXML
     private PasswordField passWordField;
 
     @FXML
@@ -40,9 +43,6 @@ public class RegisterController extends Main {
 
     @FXML
     private ChoiceBox roles;
-
-    @FXML
-    private ChoiceBox affiliation;
 
     public void initialize() {
         List<String> list = new ArrayList<String>();
@@ -59,17 +59,6 @@ public class RegisterController extends Main {
         rolesList.add("Reviewer");
         ObservableList rlList = FXCollections.observableList(rolesList);
         roles.setItems(rlList);
-
-        List<String> affiliationsList = new ArrayList<String>();
-        affiliationsList.add("Department of Computer Science");
-        affiliationsList.add("Department of Engineering");
-        affiliationsList.add("Department of Psychology");
-        affiliationsList.add("Department of Social Science");
-        affiliationsList.add("Department of Law");
-        affiliationsList.add("Department of Mathematics");
-        affiliationsList.add("Department of Science");
-        ObservableList aList = FXCollections.observableList(affiliationsList);
-        affiliation.setItems(aList);
     }
 
     public void handleRegisterSuccess(ActionEvent action) throws IOException, SQLException {
@@ -86,7 +75,7 @@ public class RegisterController extends Main {
 
             if (roles.getValue() == "Author") {
                 try {
-                    AuthorTable.Insert((String) prefix.getValue(), firstName.getText(), lastName.getText(), (String) affiliation.getValue(), emailField.getText(), Integer.toString(passWordField.getText().hashCode()),0);
+                    AuthorTable.Insert((String) prefix.getValue(), firstName.getText(), lastName.getText(), affiliation.getText(), emailField.getText(), Integer.toString(passWordField.getText().hashCode()),0);
                     loadLogin(action);
 
                 } catch (SQLException e) {
@@ -96,7 +85,7 @@ public class RegisterController extends Main {
 
             } else if (roles.getValue() == "Editor") {
                 try {
-                    EditorTable.Insert((String) prefix.getValue(), firstName.getText(), lastName.getText(), (String) affiliation.getValue(), emailField.getText(), Integer.toString(passWordField.getText().hashCode()),0);
+                    EditorTable.Insert((String) prefix.getValue(), firstName.getText(), lastName.getText(), affiliation.getText(), emailField.getText(), Integer.toString(passWordField.getText().hashCode()),0);
 
                     loadLogin(action);
                 } catch (SQLException e) {
@@ -106,7 +95,7 @@ public class RegisterController extends Main {
             } else if (roles.getValue() == "Reviewer") {
 
                 try {
-                    ReviewerTable.Insert((String) prefix.getValue(), firstName.getText(), lastName.getText(), (String) affiliation.getValue(), emailField.getText(), Integer.toString(passWordField.getText().hashCode()),0, 0);
+                    ReviewerTable.Insert((String) prefix.getValue(), firstName.getText(), lastName.getText(), affiliation.getText(), emailField.getText(), Integer.toString(passWordField.getText().hashCode()),0, 0);
                     loadLogin(action);
                 } catch (SQLException e) {
                     System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -171,7 +160,7 @@ public class RegisterController extends Main {
     }
 
     public boolean validAffiliation(){
-        if (affiliation.getSelectionModel().isEmpty()) {
+        if (affiliation.getText().isEmpty() || affiliation.getText().chars().allMatch(Character::isLetter)) {
             affiliation.setStyle("-fx-border-color: red; -fx-border-width: 2px;-fx-prompt-text-fill : red;");
             return false;
         } else {
