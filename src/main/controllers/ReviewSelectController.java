@@ -76,13 +76,19 @@ public class ReviewSelectController {
             Label title = (Label)v.getChildren().get(0);
             Label submissionID = (Label)v.getChildren().get(1);
 
+            if(ReviewTable.CheckReviewID(SubmissionInfoTable.getSubmissionInfoID(i+1))==1){
+                VBox vButton = (VBox)child.get(2);
+                Button selector = (Button) vButton.getChildren().get(0);
+                selector.setVisible(false);
+
+            }
 
             title.setText(submissions.get(i));
             submissionID.setText("Submission ID: "+SubmissionTable.selectSubmissionID(submissions.get(i)));
-            //role.setText(String.valueOf(i));
 
-            //ReviewTable.SelectReviewID(SubmissionInfoTable.getSubmissionInfoID(i));
+
             System.out.println(ReviewTable.CheckReviewID(SubmissionInfoTable.getSubmissionInfoID(i)));
+
 
             Insets padding = new Insets(10,0,0,0);
             Separator sep = new Separator();
@@ -93,15 +99,17 @@ public class ReviewSelectController {
 
 
 
+
+
         }
     }
 
     public void handleSelectReview(ActionEvent actionEvent) throws SQLException {
         String strap = submissionID.getText();
         int iD = Character.getNumericValue(strap.charAt(strap.length()-1));
-        System.out.println(ReviewTable.CheckReviewID(SubmissionInfoTable.getSubmissionInfoID(iD)));
 
-        //ReviewTable.Insert(Main.IDs[2],iD,null,null);
+
+        ReviewTable.Insert(Main.IDs[2],iD,null,null);
         review.getChildren().remove(select);
         select.setVisible(false);
         select.setDisable(true);

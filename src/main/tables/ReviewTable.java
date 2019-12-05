@@ -471,6 +471,7 @@ public class ReviewTable {
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     fin = res.getInt("ReviewID");
+
                 }
                 res.close();
             }
