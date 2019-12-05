@@ -61,7 +61,7 @@ public class RegisterController extends Main {
         roles.setItems(rlList);
     }
 
-    public void handleRegisterSuccess(ActionEvent action) throws IOException, SQLException {
+    public void handleRegisterSuccess (ActionEvent action) throws IOException, SQLException {
 
         boolean t = validTitle();
         boolean r = validRole();
@@ -77,7 +77,6 @@ public class RegisterController extends Main {
                 try {
                     AuthorTable.Insert((String) prefix.getValue(), firstName.getText(), lastName.getText(), affiliation.getText(), emailField.getText(), Integer.toString(passWordField.getText().hashCode()),0);
                     loadLogin(action);
-
                 } catch (SQLException e) {
                     System.err.println(e.getClass().getName() + ": " + e.getMessage());
                     System.out.println("Selection failed");
@@ -85,7 +84,9 @@ public class RegisterController extends Main {
 
             } else if (roles.getValue() == "Editor") {
                 try {
+                    System.out.println("chosen to register an editor");
                     EditorTable.Insert((String) prefix.getValue(), firstName.getText(), lastName.getText(), affiliation.getText(), emailField.getText(), Integer.toString(passWordField.getText().hashCode()),0);
+                    System.out.println("inserted into table");
                     loadLogin(action);
                 } catch (SQLException e) {
                     System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -197,3 +198,4 @@ public class RegisterController extends Main {
         window.setScene(viewScene);
     }
 }
+
