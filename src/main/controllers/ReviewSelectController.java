@@ -1,20 +1,37 @@
 package main.controllers;
 
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import javafx.event.*;
+import main.Main;
+import main.tables.SubmissionInfoTable;
+import main.tables.SubmissionTable;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.List;
 
 public class ReviewSelectController {
+
+
+    @FXML
+    private Button toRemove;
+
+    @FXML
+    private VBox vBoxArticle;
+
 
     public void handleBack(ActionEvent event) throws IOException {
         URL url = new File("src/resources/ReviewPanel.fxml").toURI().toURL();
@@ -25,4 +42,39 @@ public class ReviewSelectController {
 
         window.setScene(viewScene);
     }
+
+    public void handleLoadArticles(ActionEvent event) throws IOException, SQLException {
+        List<String> submissions = SubmissionTable.SelectAllSubmissionTitles();
+        System.out.println(submissions);
+
+        for(int i =0; i<submissions.size(); i++) {
+
+
+            URL url = new File("src/resources/ReviewSelectBox.fxml").toURI().toURL();
+
+            HBox box = FXMLLoader.load(url);
+            ObservableList<Node> child = box.getChildren();
+            vBoxArticle.getChildren().remove(toRemove);
+
+            VBox v = (VBox)child.get(0);
+            Label title = (Label)v.getChildren().get(0);
+            Label submissionID = (Label)v.getChildren().get(1);
+
+
+            title.setText(submissions.get(i));
+            submissionID.setText("Submission ID: "+SubmissionTable.selectSubmissionID(submissions.get(i)));
+            //role.setText(String.valueOf(i));
+
+
+            Insets padding = new Insets(10,0,0,0);
+            Separator sep = new Separator();
+            sep.setPadding(padding);
+
+            vBoxArticle.getChildren().add(box);
+            vBoxArticle.getChildren().add(sep);
+
+        }
+    }
+
+
 }

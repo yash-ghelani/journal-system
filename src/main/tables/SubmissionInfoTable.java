@@ -1,5 +1,7 @@
 package main.tables;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SubmissionInfoTable {
 
@@ -201,6 +203,8 @@ public class SubmissionInfoTable {
 
     }
 
+
+
     //=================================================================================================================
 
     public int SelectSubmissionID(int submissionInfoID) throws SQLException {
@@ -216,6 +220,39 @@ public class SubmissionInfoTable {
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     fin = res.getInt("SubmissionID");
+                }
+                res.close();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+        return fin;
+    }
+
+    public static List<Integer> SelectWhichSubmissionID(int authorID) throws SQLException {
+        List<Integer> fin = new ArrayList<>();
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String query = "SELECT SubmissionID FROM SubmissionInfo WHERE AuthorID = " + authorID;
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    fin.add(res.getInt("SubmissionID"));
                 }
                 res.close();
             }

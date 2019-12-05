@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -25,12 +26,14 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Iterator;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-public class AuthorPanelController {
+public class AuthorPanelController{
 
     @FXML
     private VBox vBoxArticle;
@@ -64,11 +67,14 @@ public class AuthorPanelController {
 
     public void handleLoadArticles (ActionEvent event) throws IOException, SQLException {
 
-        //SubmissionTable.Insert("snfnwsf","ff");
-        //SubmissionInfoTable.Insert(21,212,true);
-        int submissionsCount = SubmissionInfoTable.countSubmissions(Main.IDs[0]);
-        System.out.println(submissionsCount);
-        for(int i=0; i<2; i++) {
+        List<Integer> submissions = SubmissionInfoTable.SelectWhichSubmissionID(Main.IDs[0]);
+        System.out.println(submissions);
+
+        for(int i =0; i<submissions.size(); i++) {
+
+            String currentTitle = SubmissionTable.SelectTitle(submissions.get(i));
+            String currentStatus = SubmissionTable.GetEditorVerdict(submissions.get(i));
+
 
             URL url = new File("src/resources/ArticleBox.fxml").toURI().toURL();
 
@@ -77,21 +83,27 @@ public class AuthorPanelController {
             vBoxArticle.getChildren().remove(toRemove);
 
             VBox v = (VBox)child.get(0);
-            Label tittle = (Label)v.getChildren().get(0);
+            Label title = (Label)v.getChildren().get(0);
             Label submissionID = (Label)v.getChildren().get(1);
             Label role = (Label)v.getChildren().get(2);
             Label status = (Label)v.getChildren().get(3);
 
-            tittle.setText(String.valueOf(i));
-            submissionID.setText(String.valueOf(i));
-            role.setText(String.valueOf(i));
-            status.setText(String.valueOf(i));
+            title.setText(currentTitle);
+            submissionID.setText("Submission ID: "+(submissions.get(i)));
+            //role.setText(String.valueOf(i));
+            status.setText("Status: "+currentStatus);
+
+            Insets padding = new Insets(10,0,0,0);
+            Separator sep = new Separator();
+            sep.setPadding(padding);
 
             vBoxArticle.getChildren().add(box);
+            vBoxArticle.getChildren().add(sep);
 
         }
 
     }
+
 
 
     public void handleNewSubmission (ActionEvent event) throws IOException {
@@ -113,7 +125,6 @@ public class AuthorPanelController {
 
         window.setScene(viewScene);
     }
-
 
 
 
