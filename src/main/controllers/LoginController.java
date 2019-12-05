@@ -34,13 +34,6 @@ public class LoginController {
     @FXML
     private PasswordField Password;
 
-    @FXML
-    private Text errorLabel;
-
-    public void initialize(){
-        errorLabel.setVisible(false);
-    }
-
     public void handleRegister(javafx.event.ActionEvent event) throws IOException {
         URL url = new File("src/resources/Register.fxml").toURI().toURL();
         Parent view = FXMLLoader.load(url);
@@ -148,7 +141,6 @@ public class LoginController {
             Password.setStyle("-fx-border-color: red; -fx-border-width: 2px;-fx-prompt-text-fill : red;");
             loginID.clear();
             Password.clear();
-            errorLabel.setVisible(true);
 
         } else {
 
@@ -156,8 +148,6 @@ public class LoginController {
             Password.setStyle("-fx-border-color: red; -fx-border-width: 2px;-fx-prompt-text-fill : red;");
             loginID.clear();
             Password.clear();
-            errorLabel.setVisible(true);
-
         }
     }
 
@@ -185,7 +175,6 @@ public class LoginController {
             Password.setStyle("-fx-prompt-text-fill :red");
             loginID.clear();
             Password.clear();
-            errorLabel.setVisible(true);
         }
     }
 }
