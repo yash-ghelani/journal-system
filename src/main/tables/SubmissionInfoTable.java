@@ -5,8 +5,9 @@ public class SubmissionInfoTable {
 
     public static void main (String args[]) throws SQLException {
 
-        SubmissionInfoTable sit = new SubmissionInfoTable();
-        sit.CreateSubmissionInfoTable();
+        //SubmissionInfoTable sit = new SubmissionInfoTable();
+        //sit.CreateSubmissionInfoTable();
+        //SubmissionInfoTable.countSubmissions();
     }
 
     public static void CreateSubmissionInfoTable() throws SQLException {
@@ -325,6 +326,42 @@ public class SubmissionInfoTable {
         finally {
             if (con != null) con.close();
         }
+    }
+
+
+    public static int countSubmissions(int id) throws SQLException {
+        int fin = 0;
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String query = "SELECT SubmissionID FROM SubmissionInfo WHERE AuthorID = " + id ;
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    int in = res.getInt("SubmissionID");
+                    fin++;
+
+                }
+                res.close();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+        return fin;
     }
 }
 
