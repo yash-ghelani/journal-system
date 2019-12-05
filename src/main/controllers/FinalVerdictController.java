@@ -1,5 +1,7 @@
 package main.controllers;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -16,6 +18,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class FinalVerdictController {
@@ -23,11 +27,20 @@ public class FinalVerdictController {
     @FXML
     private TextField reviewSummary;
 
+    @FXML
+    private ChoiceBox verdictChoiceBox;
+
+    public void initialize() {
+        List<String> list = new ArrayList<String>();
+        list.add("Champion");
+        list.add("Detractor");
+        ObservableList obList = FXCollections.observableList(list);
+        verdictChoiceBox.setItems(obList);
+
+    }
+
     public void handleSubmit(ActionEvent action) throws IOException{
         String rs = reviewSummary.getText();
-
-
-
     }
 
     public void handleLogOut(ActionEvent actionEvent) throws IOException {

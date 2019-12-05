@@ -136,8 +136,10 @@ public class LoginController {
                 window.setScene(viewScene);
             }
         }else {
-            loginID.setStyle("-fx-prompt-text-fill :red");
-            Password.setStyle("-fx-prompt-text-fill :red");
+            loginID.setStyle("-fx-border-color: red; -fx-border-width: 2px;-fx-prompt-text-fill : red;");
+            Password.setStyle("-fx-border-color: red; -fx-border-width: 2px;-fx-prompt-text-fill : red;");
+            loginID.clear();
+            Password.clear();
         }
     }
 
