@@ -86,19 +86,12 @@ public class RegisterController extends Main {
             passWordField.clear();
             passWordField.setPromptText("must be 6 letters and above");
         }
-        if (!l[0].isEmpty() && !l[1].isEmpty() && !l[2].isEmpty() && !l[3].isEmpty()&& !l[4].isEmpty()){
-
-            URL url = new File("src/resources/login.fxml").toURI().toURL();
-            Parent view = FXMLLoader.load(url);
-            Scene viewScene = new Scene(view);
-
-            Stage window = (Stage)((Node)action.getSource()).getScene().getWindow();
-            window.setResizable(true);
-            window.setScene(viewScene);
+        System.out.println(l[0] +""+l[1]);
 
         }
+
     }
 
 
 
-}
+
