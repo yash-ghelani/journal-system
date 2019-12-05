@@ -74,7 +74,15 @@ public class RegisterController extends Main {
 
     public void handleRegisterSuccess(ActionEvent action) throws IOException, SQLException {
 
-        if (validTitle() && validRole() && validFirstName() && validLastName() && validAffiliation() && validEmail() && validPassword()){
+        boolean t = validTitle();
+        boolean r = validRole();
+        boolean fn = validFirstName();
+        boolean ln = validLastName();
+        boolean a = validAffiliation();
+        boolean email = validEmail();
+        boolean pw = validPassword();
+
+        if (t && r && fn && ln && a && email && pw ){
 
             if (roles.getValue() == "Author") {
                 try {
