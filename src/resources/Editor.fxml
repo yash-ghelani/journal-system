@@ -8,18 +8,20 @@
 
 <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="463.0" prefWidth="601.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controllers.ControlEditor">
     <children>
-        <AnchorPane layoutX="16.0" layoutY="30.0" prefHeight="433.0" prefWidth="183.0">
+        <AnchorPane fx:id="anchor" layoutX="16.0" layoutY="30.0" prefHeight="433.0" prefWidth="183.0">
             <children>
-            <Button layoutX="44.0" layoutY="392.0" mnemonicParsing="false" onAction="#addTable" text=" New Volume" />
-            <TreeView fx:id="treeVolume" layoutY="55.0" onMouseClicked="#selectedNode" prefHeight="332.0" prefWidth="200.0" />
+            <Button layoutX="115.0" layoutY="392.0" mnemonicParsing="false" onAction="#addTable" prefHeight="27.0" prefWidth="65.0" text=" New" />
+            <TreeView fx:id="treeVolume" editable="true" layoutY="55.0" onMouseClicked="#selectedNode" prefHeight="332.0" prefWidth="200.0" />
+            <Button layoutX="14.0" layoutY="392.0" mnemonicParsing="false" onAction="#deletetreepaths" text="Delete" />
             </children>
         </AnchorPane>
         <AnchorPane layoutY="-1.0" prefHeight="31.0" prefWidth="601.0" style="-fx-background-color: grey;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
             <children>
-                <Label alignment="CENTER" layoutX="214.0" layoutY="6.0" prefHeight="18.0" prefWidth="188.0" text="Journal name" AnchorPane.leftAnchor="214.0" AnchorPane.rightAnchor="214.0" />
-                <Label alignment="CENTER" layoutX="440.0" layoutY="6.0" prefHeight="18.0" prefWidth="99.0" text="Chief Editor" AnchorPane.rightAnchor="57.0" />
+                <Label fx:id="changejournal" alignment="CENTER" layoutX="231.0" layoutY="6.0" onContextMenuRequested="#contexter" prefHeight="18.0" prefWidth="114.0" text="Journal name" AnchorPane.leftAnchor="231.0" AnchorPane.rightAnchor="256.0" />
+                <Label alignment="CENTER" layoutX="494.0" layoutY="7.0" prefHeight="18.0" prefWidth="99.0" text="editor title" AnchorPane.leftAnchor="494.0" AnchorPane.rightAnchor="8.0" />
             <Button fx:id="addingEditor" layoutX="14.0" layoutY="4.0" mnemonicParsing="false" onAction="#addEditors" text="Add Editor" />
             <Button layoutX="107.0" layoutY="4.0" mnemonicParsing="false" onAction="#retire" text="Editor" />
+            <Label fx:id="editnames" layoutX="412.0" layoutY="6.0" prefHeight="17.0" prefWidth="77.0" text="editor name" AnchorPane.leftAnchor="412.0" AnchorPane.rightAnchor="112.0" />
             </children>
         </AnchorPane>
         <AnchorPane layoutX="215.0" layoutY="30.0" prefHeight="433.0" prefWidth="385.0">
