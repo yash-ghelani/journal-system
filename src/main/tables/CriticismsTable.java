@@ -61,7 +61,7 @@ public class CriticismsTable {
                 stmt = con.createStatement();
 
                 String journal = "INSERT INTO Criticisms ( ReviewID, Criticism) VALUES (" + reviewid +",'" + criticism + "')";
-                System.out.println(journal);
+                //System.out.println(journal);
                 stmt.executeUpdate(journal);
 
             }
