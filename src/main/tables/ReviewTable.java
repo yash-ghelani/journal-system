@@ -456,4 +456,37 @@ public class ReviewTable {
         return list;
     }
 
+    public static int CheckReviewID(int id) throws SQLException {
+        int fin = 0;
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String query = "SELECT ReviewerID FROM Review WHERE SubmissionInfoID = " + id;
+                ResultSet res = stmt.executeQuery(query);
+                //if (rs.next() == false) { System.out.println("ResultSet in empty in Java"); } else { do { String data = rs.getString("emp_name"); System.out.println(data); } while (rs.next()); }
+
+
+            //catch (SQLException ex) {
+              //  ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+        return fin;
+    }
+
+
+
 }

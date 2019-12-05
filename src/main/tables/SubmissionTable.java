@@ -172,6 +172,7 @@ public class SubmissionTable {
         finally {
             if (con != null) con.close();
         }
+        return fin;
     }
 
     public static void UpdateVerdict(int submissionID, String verdict ) throws SQLException {
@@ -390,6 +391,39 @@ public class SubmissionTable {
             if (con != null) con.close();
         }
         return fin;
+    }
+
+    public static String selectInitialTitle(int id) throws SQLException {
+        String title = null;
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String query = "SELECT InitialTitle FROM Submissions WHERE SubmissionID = "+ id;
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    title = res.getString("InitialTitle");
+                }
+                res.close();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+        return title;
     }
 
 }

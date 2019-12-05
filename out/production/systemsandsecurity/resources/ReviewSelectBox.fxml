@@ -8,16 +8,16 @@
 
 <?import javafx.scene.text.Font?>
 <?import javafx.geometry.Insets?>
-<HBox fx:id="ReviewSelectBox" prefHeight="65.0" prefWidth="783.0" xmlns:fx="http://javafx.com/fxml/1">
+<HBox fx:id="review" prefHeight="65.0" prefWidth="783.0" fx:controller="main.controllers.ReviewSelectController" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <VBox prefHeight="100.0" prefWidth="325.0">
             <children>
-                <Label text="Article 1">
+                <Label fx:id="title" text="Article 1">
                     <font>
                         <Font size="18.0" />
                     </font>
                 </Label>
-                <Label prefHeight="23.0" prefWidth="256.0" text="Author ID: 473856547" />
+                <Label fx:id="submissionID" prefHeight="23.0" prefWidth="256.0" text="Submission ID: 473856547" />
             </children>
             <HBox.margin>
                 <Insets left="18.0" top="5.0" />
@@ -26,7 +26,7 @@
         <Region prefHeight="100.0" prefWidth="160.0" HBox.hgrow="ALWAYS" />
         <VBox prefHeight="94.0" prefWidth="166.0">
             <children>
-                <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="148.0" text="Select Article">
+                <Button fx:id="select" onAction="#handleSelectReview" mnemonicParsing="false" prefHeight="27.0" prefWidth="148.0" text="Select Article">
                     <VBox.margin>
                         <Insets bottom="5.0" />
                     </VBox.margin>

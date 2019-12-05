@@ -1,5 +1,6 @@
 package main.controllers;
 
+import com.mysql.cj.log.NullLogger;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,11 +10,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import javafx.event.*;
 import main.Main;
+import main.tables.ReviewTable;
 import main.tables.SubmissionInfoTable;
 import main.tables.SubmissionTable;
 
@@ -31,6 +34,19 @@ public class ReviewSelectController {
 
     @FXML
     private VBox vBoxArticle;
+
+    @FXML
+    private Label submissionID;
+
+    @FXML
+    private Label title;
+
+    @FXML
+    private HBox review;
+
+    @FXML
+    private Button select;
+
 
 
     public void handleBack(ActionEvent event) throws IOException {
@@ -65,6 +81,8 @@ public class ReviewSelectController {
             submissionID.setText("Submission ID: "+SubmissionTable.selectSubmissionID(submissions.get(i)));
             //role.setText(String.valueOf(i));
 
+            //ReviewTable.SelectReviewID(SubmissionInfoTable.getSubmissionInfoID(i));
+            System.out.println(ReviewTable.CheckReviewID(SubmissionInfoTable.getSubmissionInfoID(i)));
 
             Insets padding = new Insets(10,0,0,0);
             Separator sep = new Separator();
@@ -73,7 +91,23 @@ public class ReviewSelectController {
             vBoxArticle.getChildren().add(box);
             vBoxArticle.getChildren().add(sep);
 
+
+
         }
+    }
+
+    public void handleSelectReview(ActionEvent actionEvent) throws SQLException {
+        String strap = submissionID.getText();
+        int iD = Character.getNumericValue(strap.charAt(strap.length()-1));
+        System.out.println(ReviewTable.CheckReviewID(SubmissionInfoTable.getSubmissionInfoID(iD)));
+
+        //ReviewTable.Insert(Main.IDs[2],iD,null,null);
+        review.getChildren().remove(select);
+        select.setVisible(false);
+        select.setDisable(true);
+
+
+
     }
 
 

@@ -1,20 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="740.0" prefWidth="1044.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controllers.InitialVerdictController">
+<BorderPane prefHeight="740.0" prefWidth="1044.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controllers.InitialVerdictController">
    <top>
       <VBox prefHeight="45.0" prefWidth="825.0" BorderPane.alignment="CENTER">
          <children>
@@ -37,7 +28,7 @@
             <Separator prefHeight="0.0" prefWidth="124.0" />
             <HBox prefHeight="110.0" prefWidth="721.0">
                <children>
-                  <Region prefHeight="67.0" prefWidth="133.0" />
+                  <Region prefHeight="67.0" prefWidth="80.0" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Article" wrappingWidth="218.2060546875">
                      <font>
                         <Font size="36.0" />
@@ -46,12 +37,12 @@
                         <Insets bottom="8.0" left="13.0" right="8.0" top="6.0" />
                      </HBox.margin>
                   </Text>
-                  <Region prefHeight="169.0" prefWidth="339.0" HBox.hgrow="ALWAYS" />
-                  <VBox prefHeight="91.0" prefWidth="501.0">
+                  <Region prefHeight="67.0" prefWidth="502.0" HBox.hgrow="ALWAYS" />
+                  <VBox prefHeight="67.0" prefWidth="228.0">
                      <children>
                         <Label prefHeight="17.0" prefWidth="446.0" text="Review ID: 523245641">
                            <VBox.margin>
-                              <Insets top="10.0" />
+                              <Insets top="20.0" />
                            </VBox.margin>
                         </Label>
                         <Label prefHeight="21.0" prefWidth="312.0" text="Submission ID: 42342345" />
@@ -67,7 +58,7 @@
             <HBox prefHeight="230.0" prefWidth="1044.0">
                <children>
                   <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                  <TextField fx:id = "reviewSummary" prefHeight="193.0" prefWidth="976.0" />
+                  <TextField fx:id="reviewSummary" prefHeight="193.0" prefWidth="976.0" />
                   <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
@@ -79,22 +70,28 @@
             <HBox prefHeight="78.0" prefWidth="1044.0">
                <children>
                   <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                  <TextField fx:id="typoError" prefHeight="27.0" prefWidth="650.0" />
+                  <TextField fx:id="typoError" prefHeight="27.0" prefWidth="650.0">
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin></TextField>
                   <Region prefHeight="67.0" prefWidth="316.0" HBox.hgrow="ALWAYS" />
-                  <Button onAction="#handleTypoError" mnemonicParsing="false" prefHeight="27.0" prefWidth="240.0" text="Add Error" />
+                  <Button mnemonicParsing="false" onAction="#handleTypoError" prefHeight="27.0" prefWidth="240.0" text="Add Error" />
                   <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
-            <HBox prefHeight="180.0" prefWidth="200.0">
+            <HBox prefHeight="250.0" prefWidth="200.0">
                <children>
                   <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
                   <ScrollPane prefHeight="84.0" prefWidth="984.0">
                      <content>
                         <VBox fx:id="vBox" prefWidth="866.0">
-                           <children >
+                           <children>
                            </children>
                         </VBox>
                      </content>
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
                   </ScrollPane>
                   <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
                </children>
@@ -107,13 +104,16 @@
             <HBox prefHeight="78.0" prefWidth="1044.0">
                <children>
                   <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                  <TextField fx:id="criticism" prefHeight="27.0" prefWidth="650.0" />
+                  <TextField fx:id="criticism" prefHeight="27.0" prefWidth="650.0">
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin></TextField>
                   <Region prefHeight="67.0" prefWidth="316.0" HBox.hgrow="ALWAYS" />
-                  <Button onAction="#handleAddCriticism" mnemonicParsing="false" prefHeight="27.0" prefWidth="240.0" text="Add Criticism" />
+                  <Button mnemonicParsing="false" onAction="#handleAddCriticism" prefHeight="27.0" prefWidth="240.0" text="Add Criticism" />
                   <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
-            <HBox prefHeight="180.0" prefWidth="200.0">
+            <HBox prefHeight="250.0" prefWidth="200.0">
                <children>
                   <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
                   <ScrollPane prefHeight="71.0" prefWidth="984.0">
@@ -123,6 +123,9 @@
                            </children>
                         </VBox>
                      </content>
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
                   </ScrollPane>
                   <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
                </children>
@@ -145,7 +148,7 @@
             <HBox layoutX="10.0" layoutY="123.0" prefHeight="222.0" prefWidth="721.0">
                <children>
                   <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                  <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="976.0" text="Submit Review" onAction="#handleSubmit">
+                  <Button mnemonicParsing="false" onAction="#handleSubmit" prefHeight="27.0" prefWidth="976.0" text="Submit Review">
                      <HBox.margin>
                         <Insets top="35.0" />
                      </HBox.margin>
