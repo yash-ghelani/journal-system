@@ -10,14 +10,20 @@
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Your Reviews">
-               <HBox.margin>
-                  <Insets bottom="30.0" right="30.0" top="30.0" />
-               </HBox.margin>
-               <font>
-                  <Font size="36.0" />
-               </font>
-            </Text>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Your Reviews">
+                     <font>
+                        <Font size="36.0" />
+                     </font>
+                  </Text>
+                  <Label prefHeight="42.0" prefWidth="144.0" text="" textFill="#fa0000" fx:id="pleaseselect">
+                     <VBox.margin>
+                        <Insets left="50.0" />
+                     </VBox.margin>
+                  </Label>
+               </children>
+            </VBox>
             <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
             <VBox prefHeight="99.0" prefWidth="202.0">
                <children>
@@ -45,14 +51,14 @@
    <center>
       <ScrollPane prefHeight="487.0" prefWidth="187.0" BorderPane.alignment="CENTER">
          <content>
-            <VBox fx:id = "vboxpanel" prefHeight="477.0" prefWidth="783.0">
+            <VBox fx:id="vboxpanel" prefHeight="477.0" prefWidth="783.0">
                <children>
                   <Separator prefWidth="200.0">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
                   </Separator>
-                  <Button mnemonicParsing="false" prefHeight="64.0" prefWidth="189.0" text="Click to load your reviews" fx:id="clickToAdd" onAction="#handleClick">
+                  <Button fx:id="clickToAdd" mnemonicParsing="false" onAction="#handleClick" prefHeight="64.0" prefWidth="189.0" text="Click to load your reviews">
                      <VBox.margin>
                         <Insets left="300.0" top="200.0" />
                      </VBox.margin>
