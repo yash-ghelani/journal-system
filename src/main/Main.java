@@ -5,13 +5,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import main.tables.AuthorTable;
-
 
 import java.io.File;
 import java.net.URL;
 
-public class Main extends Application {
+public class Main<IDs> extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{

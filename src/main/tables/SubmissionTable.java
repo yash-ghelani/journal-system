@@ -23,7 +23,8 @@ public class SubmissionTable {
                 String initialise = "CREATE TABLE Submissions " + //Creating the table
                                     "(SubmissionID          INT             NOT NULL AUTO_INCREMENT, "+ //Creating the different fields
                                     "PDF                    NVARCHAR(255)   NOT NULL, "+
-                                    "EditorVerdict          TEXT            NOT NULL, "+
+                                    "EditorVerdict          TEXT," +
+                                    "InitialTitle           TEXT,"+
                                     "PRIMARY KEY (SubmissionID))";
 
                 stmt.executeUpdate(initialise);
@@ -171,7 +172,6 @@ public class SubmissionTable {
         finally {
             if (con != null) con.close();
         }
-        return fin;
     }
 
     public static void UpdateVerdict(int submissionID, String verdict ) throws SQLException {
