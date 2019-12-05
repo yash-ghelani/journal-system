@@ -5,16 +5,9 @@ misc.xml
 vcs.xml
 modules.xml
 /libraries
-<<<<<<< HEAD
 /out
-systemsandsecurity.iml
-# Datasource local storage ignored files
-/dataSources/
-=======
-out/
 systemsandsecurity.iml
 # Datasource local storage ignored files
 /dataSources/
 dataSources.xml
 dataSources.local.xml
->>>>>>> 805f98c88dc4dd812cc2833b7926efd61fdc629a

@@ -117,7 +117,6 @@ public class ReviewPanelController {
         }
     }
 
-
     public void handleSubmitInitialVerdict(ActionEvent actionEvent) throws IOException {
         String text = submissionid.getText();
         String id = text.substring(20);

@@ -458,10 +458,15 @@ public class ReviewTable {
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     public static int CheckReviewID(int id) throws SQLException {
 =======
     public static int selectReviewID(int id) throws SQLException {
 >>>>>>> 805f98c88dc4dd812cc2833b7926efd61fdc629a
+=======
+
+    public static int selectReviewID(int id) throws SQLException {
+>>>>>>> b889ad4f9fcc866c6c220f351eca892002e86991
         int fin = 0;
         Connection con = null; // connection to a database
         try {
@@ -474,16 +479,22 @@ public class ReviewTable {
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
 <<<<<<< HEAD
+<<<<<<< HEAD
                     int dn = res.getInt("ReviewID");
                     fin++;
 =======
                     fin = res.getInt("ReviewID");
 >>>>>>> 805f98c88dc4dd812cc2833b7926efd61fdc629a
+=======
+                    fin = res.getInt("ReviewID");
+
+>>>>>>> b889ad4f9fcc866c6c220f351eca892002e86991
                 }
                 res.close();
             }
             catch (SQLException ex) {
                 ex.printStackTrace();
+
             }
             finally {
                 if (stmt != null)
@@ -500,8 +511,11 @@ public class ReviewTable {
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
 =======
 >>>>>>> 805f98c88dc4dd812cc2833b7926efd61fdc629a
+=======
+>>>>>>> b889ad4f9fcc866c6c220f351eca892002e86991
 }
