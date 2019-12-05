@@ -6,3 +6,6 @@
 /libraries
 /out
 systemsandsecurity.iml
+# Datasource local storage ignored files
+/dataSources/
+dataSources.xml
