@@ -26,6 +26,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static main.Main.SubmissionIDForReview;
+
 public class InitialVerdictController {
 
     @FXML
@@ -41,16 +43,22 @@ public class InitialVerdictController {
     private TextField reviewSummary;
     @FXML
     private ComboBox finalVerdict;
+    @FXML
+    private Label submissionid;
+    @FXML
+    private Label reviewid;
 
     private List<String> crits = new ArrayList<String>(); //store criticisms
     private List<String> errors = new ArrayList<String>(); // store errors
 
-    public void initialize() {
+    public void initialize() throws SQLException {
         List<String> list = new ArrayList<String>();
         list.add("Champion");
         list.add("Detractor");
         ObservableList obList = FXCollections.observableList(list);
         finalVerdict.setItems(obList);
+        submissionid.setText("Submission ID: "+ SubmissionIDForReview);
+        reviewid.setText("Review ID: " + ReviewTable.selectReviewID(SubmissionIDForReview));
 
     }
 
@@ -86,14 +94,14 @@ public class InitialVerdictController {
         window.setScene(viewScene);
     }
 
-    public void handleSubmit(ActionEvent actionEvent) throws SQLException {
-
-        int dummySubmissionInfo = 1234; //Currently using a dummy submissioninfoid
+    public void handleSubmit(ActionEvent actionEvent) throws SQLException, IOException {
 
         String summary = reviewSummary.getText();
 
-        ReviewTable.Insert(Main.IDs[2], dummySubmissionInfo, summary, (String) finalVerdict.getValue());
-        int reviewid = ReviewTable.SelectReviewID(Main.IDs[2], dummySubmissionInfo, summary, (String) finalVerdict.getValue());
+        ReviewTable.UpdateSummary(SubmissionIDForReview, summary);
+        ReviewTable.UpdateVerdict(SubmissionIDForReview, (String) finalVerdict.getValue());
+
+        int reviewid = ReviewTable.SelectReviewID(Main.IDs[2], SubmissionIDForReview, summary, (String) finalVerdict.getValue());
 
         for (int i = 0 ; i < errors.size() ; i++) {
             ErrorTable.Insert(reviewid, errors.get(i));
@@ -102,6 +110,12 @@ public class InitialVerdictController {
         for (int i = 0 ; i < crits.size(); i++) {
             CriticismsTable.Insert(reviewid, crits.get(i));
         }
+
+        URL url = new File("src/resources/ReviewPanel.fxml").toURI().toURL();
+        Parent view = FXMLLoader.load(url);
+        Scene viewScene = new Scene(view);
+        Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        window.setScene(viewScene);
 
     }
 }

@@ -40,12 +40,12 @@
                   <Region prefHeight="67.0" prefWidth="502.0" HBox.hgrow="ALWAYS" />
                   <VBox prefHeight="67.0" prefWidth="228.0">
                      <children>
-                        <Label prefHeight="17.0" prefWidth="446.0" text="Review ID: 523245641">
+                        <Label prefHeight="17.0" prefWidth="446.0" text="Review ID: 523245641" fx:id = "reviewid">
                            <VBox.margin>
                               <Insets top="20.0" />
                            </VBox.margin>
                         </Label>
-                        <Label prefHeight="21.0" prefWidth="312.0" text="Submission ID: 42342345" />
+                        <Label prefHeight="21.0" prefWidth="312.0" text="Submission ID: 42342345" fx:id = "submissionid"/>
                      </children>
                   </VBox>
                </children>
