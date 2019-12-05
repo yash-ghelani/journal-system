@@ -61,7 +61,7 @@ public class ReviewerTable {
             try {
                 stmt = con.createStatement();
                 String journal = "INSERT INTO Reviewer (Title, Name, Surname, Affiliation, Email, Password, Temp, Count) "+
-                        " VALUES ('" + title + "', '" + name + "', '" + surname + "','" + affiliation + "','" + email + "','" + password + "','"+ temp+"'," + count + ")";
+                        " VALUES ('" + title + "', '" + name + "', '" + surname + "','" + affiliation + "','" + email + "','" + password + "',"+ temp+"," + count + ")";
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
             } catch (SQLException e) {
