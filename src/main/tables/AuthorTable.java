@@ -368,7 +368,7 @@ public class AuthorTable {
         return fin;
     }
 
-    public String SelectAffiliation(int id) throws SQLException {
+    public static String SelectAffiliation(int id) throws SQLException {
         String fin = null;
         Connection con = null; // connection to a database
         try {

@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 
 import javafx.event.*;
 import main.Main;
+import main.tables.AuthorTable;
 import main.tables.ReviewTable;
 import main.tables.SubmissionInfoTable;
 import main.tables.SubmissionTable;
@@ -80,14 +81,23 @@ public class ReviewSelectController {
                 VBox vButton = (VBox)child.get(2);
                 Button selector = (Button) vButton.getChildren().get(0);
                 selector.setVisible(false);
+            }
 
+            if(SubmissionInfoTable.getAuthorID(SubmissionInfoTable.getSubmissionInfoID(s))==Main.IDs[0]){
+                VBox vButton = (VBox)child.get(2);
+                Button selector = (Button) vButton.getChildren().get(0);
+                selector.setVisible(false);
+            }
+
+            if(AuthorTable.SelectAffiliation(SubmissionInfoTable.getAuthorID(SubmissionInfoTable.getSubmissionInfoID(s))).equalsIgnoreCase(AuthorTable.SelectAffiliation(SubmissionInfoTable.getAuthorID(Main.IDs[0])))){
+                VBox vButton = (VBox)child.get(2);
+                Button selector = (Button) vButton.getChildren().get(0);
+                selector.setVisible(false);
             }
 
             title.setText(submissions.get(i));
             submissionID.setText("Submission ID: "+SubmissionTable.selectSubmissionID(submissions.get(i)));
 
-
-            System.out.println(ReviewTable.CheckReviewID(SubmissionInfoTable.getSubmissionInfoID(s)));
 
             Insets padding = new Insets(10,0,0,0);
             Separator sep = new Separator();
@@ -109,4 +119,6 @@ public class ReviewSelectController {
         select.setDisable(true);
 
     }
+
+
 }
