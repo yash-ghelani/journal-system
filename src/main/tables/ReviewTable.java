@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class ReviewTable {
 
-    public static void main (String args[]) throws SQLException {
+    public static void main(String args[]) throws SQLException {
 
         ReviewTable rt = new ReviewTable();
         rt.CreateReviewTable();
@@ -22,42 +22,37 @@ public class ReviewTable {
             try {
                 stmt = con.createStatement();
                 String jtable = "CREATE TABLE Review " + //Creating the table "UserTable"
-                        "(ReviewID              INT     AUTO_INCREMENT, "+ //Creating the different fields
-                        "ReviewerID             INT, "+
-                        "ArticleID               INT,"+
-                        "Summary                TEXT, "+
-                        "Verdict                TEXT, "+
+                        "(ReviewID              INT     AUTO_INCREMENT, " + //Creating the different fields
+                        "ReviewerID             INT, " +
+                        "ArticleID               INT," +
+                        "Summary                TEXT, " +
+                        "Verdict                TEXT, " +
                         "PRIMARY KEY (ReviewID), " +
                         "FOREIGN KEY (ReviewerID) REFERENCES Reviewer(ReviewerID), " +
                         "FOREIGN KEY (ArticleID) REFERENCES Articles(ArticleID))";
 
                 stmt.executeUpdate(jtable);
-            }
-            catch (SQLException ex) {
+            } catch (SQLException ex) {
                 ex.printStackTrace();
-            }
-            finally {
+            } finally {
                 if (stmt != null)
                     stmt.close();
             }
 
 
             //=========================================================================================================
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             //e.printStackTrace();
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
 
-        }
-        finally {
+        } finally {
             if (con != null) con.close();
         }
 
     }
 
 
-
-    public static void Insert(int reviewerid, int submissioninfoid, String Summary, String verdict ) throws SQLException {
+    public static void Insert(int reviewerid, int submissioninfoid, String Summary, String verdict) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -67,25 +62,21 @@ public class ReviewTable {
                 stmt = con.createStatement();
 
 
-                String journal = "INSERT INTO Review (ReviewerID, SubmissionInfoID, Summary, Verdict) VALUES (" + reviewerid +"," + submissioninfoid + ", '" + Summary + "', '" + verdict +"')";
+                String journal = "INSERT INTO Review (ReviewerID, SubmissionInfoID, Summary, Verdict) VALUES (" + reviewerid + "," + submissioninfoid + ", '" + Summary + "', '" + verdict + "')";
                 System.out.println(journal);
 
                 stmt.executeUpdate(journal);
 
-            }
-            catch (SQLException ex) {
+            } catch (SQLException ex) {
                 ex.printStackTrace();
-            }
-            finally {
+            } finally {
                 if (stmt != null)
                     stmt.close();
             }
 
-        }
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             ex.printStackTrace();
-        }
-        finally {
+        } finally {
             if (con != null) con.close();
         }
     }
@@ -101,19 +92,15 @@ public class ReviewTable {
                 String journal = "DELETE FROM Review WHERE ReviewID = " + reviewid;
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
-            }
-            catch (SQLException ex) {
+            } catch (SQLException ex) {
                 ex.printStackTrace();
-            }
-            finally {
+            } finally {
                 if (stmt != null)
                     stmt.close();
             }
-        }
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             ex.printStackTrace();
-        }
-        finally {
+        } finally {
             if (con != null) con.close();
         }
     }
@@ -130,19 +117,15 @@ public class ReviewTable {
                 String journal = "UPDATE Review SET Summary = '" + Summary + "'";
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
-            }
-            catch (SQLException ex) {
+            } catch (SQLException ex) {
                 ex.printStackTrace();
-            }
-            finally {
+            } finally {
                 if (stmt != null)
                     stmt.close();
             }
-        }
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             ex.printStackTrace();
-        }
-        finally {
+        } finally {
             if (con != null) con.close();
         }
     }
@@ -158,19 +141,15 @@ public class ReviewTable {
                 String journal = "UPDATE Review SET verdict = '" + verdict + "'";
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
-            }
-            catch (SQLException ex) {
+            } catch (SQLException ex) {
                 ex.printStackTrace();
-            }
-            finally {
+            } finally {
                 if (stmt != null)
                     stmt.close();
             }
-        }
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             ex.printStackTrace();
-        }
-        finally {
+        } finally {
             if (con != null) con.close();
         }
     }
@@ -186,22 +165,19 @@ public class ReviewTable {
                 String journal = "UPDATE Review SET ReviewerID = " + id;
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
-            }
-            catch (SQLException ex) {
+            } catch (SQLException ex) {
                 ex.printStackTrace();
-            }
-            finally {
+            } finally {
                 if (stmt != null)
                     stmt.close();
             }
-        }
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             ex.printStackTrace();
-        }
-        finally {
+        } finally {
             if (con != null) con.close();
         }
     }
+
     public static void UpdateSubmissionInfoID(int id) throws SQLException {
         Connection con = null; // connection to a database
         try {
@@ -213,19 +189,15 @@ public class ReviewTable {
                 String journal = "UPDATE Review SET SubmissionInfoID = " + id;
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
-            }
-            catch (SQLException ex) {
+            } catch (SQLException ex) {
                 ex.printStackTrace();
-            }
-            finally {
+            } finally {
                 if (stmt != null)
                     stmt.close();
             }
-        }
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             ex.printStackTrace();
-        }
-        finally {
+        } finally {
             if (con != null) con.close();
         }
     }
@@ -245,19 +217,15 @@ public class ReviewTable {
                     fin = res.getInt("ReviewerID");
                 }
                 res.close();
-            }
-            catch (SQLException ex) {
+            } catch (SQLException ex) {
                 ex.printStackTrace();
-            }
-            finally {
+            } finally {
                 if (stmt != null)
                     stmt.close();
             }
-        }
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             ex.printStackTrace();
-        }
-        finally {
+        } finally {
             if (con != null) con.close();
         }
         return fin;
@@ -278,19 +246,15 @@ public class ReviewTable {
                     fin = res.getInt("SubmissionInfoID");
                 }
                 res.close();
-            }
-            catch (SQLException ex) {
+            } catch (SQLException ex) {
                 ex.printStackTrace();
-            }
-            finally {
+            } finally {
                 if (stmt != null)
                     stmt.close();
             }
-        }
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             ex.printStackTrace();
-        }
-        finally {
+        } finally {
             if (con != null) con.close();
         }
         return fin;
@@ -311,19 +275,15 @@ public class ReviewTable {
                     fin = res.getString("Summary");
                 }
                 res.close();
-            }
-            catch (SQLException ex) {
+            } catch (SQLException ex) {
                 ex.printStackTrace();
-            }
-            finally {
+            } finally {
                 if (stmt != null)
                     stmt.close();
             }
-        }
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             ex.printStackTrace();
-        }
-        finally {
+        } finally {
             if (con != null) con.close();
         }
         return fin;
@@ -344,19 +304,15 @@ public class ReviewTable {
                     fin = res.getString("Verdict");
                 }
                 res.close();
-            }
-            catch (SQLException ex) {
+            } catch (SQLException ex) {
                 ex.printStackTrace();
-            }
-            finally {
+            } finally {
                 if (stmt != null)
                     stmt.close();
             }
-        }
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             ex.printStackTrace();
-        }
-        finally {
+        } finally {
             if (con != null) con.close();
         }
         return fin;
@@ -372,19 +328,15 @@ public class ReviewTable {
                 stmt = con.createStatement();
                 String newEdition = "DROP TABLE Review";
                 stmt.executeUpdate(newEdition);
-            }
-            catch (SQLException ex) {
+            } catch (SQLException ex) {
                 ex.printStackTrace();
-            }
-            finally {
+            } finally {
                 if (stmt != null)
                     stmt.close();
             }
-        }
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             ex.printStackTrace();
-        }
-        finally {
+        } finally {
             if (con != null) con.close();
         }
     }
@@ -398,25 +350,21 @@ public class ReviewTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "SELECT ReviewID FROM Review WHERE ReviewerID = " + reviewerid + " AND SubmissionID = " + submissionid + " AND Summary = '" + summary +"' AND Verdict = '" + verdict + "'";
+                String query = "SELECT ReviewID FROM Review WHERE ReviewerID = " + reviewerid + " AND SubmissionID = " + submissionid + " AND Summary = '" + summary + "' AND Verdict = '" + verdict + "'";
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     fin = res.getInt("ReviewID");
                 }
                 res.close();
-            }
-            catch (SQLException ex) {
+            } catch (SQLException ex) {
                 ex.printStackTrace();
-            }
-            finally {
+            } finally {
                 if (stmt != null)
                     stmt.close();
             }
-        }
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             ex.printStackTrace();
-        }
-        finally {
+        } finally {
             if (con != null) con.close();
         }
         return fin;
@@ -438,19 +386,15 @@ public class ReviewTable {
                     list.add(fin);
                 }
                 res.close();
-            }
-            catch (SQLException ex) {
+            } catch (SQLException ex) {
                 ex.printStackTrace();
-            }
-            finally {
+            } finally {
                 if (stmt != null)
                     stmt.close();
             }
-        }
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             ex.printStackTrace();
-        }
-        finally {
+        } finally {
             if (con != null) con.close();
         }
         return list;
@@ -472,56 +416,17 @@ public class ReviewTable {
                     fin++;
                 }
                 res.close();
-            }
-            catch (SQLException ex) {
+            } catch (SQLException ex) {
                 ex.printStackTrace();
-            }
-            finally {
+            } finally {
                 if (stmt != null)
                     stmt.close();
             }
-        }
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             ex.printStackTrace();
-        }
-        finally {
+        } finally {
             if (con != null) con.close();
         }
         return fin;
     }
-
-    public static ArrayList<Integer> checkIfReviewed(int id) throws SQLException {
-        ArrayList<Integer> list = new ArrayList<Integer>();
-        Connection con = null; // connection to a database
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
-            // use the open connection
-            Statement stmt = null;
-            try {
-                stmt = con.createStatement();
-                String query = "SELECT ReviewID FROM Review WHERE SubmissionInfoID = " + id ;
-                ResultSet res = stmt.executeQuery(query);
-                while (res.next()) {
-                    int in = res.getInt("ReviewID");
-                    list.add(in);
-                }
-                res.close();
-            }
-            catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-            finally {
-                if (stmt != null)
-                    stmt.close();
-            }
-        }
-        catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        finally {
-            if (con != null) con.close();
-        }
-        return list;
-    }
-
 }

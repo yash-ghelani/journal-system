@@ -61,7 +61,7 @@ public class RegisterController extends Main {
         roles.setItems(rlList);
     }
 
-    public void handleRegisterSuccess(ActionEvent action) throws IOException, SQLException {
+    public void handleRegisterSuccess (ActionEvent action) throws IOException, SQLException {
 
         boolean t = validTitle();
         boolean r = validRole();
@@ -77,7 +77,6 @@ public class RegisterController extends Main {
                 try {
                     AuthorTable.Insert((String) prefix.getValue(), firstName.getText(), lastName.getText(), affiliation.getText(), emailField.getText(), Integer.toString(passWordField.getText().hashCode()),0);
                     loadLogin(action);
-
                 } catch (SQLException e) {
                     System.err.println(e.getClass().getName() + ": " + e.getMessage());
                     System.out.println("Selection failed");
@@ -85,8 +84,9 @@ public class RegisterController extends Main {
 
             } else if (roles.getValue() == "Editor") {
                 try {
+                    System.out.println("chosen to register an editor");
                     EditorTable.Insert((String) prefix.getValue(), firstName.getText(), lastName.getText(), affiliation.getText(), emailField.getText(), Integer.toString(passWordField.getText().hashCode()),0);
-
+                    System.out.println("inserted into table");
                     loadLogin(action);
                 } catch (SQLException e) {
                     System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -129,8 +129,9 @@ public class RegisterController extends Main {
 
     public boolean validFirstName(){
         // first name
-        if (firstName.getText().isEmpty() || firstName.getText().chars().allMatch(Character::isLetter)) {
+        if (firstName.getText().isEmpty() || !firstName.getText().chars().allMatch(Character::isLetter)) {
             firstName.setStyle("-fx-prompt-text-fill : red;");
+            firstName.clear();
             return false;
         } else {
             return true;
@@ -139,8 +140,9 @@ public class RegisterController extends Main {
 
     public boolean validLastName(){
         // last name
-        if (lastName.getText().isEmpty() || lastName.getText().chars().allMatch(Character::isLetter)) {
+        if (lastName.getText().isEmpty() || !lastName.getText().chars().allMatch(Character::isLetter)) {
             lastName.setStyle("-fx-prompt-text-fill : red;");
+            firstName.clear();
             return false;
         } else {
             return true;
@@ -160,8 +162,9 @@ public class RegisterController extends Main {
     }
 
     public boolean validAffiliation(){
-        if (affiliation.getText().isEmpty() || affiliation.getText().chars().allMatch(Character::isLetter)) {
+        if (affiliation.getText().isEmpty() || !affiliation.getText().chars().allMatch(Character::isLetter)) {
             affiliation.setStyle("-fx-border-color: red; -fx-border-width: 2px;-fx-prompt-text-fill : red;");
+            firstName.clear();
             return false;
         } else {
             return true;
@@ -169,11 +172,7 @@ public class RegisterController extends Main {
     }
 
     public boolean validPassword(){
-        if (passWordField.getText().isEmpty() || !Pattern.matches("[a-zA-Z0-9[^\\dA-Za-zA-Za-z0-9]]{6,}", passWordField.getText())) {
-            passWordField.setStyle("-fx-prompt-text-fill : red;");
-            passWordField.setPromptText("Password must be over 6 letters long");
-            return false;
-        } else if (Pattern.matches("[a-zA-Z0-9[^\\dA-Za-zA-Za-z0-9]]{6,}", passWordField.getText())) {
+        if (Pattern.matches("[a-zA-Z0-9[^\\dA-Za-zA-Za-z0-9]]{6,}", passWordField.getText())) {
             return true;
         } else {
             passWordField.setStyle("-fx-prompt-text-fill : red;");
@@ -198,3 +197,4 @@ public class RegisterController extends Main {
         window.setScene(viewScene);
     }
 }
+
