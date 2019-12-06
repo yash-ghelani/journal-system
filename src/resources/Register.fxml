@@ -8,7 +8,7 @@
    <children>
       <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="520.0" prefWidth="479.0" style="-fx-background-color: #333639 #333639;" VBox.vgrow="ALWAYS">
          <children>
-            <Text fill="WHITE" layoutX="159.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Register" wrappingWidth="163.0">
+            <Text fill="WHITE" layoutX="163.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Register" wrappingWidth="170.0">
                <font>
                   <Font size="45.0" />
                </font>

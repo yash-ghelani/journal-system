@@ -35,7 +35,7 @@
                <font>
                   <Font size="20.0" />
                </font></Button>
-            <Text fill="WHITE" layoutX="463.0" layoutY="429.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(for temporary users)" wrappingWidth="133.76953348517418">
+            <Text fill="WHITE" layoutX="463.0" layoutY="430.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(for temporary users)" wrappingWidth="135.0">
                <font>
                   <Font size="14.0" />
                </font>

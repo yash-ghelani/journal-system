@@ -1,5 +1,6 @@
 package main.tables;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class JournalTable {
 
@@ -175,6 +176,73 @@ public class JournalTable {
             if (con != null) con.close();
         }
         return fin;
+    }
+
+    public static int SelectISSN(String name) throws SQLException {
+        int fin = 0;
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String query = "SELECT ISSN FROM Journal WHERE Name = '" + name +"'";
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    fin = res.getInt("ISSN");
+                }
+                res.close();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+        return fin;
+    }
+
+    public static ArrayList<String> selectJournals() throws SQLException {
+        ArrayList<String> list = new ArrayList<>();
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String query = "SELECT Name FROM Journal";
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    String fin = res.getString("Name");
+                    list.add(fin);
+                }
+                res.close();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+        return list;
     }
 
     public static void DeleteTable() throws SQLException {
