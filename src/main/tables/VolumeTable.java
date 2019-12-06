@@ -1,5 +1,6 @@
 package main.tables;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class VolumeTable {
 
@@ -7,7 +8,18 @@ public class VolumeTable {
 
         VolumeTable vt = new VolumeTable();
         //vt.CreateVolumeTable();
-//        vt.Insert(12345678, 2018);
+//        vt.Insert(18361310, 2017);
+//        vt.Insert(18361310, 2018);
+//        vt.Insert(18361310, 2019);
+//
+//        vt.Insert(18387189, 2017);
+//        vt.Insert(18387189, 2018);
+//        vt.Insert(18387189, 2019);
+//
+//        vt.Insert(54362042, 2017);
+//        vt.Insert(54362042, 2018);
+//        vt.Insert(54362042, 2019);
+
     }
 
     public static void CreateVolumeTable() throws SQLException {
@@ -140,6 +152,7 @@ public class VolumeTable {
             if (con != null) con.close();
         }
     }
+
     public int SelectISSN(int id) throws SQLException {
         int fin = 0;
         Connection con = null; // connection to a database
@@ -205,6 +218,39 @@ public class VolumeTable {
         return fin;
     }
 
+    public static int SelectVolID(int year) throws SQLException {
+        int fin = 0;
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String query = "SELECT VolumeID FROM Volume WHERE PublicationYear = " + year;
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    fin = res.getInt("ISSN");
+                }
+                res.close();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+        return fin;
+    }
+
     public static void DeleteTable() throws SQLException {
         Connection con = null;
         try {
@@ -229,5 +275,39 @@ public class VolumeTable {
         finally {
             if (con != null) con.close();
         }
+    }
+
+    public static ArrayList<String> selectVolumes(String name) throws SQLException {
+        ArrayList<String> list = new ArrayList<>();
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String query = "SELECT PublicationYear FROM Journal WHERE Name = "+ name;
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    String fin =  String.valueOf(res.getInt("PublicationYear"));
+                    list.add(fin);
+                }
+                res.close();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+        return list;
     }
 }
