@@ -32,6 +32,8 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static main.Main.submissionIDForAuthor;
+
 
 public class AuthorPanelController{
 
@@ -41,16 +43,22 @@ public class AuthorPanelController{
     @FXML
     private Button toRemove;
 
+    @FXML
+    private Label submissionID;
 
 
 
     public void handleViewInitialVerdict (ActionEvent event) throws IOException {
+
+        String text = submissionID.getText();
+        String subid = text.substring(15);
+        int id = Integer.parseInt(subid);
+        submissionIDForAuthor = id;
+
         URL url = new File("src/resources/InitialViewer.fxml").toURI().toURL();
         Parent view = FXMLLoader.load(url);
         Scene viewScene = new Scene(view);
-
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-
         window.setScene(viewScene);
     }
 

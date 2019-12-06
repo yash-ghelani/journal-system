@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="main.controllers.ResponseController">
+    <children>
+        <HBox>
+            <children>
+                <VBox prefHeight="80.0" prefWidth="867.0">
+                    <children>
+                        <Label text="Question 1" />
+                        <TextField minHeight="-Infinity" prefHeight="22.0" prefWidth="782.0">
+                            <VBox.margin>
+                                <Insets top="7.0" />
+                            </VBox.margin>
+                        </TextField>
+                        <Button mnemonicParsing="false" text="Respond">
+                            <VBox.margin>
+                                <Insets top="7.0" />
+                            </VBox.margin>
+                        </Button>
+                    </children>
+                </VBox>
+            </children>
+            <VBox.margin>
+                <Insets />
+            </VBox.margin>
+        </HBox>
+    </children>
+</VBox>

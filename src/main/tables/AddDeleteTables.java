@@ -49,6 +49,6 @@ public class AddDeleteTables {
     public static void main (String args[]) throws SQLException {
 
         //AddDeleteTables.adding();
-        //AddDeleteTables.delete();
+        AddDeleteTables.delete();
     }
 }

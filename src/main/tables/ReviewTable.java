@@ -24,12 +24,12 @@ public class ReviewTable {
                 String jtable = "CREATE TABLE Review " + //Creating the table "UserTable"
                         "(ReviewID              INT     AUTO_INCREMENT, "+ //Creating the different fields
                         "ReviewerID             INT, "+
-                        "SubmissionInfoID       INT, "+
+                        "ArticleID               INT,"+
                         "Summary                TEXT, "+
                         "Verdict                TEXT, "+
                         "PRIMARY KEY (ReviewID), " +
                         "FOREIGN KEY (ReviewerID) REFERENCES Reviewer(ReviewerID), " +
-                        "FOREIGN KEY (SubmissionInfoID) REFERENCES SubmissionInfo(SubmissionInfoID))";
+                        "FOREIGN KEY (ArticleID) REFERENCES Articles(ArticleID))";
 
                 stmt.executeUpdate(jtable);
             }
@@ -296,7 +296,7 @@ public class ReviewTable {
         return fin;
     }
 
-    public String SelectSummary(int id) throws SQLException {
+    public static String SelectSummary(int id) throws SQLException {
         String fin = null;
         Connection con = null; // connection to a database
         try {
@@ -490,6 +490,38 @@ public class ReviewTable {
         return fin;
     }
 
-
+    public static ArrayList<Integer> checkIfReviewed(int id) throws SQLException {
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String query = "SELECT ReviewID FROM Review WHERE SubmissionInfoID = " + id ;
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    int in = res.getInt("ReviewID");
+                    list.add(in);
+                }
+                res.close();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+        return list;
+    }
 
 }

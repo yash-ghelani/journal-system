@@ -17,7 +17,7 @@
                         <Font size="18.0" />
                     </font>
                 </Label>
-                <Label id="submissionID" fx:id="submissionID" prefHeight="23.0" prefWidth="256.0" text="Submission ID: 473856547" />
+                <Label fx:id="submissionID" prefHeight="23.0" prefWidth="256.0" text="Submission ID: 473856547" />
                 <Label prefHeight="23.0" prefWidth="256.0" text="Role: Co-Author" />
                 <Label prefHeight="23.0" prefWidth="256.0" text="Status: Accepted" />
             </children>

@@ -22,6 +22,8 @@ public class Main<IDs> extends Application {
         primaryStage.setResizable(false);
         primaryStage.show();
     }
+    public static int reviewIDForAuthor;
+    public static int submissionIDForAuthor;
 
     public static int IDs[] = new int[3];
 
