@@ -21,15 +21,11 @@ public class AuthorTable {
             try {
                 stmt = con.createStatement();
                 String jtable = "CREATE TABLE Author " + //Creating the table "UserTable"
-                        "(AuthorID               INT                 AUTO_INCREMENT, " + //Creating the different fields
-                        "Title                   TEXT                NOT NULL, " +
-                        "Name                    TEXT                NOT NULL, " +
-                        "Surname                 TEXT                NOT NULL, " +
-                        "Affiliation             TEXT                NOT NULL, " +
-                        "Email                   NVARCHAR(320)       NOT NULL," +
-                        "Password                NVARCHAR(100)       NOT NULL," +
-                        "Temp                    INT             NOT NULL," +
-                        "PRIMARY KEY (AuthorID))";
+                        "(AuthorID               INT                 AUTO_INCREMENT, " +
+                        "UserID                  INT," + //Creating the different fields
+                        "Temp                    INT," +
+                        "PRIMARY KEY (AuthorID)," +
+                        "FOREIGN KEY (UserID) REFERENCES User(UserID))";
 
                 stmt.executeUpdate(jtable);
             } catch (SQLException ex) {

@@ -26,8 +26,8 @@ public class JournalTable {
             try {
                 stmt = con.createStatement();
                 String jtable = "CREATE TABLE Journal " + //Creating the table "UserTable"
-                                "(ISSN      INT     NOT NULL, "+ //Creating the different fields
-                                "Name       TEXT    NOT NULL, " +
+                                "(ISSN              INT     NOT NULL, "+ //Creating the different fields
+                                "JournalName       TEXT    NOT NULL, " +
                                 "PRIMARY KEY (ISSN))";
 
                 stmt.executeUpdate(jtable);

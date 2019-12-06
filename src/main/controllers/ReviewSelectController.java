@@ -1,6 +1,5 @@
 package main.controllers;
 
-import com.mysql.cj.log.NullLogger;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,7 +9,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -18,8 +16,6 @@ import javafx.event.*;
 import main.Main;
 import main.tables.AuthorTable;
 import main.tables.ReviewTable;
-import main.tables.SubmissionInfoTable;
-import main.tables.SubmissionTable;
 
 import java.io.File;
 import java.io.IOException;

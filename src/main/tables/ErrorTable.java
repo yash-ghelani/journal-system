@@ -1,5 +1,6 @@
 package main.tables;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class ErrorTable {
 
@@ -60,8 +61,8 @@ public class ErrorTable {
             try {
                 stmt = con.createStatement();
 
-                String journal = "INSERT INTO Errors ( ReviewID, Error) VALUES (" + reviewid +",'" + error + "')";
-                //System.out.println(journal);
+                String journal = "INSERT INTO Errors ( ReviewID, Criticism) VALUES (" + reviewid +",'" + error + "')";
+                System.out.println(journal);
                 stmt.executeUpdate(journal);
 
             }
@@ -204,8 +205,8 @@ public class ErrorTable {
         return fin;
     }
 
-    public String SelectError(int id) throws SQLException {
-        String fin = null;
+    public static ArrayList<String> SelectError(int id) throws SQLException {
+        ArrayList<String> list = new ArrayList<String>();
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -213,10 +214,11 @@ public class ErrorTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "SELECT Error FROM Errors WHERE ErrorID = " + id;
+                String query = "SELECT Error FROM Errors WHERE ReviewID = " + id;
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
-                    fin = res.getString("Error");
+                    String fin = res.getString("Error");
+                    list.add(fin);
                 }
                 res.close();
             }
@@ -234,7 +236,7 @@ public class ErrorTable {
         finally {
             if (con != null) con.close();
         }
-        return fin;
+        return list;
     }
 
     public static void DeleteTable() throws SQLException {

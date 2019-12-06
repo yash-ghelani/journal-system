@@ -20,15 +20,11 @@ public class EditorTable {
             try {
                 stmt = con.createStatement();
                 String jtable = "CREATE TABLE Editor " + //Creating the table "UserTable"
-                        "(EditorID               INT                 AUTO_INCREMENT, " + //Creating the different fields
-                        "Title                   TEXT                NOT NULL, " +
-                        "Name                    TEXT                NOT NULL, " +
-                        "Surname                 TEXT                NOT NULL, " +
-                        "Affiliation             TEXT                NOT NULL, " +
-                        "Email                   NVARCHAR(320)        NOT NULL," +
-                        "Password                NVARCHAR(100)        NOT NULL," +
-                        "Temp                    INT             NOT NULL," +
-                        "PRIMARY KEY (EditorID))";
+                        "(EditorID               INT             AUTO_INCREMENT, " +
+                        "UserID                  INT          NOT NULL, " + //Creating the different fields
+                        "Temp                    INT          NOT NULL," +
+                        "PRIMARY KEY (EditorID)," +
+                        "FOREIGN KEY (UserID) REFERENCES User(UserID))";
 
                 stmt.executeUpdate(jtable);
             } catch (SQLException ex) {
