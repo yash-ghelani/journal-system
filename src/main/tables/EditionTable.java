@@ -292,7 +292,7 @@ public class EditionTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "SELECT PublicationMonth FROM Journal WHERE VolumeID = "+ volID;
+                String query = "SELECT PublicationMonth FROM Edition WHERE VolumeID = "+ volID;
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     int fin = res.getInt("PublicationMonth");

@@ -48,15 +48,16 @@ public class ReaderController {
             TreeItem<String> journals = new TreeItem<>(journalList.get(i));
             journals.setExpanded(false);
             root.getChildren().add(journals);
-            //get volumes of that journal
-            ArrayList<String> volumeList = VolumeTable.selectVolumes(journalList.get(i));
+            //get volumes (years) of that journal using journal name to get issn, then using issn to get publication year
+            ArrayList<String> volumeList = VolumeTable.SelectVolumes(JournalTable.SelectISSN((journalList.get(i))));
 
             //add volumes to tree
             for (int j = 0; j < volumeList.size(); j++) {
                 TreeItem<String> volumes = new TreeItem<>(volumeList.get(j));
                 volumes.setExpanded(false);
                 journals.getChildren().add(volumes);
-                //get volumes of that journal
+                //**************************************need to update column in editions table to store year instead of vol id**************************
+                //get editions of that volume using volume year
                 ArrayList<String> editionsList = EditionTable.selectEditions(VolumeTable.SelectVolID(Integer.valueOf(volumeList.get(j))));
 
                 //add volumes to tree
