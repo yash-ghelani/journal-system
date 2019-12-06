@@ -30,8 +30,8 @@ public class ReaderController {
 
     @FXML
     TreeView selectionTreeView;
-    @FXML
-    public void handleTree(javafx.event.ActionEvent event) throws SQLException {
+
+    public void initialize() throws SQLException {
         createTree();
     }
 
