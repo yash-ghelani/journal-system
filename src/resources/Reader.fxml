@@ -38,7 +38,10 @@
       </VBox>
    </top>
    <left>
-      <TreeView fx:id="selectionTreeView" prefWidth="323.0" BorderPane.alignment="CENTER" />
+      <TreeView fx:id="selectionTreeView" prefWidth="323.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="10.0" left="10.0" top="10.0" />
+         </BorderPane.margin></TreeView>
    </left>
    <center>
       <VBox prefHeight="168.0" prefWidth="727.0" BorderPane.alignment="CENTER">
@@ -51,7 +54,7 @@
                         <Font size="36.0" />
                      </font>
                      <HBox.margin>
-                        <Insets bottom="8.0" left="18.0" right="8.0" top="8.0" />
+                        <Insets bottom="8.0" left="15.0" right="8.0" top="8.0" />
                      </HBox.margin>
                   </Text>
                   <VBox prefHeight="91.0" prefWidth="501.0">
