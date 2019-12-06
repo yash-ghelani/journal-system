@@ -22,8 +22,9 @@ public class ArticleInfoTable {
                 stmt = con.createStatement();
                 String initialise = "CREATE TABLE ArticleInfo " + //Creating the table
                                     "(ArticleInfoID         INT    NOT NULL     AUTO_INCREMENT, "+ //Creating the different fields
-                                    "ArticleID              INT    NOT NULL, "+ //Creating the different fields
-                                    "AuthorID               INT    NOT NULL, "+
+                                    "AuthorID               INT, "+
+                                    "ArticleID              INT, " +
+                                    "ArticleType            TEXT,"+
                                     "PRIMARY KEY (ArticleInfoID), "+
                                     "FOREIGN KEY (ArticleID) REFERENCES Articles(ArticleID), "+
                                     "FOREIGN KEY (AuthorID) REFERENCES Author(AuthorID))";

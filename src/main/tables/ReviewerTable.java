@@ -21,16 +21,12 @@ public class ReviewerTable {
             try {
                 stmt = con.createStatement();
                 String jtable = "CREATE TABLE Reviewer " + //Creating the table "UserTable"
-                        "(ReviewerID             INT                 AUTO_INCREMENT, " + //Creating the different fields
-                        "Title                   TEXT                NOT NULL, " +
-                        "Name                    TEXT                NOT NULL, " +
-                        "Surname                 TEXT                NOT NULL, " +
-                        "Affiliation             TEXT                NOT NULL, " +
-                        "Email                   NVARCHAR(320)        NOT NULL," +
-                        "Password                NVARCHAR(100)        NOT NULL," +
-                        "Temp                    INT             NOT NULL," +
-                        "Count                   INT                  NOT NULL," +
-                        "PRIMARY KEY (ReviewerID))";
+                        "(ReviewerID             INT                 AUTO_INCREMENT," +
+                        "UserID                 INT, " + //Creating the different fields
+                        "Temp                    INT," +
+                        "Count                   INT," +
+                        "PRIMARY KEY (ReviewerID)," +
+                        "FOREIGN KEY (UserID) REFERENCES User(UserID))";
 
                 stmt.executeUpdate(jtable);
             } catch (SQLException ex) {

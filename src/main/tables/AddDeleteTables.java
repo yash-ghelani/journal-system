@@ -26,29 +26,27 @@ public class AddDeleteTables {
     }
 
     public static void adding() throws SQLException {
-        //Creates all tables
+//        //Creates all tables
+        UserTable.CreateUserTable();
+        EditorTable.CreateEditorTable();
+        ReviewerTable.CreateReviewerTable();
         JournalTable.CreateJournalTable();
+        JournalInfoTable.CreateJournalInfoTable();
         VolumeTable.CreateVolumeTable();
         EditionTable.CreateEditionTable();
-        EditorTable.CreateEditorTable();
-        JournalInfoTable.CreateJournalInfoTable();
-        SubmissionTable.CreateSubmissionTable();
         AuthorTable.CreateAuthorTable();
-        SubmissionInfoTable.CreateSubmissionInfoTable();
         ArticleTable.CreateArticleTable();
         ArticleInfoTable.CreateArticleInfoTable();
-        ReviewerTable.CreateReviewerTable();
         ReviewTable.CreateReviewTable();
-        EditorInfoTable.CreateEditorInfoTable();
         VerdictTable.CreateVerdictTable();
-        CriticismsTable.CreateCriticismsTable();
         ErrorTable.CreateErrorTable();
         QuestionTable.CreateQuestionTable();
         ResponseTable.CreateResponseTable();
+        EditorInfoTable.CreateEditorInfoTable();
     }
     public static void main (String args[]) throws SQLException {
 
         //AddDeleteTables.adding();
-        AddDeleteTables.delete();
+        //AddDeleteTables.delete();
     }
 }

@@ -22,13 +22,13 @@ public class ArticleTable {
                 String initialise = "CREATE TABLE Articles " + //Creating the table
                                     "(ArticleID             INT    NOT NULL AUTO_INCREMENT, "+ //Creating the different fields
                                     "EditionID              INT    NOT NULL, "+
-                                    "SubmissionID           INT    NOT NULL, "+
-                                    "Title                  TEXT   NOT NULL, "+
-                                    "PageRange              TEXT   NOT NULL, "+
-                                    "Abstract               TEXT   NOT NULL, "+
+                                    "Title                  TEXT, "+
+                                    "PageRange              TEXT, "+
+                                    "Abstract               TEXT, " +
+                                    "PDF                    TEXT," +
+                                    "Published              INT,"+
                                     "PRIMARY KEY (ArticleID), "+
-                                    "FOREIGN KEY (EditionID) REFERENCES Edition(EditionID), "+
-                                    "FOREIGN KEY (SubmissionID) REFERENCES Submissions(SubmissionID))";
+                                    "FOREIGN KEY (EditionID) REFERENCES Edition(EditionID))";
 
                 stmt.executeUpdate(initialise);
             }
