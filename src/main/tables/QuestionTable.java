@@ -1,5 +1,6 @@
 package main.tables;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class QuestionTable {
 
@@ -203,8 +204,8 @@ public class QuestionTable {
         return fin;
     }
 
-    public String SelectQuestionText(int id) throws SQLException {
-        String fin = null;
+    public static ArrayList<String> SelectQuestionText(int id) throws SQLException {
+        ArrayList<String> list = new ArrayList<String>();
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -212,10 +213,11 @@ public class QuestionTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "SELECT QuestionText FROM Question WHERE QuestionID = " + id;
+                String query = "SELECT QuestionText FROM Question WHERE ReviewID = " + id;
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
-                    fin = res.getString("QuestionText");
+                    String fin = res.getString("QuestionText");
+                    list.add(fin);
                 }
                 res.close();
             }
@@ -233,7 +235,7 @@ public class QuestionTable {
         finally {
             if (con != null) con.close();
         }
-        return fin;
+        return list;
     }
 
     public static void DeleteTable() throws SQLException {

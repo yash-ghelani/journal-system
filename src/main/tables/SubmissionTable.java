@@ -109,6 +109,72 @@ public class SubmissionTable {
         }
     }
 
+    public static String SelectTitle(int submissionID) throws SQLException {
+        String fin = "dd";
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String query = "SELECT InitialTitle FROM Submissions WHERE SubmissionID = " + submissionID;
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    fin = res.getString("InitialTitle");
+                }
+                res.close();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+        return fin;
+    }
+
+    public static String GetEditorVerdict(int submissionID) throws SQLException {
+        String fin = "dd";
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String query = "SELECT EditorVerdict FROM Submissions WHERE SubmissionID = " + submissionID;
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    fin = res.getString("EditorVerdict");
+                }
+                res.close();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+        return fin;
+    }
+
     public static void UpdateVerdict(int submissionID, String verdict ) throws SQLException {
         Connection con = null; // connection to a database
         try {
@@ -260,9 +326,8 @@ public class SubmissionTable {
             if (con != null) con.close();
         }
     }
-
-    public static ArrayList<Integer> selectSubmissionID(String title) throws SQLException {
-        ArrayList<Integer> list = new ArrayList<Integer>();
+    public static ArrayList<String> SelectAllSubmissionTitles() throws SQLException {
+        ArrayList<String> list = new ArrayList<String>();
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -270,11 +335,11 @@ public class SubmissionTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "SELECT SubmissionID FROM Submissions WHERE InitialTitle = '" + title + "'";
+                String query = "SELECT InitialTitle FROM Submissions";
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
-                    int fin = res.getInt("SubmissionID");
-                    list.add(fin);
+                    String title = res.getString("InitialTitle");
+                    list.add(title);
                 }
                 res.close();
             }
@@ -293,6 +358,39 @@ public class SubmissionTable {
             if (con != null) con.close();
         }
         return list;
+    }
+
+    public static int selectSubmissionID(String title) throws SQLException {
+        int fin = 0;
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String query = "SELECT SubmissionID FROM Submissions WHERE InitialTitle = '" + title + "'";
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    fin = res.getInt("SubmissionID");
+                }
+                res.close();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+        return fin;
     }
 
     public static String selectInitialTitle(int id) throws SQLException {
@@ -327,6 +425,7 @@ public class SubmissionTable {
         }
         return title;
     }
+
 }
 
 
