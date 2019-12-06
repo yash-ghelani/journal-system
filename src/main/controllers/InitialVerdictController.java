@@ -56,7 +56,6 @@ public class InitialVerdictController {
         finalVerdict.setItems(obList);
         submissionid.setText("Submission ID: "+ SubmissionIDForReview);
         reviewid.setText("Review ID: " + ReviewTable.selectReviewID(SubmissionIDForReview));
-
     }
 
 
