@@ -48,7 +48,6 @@ public class ReviewSelectController {
     private Button select;
 
 
-
     public void handleBack(ActionEvent event) throws IOException {
         URL url = new File("src/resources/ReviewPanel.fxml").toURI().toURL();
         Parent view = FXMLLoader.load(url);
@@ -61,10 +60,10 @@ public class ReviewSelectController {
 
     public void handleLoadArticles(ActionEvent event) throws IOException, SQLException {
         List<String> submissions = SubmissionTable.SelectAllSubmissionTitles();
+        List<Integer> ids = SubmissionTable.SelectAllSubmissionIDs();
         System.out.println(submissions);
 
         for(int i =0; i<submissions.size(); i++) {
-
 
             URL url = new File("src/resources/ReviewSelectBox.fxml").toURI().toURL();
 
@@ -75,8 +74,9 @@ public class ReviewSelectController {
             VBox v = (VBox)child.get(0);
             Label title = (Label)v.getChildren().get(0);
             Label submissionID = (Label)v.getChildren().get(1);
+            int s = ids.get(i);
 
-            if(ReviewTable.CheckReviewID(SubmissionInfoTable.getSubmissionInfoID(i+1))==1){
+            if(ReviewTable.CheckReviewID(SubmissionInfoTable.getSubmissionInfoID(s)) > 0){
                 VBox vButton = (VBox)child.get(2);
                 Button selector = (Button) vButton.getChildren().get(0);
                 selector.setVisible(false);
@@ -87,8 +87,7 @@ public class ReviewSelectController {
             submissionID.setText("Submission ID: "+SubmissionTable.selectSubmissionID(submissions.get(i)));
 
 
-            System.out.println(ReviewTable.CheckReviewID(SubmissionInfoTable.getSubmissionInfoID(i)));
-
+            System.out.println(ReviewTable.CheckReviewID(SubmissionInfoTable.getSubmissionInfoID(s)));
 
             Insets padding = new Insets(10,0,0,0);
             Separator sep = new Separator();
@@ -97,26 +96,17 @@ public class ReviewSelectController {
             vBoxArticle.getChildren().add(box);
             vBoxArticle.getChildren().add(sep);
 
-
-
-
-
         }
     }
 
     public void handleSelectReview(ActionEvent actionEvent) throws SQLException {
-        String strap = submissionID.getText();
-        int iD = Character.getNumericValue(strap.charAt(strap.length()-1));
-
-
-        ReviewTable.Insert(Main.IDs[2],iD,null,null);
+        String text = submissionID.getText();
+        String id = text.substring(15);
+        int idtoint =Integer.parseInt(id);
+        ReviewTable.Insert(Main.IDs[2],idtoint,null,null);
         review.getChildren().remove(select);
         select.setVisible(false);
         select.setDisable(true);
 
-
-
     }
-
-
 }

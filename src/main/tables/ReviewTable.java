@@ -457,16 +457,7 @@ public class ReviewTable {
         return list;
     }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-    public static int CheckReviewID(int id) throws SQLException {
-=======
     public static int selectReviewID(int id) throws SQLException {
->>>>>>> 805f98c88dc4dd812cc2833b7926efd61fdc629a
-=======
-
-    public static int selectReviewID(int id) throws SQLException {
->>>>>>> b889ad4f9fcc866c6c220f351eca892002e86991
         int fin = 0;
         Connection con = null; // connection to a database
         try {
@@ -478,23 +469,12 @@ public class ReviewTable {
                 String query = "SELECT ReviewID FROM Review WHERE SubmissionInfoID = " + id;
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                    int dn = res.getInt("ReviewID");
-                    fin++;
-=======
                     fin = res.getInt("ReviewID");
->>>>>>> 805f98c88dc4dd812cc2833b7926efd61fdc629a
-=======
-                    fin = res.getInt("ReviewID");
-
->>>>>>> b889ad4f9fcc866c6c220f351eca892002e86991
                 }
                 res.close();
             }
             catch (SQLException ex) {
                 ex.printStackTrace();
-
             }
             finally {
                 if (stmt != null)
@@ -510,12 +490,37 @@ public class ReviewTable {
         return fin;
     }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 805f98c88dc4dd812cc2833b7926efd61fdc629a
-=======
->>>>>>> b889ad4f9fcc866c6c220f351eca892002e86991
+    public static int CheckReviewID(int id) throws SQLException {
+        int fin = 0;
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String query = "SELECT ReviewID FROM Review WHERE SubmissionInfoID = " + id;
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    fin = res.getInt("ReviewID");
+                }
+                res.close();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+        return fin;
+    }
+    
 }
