@@ -23,7 +23,7 @@ public class AddDeleteTables {
         AuthorTable.DeleteTable();
     }
 
-    public static void adding() throws SQLException {
+    public static void add() throws SQLException {
 //        //Creates all tables
         CreateUserTable();
         EditorTable.CreateEditorTable();
@@ -43,7 +43,7 @@ public class AddDeleteTables {
     }
     public static void main (String args[]) throws SQLException {
 
-        AddDeleteTables.adding();
+        AddDeleteTables.add();
         //AddDeleteTables.delete();
     }
 }
