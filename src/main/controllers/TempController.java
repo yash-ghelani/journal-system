@@ -22,8 +22,6 @@ import java.util.regex.*;
 
 public class TempController extends Main {
 
-    String[] l = new String[5];
-
     @FXML
     private TextField firstName;
 
@@ -56,131 +54,92 @@ public class TempController extends Main {
     }
 
     public void handleUpdate(ActionEvent action) throws IOException, SQLException {
-        // first name
-        boolean validFirstName = false;
-        if (firstName.getText().isEmpty()) {
-            firstName.setStyle("-fx-prompt-text-fill : red;");
-        } else
-            l[0] = firstName.getText();
-        validFirstName = true;
-        // last name
-        boolean validLastName = false;
-        if (lastName.getText().isEmpty()) {
-            lastName.setStyle("-fx-prompt-text-fill : red;");
-        } else
-            l[1] = lastName.getText();
-        validLastName = true;
-        // university
-        boolean validUniversityName = false;
-        if (university.getText().isEmpty()) {
-            university.setStyle("-fx-prompt-text-fill : red;");
-        } else
-            l[2] = university.getText();
-        validUniversityName = true;
-        //emailField
-        boolean validEmail = false;
-        if (emailField.getText().isEmpty()) {
-            emailField.setStyle("-fx-prompt-text-fill : red;");
-            //} else if (Pattern.matches("[a-zA-Z]+[@][a-zA-z]+[.][A-Za-z.]+", emailField.getText())) {
-        } else if (Pattern.matches("[A-Za-z.]+[@][a-zA-z]+[.][A-Za-z.]+", emailField.getText())) {
-            l[3] = emailField.getText();
-            validEmail = true;
-        }
-        //else if (!Pattern.matches("[a-zA-Z]+[@][a-zA-z]+[.][A-Za-z.]+",emailField.getText())){
-        else if (!Pattern.matches("[A-Za-z.]+[@][a-zA-z]+[.][A-Za-z.]+", emailField.getText())) {
-            emailField.setStyle("-fx-prompt-text-fill : red;");
-            emailField.clear();
-            emailField.setPromptText("not valid email type");
 
-        }
-        // password
-        boolean validPassword = false;
-        if (passWordField.getText().isEmpty()) {
-            passWordField.setStyle("-fx-prompt-text-fill : red;");
-        } else if (Pattern.matches("[a-zA-Z0-9[^\\dA-Za-zA-Za-z0-9]]{6,}", passWordField.getText())) {
-            l[4] = passWordField.getText();
-            validPassword = true;
-            // System.out.println("N");
-        } else if (!Pattern.matches("[a-zA-Z0-9[^\\dA-Za-zA-Za-z0-9]]{6,}", passWordField.getText())) {
-            passWordField.setStyle("-fx-prompt-text-fill : red;");
-            passWordField.clear();
-            passWordField.setPromptText("must be 6 letters and above");
-        }
+        boolean t = validTitle();
+        boolean fn = validFirstName();
+        boolean ln = validLastName();
+        boolean a = validAffiliation();
+        boolean email = validEmail();
+        boolean pw = validPassword();
 
-        String prefixValue = (String) prefix.getValue();
-
-        String [] roleValue = getRole(Main.IDs);
-
-        if (prefix != null && firstName != null && lastName != null && university != null && emailField != null && passWordField != null
-                && validFirstName && validLastName && validUniversityName && validEmail && validPassword){
-
-            if (roleValue[0] == "Author") {
-                try {
-
-                    AuthorTable.UpdateTitle(Integer.valueOf(roleValue[1]),prefixValue);
-                    AuthorTable.UpdateName(Integer.valueOf(roleValue[1]), firstName.getText());
-                    AuthorTable.UpdateSurname(Integer.valueOf(roleValue[1]),lastName.getText());
-                    AuthorTable.UpdateAffiliation(Integer.valueOf(roleValue[1]),university.getText());
-                    AuthorTable.UpdateEmail(Integer.valueOf(roleValue[1]),emailField.getText());
-                    AuthorTable.UpdatePassword(Integer.valueOf(roleValue[1]),Integer.toString(passWordField.getText().hashCode()));
-                    AuthorTable.UpdateTemp(Integer.valueOf(roleValue[1]),false);
-
-                    System.out.println(roleValue[0]+" "+firstName.getText()+" "+lastName.getText()+" "+university.getText()+" "+emailField.getText()+" "+ passWordField.getText().hashCode() +" "+ false);
-
-                    RegisterController.loadLogin(action);
-
-                } catch (SQLException e) {
-                    System.err.println(e.getClass().getName() + ": " + e.getMessage());
-                    System.out.println("Selection failed");
-                }
-
-            } else if (roleValue[0] == "Editor") {
-                try {
-
-                    EditorTable.UpdateTitle(Integer.valueOf(roleValue[1]),prefixValue);
-                    EditorTable.UpdateName(Integer.valueOf(roleValue[1]), firstName.getText());
-                    EditorTable.UpdateSurname(Integer.valueOf(roleValue[1]),lastName.getText());
-                    EditorTable.UpdateAffiliation(Integer.valueOf(roleValue[1]),university.getText());
-                    EditorTable.UpdateEmail(Integer.valueOf(roleValue[1]),emailField.getText());
-                    EditorTable.UpdatePassword(Integer.valueOf(roleValue[1]),Integer.toString(passWordField.getText().hashCode()));
-                    EditorTable.UpdateTemp(Integer.valueOf(roleValue[1]),0);
-
-                    RegisterController.loadLogin(action);
-                } catch (SQLException e) {
-                    System.err.println(e.getClass().getName() + ": " + e.getMessage());
-                    System.out.println("Selection failed");
-                }
-            } else if (roleValue[0] == "Reviewer") {
-
-                try {
-                    ReviewerTable.UpdateTitle(Integer.valueOf(roleValue[1]),prefixValue);
-                    ReviewerTable.UpdateName(Integer.valueOf(roleValue[1]), firstName.getText());
-                    ReviewerTable.UpdateSurname(Integer.valueOf(roleValue[1]),lastName.getText());
-                    ReviewerTable.UpdateAffiliation(Integer.valueOf(roleValue[1]),university.getText());
-                    ReviewerTable.UpdateEmail(Integer.valueOf(roleValue[1]),emailField.getText());
-                    ReviewerTable.UpdatePassword(Integer.valueOf(roleValue[1]),Integer.toString(passWordField.getText().hashCode()));
-                    ReviewerTable.UpdateTemp(Integer.valueOf(roleValue[1]),0);
-
-                    RegisterController.loadLogin(action);
-                } catch (SQLException e) {
-                    System.err.println(e.getClass().getName() + ": " + e.getMessage());
-                    System.out.println("Selection failed");
-                }
-
-            } else {
-                System.out.println("Not all fields filled in");
-            }
+        if (t && fn && ln && a && email && pw) {
+            UserTable.Update((String) prefix.getValue(), firstName.getText(), lastName.getText(), university.getText(), emailField.getText(), String.valueOf(passWordField.getText().hashCode()));
+            loadLogin(action);
         }
     }
 
-    public String[] getRole(int [] IDs){
-
-        if (IDs[0] == 0 && IDs[1] == 0 && IDs[2] != 0){
-            return new String[] {"Reviewer", String.valueOf(IDs[2])};
-        } else if (IDs[0] == 0 && IDs[1] != 0 && IDs[2] == 0) {
-            return new String[] {"Editor", String.valueOf(IDs[1])};
+    // *************************************validation methods******************************************************
+    public boolean validTitle(){
+        if (prefix.getSelectionModel().isEmpty()) {
+            prefix.setStyle("-fx-border-color: red; -fx-border-width: 2px;-fx-prompt-text-fill : red;");
+            return false;
         } else {
-            return new String[] {"Author", String.valueOf(IDs[0])};
+            return true;
         }
+    }
+
+    public boolean validFirstName(){
+        // first name
+        if (firstName.getText().isEmpty() || !firstName.getText().chars().allMatch(Character::isLetter)) {
+            firstName.setStyle("-fx-prompt-text-fill : red;");
+            firstName.clear();
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean validLastName(){
+        // last name
+        if (lastName.getText().isEmpty() || !lastName.getText().chars().allMatch(Character::isLetter)) {
+            lastName.setStyle("-fx-prompt-text-fill : red;");
+            firstName.clear();
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean validEmail(){
+        //emailField
+        if (Pattern.matches("[A-Za-z.]+[@][a-zA-z]+[.][A-Za-z.]+", emailField.getText())) {
+            return true;
+        } else {
+            emailField.setStyle("-fx-prompt-text-fill : red;");
+            emailField.clear();
+            emailField.setPromptText("Not valid email type");
+            return false;
+        }
+    }
+
+    public boolean validAffiliation(){
+        if (university.getText().isEmpty() || !university.getText().chars().allMatch(Character::isLetter)) {
+            university.setStyle("-fx-border-color: red; -fx-border-width: 2px;-fx-prompt-text-fill : red;");
+            firstName.clear();
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean validPassword(){
+        if (Pattern.matches("[a-zA-Z0-9[^\\dA-Za-zA-Za-z0-9]]{6,}", passWordField.getText())) {
+            return true;
+        } else {
+            passWordField.setStyle("-fx-prompt-text-fill : red;");
+            passWordField.clear();
+            passWordField.setPromptText("Password must be over 6 letters long");
+            return false;
+        }
+    }
+
+    static void loadLogin(ActionEvent action) throws IOException {
+        URL url = new File("src/resources/login.fxml").toURI().toURL();
+        Parent view = FXMLLoader.load(url);
+        Scene viewScene = new Scene(view);
+
+        Stage window = (Stage) ((Node) action.getSource()).getScene().getWindow();
+        window.setResizable(true);
+        window.setScene(viewScene);
     }
 }
