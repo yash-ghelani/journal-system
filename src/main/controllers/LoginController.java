@@ -50,22 +50,40 @@ public class LoginController {
             Main.IDs[1] = EditorTable.GetID(userID);
             Main.IDs[2] = ReviewerTable.GetID(userID);
 
+            boolean Author = false;
+            boolean Editor = false;
+            boolean Reviewer = false;
+
+
+            if (Main.IDs[0] != -1) {
+                Author = true;
+            } else if (Main.IDs[1] != -1) {
+                Editor = true;
+            } if (Main.IDs[2] != -1) {
+                Reviewer = true;
+            }
+
+            System.out.println(Main.IDs[0] +" "+ Author);
+            System.out.println(Main.IDs[1] +" "+ Editor);
+            System.out.println(Main.IDs[2] +" "+ Reviewer);
+
             // load page depending on user roles
-            if ((Main.IDs[1] != -1) && (Main.IDs[1] != -1) && (Main.IDs[1] != -1)) {
+            if (Author && Editor && Reviewer) {
                 loadScene(event, "src/resources/EAR.fxml");
-            } else if ((Main.IDs[1] != -1) && (Main.IDs[1] != -1) && (Main.IDs[1] == -1)) {
+            } else if (Author && Editor && !Reviewer) {
                 loadScene(event, "src/resources/EA.fxml");
-            } else if ((Main.IDs[1] != -1) && (Main.IDs[1] == -1) && (Main.IDs[1] != -1)) {
+            } else if (!Author && Editor && Reviewer) {
                 loadScene(event, "src/resources/ER.fxml");
-            }  else if ((Main.IDs[1] == -1) && (Main.IDs[1] != -1) && (Main.IDs[1] != -1)) {
+            }  else if (Author && !Editor && Reviewer) {
                 loadScene(event, "src/resources/RA.fxml");
-            } else if ((Main.IDs[1] != -1) && (Main.IDs[1] == -1) && (Main.IDs[1] == -1)) {
-                loadScene(event, "src/resources/EditorPanel.fxml");
-            } else if ((Main.IDs[1] == -1) && (Main.IDs[1] != -1) && (Main.IDs[1] == -1)) {
-                loadScene(event,"src/resources/AuthorPanel.fxml");
-            } else if ((Main.IDs[1] == -1) && (Main.IDs[1] == -1) && (Main.IDs[1] != -1)) {
+            } else if (Author && !Editor && !Reviewer) {
+                loadScene(event, "src/resources/AuthorPanel.fxml");
+            } else if (!Author && Editor && !Reviewer) {
+                loadScene(event,"src/resources/EditorPanel.fxml");
+            } else if (!Author && !Editor && Reviewer) {
                 loadScene(event, "src/resources/ReviewPanel.fxml");
             } else {
+                System.out.println("Not a user");
                 error();
             }
 

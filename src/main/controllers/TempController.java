@@ -62,8 +62,18 @@ public class TempController extends Main {
         boolean email = validEmail();
         boolean pw = validPassword();
 
+        int id;
+        if (Main.IDs[0] != -1){
+            id = Main.IDs[0];
+        } else if (Main.IDs[1] != -1){
+            id = Main.IDs[1];
+        } else {
+            id = Main.IDs[2];
+        }
+
         if (t && fn && ln && a && email && pw) {
-            UserTable.Update((String) prefix.getValue(), firstName.getText(), lastName.getText(), university.getText(), emailField.getText(), String.valueOf(passWordField.getText().hashCode()));
+
+            UserTable.Update(id, (String) prefix.getValue(), firstName.getText(), lastName.getText(), university.getText(), emailField.getText(), String.valueOf(passWordField.getText().hashCode()));
             loadLogin(action);
         }
     }
