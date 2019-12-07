@@ -17,7 +17,6 @@
     </data-source>
     <data-source name="MySQL - @localhost" uuid="346281f2-966d-4fed-b301-ab2d824ca823">
       <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="MYSQL" exact-version="0" />
-      <secret-storage>master_key</secret-storage>
       <schema-mapping />
     </data-source>
   </component>
