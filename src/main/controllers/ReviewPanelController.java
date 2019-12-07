@@ -119,7 +119,7 @@ public class ReviewPanelController {
         String id = text.substring(11);
         int idtoint = Integer.parseInt(id);
         ArticleIDForReview = idtoint;
-        System.out.println(ArticleIDForReview);
+        //System.out.println(ArticleIDForReview);
         URL url = new File("src/resources/InitialVerdict.fxml").toURI().toURL();
         Parent view = FXMLLoader.load(url);
         Scene viewScene = new Scene(view);
