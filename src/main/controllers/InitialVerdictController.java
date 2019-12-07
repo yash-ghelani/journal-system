@@ -23,6 +23,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static main.Main.ArticleIDForReview;
 import static main.Main.SubmissionIDForReview;
 
 public class InitialVerdictController {
@@ -45,7 +46,7 @@ public class InitialVerdictController {
     @FXML
     private Label reviewid;
 
-    private List<String> crits = new ArrayList<String>(); //store criticisms
+    private List<String> questions = new ArrayList<String>(); //store criticisms
     private List<String> errors = new ArrayList<String>(); // store errors
 
     public void initialize() throws SQLException {
@@ -54,8 +55,8 @@ public class InitialVerdictController {
         list.add("Detractor");
         ObservableList obList = FXCollections.observableList(list);
         finalVerdict.setItems(obList);
-        submissionid.setText("Submission ID: "+ SubmissionIDForReview);
-        reviewid.setText("Review ID: " + ReviewTable.selectReviewID(SubmissionIDForReview));
+        submissionid.setText("ArticleID: "+ ArticleIDForReview);
+        //reviewid.setText("Review ID: " + ReviewTable.selectReviewID(SubmissionIDForReview));
     }
 
 
@@ -75,7 +76,7 @@ public class InitialVerdictController {
         text.setText(criticism.getText());
         vBoxCriticism.getChildren().add(text);
 
-        crits.add(criticism.getText());
+        questions.add(criticism.getText());
 
         criticism.clear();
     }
@@ -94,17 +95,17 @@ public class InitialVerdictController {
 
         String summary = reviewSummary.getText();
 
-        ReviewTable.UpdateSummary(SubmissionIDForReview, summary);
-        ReviewTable.UpdateVerdict(SubmissionIDForReview, (String) finalVerdict.getValue());
+        ReviewTable.UpdateSummary(ArticleIDForReview, Main.IDs[2], summary);
+        ReviewTable.UpdateInitialVerdict(ArticleIDForReview, Main.IDs[2], (String) finalVerdict.getValue());
 
-        int reviewid = ReviewTable.SelectReviewID(Main.IDs[2], SubmissionIDForReview, summary, (String) finalVerdict.getValue());
+        int reviewid = ReviewTable.SelectReviewID(Main.IDs[2], ArticleIDForReview);
 
         for (int i = 0 ; i < errors.size() ; i++) {
             ErrorTable.Insert(reviewid, errors.get(i));
         }
 
-        for (int i = 0 ; i < crits.size(); i++) {
-            CriticismsTable.Insert(reviewid, crits.get(i));
+        for (int i = 0 ; i < questions.size(); i++) {
+            QuestionTable.Insert(reviewid, questions.get(i));
         }
 
         URL url = new File("src/resources/ReviewPanel.fxml").toURI().toURL();

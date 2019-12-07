@@ -61,7 +61,7 @@ public class ErrorTable {
             try {
                 stmt = con.createStatement();
 
-                String journal = "INSERT INTO Errors ( ReviewID, Criticism) VALUES (" + reviewid +",'" + error + "')";
+                String journal = "INSERT INTO Errors (ReviewID, Error) VALUES (" + reviewid +",'" + error + "')";
                 System.out.println(journal);
                 stmt.executeUpdate(journal);
 

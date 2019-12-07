@@ -324,7 +324,7 @@ public class ArticleTable {
         return fin;
     }
 
-    public String SelectTitle(int articleID) throws SQLException {
+    public static String SelectTitle(int articleID) throws SQLException {
         String fin = null;
         Connection con = null; // connection to a database
         try {

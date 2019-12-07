@@ -31,7 +31,6 @@ public class ReviewTable {
                         "PRIMARY KEY (ReviewID), " +
                         "FOREIGN KEY (ReviewerID) REFERENCES Reviewer(ReviewerID), " +
                         "FOREIGN KEY (ArticleID) REFERENCES Articles(ArticleID))";
-
                 stmt.executeUpdate(jtable);
             } catch (SQLException ex) {
                 ex.printStackTrace();
@@ -39,21 +38,14 @@ public class ReviewTable {
                 if (stmt != null)
                     stmt.close();
             }
-
-
             //=========================================================================================================
         } catch (Exception e) {
             //e.printStackTrace();
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
-
         } finally {
-            if (con != null) con.close();
-        }
-
+            if (con != null) con.close(); }
     }
-
-
-    public static void Insert(int reviewerid, int submissioninfoid, String Summary, String verdict) throws SQLException {
+    public static void Insert(int reviewerid, int articleid, String Summary, String initialverdict, String finalverdict) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -61,11 +53,8 @@ public class ReviewTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-
-
-                String journal = "INSERT INTO Review (ReviewerID, SubmissionInfoID, Summary, Verdict) VALUES (" + reviewerid + "," + submissioninfoid + ", '" + Summary + "', '" + verdict + "')";
+                String journal = "INSERT INTO Review (ReviewerID, ArticleID, Summary, InitialVerdict, FinalVerdict) VALUES (" + reviewerid + "," + articleid + ", '" + Summary + "', '" + initialverdict + "', '" + finalverdict + "')";
                 System.out.println(journal);
-
                 stmt.executeUpdate(journal);
 
             } catch (SQLException ex) {
@@ -107,7 +96,7 @@ public class ReviewTable {
     }
 
 
-    public static void UpdateSummary(String Summary) throws SQLException {
+    public static void UpdateSummary(int articleid, int reviewerid, String Summary) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -115,7 +104,7 @@ public class ReviewTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String journal = "UPDATE Review SET Summary = '" + Summary + "'";
+                String journal = "UPDATE Review SET Summary = '" + Summary + "' WHERE ArticleID = " + articleid + " AND ReviewerID = " + reviewerid;
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
             } catch (SQLException ex) {
@@ -131,7 +120,7 @@ public class ReviewTable {
         }
     }
 
-    public static void UpdateVerdict(String verdict) throws SQLException {
+    public static void UpdateInitialVerdict(int articleid, int reviewerid, String verdict) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -139,7 +128,7 @@ public class ReviewTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String journal = "UPDATE Review SET verdict = '" + verdict + "'";
+                String journal = "UPDATE Review SET InitialVerdict = '" + verdict + "' WHERE ArticleID = " + articleid + " AND ReviewerID = " + reviewerid;
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
             } catch (SQLException ex) {
@@ -342,7 +331,7 @@ public class ReviewTable {
         }
     }
 
-    public static int SelectReviewID(int reviewerid, int submissionid, String summary, String verdict) throws SQLException {
+    public static int SelectReviewID(int reviewerid, int articleid) throws SQLException {
         int fin = 0;
         Connection con = null; // connection to a database
         try {
@@ -351,7 +340,7 @@ public class ReviewTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "SELECT ReviewID FROM Review WHERE ReviewerID = " + reviewerid + " AND SubmissionID = " + submissionid + " AND Summary = '" + summary + "' AND Verdict = '" + verdict + "'";
+                String query = "SELECT ReviewID FROM Review WHERE ReviewerID = " + reviewerid + " AND ArticleID = " + articleid;
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     fin = res.getInt("ReviewID");
@@ -371,7 +360,7 @@ public class ReviewTable {
         return fin;
     }
 
-    public static ArrayList<Integer> selectListOfSubmissionID(int id) throws SQLException {
+    public static ArrayList<Integer> SelectListOfArticleIDs(int id) throws SQLException {
         ArrayList<Integer> list = new ArrayList<Integer>();
         Connection con = null; // connection to a database
         try {
@@ -380,10 +369,10 @@ public class ReviewTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "SELECT SubmissionInfoID FROM Review WHERE ReviewerID = " + id;
+                String query = "SELECT ArticleID FROM Review WHERE ReviewerID = " + id + " AND Summary = 'null' AND InitialVerdict = 'null' AND FinalVerdict = 'null'";
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
-                    int fin = res.getInt("SubmissionInfoID");
+                    int fin = res.getInt("ArticleID");
                     list.add(fin);
                 }
                 res.close();

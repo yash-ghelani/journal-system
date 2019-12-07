@@ -205,7 +205,7 @@ public class ArticleInfoTable {
         return fin;
     }
 
-    public int SelectAuthorID(int articleInfoID) throws SQLException {
+    public static int SelectAuthorID(int articleInfoID) throws SQLException {
         int fin = 0;
         Connection con = null; // connection to a database
         try {

@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 
 import javafx.event.*;
 import main.Main;
+import main.tables.ArticleTable;
 import main.tables.ReviewTable;
 
 import java.io.File;
@@ -22,7 +23,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import static main.Main.SubmissionIDForReview;
+import static main.Main.ArticleIDForReview;
 
 
 public class ReviewPanelController {
@@ -82,11 +83,12 @@ public class ReviewPanelController {
 
     public void handleClick(ActionEvent actionEvent) throws IOException, SQLException {
 
-        ArrayList<Integer> submissionids = ReviewTable.selectListOfSubmissionID(Main.IDs[2]);
+        ArrayList<Integer> submissionids = ReviewTable.SelectListOfArticleIDs(Main.IDs[2]);
 
         if (submissionids.isEmpty()) {
             pleaseselect.setText("Please select reviews");
         }
+
         for (int i = 0; i < (submissionids).size(); i++) {
 
             pleaseselect.setText("");
@@ -98,13 +100,10 @@ public class ReviewPanelController {
 
             VBox v = (VBox) child.get(0);
             Label title = (Label) v.getChildren().get(0);
-            Label submissioninfoID = (Label) v.getChildren().get(1);
+            Label articleID = (Label) v.getChildren().get(1);
 
-
-
-            title.setText(SubmissionTable.selectInitialTitle(submissionids.get(i)));
-
-            submissioninfoID.setText("Submission Info ID: " + submissionids.get(i));
+            title.setText(ArticleTable.SelectTitle(submissionids.get(i)));
+            articleID.setText("ArticleID: " + submissionids.get(i));
 
             Insets padding = new Insets(10, 0, 0, 0);
             Separator sep = new Separator();
@@ -117,9 +116,10 @@ public class ReviewPanelController {
 
     public void handleSubmitInitialVerdict(ActionEvent actionEvent) throws IOException {
         String text = submissionid.getText();
-        String id = text.substring(20);
-        int idtoint =Integer.parseInt(id);
-        SubmissionIDForReview = idtoint;
+        String id = text.substring(11);
+        int idtoint = Integer.parseInt(id);
+        ArticleIDForReview = idtoint;
+        //System.out.println(ArticleIDForReview);
         URL url = new File("src/resources/InitialVerdict.fxml").toURI().toURL();
         Parent view = FXMLLoader.load(url);
         Scene viewScene = new Scene(view);
