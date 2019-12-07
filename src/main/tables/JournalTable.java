@@ -211,7 +211,7 @@ public class JournalTable {
         return fin;
     }
 
-    public static ArrayList<String> selectJournals() throws SQLException {
+    public static ArrayList<String> SelectJournals() throws SQLException {
         ArrayList<String> list = new ArrayList<>();
         Connection con = null; // connection to a database
         try {

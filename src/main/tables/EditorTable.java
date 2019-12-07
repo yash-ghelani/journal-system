@@ -560,8 +560,8 @@ public class EditorTable {
         }
     }
 
-    public static int getID(String email, String password) throws SQLException {
-        int fin = 0;
+    public static int GetID(int id) throws SQLException {
+        int fin = -1;
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -569,25 +569,20 @@ public class EditorTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "SELECT EditorID FROM Editor WHERE Email = '" + email + "' AND Password = '" + password + "'";
+                String query = "SELECT EditorID FROM Editor WHERE UserID = '" +id+ "'";
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     fin = res.getInt("EditorID");
                 }
                 res.close();
-            }
-            catch (SQLException ex) {
+            } catch (SQLException ex) {
                 ex.printStackTrace();
+            } finally {
+                if (stmt != null) stmt.close();
             }
-            finally {
-                if (stmt != null)
-                    stmt.close();
-            }
-        }
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             ex.printStackTrace();
-        }
-        finally {
+        } finally {
             if (con != null) con.close();
         }
         return fin;

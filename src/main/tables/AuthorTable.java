@@ -534,8 +534,8 @@ public class AuthorTable {
         }
     }
 
-    public static int getID(String email, String password) throws SQLException {
-        int fin = 0;
+    public static int GetID(int id) throws SQLException {
+        int fin = -1;
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -543,7 +543,7 @@ public class AuthorTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "SELECT AuthorID FROM Author WHERE Email = '" + email + "' AND Password = '" + password + "'";
+                String query = "SELECT AuthorID FROM Author WHERE UserID = '" +id+ "'";
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     fin = res.getInt("AuthorID");
