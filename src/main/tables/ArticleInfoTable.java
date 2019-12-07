@@ -24,7 +24,7 @@ public class ArticleInfoTable {
                                     "(ArticleInfoID         INT    NOT NULL     AUTO_INCREMENT, "+ //Creating the different fields
                                     "AuthorID               INT, "+
                                     "ArticleID              INT, " +
-                                    "ArticleType            TEXT,"+
+                                    "AuthorType            TEXT,"+
                                     "PRIMARY KEY (ArticleInfoID), "+
                                     "FOREIGN KEY (ArticleID) REFERENCES Articles(ArticleID), "+
                                     "FOREIGN KEY (AuthorID) REFERENCES Author(AuthorID))";

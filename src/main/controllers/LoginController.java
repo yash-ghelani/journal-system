@@ -24,10 +24,6 @@ import java.util.regex.Pattern;
 
 public class LoginController {
 
-   // public Button button;
-
-    String [] kin = new String [2];
-
     @FXML
     private javafx.scene.control.TextField loginID;
 
@@ -68,6 +64,8 @@ public class LoginController {
 
         String login = loginID.getText();
         String password = Integer.toString(Password.getText().hashCode());
+
+
 
         boolean isAuthor = AuthorTable.ValidateEmailAndPassword(login, password);
         boolean isEditor = EditorTable.ValidateEmailAndPassword(login, password);

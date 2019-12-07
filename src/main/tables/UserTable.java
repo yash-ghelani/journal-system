@@ -7,6 +7,13 @@ import java.sql.Statement;
 
 public class UserTable {
 
+    public static void main(String args[]) throws SQLException {
+
+        UserTable rt = new UserTable();
+        rt.CreateUserTable();
+        //vt.Insert(12345678, 2018);
+    }
+
     public static void CreateUserTable() throws SQLException {
 
         Connection con = null; // a Connection object

@@ -26,7 +26,8 @@ public class ReviewTable {
                         "ReviewerID             INT, " +
                         "ArticleID               INT," +
                         "Summary                TEXT, " +
-                        "Verdict                TEXT, " +
+                        "InitialVerdict         TEXT, " +
+                        "FinalVerdict           TEXT," +
                         "PRIMARY KEY (ReviewID), " +
                         "FOREIGN KEY (ReviewerID) REFERENCES Reviewer(ReviewerID), " +
                         "FOREIGN KEY (ArticleID) REFERENCES Articles(ArticleID))";
@@ -409,7 +410,7 @@ public class ReviewTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "SELECT ReviewID FROM Review WHERE SubmissionInfoID = " + id;
+                String query = "SELECT ReviewID FROM Review WHERE ArticleID = " + id;
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     int dn = res.getInt("ReviewID");
