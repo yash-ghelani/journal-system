@@ -62,7 +62,7 @@
                   <Region prefHeight="100.0" prefWidth="86.0" />
                   <TextField fx:id="email" prefHeight="27.0" prefWidth="572.0" promptText="Co-Author Email" />
                   <Region prefHeight="38.0" prefWidth="79.0" />
-                  <Button mnemonicParsing="false" onAction="#handleRegister" prefWidth="200.0" text="Register" />
+                  <Button mnemonicParsing="false" onAction="#handleRegister" prefHeight="25.0" prefWidth="195.0" text="Register" />
                   <Region layoutX="668.0" layoutY="10.0" prefHeight="25.0" prefWidth="109.0" />
                </children>
                <VBox.margin>
@@ -72,7 +72,7 @@
             <HBox prefHeight="23.0" prefWidth="1044.0">
                <children>
                   <Region minHeight="-Infinity" minWidth="-Infinity" prefHeight="61.0" prefWidth="88.0" />
-                  <VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="253.0" prefWidth="567.0">
+                  <VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="253.0" prefWidth="845.0">
                      <children>
                         <Label fx:id="idLab" text="Temporary Login: ">
                            <VBox.margin>
@@ -101,14 +101,14 @@
                         <Insets />
                      </HBox.margin>
                   </VBox>
-                  <Region prefHeight="163.0" prefWidth="394.0" />
+                  <Region prefHeight="253.0" prefWidth="207.0" />
                </children>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="1044.0">
                <children>
-                  <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                  <Button mnemonicParsing="false" onAction="#handleSubmit" prefHeight="27.0" prefWidth="973.0" text="Submit " />
-                  <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+                  <Region prefHeight="71.0" prefWidth="225.0" HBox.hgrow="ALWAYS" />
+                  <Button mnemonicParsing="false" onAction="#handleSubmit" prefHeight="27.0" prefWidth="982.0" text="Submit " />
+                  <Region prefHeight="71.0" prefWidth="249.0" HBox.hgrow="ALWAYS" />
                </children>
                <VBox.margin>
                   <Insets top="28.0" />
