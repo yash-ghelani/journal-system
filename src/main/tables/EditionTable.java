@@ -34,9 +34,9 @@ public class EditionTable {
                 stmt = con.createStatement();
                 String initialise = "CREATE TABLE Edition " + //Creating the table
                                     "(EditionID             INT    NOT NULL AUTO_INCREMENT, "+ //Creating the different fields
-                                    "VolumeID               INT    NOT NULL, "+
-                                    "PublicationMonth       INT    NOT NULL, "+
-                                    "PRIMARY KEY (EditionID), "+
+                                    "PublicationMonth       INT    NOT NULL, " +
+                        "VolumeID INT,"+
+                                    "PRIMARY KEY (EditionID), " +
                                     "FOREIGN KEY (VolumeID) REFERENCES Volume(VolumeID))";
 
                 stmt.executeUpdate(initialise);

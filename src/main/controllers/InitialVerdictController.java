@@ -23,6 +23,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static main.Main.ArticleIDForReview;
 import static main.Main.SubmissionIDForReview;
 
 public class InitialVerdictController {
@@ -54,8 +55,8 @@ public class InitialVerdictController {
         list.add("Detractor");
         ObservableList obList = FXCollections.observableList(list);
         finalVerdict.setItems(obList);
-        submissionid.setText("Submission ID: "+ SubmissionIDForReview);
-        reviewid.setText("Review ID: " + ReviewTable.selectReviewID(SubmissionIDForReview));
+        submissionid.setText("ArticleID: "+ ArticleIDForReview);
+        //reviewid.setText("Review ID: " + ReviewTable.selectReviewID(SubmissionIDForReview));
     }
 
 
@@ -94,8 +95,8 @@ public class InitialVerdictController {
 
         String summary = reviewSummary.getText();
 
-        ReviewTable.UpdateSummary(SubmissionIDForReview, summary);
-        ReviewTable.UpdateVerdict(SubmissionIDForReview, (String) finalVerdict.getValue());
+        //ReviewTable.UpdateSummary(SubmissionIDForReview, summary);
+        //ReviewTable.UpdateVerdict(SubmissionIDForReview, (String) finalVerdict.getValue());
 
         int reviewid = ReviewTable.SelectReviewID(Main.IDs[2], SubmissionIDForReview, summary, (String) finalVerdict.getValue());
 
@@ -104,7 +105,7 @@ public class InitialVerdictController {
         }
 
         for (int i = 0 ; i < crits.size(); i++) {
-            CriticismsTable.Insert(reviewid, crits.get(i));
+            //CriticismsTable.Insert(reviewid, crits.get(i));
         }
 
         URL url = new File("src/resources/ReviewPanel.fxml").toURI().toURL();

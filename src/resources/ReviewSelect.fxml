@@ -27,7 +27,7 @@
                         <Insets top="25.0" />
                      </VBox.margin>
                   </Text>
-                  <Label text="Please Select Any 3 Articles to Review">
+                  <Label fx:id="notify" text="Please Select Any 3 Articles to Review">
                      <VBox.margin>
                         <Insets top="5.0" />
                      </VBox.margin>

@@ -24,7 +24,7 @@ public class ArticleInfoTable {
                                     "(ArticleInfoID         INT    NOT NULL     AUTO_INCREMENT, "+ //Creating the different fields
                                     "AuthorID               INT, "+
                                     "ArticleID              INT, " +
-                                    "ArticleType            TEXT,"+
+                                    "AuthorType            TEXT,"+
                                     "PRIMARY KEY (ArticleInfoID), "+
                                     "FOREIGN KEY (ArticleID) REFERENCES Articles(ArticleID), "+
                                     "FOREIGN KEY (AuthorID) REFERENCES Author(AuthorID))";
@@ -205,7 +205,7 @@ public class ArticleInfoTable {
         return fin;
     }
 
-    public int SelectAuthorID(int articleInfoID) throws SQLException {
+    public static int SelectAuthorID(int articleInfoID) throws SQLException {
         int fin = 0;
         Connection con = null; // connection to a database
         try {
