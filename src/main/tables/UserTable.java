@@ -4,13 +4,6 @@ import java.sql.*;
 
 public class UserTable {
 
-    public static void main(String args[]) throws SQLException {
-
-        UserTable rt = new UserTable();
-        rt.CreateUserTable();
-        //vt.Insert(12345678, 2018);
-    }
-
     public static void CreateUserTable() throws SQLException {
 
         Connection con = null; // a Connection object
@@ -21,10 +14,10 @@ public class UserTable {
                 stmt = con.createStatement();
                 String query = "CREATE TABLE User " + //Creating the table "UserTable"
                         "(UserID                     INT     AUTO_INCREMENT, "+ //Creating the different fields
-                        "Title                       INT, "+
-                        "Name                        INT,"+
-                        "Surname                    TEXT, "+
-                        "Affiliation                TEXT, " +
+                        "Title                       TEXT, "+
+                        "Name                        TEXT,"+
+                        "Surname                     TEXT, "+
+                        "Affiliation                 TEXT, " +
                         "Email                       TEXT, " +
                         "Password                    TEXT," +
                         "PRIMARY KEY (UserID))";
@@ -56,26 +49,28 @@ public class UserTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "INSERT INTO User (Title, Name, Surname, Affiliation, Email, Password, UserType) "+
-                        " VALUES ('" + title + "', '" + name + "', '" + surname + "','" + affiliation + "','" + email + "','" + password + "')";
+                String query = "INSERT INTO User (Title, Name, Surname, Affiliation, Email, Password) "+
+                        " VALUES ('" + title + "', '" + name + "', '" + surname + "', '" + affiliation + "', '" + email + "', '" + password + "')";
                 //System.out.println(journal);
                 stmt.executeUpdate(query);
             } catch (SQLException e) {
+                e.printStackTrace();
                 System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-                System.out.println("Selection failed");
+                System.out.println("Insert failed");
             } finally {
                 if (stmt != null)
                     stmt.close();
             }
         } catch (SQLException e) {
+            e.printStackTrace();
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-            System.out.println("Selection failed");
+            System.out.println("Something else failed");
         } finally {
             if (con != null) con.close();
         }
     }
 
-    public static void Update (String title, String name, String surname, String affiliation, String email, String password) throws SQLException {
+    public static void Update (int id, String title, String name, String surname, String affiliation, String email, String password) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -83,9 +78,10 @@ public class UserTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "UPDATE User SET Title = '"+title+"', Name = '"+name+"', Surname = '"+surname+"', Affiliation = '"+affiliation+"', Email = '"+email+"', Password = '" + password +"'";
+                String query = "UPDATE User SET Title = '"+title+"', Name = '"+name+"', Surname = '"+surname+"', Affiliation = '"+affiliation+"', Email = '"+email+"', Password = '" + password +"' WHERE UserID = " + id;
                 stmt.executeUpdate(query);
             } catch (SQLException e) {
+                e.printStackTrace();
                 System.err.println( e.getClass().getName() + ": " + e.getMessage() );
                 System.out.println("Selection failed");
             } finally {
@@ -93,8 +89,9 @@ public class UserTable {
                     stmt.close();
             }
         } catch (SQLException e) {
+            e.printStackTrace();
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-            System.out.println("Selection failed");
+            System.out.println("Something else failed");
         } finally {
             if (con != null) con.close();
         }
@@ -163,5 +160,31 @@ public class UserTable {
             if (con != null) con.close();
         }
         return fin;
+    }
+
+    public static void DeleteTable() throws SQLException {
+        Connection con = null;
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String newEdition = "DROP TABLE User";
+                stmt.executeUpdate(newEdition);
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
     }
 }

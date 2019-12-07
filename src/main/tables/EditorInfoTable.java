@@ -23,13 +23,11 @@ public class EditorInfoTable {
                 String initialise = "CREATE TABLE EditorInfo " + //Creating the table
                                     "(EditorInfoID    INT       NOT NULL AUTO_INCREMENT, "+ //Creating the different fields
                                     "EditorID         INT       NOT NULL, "+
-                                    "ArticleID     INT       NOT NULL, "+
-                                    "ReviewID         INT       NOT NULL, "+
-                                    "EditorType       INT   NOT NULL, " +
-                        "EditorVerdict TEXT,"+
+                                    "ArticleID        INT       NOT NULL, "+
+                                    "EditorType       INT       NOT NULL, "+
+                                    "EditorVerdict TEXT,"+
                                     "PRIMARY KEY (EditorInfoID), "+
                                     "FOREIGN KEY (EditorID) REFERENCES Editor(EditorID), "+
-                                    "FOREIGN KEY (ReviewID) REFERENCES Review(ReviewID), "+
                                     "FOREIGN KEY (ArticleID) REFERENCES Articles(ArticleID))";
 
                 stmt.executeUpdate(initialise);
@@ -124,35 +122,6 @@ public class EditorInfoTable {
             try {
                 stmt = con.createStatement();
                 String newEdition = "UPDATE EditorInfo SET SubmissionID = '"+submissionID+"' WHERE EditorInfoID = " + editorInfoID;
-                stmt.executeUpdate(newEdition);
-            }
-            catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-            finally {
-                if (stmt != null)
-                    stmt.close();
-            }
-
-        }
-        catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        finally {
-            if (con != null) con.close();
-        }
-
-    }
-
-    public static void UpdateReview(int editorInfoID, int reviewID ) throws SQLException {
-        Connection con = null; // connection to a database
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
-            // use the open connection
-            Statement stmt = null;
-            try {
-                stmt = con.createStatement();
-                String newEdition = "UPDATE EditorInfo SET ReviewID = '"+reviewID+"' WHERE EditorInfoID = " + editorInfoID;
                 stmt.executeUpdate(newEdition);
             }
             catch (SQLException ex) {
@@ -279,39 +248,6 @@ public class EditorInfoTable {
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     fin = res.getInt("SubmissionID");
-                }
-                res.close();
-            }
-            catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-            finally {
-                if (stmt != null)
-                    stmt.close();
-            }
-        }
-        catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        finally {
-            if (con != null) con.close();
-        }
-        return fin;
-    }
-
-    public int SelectReviewID(int editorInfoID) throws SQLException {
-        int fin = 0;
-        Connection con = null; // connection to a database
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
-            // use the open connection
-            Statement stmt = null;
-            try {
-                stmt = con.createStatement();
-                String query = "SELECT ReviewID FROM EditorInfo WHERE EditorInfoID = " + editorInfoID;
-                ResultSet res = stmt.executeQuery(query);
-                while (res.next()) {
-                    fin = res.getInt("ReviewID");
                 }
                 res.close();
             }

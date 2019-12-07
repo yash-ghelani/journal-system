@@ -17,7 +17,7 @@ public class Main<IDs> extends Application {
         URL url = new File("src/resources/Login.fxml").toURI().toURL();
         Parent root = FXMLLoader.load(url);
         primaryStage.setTitle("Publisher");
-        primaryStage.setScene(new Scene(root));//, 710, 526));
+        primaryStage.setScene(new Scene(root, 710, 526));
         primaryStage.initStyle(StageStyle.DECORATED);
         primaryStage.setResizable(false);
         primaryStage.show();

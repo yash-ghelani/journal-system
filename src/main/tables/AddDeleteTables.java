@@ -11,16 +11,18 @@ public class AddDeleteTables {
         ArticleInfoTable.DeleteTable();
         ErrorTable.DeleteTable();
         ResponseTable.DeleteTable();
+        QuestionTable.DeleteTable();
+        EditorInfoTable.DeleteTable();
+        EditorTable.DeleteTable();
+        AuthorTable.DeleteTable();
+        ReviewTable.DeleteTable();
         ArticleTable.DeleteTable();
+        ReviewerTable.DeleteTable();
         EditionTable.DeleteTable();
         VolumeTable.DeleteTable();
         JournalTable.DeleteTable();
-        EditorInfoTable.DeleteTable();
-        EditorTable.DeleteTable();
-        QuestionTable.DeleteTable();
-        ReviewTable.DeleteTable();
-        ReviewerTable.DeleteTable();
-        AuthorTable.DeleteTable();
+        UserTable.DeleteTable();
+
     }
 
     public static void add() throws SQLException {
@@ -42,8 +44,7 @@ public class AddDeleteTables {
         EditorInfoTable.CreateEditorInfoTable();
     }
     public static void main (String args[]) throws SQLException {
-
+        AddDeleteTables.delete();
         AddDeleteTables.add();
-        //AddDeleteTables.delete();
     }
 }
