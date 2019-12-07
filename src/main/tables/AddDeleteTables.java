@@ -2,13 +2,13 @@ package main.tables;
 
 import java.sql.SQLException;
 
+import static main.tables.UserTable.*;
+
 public class AddDeleteTables {
 
     public static void delete() throws SQLException {
         JournalInfoTable.DeleteTable();
         ArticleInfoTable.DeleteTable();
-        VerdictTable.DeleteTable();
-        CriticismsTable.DeleteTable();
         ErrorTable.DeleteTable();
         ResponseTable.DeleteTable();
         ArticleTable.DeleteTable();
@@ -20,14 +20,12 @@ public class AddDeleteTables {
         QuestionTable.DeleteTable();
         ReviewTable.DeleteTable();
         ReviewerTable.DeleteTable();
-        SubmissionInfoTable.DeleteTable();
-        SubmissionTable.DeleteTable();
         AuthorTable.DeleteTable();
     }
 
     public static void adding() throws SQLException {
 //        //Creates all tables
-        UserTable.CreateUserTable();
+        CreateUserTable();
         EditorTable.CreateEditorTable();
         ReviewerTable.CreateReviewerTable();
         JournalTable.CreateJournalTable();
@@ -38,7 +36,6 @@ public class AddDeleteTables {
         ArticleTable.CreateArticleTable();
         ArticleInfoTable.CreateArticleInfoTable();
         ReviewTable.CreateReviewTable();
-        VerdictTable.CreateVerdictTable();
         ErrorTable.CreateErrorTable();
         QuestionTable.CreateQuestionTable();
         ResponseTable.CreateResponseTable();
@@ -46,7 +43,7 @@ public class AddDeleteTables {
     }
     public static void main (String args[]) throws SQLException {
 
-        //AddDeleteTables.adding();
+        AddDeleteTables.adding();
         //AddDeleteTables.delete();
     }
 }

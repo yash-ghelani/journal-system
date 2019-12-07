@@ -25,7 +25,8 @@ public class EditorInfoTable {
                                     "EditorID         INT       NOT NULL, "+
                                     "ArticleID     INT       NOT NULL, "+
                                     "ReviewID         INT       NOT NULL, "+
-                                    "EditorType       INT   NOT NULL, "+
+                                    "EditorType       INT   NOT NULL, " +
+                        "EditorVerdict TEXT,"+
                                     "PRIMARY KEY (EditorInfoID), "+
                                     "FOREIGN KEY (EditorID) REFERENCES Editor(EditorID), "+
                                     "FOREIGN KEY (ReviewID) REFERENCES Review(ReviewID), "+
