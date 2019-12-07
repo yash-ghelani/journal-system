@@ -98,12 +98,6 @@ public class ReviewSelectController {
 //                selector.setVisible(false);
 //            }
 
-            if (ReviewerTable.SelectCount(Main.IDs[2]) >= 3) {
-                VBox vButton = (VBox)child.get(2);
-                Button selector = (Button) vButton.getChildren().get(0);
-                selector.setVisible(false);
-            }
-
             title.setText(submissions.get(i));
             articleID.setText("ArticleID: " + s);
 
@@ -118,13 +112,19 @@ public class ReviewSelectController {
     }
 
     public void handleSelectReview(ActionEvent actionEvent) throws SQLException {
-        String text = finallabel.getText();
-        String id = text.substring(11);
-        int idtoint =Integer.parseInt(id);
-        ReviewTable.Insert(IDs[2],idtoint,null,null, null);
-        review.getChildren().remove(select);
-        select.setVisible(false);
-        select.setDisable(true);
-        ReviewerTable.IncreaseCount(Main.IDs[2]);
+        if (ReviewerTable.SelectCount(Main.IDs[2]) >= 3) {
+            select.setStyle("-fx-text-fill : red;");
+            select.setText("Already selected 3");
+        } else {
+
+            String text = finallabel.getText();
+            String id = text.substring(11);
+            int idtoint = Integer.parseInt(id);
+            ReviewTable.Insert(IDs[2], idtoint, null, null, null);
+            review.getChildren().remove(select);
+            select.setVisible(false);
+            select.setDisable(true);
+            ReviewerTable.IncreaseCount(Main.IDs[2]);
+        }
     }
 }

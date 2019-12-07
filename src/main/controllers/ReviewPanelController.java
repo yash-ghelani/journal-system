@@ -36,6 +36,7 @@ public class ReviewPanelController {
 
     @FXML
     private Label submissionid;
+
     @FXML
     private Label pleaseselect;
 
