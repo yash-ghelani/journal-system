@@ -14,23 +14,26 @@ public class Main<IDs> extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
 
-        URL url = new File("src/resources/AuthorPanel.fxml").toURI().toURL();
+
+        URL url = new File("src/resources/Login.fxml").toURI().toURL();
         Parent root = FXMLLoader.load(url);
         primaryStage.setTitle("Publisher");
         primaryStage.setScene(new Scene(root));//, 710, 526));
         primaryStage.initStyle(StageStyle.DECORATED);
         primaryStage.setResizable(false);
         primaryStage.show();
-        IDs[0] = 2;
+
     }
 
     public static int IDs[] = new int[3];
+
 
     public static int ArticleIDForReview;
 
     public static int ArticleIDForAuthor;
 
     public static int AuthorCurrentReviewID;
+
 
     public static void main(String[] args) {
         launch(args);

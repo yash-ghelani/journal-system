@@ -23,8 +23,6 @@ import java.util.regex.*;
 
 public class RegisterController extends Main {
 
-    String[] l = new String[5];
-
     @FXML
     private TextField firstName;
 
@@ -32,10 +30,10 @@ public class RegisterController extends Main {
     private TextField lastName;
 
     @FXML
-    private TextField university;
+    private TextField emailField;
 
     @FXML
-    private TextField emailField;
+    private TextField affiliation;
 
     @FXML
     private PasswordField passWordField;
@@ -45,8 +43,6 @@ public class RegisterController extends Main {
 
     @FXML
     private ChoiceBox roles;
-
-    String[] sql = {"Drop"};
 
     public void initialize() {
         List<String> list = new ArrayList<String>();
@@ -65,92 +61,130 @@ public class RegisterController extends Main {
         roles.setItems(rlList);
     }
 
-    public void handleRegisterSuccess(ActionEvent action) throws IOException, SQLException {
-        // first name
-        boolean validFirstName = false;
-        if (firstName.getText().isEmpty()) {
-            firstName.setStyle("-fx-prompt-text-fill : red;");
-        } else
-            l[0] = firstName.getText();
-        validFirstName = true;
-        // last name
-        boolean validLastName = false;
-        if (lastName.getText().isEmpty()) {
-            lastName.setStyle("-fx-prompt-text-fill : red;");
-        } else
-            l[1] = lastName.getText();
-        validLastName = true;
-        // university
-        boolean validUniversityName = false;
-        if (university.getText().isEmpty()) {
-            university.setStyle("-fx-prompt-text-fill : red;");
-        } else
-            l[2] = university.getText();
-            validUniversityName = true;
-        //emailField
-        boolean validEmail = false;
-        if (emailField.getText().isEmpty()) {
-            emailField.setStyle("-fx-prompt-text-fill : red;");
-            //} else if (Pattern.matches("[a-zA-Z]+[@][a-zA-z]+[.][A-Za-z.]+", emailField.getText())) {
-        } else if (Pattern.matches("[A-Za-z.]+[@][a-zA-z]+[.][A-Za-z.]+", emailField.getText())) {
-            l[3] = emailField.getText();
-            validEmail = true;
-        }
-        //else if (!Pattern.matches("[a-zA-Z]+[@][a-zA-z]+[.][A-Za-z.]+",emailField.getText())){
-        else if (!Pattern.matches("[A-Za-z.]+[@][a-zA-z]+[.][A-Za-z.]+", emailField.getText())) {
-            emailField.setStyle("-fx-prompt-text-fill : red;");
-            emailField.clear();
-            emailField.setPromptText("not valid email type");
+    public void handleRegisterSuccess (ActionEvent action) throws IOException, SQLException {
 
-        }
-        // password
-        boolean validPassword = false;
-        if (passWordField.getText().isEmpty()) {
-            passWordField.setStyle("-fx-prompt-text-fill : red;");
-        } else if (Pattern.matches("[a-zA-Z0-9[^\\dA-Za-zA-Za-z0-9]]{6,}", passWordField.getText())) {
-            l[4] = passWordField.getText();
-            validPassword = true;
-            // System.out.println("N");
-        } else if (!Pattern.matches("[a-zA-Z0-9[^\\dA-Za-zA-Za-z0-9]]{6,}", passWordField.getText())) {
-            passWordField.setStyle("-fx-prompt-text-fill : red;");
-            passWordField.clear();
-            passWordField.setPromptText("must be 6 letters and above");
-        }
+        boolean t = validTitle();
+        boolean r = validRole();
+        boolean fn = validFirstName();
+        boolean ln = validLastName();
+        boolean a = validAffiliation();
+        boolean email = validEmail();
+        boolean pw = validPassword();
 
-        String prefixValue = (String) prefix.getValue();
-        String roleValue = (String) roles.getValue();
-        boolean temp = false;
+        if (t && r && fn && ln && a && email && pw ){
 
-        if (prefix != null && roles != null && firstName != null && lastName != null && university != null && emailField != null && passWordField != null
-        && validFirstName && validLastName && validUniversityName && validEmail && validPassword){
-
-            if (roleValue == "Author") {
+            if (roles.getValue() == "Author") {
                 try {
-                    AuthorTable.Insert(prefixValue, firstName.getText(), lastName.getText(), university.getText(), emailField.getText(), Integer.toString(passWordField.getText().hashCode()),0);
-                    loadLogin(action);
-
-                } catch (SQLException e) {
-                    System.err.println(e.getClass().getName() + ": " + e.getMessage());
-                    System.out.println("Selection failed");
-                }
-
-            } else if (roleValue == "Editor") {
-                try {
-                    EditorTable.Insert(prefixValue, firstName.getText(), lastName.getText(), university.getText(), emailField.getText(), Integer.toString(passWordField.getText().hashCode()),0);
-
+                    AuthorTable.Insert((String) prefix.getValue(), firstName.getText(), lastName.getText(), affiliation.getText(), emailField.getText(), Integer.toString(passWordField.getText().hashCode()),0);
                     loadLogin(action);
                 } catch (SQLException e) {
                     System.err.println(e.getClass().getName() + ": " + e.getMessage());
                     System.out.println("Selection failed");
                 }
-            } else if (roleValue == "Reviewer") {
-                ReviewerTable.Insert(prefixValue, firstName.getText(), lastName.getText(), university.getText(), emailField.getText(), Integer.toString(passWordField.getText().hashCode()),0, 0);
-                loadLogin(action);
 
+            } else if (roles.getValue() == "Editor") {
+                try {
+                    System.out.println("chosen to register an editor");
+                    EditorTable.Insert((String) prefix.getValue(), firstName.getText(), lastName.getText(), affiliation.getText(), emailField.getText(), Integer.toString(passWordField.getText().hashCode()),0);
+                    System.out.println("inserted into table");
+                    loadLogin(action);
+                } catch (SQLException e) {
+                    System.err.println(e.getClass().getName() + ": " + e.getMessage());
+                    System.out.println("Selection failed");
+                }
+            } else if (roles.getValue() == "Reviewer") {
+
+                try {
+                    ReviewerTable.Insert((String) prefix.getValue(), firstName.getText(), lastName.getText(), affiliation.getText(), emailField.getText(), Integer.toString(passWordField.getText().hashCode()),0, 0);
+                    loadLogin(action);
+                } catch (SQLException e) {
+                    System.err.println(e.getClass().getName() + ": " + e.getMessage());
+                    System.out.println("Selection failed");
+                }
             } else {
                 System.out.println("Not all fields filled in");
             }
         }
+    }
+
+
+    // *************************************validation methods******************************************************
+    public boolean validTitle(){
+        if (prefix.getSelectionModel().isEmpty()) {
+            prefix.setStyle("-fx-border-color: red; -fx-border-width: 2px;-fx-prompt-text-fill : red;");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean validRole(){
+        if (roles.getSelectionModel().isEmpty()) {
+            roles.setStyle("-fx-border-color: red; -fx-border-width: 2px;-fx-prompt-text-fill : red;");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean validFirstName(){
+        // first name
+        if (firstName.getText().isEmpty() || !firstName.getText().chars().allMatch(Character::isLetter)) {
+            firstName.setStyle("-fx-prompt-text-fill : red;");
+            firstName.clear();
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean validLastName(){
+        // last name
+        if (lastName.getText().isEmpty() || !lastName.getText().chars().allMatch(Character::isLetter)) {
+            lastName.setStyle("-fx-prompt-text-fill : red;");
+            firstName.clear();
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean validEmail(){
+        //emailField
+        if (Pattern.matches("[A-Za-z.]+[@][a-zA-z]+[.][A-Za-z.]+", emailField.getText())) {
+            return true;
+        } else {
+            emailField.setStyle("-fx-prompt-text-fill : red;");
+            emailField.clear();
+            emailField.setPromptText("Not valid email type");
+            return false;
+        }
+    }
+
+    public boolean validAffiliation(){
+        if (affiliation.getText().isEmpty() || !affiliation.getText().chars().allMatch(Character::isLetter)) {
+            affiliation.setStyle("-fx-border-color: red; -fx-border-width: 2px;-fx-prompt-text-fill : red;");
+            firstName.clear();
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean validPassword(){
+        if (Pattern.matches("[a-zA-Z0-9[^\\dA-Za-zA-Za-z0-9]]{6,}", passWordField.getText())) {
+            return true;
+        } else {
+            passWordField.setStyle("-fx-prompt-text-fill : red;");
+            passWordField.clear();
+            passWordField.setPromptText("Password must be over 6 letters long");
+            return false;
+        }
+    }
+
+
+    public void handleBack (ActionEvent action) throws IOException {
+        loadLogin(action);
     }
 
     static void loadLogin(ActionEvent action) throws IOException {
@@ -163,3 +197,4 @@ public class RegisterController extends Main {
         window.setScene(viewScene);
     }
 }
+
