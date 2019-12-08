@@ -132,7 +132,7 @@ public class RegisterController extends Main {
 
     public boolean validEmail(){
         //emailField
-        if (Pattern.matches("[A-Za-z.]+[@][a-zA-z]+[.][A-Za-z.]+", emailField.getText())) {
+        if (Pattern.matches("[0-9A-Za-z.]+[@][a-zA-z]+[.][A-Za-z.]+", emailField.getText())) {
             return true;
         } else {
             emailField.setStyle("-fx-prompt-text-fill : red;");
