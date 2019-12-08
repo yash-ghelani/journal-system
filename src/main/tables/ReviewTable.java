@@ -279,7 +279,7 @@ public class ReviewTable {
         return fin;
     }
 
-    public static String SelectVerdict(int id) throws SQLException {
+    public static String SelectInitialVerdict(int id) throws SQLException {
         String fin = null;
         Connection con = null; // connection to a database
         try {
@@ -288,10 +288,10 @@ public class ReviewTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "SELECT Verdict FROM Review WHERE ReviewID = " + id;
+                String query = "SELECT InitialVerdict FROM Review WHERE ReviewID = " + id;
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
-                    fin = res.getString("Verdict");
+                    fin = res.getString("InitialVerdict");
                 }
                 res.close();
             } catch (SQLException ex) {
@@ -418,5 +418,35 @@ public class ReviewTable {
             if (con != null) con.close();
         }
         return fin;
+    }
+
+    public static ArrayList<Integer> SelectReviewsCompleted(int id) throws SQLException {
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String query = "SELECT ReviewID FROM Review WHERE ArticleID = " + id + " AND Summary != 'null' AND InitialVerdict != 'null'";
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    int fin = res.getInt("ReviewID");
+                    list.add(fin);
+                }
+                res.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            } finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (con != null) con.close();
+        }
+        return list;
     }
 }

@@ -26,9 +26,12 @@ public class Main<IDs> extends Application {
 
     public static int IDs[] = new int[3];
 
-    public static int SubmissionIDForReview;
-
     public static int ArticleIDForReview;
+
+    public static int ArticleIDForAuthor;
+
+    public static int AuthorCurrentReviewID;
+
 
     public static void main(String[] args) {
         launch(args);

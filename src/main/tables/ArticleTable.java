@@ -141,7 +141,7 @@ public class ArticleTable {
         }
     }
 
-    public static void UpdateTitle(int articleID, int title) throws SQLException {
+    public static void UpdatePDF(int articleID, String PDF) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -149,7 +149,8 @@ public class ArticleTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String newEdition = "UPDATE Articles SET Title = '"+title+"' WHERE ArticleID = " + articleID;
+                String newEdition = "UPDATE Articles SET PDF = '"+PDF+"' WHERE ArticleID = " + articleID;
+                System.out.println(newEdition);
                 stmt.executeUpdate(newEdition);
             }
             catch (SQLException ex) {

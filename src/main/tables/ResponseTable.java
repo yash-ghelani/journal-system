@@ -59,11 +59,9 @@ public class ResponseTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-
-                String journal = "INSERT INTO Response ( QuestionID, ResponseText) VALUES (" + questionid +",'" + response + "')";
+                String journal = "INSERT INTO Response (QuestionID, ResponseText) VALUES (" + questionid  + ",'" + response + "')";
                 System.out.println(journal);
                 stmt.executeUpdate(journal);
-
             }
             catch (SQLException ex) {
                 ex.printStackTrace();
@@ -72,7 +70,6 @@ public class ResponseTable {
                 if (stmt != null)
                     stmt.close();
             }
-
         }
         catch (SQLException ex) {
             ex.printStackTrace();
