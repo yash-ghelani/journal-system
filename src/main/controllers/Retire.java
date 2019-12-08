@@ -19,7 +19,7 @@ import java.net.*;
 
 import javafx.event.*;
 import javafx.stage.Stage;
-import main.JournalTable;
+import main.tables.JournalTable;
 
 import java.io.IOException;
 import java.util.ArrayList;
