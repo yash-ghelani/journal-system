@@ -238,7 +238,7 @@ public class ArticleTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String newEdition = "DELETE FROM Article WHERE ArticleID = " + articleID;
+                String newEdition = "DELETE FROM Articles WHERE ArticleID = " + articleID;
                 stmt.executeUpdate(newEdition);
             }
             catch (SQLException ex) {
@@ -268,7 +268,7 @@ public class ArticleTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "SELECT MAX(ArticleID) FROM Article";
+                String query = "SELECT MAX(ArticleID) FROM Articles";
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     id = res.getInt("MAX(ArticleID)");
