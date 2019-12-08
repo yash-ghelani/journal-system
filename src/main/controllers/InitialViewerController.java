@@ -11,6 +11,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import javafx.event.*;
+import main.Main;
 import main.tables.SubmissionInfoTable;
 import main.tables.ReviewTable;
 
@@ -20,9 +21,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
-import static main.Main.submissionIDForAuthor;
-import static main.Main.reviewIDForAuthor;
 
 public class InitialViewerController {
 
@@ -38,7 +36,7 @@ public class InitialViewerController {
     private Label review3;
 
     public void initialize() {
-        title.setText("Initial Verdict- SubmissionID: " + submissionIDForAuthor);
+        title.setText("Initial Verdict- ArticleID: " + Main.ArticleIDForAuthor);
     }
 
     public void handleInitialCancel(ActionEvent action) throws IOException{
@@ -53,22 +51,38 @@ public class InitialViewerController {
 
     public void handleInitialViewer1(ActionEvent actionEvent) throws IOException, SQLException {
 
-        int submissioninfoid = SubmissionInfoTable.getSubmissionInfoID(submissionIDForAuthor);
-        ArrayList<Integer> timesReviewed = ReviewTable.checkIfReviewed(submissioninfoid);
-        reviewIDForAuthor = timesReviewed.get(0);
+        ArrayList<Integer> timesReviewed = ReviewTable.SelectReviewsCompleted(Main.ArticleIDForAuthor);
+        System.out.println(timesReviewed);
 
         if (timesReviewed.size() == 0) {
             review1.setText("Not completed yet");
         } else {
+            Main.AuthorCurrentReviewID = timesReviewed.get(0);
             quickLink("Respond", actionEvent);
         }
 
     }
 
-    public void handleInitialViewer2(ActionEvent actionEvent) {
+    public void handleInitialViewer2(ActionEvent actionEvent) throws IOException, SQLException {
+        ArrayList<Integer> timesReviewed = ReviewTable.SelectReviewsCompleted(Main.ArticleIDForAuthor);
+
+        if (timesReviewed.size() <= 2 ) {
+            review2.setText("Not completed yet");
+        } else {
+            Main.AuthorCurrentReviewID = timesReviewed.get(1);
+            quickLink("Respond", actionEvent);
+        }
     }
 
-    public void handleInitialViewer3(ActionEvent actionEvent) {
+    public void handleInitialViewer3(ActionEvent actionEvent) throws IOException, SQLException {
+        ArrayList<Integer> timesReviewed = ReviewTable.SelectReviewsCompleted(Main.ArticleIDForAuthor);
+
+        if (timesReviewed.size() <= 3) {
+            review3.setText("Not completed yet");
+        } else {
+            Main.AuthorCurrentReviewID = timesReviewed.get(2);
+            quickLink("Respond", actionEvent);
+        }
     }
 
     public void quickLink(String link, ActionEvent actionEvent) throws IOException {

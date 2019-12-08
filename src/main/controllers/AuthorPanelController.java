@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 
 import javafx.event.*;
 import main.Main;
+import main.tables.ArticleInfoTable;
 import main.tables.ArticleTable;
 import main.tables.SubmissionInfoTable;
 import main.tables.SubmissionTable;
@@ -32,7 +33,6 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static main.Main.submissionIDForAuthor;
 
 
 public class AuthorPanelController{
@@ -51,9 +51,10 @@ public class AuthorPanelController{
     public void handleViewInitialVerdict (ActionEvent event) throws IOException {
 
         String text = submissionID.getText();
-        String subid = text.substring(15);
+        String subid = text.substring(11);
         int id = Integer.parseInt(subid);
-        submissionIDForAuthor = id;
+        Main.ArticleIDForAuthor = id;
+        //System.out.println(Main.ArticleIDForAuthor);
 
         URL url = new File("src/resources/InitialViewer.fxml").toURI().toURL();
         Parent view = FXMLLoader.load(url);
@@ -75,14 +76,19 @@ public class AuthorPanelController{
 
     public void handleLoadArticles (ActionEvent event) throws IOException, SQLException {
 
-        List<Integer> submissions = SubmissionInfoTable.SelectWhichSubmissionID(Main.IDs[0]);
+        List<Integer> submissions = ArticleInfoTable.SelectArticleIDs(Main.IDs[0]);
         //System.out.println(submissions);
+
+        if (submissions.isEmpty()) {
+            toRemove.setStyle("-fx-text-fill : red;");
+            toRemove.setText("You do not have any submitted articles");
+        }
 
         for(int i =0; i<submissions.size(); i++) {
 
-            String currentTitle = SubmissionTable.SelectTitle(submissions.get(i));
-            String currentStatus = SubmissionTable.GetEditorVerdict(submissions.get(i));
-
+            String currentTitle = ArticleTable.SelectTitle(submissions.get(i));
+            //String currentStatus = SubmissionTable.GetEditorVerdict(submissions.get(i));
+            String currentRole = ArticleInfoTable.SelectAuthorType(Main.IDs[0], submissions.get(i));
 
             URL url = new File("src/resources/ArticleBox.fxml").toURI().toURL();
 
@@ -94,12 +100,12 @@ public class AuthorPanelController{
             Label title = (Label)v.getChildren().get(0);
             Label submissionID = (Label)v.getChildren().get(1);
             Label role = (Label)v.getChildren().get(2);
-            Label status = (Label)v.getChildren().get(3);
+            //Label status = (Label)v.getChildren().get(3);
 
             title.setText(currentTitle);
-            submissionID.setText("Submission ID: "+(submissions.get(i)));
-            //role.setText(String.valueOf(i));
-            status.setText("Status: "+currentStatus);
+            submissionID.setText("ArticleID: " + (submissions.get(i)));
+            role.setText("Role: " + currentRole);
+            //status.setText("Status: "+currentStatus);
 
             Insets padding = new Insets(10,0,0,0);
             Separator sep = new Separator();

@@ -171,7 +171,7 @@ public class QuestionTable {
         }
     }
 
-    public int SelectReviewID(int id) throws SQLException {
+    public static int SelectQuestionID(int reviewid, String question) throws SQLException {
         int fin = 0;
         Connection con = null; // connection to a database
         try {
@@ -180,10 +180,10 @@ public class QuestionTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "SELECT ReviewID FROM Question WHERE QuestionID = " + id;
+                String query = "SELECT QuestionID FROM Question WHERE ReviewID = " + reviewid + " AND QuestionText = '" + question + "'";
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
-                    fin = res.getInt("ReviewID");
+                    fin = res.getInt("QuestionID");
                 }
                 res.close();
             }

@@ -61,7 +61,7 @@
                   </Text>
                   <Region prefHeight="97.0" prefWidth="150.0" HBox.hgrow="ALWAYS" />
                   <Label fx:id="review2" prefHeight="79.0" prefWidth="142.0" text="" textFill="RED" />
-                  <Button mnemonicParsing="false" onAction="#handleInitialViewer1" prefHeight="27.0" prefWidth="180.0" text="View">
+                  <Button mnemonicParsing="false" onAction="#handleInitialViewer2" prefHeight="27.0" prefWidth="180.0" text="View">
                      <HBox.margin>
                         <Insets right="11.0" top="28.0" />
                      </HBox.margin>
@@ -80,7 +80,7 @@
                   </Text>
                   <Region prefHeight="97.0" prefWidth="150.0" HBox.hgrow="ALWAYS" />
                   <Label fx:id="review3" prefHeight="79.0" prefWidth="142.0" text="" textFill="RED" />
-                  <Button mnemonicParsing="false" onAction="#handleInitialViewer1" prefHeight="27.0" prefWidth="180.0" text="View">
+                  <Button mnemonicParsing="false" onAction="#handleInitialViewer3" prefHeight="27.0" prefWidth="180.0" text="View">
                      <HBox.margin>
                         <Insets right="11.0" top="28.0" />
                      </HBox.margin>

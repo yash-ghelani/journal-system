@@ -14,13 +14,13 @@
             <children>
                 <VBox prefHeight="80.0" prefWidth="867.0">
                     <children>
-                        <Label text="Question 1" />
-                        <TextField minHeight="-Infinity" prefHeight="22.0" prefWidth="782.0">
+                        <Label fx:id = "question" text="Question 1" />
+                        <TextField fx:id = "responsetext" minHeight="-Infinity" prefHeight="22.0" prefWidth="782.0">
                             <VBox.margin>
                                 <Insets top="7.0" />
                             </VBox.margin>
                         </TextField>
-                        <Button mnemonicParsing="false" text="Respond">
+                        <Button fx:id = "response" mnemonicParsing="false" text="Respond" onAction="#handleResponse">
                             <VBox.margin>
                                 <Insets top="7.0" />
                             </VBox.margin>
