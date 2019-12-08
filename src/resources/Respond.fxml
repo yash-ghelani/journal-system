@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="752.0" prefWidth="1044.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controllers.ReaderController">
+<BorderPane prefHeight="752.0" prefWidth="1044.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controllers.ResponseController">
    <top>
       <VBox prefHeight="45.0" prefWidth="825.0" BorderPane.alignment="CENTER">
          <children>
@@ -31,276 +23,20 @@
       </VBox>
    </top>
    <center>
-      <VBox prefHeight="168.0" prefWidth="727.0" BorderPane.alignment="CENTER">
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" fx:id="vboxpanel1">
          <children>
-            <Separator prefHeight="0.0" prefWidth="124.0" />
-            <HBox prefHeight="110.0" prefWidth="721.0">
-               <children>
-                  <Region prefHeight="67.0" prefWidth="133.0" />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Initial Verdict" wrappingWidth="244.2060546875">
-                     <font>
-                        <Font size="36.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets bottom="8.0" left="22.0" right="8.0" top="6.0" />
-                     </HBox.margin>
-                  </Text>
-                  <Region prefHeight="169.0" prefWidth="339.0" HBox.hgrow="ALWAYS" />
-                  <VBox prefHeight="91.0" prefWidth="501.0">
-                     <children>
-                        <Label prefHeight="17.0" prefWidth="446.0" text="Review ID: 523245641">
-                           <VBox.margin>
-                              <Insets top="10.0" />
-                           </VBox.margin>
-                        </Label>
-                        <Label prefHeight="21.0" prefWidth="312.0" text="Submission ID: 42342345" />
-                     </children>
-                  </VBox>
-               </children>
-            </HBox>
-            <Label text="Review Summary ">
+            <Button onAction="#handleLoadReview" mnemonicParsing="false" prefHeight="58.0" prefWidth="225.0" text="Click to load review" fx:id ="loadreview">
                <VBox.margin>
-                  <Insets left="89.0" />
+                  <Insets left="350.0" top="200.0" />
                </VBox.margin>
-            </Label>
-            <HBox prefHeight="230.0" prefWidth="1044.0">
-               <children>
-                  <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                  <TextField prefHeight="193.0" prefWidth="976.0" />
-                  <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-               </children>
-            </HBox>
-            <Label text="Typographical Errors">
-               <VBox.margin>
-                  <Insets left="88.0" top="12.0" />
-               </VBox.margin>
-            </Label>
-            <HBox prefHeight="78.0" prefWidth="1044.0">
-               <children>
-                  <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                  <Region prefHeight="67.0" prefWidth="316.0" HBox.hgrow="ALWAYS" />
-                  <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-               </children>
-            </HBox>
-            <HBox prefHeight="180.0" prefWidth="200.0">
-               <children>
-                  <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                  <ScrollPane prefHeight="84.0" prefWidth="984.0">
-                     <content>
-                        <VBox prefHeight="119.0" prefWidth="860.0">
-                           <children>
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
-                           </children>
-                        </VBox>
-                     </content>
-                  </ScrollPane>
-                  <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-               </children>
-            </HBox>
-            <Label text="Major Criticism">
-               <VBox.margin>
-                  <Insets left="89.0" top="23.0" />
-               </VBox.margin>
-            </Label>
-            <HBox prefHeight="78.0" prefWidth="1044.0">
-               <children>
-                  <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                  <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-               </children>
-            </HBox>
-            <HBox prefHeight="264.0" prefWidth="200.0">
-               <children>
-                  <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                  <ScrollPane prefHeight="71.0" prefWidth="984.0">
-                     <content>
-                        <VBox>
-                           <children>
-                              <HBox>
-                                 <children>
-                                    <Label text="Question 1">
-                                       <HBox.margin>
-                                          <Insets left="5.0" top="7.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                    <Region prefHeight="27.0" prefWidth="17.0" />
-                                    <TextField minHeight="-Infinity" prefHeight="21.0" prefWidth="634.0">
-                                       <HBox.margin>
-                                          <Insets top="6.0" />
-                                       </HBox.margin>
-                                    </TextField>
-                                    <Region prefHeight="30.0" prefWidth="46.0" HBox.hgrow="ALWAYS" />
-                                    <Button mnemonicParsing="false" text="Respond">
-                                       <HBox.margin>
-                                          <Insets top="3.0" />
-                                       </HBox.margin>
-                                    </Button>
-                                 </children>
-                                 <VBox.margin>
-                                    <Insets />
-                                 </VBox.margin>
-                              </HBox>
-                              <HBox>
-                                 <children>
-                                    <Label text="Question 2">
-                                       <HBox.margin>
-                                          <Insets left="5.0" top="7.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                    <Region prefHeight="27.0" prefWidth="17.0" />
-                                    <TextField minHeight="-Infinity" prefHeight="21.0" prefWidth="634.0">
-                                       <HBox.margin>
-                                          <Insets top="6.0" />
-                                       </HBox.margin>
-                                    </TextField>
-                                    <Region prefHeight="30.0" prefWidth="46.0" HBox.hgrow="ALWAYS" />
-                                    <Button mnemonicParsing="false" text="Respond">
-                                       <HBox.margin>
-                                          <Insets top="3.0" />
-                                       </HBox.margin>
-                                    </Button>
-                                 </children>
-                              </HBox>
-                              <HBox>
-                                 <children>
-                                    <Label text="Question 3">
-                                       <HBox.margin>
-                                          <Insets left="5.0" top="7.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                    <Region prefHeight="27.0" prefWidth="17.0" />
-                                    <TextField minHeight="-Infinity" prefHeight="21.0" prefWidth="634.0">
-                                       <HBox.margin>
-                                          <Insets top="6.0" />
-                                       </HBox.margin>
-                                    </TextField>
-                                    <Region prefHeight="30.0" prefWidth="46.0" HBox.hgrow="ALWAYS" />
-                                    <Button mnemonicParsing="false" text="Respond">
-                                       <HBox.margin>
-                                          <Insets top="3.0" />
-                                       </HBox.margin>
-                                    </Button>
-                                 </children>
-                              </HBox>
-                              <HBox>
-                                 <children>
-                                    <Label text="Question 4">
-                                       <HBox.margin>
-                                          <Insets left="5.0" top="7.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                    <Region prefHeight="27.0" prefWidth="17.0" />
-                                    <TextField minHeight="-Infinity" prefHeight="21.0" prefWidth="634.0">
-                                       <HBox.margin>
-                                          <Insets top="6.0" />
-                                       </HBox.margin>
-                                    </TextField>
-                                    <Region prefHeight="30.0" prefWidth="46.0" HBox.hgrow="ALWAYS" />
-                                    <Button mnemonicParsing="false" text="Respond">
-                                       <HBox.margin>
-                                          <Insets top="3.0" />
-                                       </HBox.margin>
-                                    </Button>
-                                 </children>
-                              </HBox>
-                              <HBox>
-                                 <children>
-                                    <Label text="Question 5">
-                                       <HBox.margin>
-                                          <Insets left="5.0" top="7.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                    <Region prefHeight="27.0" prefWidth="17.0" />
-                                    <TextField minHeight="-Infinity" prefHeight="21.0" prefWidth="634.0">
-                                       <HBox.margin>
-                                          <Insets top="6.0" />
-                                       </HBox.margin>
-                                    </TextField>
-                                    <Region prefHeight="30.0" prefWidth="46.0" HBox.hgrow="ALWAYS" />
-                                    <Button mnemonicParsing="false" text="Respond">
-                                       <HBox.margin>
-                                          <Insets top="3.0" />
-                                       </HBox.margin>
-                                    </Button>
-                                 </children>
-                              </HBox>
-                              <HBox>
-                                 <children>
-                                    <Label text="Question 6">
-                                       <HBox.margin>
-                                          <Insets left="5.0" top="7.0" />
-                                       </HBox.margin>
-                                    </Label>
-                                    <Region prefHeight="27.0" prefWidth="17.0" />
-                                    <TextField minHeight="-Infinity" prefHeight="21.0" prefWidth="634.0">
-                                       <HBox.margin>
-                                          <Insets top="6.0" />
-                                       </HBox.margin>
-                                    </TextField>
-                                    <Region prefHeight="30.0" prefWidth="46.0" HBox.hgrow="ALWAYS" />
-                                    <Button mnemonicParsing="false" text="Respond">
-                                       <HBox.margin>
-                                          <Insets top="3.0" />
-                                       </HBox.margin>
-                                    </Button>
-                                 </children>
-                              </HBox>
-                           </children>
-                        </VBox>
-                     </content>
-                  </ScrollPane>
-                  <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-               </children>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <Region prefHeight="27.0" prefWidth="86.0" />
-                  <Label text="Verdict:">
-                     <HBox.margin>
-                        <Insets bottom="10.0" top="4.0" />
-                     </HBox.margin>
-                  </Label>
-                  <Region prefHeight="23.0" prefWidth="7.0" />
-                  <Label text="Strong Accept">
-                     <HBox.margin>
-                        <Insets top="4.0" />
-                     </HBox.margin>
-                  </Label>
-               </children>
-               <VBox.margin>
-                  <Insets top="15.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <Region prefHeight="27.0" prefWidth="86.0" />
-                  <Button mnemonicParsing="false" text="Upload Article" />
-                  <Region prefHeight="200.0" prefWidth="200.0" />
-               </children>
-            </HBox>
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Button>
          </children>
       </VBox>
    </center>
    <bottom>
-      <HBox prefHeight="57.0" prefWidth="1044.0" BorderPane.alignment="CENTER">
-         <children>
-            <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin></Region>
-            <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="986.0" text="Submit Response" />
-            <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-         </children>
-         <opaqueInsets>
-            <Insets top="7.0" />
-         </opaqueInsets>
-         <BorderPane.margin>
-            <Insets top="10.0" />
-         </BorderPane.margin></HBox>
+      
    </bottom>
 </BorderPane>

@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static main.Main.ArticleIDForReview;
-import static main.Main.SubmissionIDForReview;
 
 public class InitialVerdictController {
 

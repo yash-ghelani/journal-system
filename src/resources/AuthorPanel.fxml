@@ -58,7 +58,7 @@
                         <Insets />
                      </VBox.margin>
                   </Separator>
-                  <Button fx:id="toRemove" mnemonicParsing="false" onAction="#handleLoadArticles" prefHeight="93.0" prefWidth="259.0" text="Cick Here To Load Articles">
+                  <Button fx:id="toRemove" mnemonicParsing="false" onAction="#handleLoadArticles" prefHeight="93.0" prefWidth="259.0" text="Click Here To Load Articles">
                      <VBox.margin>
                         <Insets left="263.0" top="171.0" />
                      </VBox.margin>
