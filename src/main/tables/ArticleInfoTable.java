@@ -206,13 +206,8 @@ public class ArticleInfoTable {
         return fin;
     }
 
-<<<<<<< HEAD
     public static ArrayList<Integer> SelectArticleIDs(int id) throws SQLException {
         ArrayList<Integer> list = new ArrayList<Integer>();
-=======
-    public static int SelectAuthorID(int articleInfoID) throws SQLException {
-        int fin = 0;
->>>>>>> frontend
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
