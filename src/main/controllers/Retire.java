@@ -92,7 +92,7 @@ public class Retire extends ClassLoader {
       for (int y :u){
          String l = EditorTable.SelectName(y);
          String h = EditorTable.SelectSurname(y);
-          k.add(new EditorP(l+" "+h,));
+        // k.add(new EditorP(l+" "+h,JournalInfoTable.));
       }
     }
 }
