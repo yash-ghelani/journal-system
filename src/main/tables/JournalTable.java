@@ -154,10 +154,10 @@ public class JournalTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "SELECT Name FROM Journal WHERE ISSN = " + issn;
+                String query = "SELECT JournalName FROM Journal WHERE ISSN = " + issn;
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
-                    fin = res.getString("Name");
+                    fin = res.getString("JournalName");
                 }
                 res.close();
             }
@@ -223,7 +223,7 @@ public class JournalTable {
                 String query = "SELECT JournalName FROM Journal";
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
-                    String fin = res.getString("Name");
+                    String fin = res.getString("JournalName");
                     list.add(fin);
                 }
                 res.close();
