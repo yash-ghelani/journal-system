@@ -1,11 +1,14 @@
 package main.controllers;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -18,6 +21,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 
@@ -32,14 +36,18 @@ public class NewSubmissionController {
     public TextField title;
     public TextArea abstractTA;
     public TextField pdf;
-
+    public ChoiceBox journals;
 
 
     ArrayList<Integer> ids = new  ArrayList<>();
     int authCount = 1;
 
-    public void initialize () {
+    public void initialize () throws SQLException {
         idLab.setText("Author ID: "+Main.IDs[0]);
+        // getting list of journals
+        List<String> journalList = JournalTable.SelectJournals();
+        ObservableList jList = FXCollections.observableList(journalList);
+        journals.setItems(jList);
     }
 
     public void handleCancel (ActionEvent event) throws IOException {
@@ -48,11 +56,12 @@ public class NewSubmissionController {
 
     public void handleSubmit (ActionEvent event) throws IOException, SQLException {
 
-        if (!title.getText().isEmpty() && !abstractTA.getText().isEmpty() && !pdf.getText().isEmpty()) {
+        if (!title.getText().isEmpty() && !abstractTA.getText().isEmpty() && (!pdf.getText().isEmpty() || !pdf.getText().endsWith(".pdf")) && journals.getSelectionModel().isEmpty()) {
 
             //creating article
-            ArticleTable.Insert(-1, -1, title.getText(), abstractTA.getText(), pdf.getText(), null, 0);
+            ArticleTable.Insert(-1, JournalTable.SelectISSN((String) journals.getValue()), title.getText(), abstractTA.getText(), pdf.getText(), null, 0);
             int articleID = ArticleTable.GetID();
+            System.out.println(articleID);
 
             //adding main author
             ArticleInfoTable.Insert(articleID, Main.IDs[0], 0);
@@ -62,17 +71,24 @@ public class NewSubmissionController {
                 ArticleInfoTable.Insert(articleID, ids.get(i), 1);
             }
 
+            loadScene(event, "src/resources/AuthorPanel.fxml");
+
         } else {
+
+            if (journals.getSelectionModel().isEmpty()) {
+                journals.setStyle("-fx-border-color: red; -fx-border-width: 2px;-fx-prompt-text-fill : red;");
+            }
             if (title.getText().isEmpty()){
                 title.setStyle("-fx-border-color: red; -fx-border-width: 2px;-fx-prompt-text-fill : red;");
-            } else if (abstractTA.getText().isEmpty()) {
+            }
+            if (abstractTA.getText().isEmpty()) {
                 abstractTA.setStyle("-fx-border-color: red; -fx-border-width: 2px;-fx-prompt-text-fill : red;");
-            } else if (pdf.getText().isEmpty() || !pdf.getText().endsWith(".pdf")) {
+            }
+            if (pdf.getText().isEmpty() || !pdf.getText().endsWith(".pdf")) {
                 pdf.setStyle("-fx-border-color: red; -fx-border-width: 2px;-fx-prompt-text-fill : red;");
             }
-        }
 
-        loadScene(event, "src/resources/AuthorPanel.fxml");
+        }
     }
 
     public void handleRegister(ActionEvent actionEvent) throws SQLException {
@@ -81,12 +97,15 @@ public class NewSubmissionController {
             if (authCount == 1) {
                 coAuth1.setText("Co-Author 1 Temporary Login: " + email.getText()+ ", " + Math.abs((email.getText()).hashCode()));
                 insertCoAuthor();
+                authCount += 1;
             } else if (authCount == 2) {
                 coAuth2.setText("Co-Author 2 Temporary Login: " + email.getText()+ ", " + Math.abs((email.getText()).hashCode()));
                 insertCoAuthor();
+                authCount += 1;
             } else if (authCount == 3) {
                 coAuth3.setText("Co-Author 3 Temporary Login: " + email.getText()+ ", " + Math.abs((email.getText()).hashCode()));
                 insertCoAuthor();
+                authCount += 1;
             } else {
                 email.clear();
                 email.setStyle("-fx-border-color: red; -fx-border-width: 2px;-fx-prompt-text-fill : red;");

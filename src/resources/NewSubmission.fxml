@@ -40,7 +40,7 @@
                   <Region prefHeight="65.0" prefWidth="369.0" HBox.hgrow="ALWAYS" />
                   <VBox prefHeight="81.0" prefWidth="314.0">
                      <children>
-                        <Label fx:id = "idLab" prefHeight="17.0" prefWidth="201.0" text="Author ID: 523245641">
+                        <Label fx:id="idLab" prefHeight="17.0" prefWidth="201.0" text="Author ID: 523245641">
                            <VBox.margin>
                               <Insets top="22.0" />
                            </VBox.margin>
@@ -93,7 +93,7 @@
             <HBox prefHeight="23.0" prefWidth="1044.0">
                <children>
                   <Region minHeight="-Infinity" minWidth="-Infinity" prefHeight="253.0" prefWidth="90.0" />
-                  <VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="253.0" prefWidth="845.0">
+                  <VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="275.0" prefWidth="845.0">
                      <children>
                         <Label text="Article Information:">
                            <VBox.margin>
@@ -103,6 +103,11 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
+                        <ChoiceBox fx:id="journals" prefHeight="25.0" prefWidth="845.0">
+                           <VBox.margin>
+                              <Insets bottom="15.0" />
+                           </VBox.margin>
+                        </ChoiceBox>
                         <TextField fx:id="title" prefHeight="27.0" prefWidth="565.0" promptText="Title">
                            <VBox.margin>
                               <Insets bottom="15.0" />
@@ -112,7 +117,7 @@
                            <VBox.margin>
                               <Insets bottom="15.0" />
                            </VBox.margin></TextArea>
-                        <TextField fx:id="pdf" prefHeight="25.0" prefWidth="564.0" promptText="Link to PDF" />
+                        <TextField fx:id="pdf" prefHeight="41.0" prefWidth="845.0" promptText="Link to PDF" />
                      </children>
                      <HBox.margin>
                         <Insets />
