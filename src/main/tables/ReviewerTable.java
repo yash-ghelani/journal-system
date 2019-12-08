@@ -21,16 +21,12 @@ public class ReviewerTable {
             try {
                 stmt = con.createStatement();
                 String jtable = "CREATE TABLE Reviewer " + //Creating the table "UserTable"
-                        "(ReviewerID             INT                 AUTO_INCREMENT, " + //Creating the different fields
-                        "Title                   TEXT                NOT NULL, " +
-                        "Name                    TEXT                NOT NULL, " +
-                        "Surname                 TEXT                NOT NULL, " +
-                        "Affiliation             TEXT                NOT NULL, " +
-                        "Email                   NVARCHAR(320)        NOT NULL," +
-                        "Password                NVARCHAR(100)        NOT NULL," +
-                        "Temp                    INT             NOT NULL," +
-                        "Count                   INT                  NOT NULL," +
-                        "PRIMARY KEY (ReviewerID))";
+                        "(ReviewerID             INT                 AUTO_INCREMENT," +
+                        "UserID                 INT, " + //Creating the different fields
+                        "Temp                    INT," +
+                        "Count                   INT," +
+                        "PRIMARY KEY (ReviewerID)," +
+                        "FOREIGN KEY (UserID) REFERENCES User(UserID))";
 
                 stmt.executeUpdate(jtable);
             } catch (SQLException ex) {
@@ -52,7 +48,7 @@ public class ReviewerTable {
 
     }
 
-    public static void Insert(String title, String name, String surname, String affiliation, String email, String password, int temp, int count) throws SQLException {
+    public static void Insert(int userid, int temp) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -60,10 +56,10 @@ public class ReviewerTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String journal = "INSERT INTO Reviewer (Title, Name, Surname, Affiliation, Email, Password, Temp, Count) "+
-                        " VALUES ('" + title + "', '" + name + "', '" + surname + "','" + affiliation + "','" + email + "','" + password + "',"+ temp+"," + count + ")";
+                String insert = "INSERT INTO Reviewer (UserID, Temp, Count) "+
+                        " VALUES ('" + userid + "','"+ temp +"', '0')";
                 //System.out.println(journal);
-                stmt.executeUpdate(journal);
+                stmt.executeUpdate(insert);
             } catch (SQLException e) {
                 System.err.println( e.getClass().getName() + ": " + e.getMessage() );
                 System.out.println("Selection failed");
@@ -566,8 +562,8 @@ public class ReviewerTable {
         }
     }
 
-    public static int getID(String email, String password) throws SQLException {
-        int fin = 0;
+    public static int GetID(int id) throws SQLException {
+        int fin = -1;
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -575,7 +571,7 @@ public class ReviewerTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "SELECT ReviewerID FROM Reviewer WHERE Email = '" + email + "' AND Password = '" + password + "'";
+                String query = "SELECT ReviewerID FROM Reviewer WHERE UserID = '" +id+ "'";
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     fin = res.getInt("ReviewerID");
@@ -608,6 +604,67 @@ public class ReviewerTable {
                 stmt = con.createStatement();
                 String newEdition = "DROP TABLE Reviewer";
                 stmt.executeUpdate(newEdition);
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+    }
+
+    public static int SelectCount(int id) throws SQLException {
+        int fin = 0;
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String query = "SELECT Count FROM Reviewer WHERE ReviewerID = " + id;
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    fin = res.getInt("Count");
+                }
+                res.close();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+        return fin;
+    }
+
+    public static void IncreaseCount(int id) throws SQLException {
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String journal = "UPDATE Reviewer SET Count = Count + 1 WHERE ReviewerID = " + id;
+                //System.out.println(journal);
+                stmt.executeUpdate(journal);
             }
             catch (SQLException ex) {
                 ex.printStackTrace();

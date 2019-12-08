@@ -2,53 +2,47 @@ package main.tables;
 
 import java.sql.SQLException;
 
+import static main.tables.UserTable.*;
+
 public class AddDeleteTables {
 
     public static void delete() throws SQLException {
         JournalInfoTable.DeleteTable();
         ArticleInfoTable.DeleteTable();
-        VerdictTable.DeleteTable();
-        CriticismsTable.DeleteTable();
         ErrorTable.DeleteTable();
         ResponseTable.DeleteTable();
+        QuestionTable.DeleteTable();
+        EditorTable.DeleteTable();
+        AuthorTable.DeleteTable();
+        ReviewTable.DeleteTable();
         ArticleTable.DeleteTable();
+        ReviewerTable.DeleteTable();
         EditionTable.DeleteTable();
         VolumeTable.DeleteTable();
         JournalTable.DeleteTable();
-        EditorInfoTable.DeleteTable();
-        EditorTable.DeleteTable();
-        QuestionTable.DeleteTable();
-        ReviewTable.DeleteTable();
-        ReviewerTable.DeleteTable();
-        SubmissionInfoTable.DeleteTable();
-        SubmissionTable.DeleteTable();
-        AuthorTable.DeleteTable();
+        UserTable.DeleteTable();
+
     }
 
-    public static void adding() throws SQLException {
-        //Creates all tables
+    public static void add() throws SQLException {
+//        //Creates all tables
+        CreateUserTable();
+        EditorTable.CreateEditorTable();
+        ReviewerTable.CreateReviewerTable();
         JournalTable.CreateJournalTable();
+        JournalInfoTable.CreateJournalInfoTable();
         VolumeTable.CreateVolumeTable();
         EditionTable.CreateEditionTable();
-        EditorTable.CreateEditorTable();
-        JournalInfoTable.CreateJournalInfoTable();
-        SubmissionTable.CreateSubmissionTable();
         AuthorTable.CreateAuthorTable();
-        SubmissionInfoTable.CreateSubmissionInfoTable();
         ArticleTable.CreateArticleTable();
         ArticleInfoTable.CreateArticleInfoTable();
-        ReviewerTable.CreateReviewerTable();
         ReviewTable.CreateReviewTable();
-        EditorInfoTable.CreateEditorInfoTable();
-        VerdictTable.CreateVerdictTable();
-        CriticismsTable.CreateCriticismsTable();
         ErrorTable.CreateErrorTable();
         QuestionTable.CreateQuestionTable();
         ResponseTable.CreateResponseTable();
     }
     public static void main (String args[]) throws SQLException {
-
-        //AddDeleteTables.adding();
-        //AddDeleteTables.delete();
+//        AddDeleteTables.delete();
+        AddDeleteTables.add();
     }
 }

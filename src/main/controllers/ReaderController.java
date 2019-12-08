@@ -1,10 +1,8 @@
 package main.controllers;
 
 
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -15,16 +13,11 @@ import main.tables.EditionTable;
 import main.tables.JournalTable;
 import main.tables.VolumeTable;
 
-import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
 
 public class ReaderController {
 
@@ -41,7 +34,7 @@ public class ReaderController {
         root.setExpanded(true);
         //create child
         //get list of journals
-        ArrayList<String> journalList = JournalTable.selectJournals();
+        ArrayList<String> journalList = JournalTable.SelectJournals();
 
         // add journals to tree
         for (int i = 0; i < journalList.size(); i++){
@@ -84,7 +77,4 @@ public class ReaderController {
         window.setResizable(true);
         window.setScene(viewScene);
     }
-
-
-
 }

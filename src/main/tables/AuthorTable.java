@@ -21,15 +21,11 @@ public class AuthorTable {
             try {
                 stmt = con.createStatement();
                 String jtable = "CREATE TABLE Author " + //Creating the table "UserTable"
-                        "(AuthorID               INT                 AUTO_INCREMENT, " + //Creating the different fields
-                        "Title                   TEXT                NOT NULL, " +
-                        "Name                    TEXT                NOT NULL, " +
-                        "Surname                 TEXT                NOT NULL, " +
-                        "Affiliation             TEXT                NOT NULL, " +
-                        "Email                   NVARCHAR(320)       NOT NULL," +
-                        "Password                NVARCHAR(100)       NOT NULL," +
-                        "Temp                    INT             NOT NULL," +
-                        "PRIMARY KEY (AuthorID))";
+                        "(AuthorID               INT                 AUTO_INCREMENT, " +
+                        "UserID                  INT," + //Creating the different fields
+                        "Temp                    INT," +
+                        "PRIMARY KEY (AuthorID)," +
+                        "FOREIGN KEY (UserID) REFERENCES User(UserID))";
 
                 stmt.executeUpdate(jtable);
             } catch (SQLException ex) {
@@ -51,7 +47,7 @@ public class AuthorTable {
 
     }
 
-    public static void Insert(String title, String name, String surname, String affiliation, String email, String password, int temp) throws SQLException {
+    public static void Insert(int userid, int temp) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -59,10 +55,10 @@ public class AuthorTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String journal = "INSERT INTO Author (Title, Name, Surname, Affiliation, Email, Password, Temp) "+
-                                " VALUES ('" + title + "', '" + name + "', '" + surname + "','" + affiliation + "','" + email + "','" + password + "','"+ temp+"')";
+                String insert = "INSERT INTO Author (UserID, Temp) "+
+                                " VALUES ('" + userid + "','"+ temp+"')";
                 //System.out.println(journal);
-                stmt.executeUpdate(journal);
+                stmt.executeUpdate(insert);
             } catch (SQLException e) {
                 System.err.println( e.getClass().getName() + ": " + e.getMessage() );
                 System.out.println("Selection failed");
@@ -368,7 +364,7 @@ public class AuthorTable {
         return fin;
     }
 
-    public String SelectAffiliation(int id) throws SQLException {
+    public static String SelectAffiliation(int id) throws SQLException {
         String fin = null;
         Connection con = null; // connection to a database
         try {
@@ -538,8 +534,8 @@ public class AuthorTable {
         }
     }
 
-    public static int getID(String email, String password) throws SQLException {
-        int fin = 0;
+    public static int GetID(int id) throws SQLException {
+        int fin = -1;
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -547,7 +543,7 @@ public class AuthorTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "SELECT AuthorID FROM Author WHERE Email = '" + email + "' AND Password = '" + password + "'";
+                String query = "SELECT AuthorID FROM Author WHERE UserID = '" +id+ "'";
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     fin = res.getInt("AuthorID");
@@ -595,6 +591,39 @@ public class AuthorTable {
         finally {
             if (con != null) con.close();
         }
+    }
+
+    public static int SelectUserID(int id) throws SQLException {
+        int fin = 0;
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String query = "SELECT UserID FROM Author WHERE AuthorID = " + id;
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    fin = res.getInt("UserID");
+                }
+                res.close();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+        return fin;
     }
 
 }

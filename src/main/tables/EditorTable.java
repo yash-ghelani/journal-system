@@ -20,15 +20,11 @@ public class EditorTable {
             try {
                 stmt = con.createStatement();
                 String jtable = "CREATE TABLE Editor " + //Creating the table "UserTable"
-                        "(EditorID               INT                 AUTO_INCREMENT, " + //Creating the different fields
-                        "Title                   TEXT                NOT NULL, " +
-                        "Name                    TEXT                NOT NULL, " +
-                        "Surname                 TEXT                NOT NULL, " +
-                        "Affiliation             TEXT                NOT NULL, " +
-                        "Email                   NVARCHAR(320)        NOT NULL," +
-                        "Password                NVARCHAR(100)        NOT NULL," +
-                        "Temp                    INT             NOT NULL," +
-                        "PRIMARY KEY (EditorID))";
+                        "(EditorID               INT             AUTO_INCREMENT, " +
+                        "UserID                  INT          NOT NULL, " + //Creating the different fields
+                        "Temp                    INT          NOT NULL," +
+                        "PRIMARY KEY (EditorID)," +
+                        "FOREIGN KEY (UserID) REFERENCES User(UserID))";
 
                 stmt.executeUpdate(jtable);
             } catch (SQLException ex) {
@@ -50,7 +46,7 @@ public class EditorTable {
 
     }
 
-    public static void Insert(String title, String name, String surname, String affiliation, String email, String password, int temp) throws SQLException {
+    public static void Insert(int userid, int temp) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -58,10 +54,10 @@ public class EditorTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String journal = "INSERT INTO Editor (Title, Name, Surname, Affiliation, Email, Password, Temp) "+
-                        " VALUES ('" + title + "', '" + name + "', '" + surname + "','" + affiliation + "','" + email + "','" + password + "','"+ temp+"')";
+                String insert = "INSERT INTO Editor (UserID, Temp) "+
+                        " VALUES ('" + userid + "','"+ temp+"')";
                 //System.out.println(journal);
-                stmt.executeUpdate(journal);
+                stmt.executeUpdate(insert);
             } catch (SQLException e) {
                 System.err.println( e.getClass().getName() + ": " + e.getMessage() );
                 System.out.println("Selection failed");
@@ -564,8 +560,8 @@ public class EditorTable {
         }
     }
 
-    public static int getID(String email, String password) throws SQLException {
-        int fin = 0;
+    public static int GetID(int id) throws SQLException {
+        int fin = -1;
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -573,25 +569,20 @@ public class EditorTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "SELECT EditorID FROM Editor WHERE Email = '" + email + "' AND Password = '" + password + "'";
+                String query = "SELECT EditorID FROM Editor WHERE UserID = '" +id+ "'";
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     fin = res.getInt("EditorID");
                 }
                 res.close();
-            }
-            catch (SQLException ex) {
+            } catch (SQLException ex) {
                 ex.printStackTrace();
+            } finally {
+                if (stmt != null) stmt.close();
             }
-            finally {
-                if (stmt != null)
-                    stmt.close();
-            }
-        }
-        catch (SQLException ex) {
+        } catch (SQLException ex) {
             ex.printStackTrace();
-        }
-        finally {
+        } finally {
             if (con != null) con.close();
         }
         return fin;

@@ -71,39 +71,20 @@ public class RegisterController extends Main {
         boolean email = validEmail();
         boolean pw = validPassword();
 
-        if (t && r && fn && ln && a && email && pw ){
 
-            if (roles.getValue() == "Author") {
-                try {
-                    AuthorTable.Insert((String) prefix.getValue(), firstName.getText(), lastName.getText(), affiliation.getText(), emailField.getText(), Integer.toString(passWordField.getText().hashCode()),0);
-                    loadLogin(action);
-                } catch (SQLException e) {
-                    System.err.println(e.getClass().getName() + ": " + e.getMessage());
-                    System.out.println("Selection failed");
-                }
+        if (t && r && fn && ln && a && email && pw) {
 
-            } else if (roles.getValue() == "Editor") {
-                try {
-                    System.out.println("chosen to register an editor");
-                    EditorTable.Insert((String) prefix.getValue(), firstName.getText(), lastName.getText(), affiliation.getText(), emailField.getText(), Integer.toString(passWordField.getText().hashCode()),0);
-                    System.out.println("inserted into table");
-                    loadLogin(action);
-                } catch (SQLException e) {
-                    System.err.println(e.getClass().getName() + ": " + e.getMessage());
-                    System.out.println("Selection failed");
-                }
-            } else if (roles.getValue() == "Reviewer") {
+            UserTable.Insert((String) prefix.getValue(), firstName.getText(), lastName.getText(), affiliation.getText(), emailField.getText(), String.valueOf(passWordField.getText().hashCode()));
+            loadLogin(action);
 
-                try {
-                    ReviewerTable.Insert((String) prefix.getValue(), firstName.getText(), lastName.getText(), affiliation.getText(), emailField.getText(), Integer.toString(passWordField.getText().hashCode()),0, 0);
-                    loadLogin(action);
-                } catch (SQLException e) {
-                    System.err.println(e.getClass().getName() + ": " + e.getMessage());
-                    System.out.println("Selection failed");
-                }
+            if (roles.getValue() == "Author"){
+                AuthorTable.Insert(UserTable.ValidateEmailAndPassword(emailField.getText(), String.valueOf(passWordField.getText().hashCode())), 0);
+            } else if (roles.getValue() == "Editor"){
+                EditorTable.Insert(UserTable.ValidateEmailAndPassword(emailField.getText(), String.valueOf(passWordField.getText().hashCode())), 0);
             } else {
-                System.out.println("Not all fields filled in");
+                ReviewerTable.Insert(UserTable.ValidateEmailAndPassword(emailField.getText(), String.valueOf(passWordField.getText().hashCode())), 0);
             }
+
         }
     }
 

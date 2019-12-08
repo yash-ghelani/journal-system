@@ -23,6 +23,7 @@ public class JournalInfoTable {
                         "(JournalInfoID         INT     AUTO_INCREMENT, " + //Creating the different fields
                         "ISSN                   INT     NOT NULL, " +
                         "EditorID               INT     NOT NULL, " +
+                        "EditorType             TEXT    NOT NULL, " +
                         "PRIMARY KEY (JournalInfoID), "+
                         "FOREIGN KEY (ISSN) REFERENCES Journal(ISSN), "+
                         "FOREIGN KEY (EditorID) REFERENCES Editor(EditorID))";
@@ -47,7 +48,7 @@ public class JournalInfoTable {
 
     }
 
-    public static void Insert(int issn, int editorID) throws SQLException {
+    public static void Insert(int issn, int editorID, String type) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -55,8 +56,8 @@ public class JournalInfoTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String insert = "INSERT INTO Editor (ISSN, EditorID) "+
-                                " VALUES ('"+ issn + "','" + editorID + "')";
+                String insert = "INSERT INTO Editor (ISSN, EditorID, EditorType) "+
+                                " VALUES ('"+ issn + "','" + editorID + "','" + type + "')";
                 //System.out.println(journal);
                 stmt.executeUpdate(insert);
             } catch (SQLException ex) {

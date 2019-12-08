@@ -1,5 +1,6 @@
 package main.tables;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class ArticleInfoTable {
 
@@ -21,9 +22,10 @@ public class ArticleInfoTable {
             try {
                 stmt = con.createStatement();
                 String initialise = "CREATE TABLE ArticleInfo " + //Creating the table
-                                    "(ArticleInfoID         INT    NOT NULL AUTO_INCREMENT, "+ //Creating the different fields
-                                    "ArticleID              INT    NOT NULL, "+ //Creating the different fields
-                                    "AuthorID               INT    NOT NULL, "+
+                                    "(ArticleInfoID         INT    NOT NULL     AUTO_INCREMENT, "+ //Creating the different fields
+                                    "AuthorID               INT, "+
+                                    "ArticleID              INT, " +
+                                    "AuthorType             INT,"+
                                     "PRIMARY KEY (ArticleInfoID), "+
                                     "FOREIGN KEY (ArticleID) REFERENCES Articles(ArticleID), "+
                                     "FOREIGN KEY (AuthorID) REFERENCES Author(AuthorID))";
@@ -52,7 +54,7 @@ public class ArticleInfoTable {
 
     }
 
-    public static void Insert(int articleID, int authorID) throws SQLException {
+    public static void Insert(int articleID, int authorID, int type) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -60,8 +62,8 @@ public class ArticleInfoTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String newEdition = "INSERT INTO ArticleInfo (ArticleID, AuthorID) "+
-                                    "VALUES ('" + articleID + "',  '" + authorID + "')";
+                String newEdition = "INSERT INTO ArticleInfo (ArticleID, AuthorID, AuthorType) "+
+                                    "VALUES ('" + articleID + "',  '" + authorID + "',  '"+ type + "')";
                 stmt.executeUpdate(newEdition);
             }
             catch (SQLException ex) {
@@ -204,7 +206,67 @@ public class ArticleInfoTable {
         return fin;
     }
 
-    public int SelectAuthorID(int articleInfoID) throws SQLException {
+    public static ArrayList<Integer> SelectArticleIDs(int id) throws SQLException {
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String query = "SELECT ArticleID FROM ArticleInfo WHERE AuthorID = " + id;
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    int in = res.getInt("ArticleID");
+                    list.add(in);
+                }
+                res.close();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+        return list;
+    }
+
+    public static void DeleteTable() throws SQLException {
+        Connection con = null;
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String newEdition = "DROP TABLE ArticleInfo";
+                stmt.executeUpdate(newEdition);
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+    }
+
+    public static int SelectAuthorID(int articleInfoID) throws SQLException {
         int fin = 0;
         Connection con = null; // connection to a database
         try {
@@ -237,15 +299,21 @@ public class ArticleInfoTable {
         return fin;
     }
 
-    public static void DeleteTable() throws SQLException {
-        Connection con = null;
+    public static String SelectAuthorType(int authorid, int articleid) throws SQLException {
+        String fin = null;
+        Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String newEdition = "DROP TABLE ArticleInfo";
-                stmt.executeUpdate(newEdition);
+                String query = "SELECT AuthorType FROM ArticleInfo WHERE AuthorID = " + authorid + " AND ArticleID = " + articleid;
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    fin = res.getString("AuthorType");
+                }
+                res.close();
             }
             catch (SQLException ex) {
                 ex.printStackTrace();
@@ -261,6 +329,7 @@ public class ArticleInfoTable {
         finally {
             if (con != null) con.close();
         }
+        return fin;
     }
 }
 
