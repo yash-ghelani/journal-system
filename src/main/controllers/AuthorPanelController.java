@@ -54,7 +54,7 @@ public class AuthorPanelController{
     }
 
 
-//    public void handleLoadArticles (ActionEvent event) throws IOException, SQLException {
+    public void handleLoadArticles (ActionEvent event) throws IOException, SQLException {
 //
 //        List<Integer> submissions = SubmissionInfoTable.SelectWhichSubmissionID(Main.IDs[0]);
 //        System.out.println(submissions);
@@ -91,7 +91,7 @@ public class AuthorPanelController{
 //
 //        }
 //
-//    }
+    }
 
 
 
