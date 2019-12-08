@@ -8,7 +8,7 @@ public class JournalTable {
 
         JournalTable jt = new JournalTable();
 
-        //jt.CreateJournalTable();
+        jt.CreateJournalTable();
         jt.Insert(12345678, "test2");
         //jt.Delete(12345678);
         //System.out.println(jt.SelectName(12345679));
@@ -27,7 +27,7 @@ public class JournalTable {
                 stmt = con.createStatement();
                 String jtable = "CREATE TABLE Journal " + //Creating the table "UserTable"
                                 "(ISSN      INT     NOT NULL, "+ //Creating the different fields
-                                "Name       TEXT    NOT NULL, " +
+                                "JournalName       TEXT    NOT NULL, " +
                                 "PRIMARY KEY (ISSN))";
 
                 stmt.executeUpdate(jtable);
@@ -63,7 +63,7 @@ public class JournalTable {
             try {
                 stmt = con.createStatement();
 
-                String journal = "INSERT INTO Journal (ISSN, Name) VALUES ('" + ISSN + "',  '" + name + "')";
+                String journal = "INSERT INTO Journal (ISSN, JournalName) VALUES ('" + ISSN + "','" + name + "')";
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
 
@@ -126,7 +126,7 @@ public class JournalTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String journal = "UPDATE Journal SET Name = " + name + " WHERE ISSN = " + issn;
+                String journal = "UPDATE Journal SET JournalName = " + name + " WHERE ISSN = " + issn;
                 stmt.executeUpdate(journal);
             }
             catch (SQLException ex) {
@@ -154,10 +154,10 @@ public class JournalTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "SELECT Name FROM Journal WHERE ISSN = " + issn;
+                String query = "SELECT JournalName FROM Journal WHERE ISSN = " + issn;
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
-                    fin = res.getString("Name");
+                    fin = res.getString("JournalName");
                 }
                 res.close();
             }
@@ -187,7 +187,7 @@ public class JournalTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "SELECT ISSN FROM Journal WHERE Name = '" + name +"'";
+                String query = "SELECT ISSN FROM Journal WHERE JournalName = '"+name+"'";
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     fin = res.getInt("ISSN");
@@ -220,10 +220,10 @@ public class JournalTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "SELECT Name FROM Journal";
+                String query = "SELECT JournalName FROM Journal";
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
-                    String fin = res.getString("Name");
+                    String fin = res.getString("JournalName");
                     list.add(fin);
                 }
                 res.close();

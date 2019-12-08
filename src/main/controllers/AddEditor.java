@@ -1,14 +1,23 @@
 package main.controllers;
 
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 
 import javafx.scene.control.*;
 import javafx.event.*;
+import main.tables.EditionTable;
+import main.tables.EditorTable;
+import main.tables.JournalInfoTable;
+import main.tables.JournalTable;
+
+import java.sql.SQLException;
+import java.util.regex.Pattern;
 
 public class AddEditor {
 
-    String [] editorn_p = {"@£$%N","@£$%N"};
+    String[] editorn_p = {null,null,null,null};
+
     @FXML
 
     private TextField textName;
@@ -17,33 +26,85 @@ public class AddEditor {
 
     private PasswordField passField;
 
-    public void actionAdd(ActionEvent actionEvent) throws NullPointerException{
+    @FXML
 
-        if (textName.getText().isEmpty()){
+    private TextField emailField;
+
+    @FXML
+
+    private ChoiceBox choice;
+
+    @FXML
+
+    private TextField affiliate;
+
+    String [] str = {"Mr.","Ms.","Dr.","Prof."};
+
+   public void initialize(){
+       choice.setValue("Mr.");
+       choice.getItems().addAll(FXCollections.observableArrayList(str));
+      //System.out.println();
+   }
+
+
+
+    public void actionAdd(ActionEvent actionEvent) throws NullPointerException, SQLException {
+
+        if (textName.getText().isEmpty()) {
             textName.setStyle("-fx-prompt-text-fill:red;");
 
-        }
-        else if(!textName.getText().isEmpty()) {
+        } else if (!textName.getText().isEmpty()) {
             editorn_p[0] = textName.getText();
-
         }
 
-        if (passField.getText().isEmpty()){
+        if (passField.getText().isEmpty()) {
+            passField.clear();
             passField.setStyle("-fx-prompt-text-fill:red;");
+        } else {
+            editorn_p[1] = passField.getText();
+        }
+
+        if (emailField.getText().isEmpty()){
+            emailField.setStyle("-fx-prompt-text-fill:red;");
+        }
+        else if (!Pattern.matches("[A-za-z]+[@]{1}[a-zA-Z]+[.]{1}[A-za-z.]+",emailField.getText())){
+            emailField.clear();
+            emailField.setPromptText("invalid email structure");
+            emailField.setStyle("-fx-prompt-text-fill:red;");
+        }
+        else if (Pattern.matches("[A-za-z]+[@]{1}[a-zA-Z]+[.]{1}[A-za-z.]+",emailField.getText())){
+            editorn_p[2] = emailField.getText();
+        }
+
+        if (affiliate.getText().isEmpty()){
+            affiliate.setStyle("-fx-prompt-text-fill:red;");
         }
         else {
-           editorn_p[1] = passField.getText();
+            editorn_p[3] = affiliate.getText();
         }
 
-        if (!editorn_p[0].equals("@£$%N") && !editorn_p[1].equals("@£$%N")) {
-            if (Retire.k.size()<4)
+        if (editorn_p[0] != null && editorn_p[1] != null && editorn_p[2] == null ){
+            String [] namespilt = editorn_p[0].split(" ");
+           // System.out.println(namespilt[0]);
+            String l[] = new String[8];
+            l[0] =(String)choice.getValue();
+            l[1] = namespilt[0];
+            l[2] = namespilt[1];
+            l[3] = affiliate.getText();
+            l[4] = emailField.getText();
+            l[5] = passField.getText();
+
+            EditorTable.Insert(l[0],l[1],l[2],l[3],l[4],l[5],1);
+
+            JournalInfoTable.Insert(JournalTable.SelectISSN(
+                    ControlEditor.name_of_journal),EditorTable.getID(l[4],l[5]));
+
             Retire.k.add(new EditorP(editorn_p[0], "Editor"));
-            else {}
+        }
+        else {
+        }
 
-        }
-        else   {
-           //nothing
-        }
+
    }
 
 }

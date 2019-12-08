@@ -6,7 +6,7 @@ public class VerdictTable {
     public static void main (String args[]) throws SQLException {
 
         VerdictTable vt = new VerdictTable();
-        vt.CreateVerdictTable();
+        //vt.CreateVerdictTable();
         //vt.Insert(12345678, 2018);
     }
 

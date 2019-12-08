@@ -14,19 +14,14 @@ public class Article {
     private String code;
     private CheckBox checkbox;
 
-    public Article(String name,String code){
+    public Article(String name){
         this.name=name;
-        this.code = code;
         this.checkbox = new CheckBox();
     }
 
 
     public String getName(){
         return name;
-    }
-
-    public String getCode(){
-        return code;
     }
 
     public CheckBox getCheckbox(){
@@ -36,10 +31,6 @@ public class Article {
 
     public void setName(String name){
         this.name = name;
-    }
-
-    public void setCode(String code){
-        this.code = code;
     }
 
     public void setCheckbox(CheckBox checkbox){

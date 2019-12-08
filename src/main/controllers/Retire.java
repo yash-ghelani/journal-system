@@ -19,9 +19,12 @@ import java.net.*;
 
 import javafx.event.*;
 import javafx.stage.Stage;
+import main.tables.EditorTable;
+import main.tables.JournalInfoTable;
 import main.tables.JournalTable;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +42,7 @@ public class Retire extends ClassLoader {
     TableColumn<EditorP, String> editorsTitle = new TableColumn("title");
 
 
-    public void initialize() {
+    public void initialize() throws SQLException {
         editors.setCellValueFactory(new PropertyValueFactory<>("name"));
         editors.setStyle("-fx-alignment: CENTER;");
         editorsTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -50,6 +53,7 @@ public class Retire extends ClassLoader {
         m.clear();
         tableT.setItems(k);
         tableT.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        add_to_board();
     }
 
 
@@ -81,6 +85,15 @@ public class Retire extends ClassLoader {
         k.removeAll(d);
         tableT.getSelectionModel().clearSelection();
         tableT.refresh();
+    }
+
+    public void add_to_board() throws SQLException {
+       int [] u = JournalInfoTable.SelectEditorID(JournalTable.SelectISSN(ControlEditor.name_of_journal));
+      for (int y :u){
+         String l = EditorTable.SelectName(y);
+         String h = EditorTable.SelectSurname(y);
+          k.add(new EditorP(l+" "+h,));
+      }
     }
 }
 

@@ -14,11 +14,8 @@ public class Main<IDs> extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
 
-<<<<<<< HEAD
+
         URL url = new File("src/resources/Editor.fxml").toURI().toURL();
-=======
-        URL url = new File("src/resources/Login.fxml").toURI().toURL();
->>>>>>> 805f98c88dc4dd812cc2833b7926efd61fdc629a
         Parent root = FXMLLoader.load(url);
         primaryStage.setTitle("Publisher");
         primaryStage.setScene(new Scene(root, 710, 526));

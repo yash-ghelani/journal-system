@@ -23,13 +23,11 @@ public class EditorInfoTable {
                 String initialise = "CREATE TABLE EditorInfo " + //Creating the table
                                     "(EditorInfoID    INT       NOT NULL AUTO_INCREMENT, "+ //Creating the different fields
                                     "EditorID         INT       NOT NULL, "+
-                                    "SubmissionID     INT       NOT NULL, "+
-                                    "ReviewID         INT       NOT NULL, "+
-                                    "EditorType       BOOLEAN   NOT NULL, "+
+                                    "ArticleID     INT       NOT NULL, "+
+                                    "EditorType    INT   NOT NULL, "+
                                     "PRIMARY KEY (EditorInfoID), "+
                                     "FOREIGN KEY (EditorID) REFERENCES Editor(EditorID), "+
-                                    "FOREIGN KEY (ReviewID) REFERENCES Review(ReviewID), "+
-                                    "FOREIGN KEY (SubmissionID) REFERENCES Submissions(SubmissionID))";
+                                    "FOREIGN KEY (ArticleID) REFERENCES Submissions(ArticleID))";
 
                 stmt.executeUpdate(initialise);
             }

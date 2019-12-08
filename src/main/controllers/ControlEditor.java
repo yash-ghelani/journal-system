@@ -17,6 +17,9 @@ import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.*;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.io.*;;
 import java.net.MalformedURLException;
@@ -25,6 +28,7 @@ import java.util.ResourceBundle;
 
 import javafx.collections.*;
 import main.TreeCellTextField;
+import main.tables.*;
 
 
 public class ControlEditor {
@@ -50,25 +54,19 @@ public class ControlEditor {
 
     @FXML
 
-    private Label journal; // use to set the journal name in the initialize method
-
-    @FXML
-
     private TreeView<String> treeVolume;
 
-    TreeItem<String> l = new TreeItem<>("Volumes");
+    TreeItem<String> l = new TreeItem<>("Volumes"); // for volumes
 
     TableView tableView = new TableView();
 
     TableColumn<Article,String> article_name = new TableColumn<>("Name");
-    TableColumn<Article,String> article_code = new TableColumn<>("ISSN");
     TableColumn<Article,String> article_check = new TableColumn<>("Select");
 
     @FXML
     private Button delete;
 
-    @FXML Label changejournal;
-
+    @FXML ChoiceBox journals;
 
     @FXML
 
@@ -86,12 +84,28 @@ public class ControlEditor {
 
     String [] n = {"vf","sf","gf","hf"};
 
+   static String name_of_journal;
+
     public ControlEditor() throws MalformedURLException {
     }
 
-    public void initialize(){
+    public void initialize() throws SQLException {
+    //  VolumeTable.Delete(4);
+       //System.out.println(VolumeTable.SelectVolID(1));
+        ObservableList<TreeItem> j = FXCollections.observableArrayList();
         article.getChildren().add(tableView);
         l.setExpanded(true);
+        for (String r : VolumeTable.SelectVolumes(JournalTable.SelectISSN("Journal of Computer Science"))){
+         j.add(new TreeItem<String>(r));
+        }
+
+        for (TreeItem n : j){
+            l.getChildren().add(n);
+            ObservableList<TreeItem> a = FXCollections.observableArrayList();
+          //  for (){
+
+           // }
+        }
         treeVolume.setRoot(l);
         treeVolume.setCellFactory((TreeView<String> p) -> new TreeCellTextField());
         one.setExpanded(false);
@@ -101,44 +115,47 @@ public class ControlEditor {
         article_name.setCellValueFactory(new PropertyValueFactory<>("name"));
         article_name.setStyle("-fx-alignment: CENTER;");
         article_check.setCellValueFactory(new PropertyValueFactory<>("checkbox"));
-        article_code.setStyle("-fx-alignment: CENTER;");
-        article_code.setCellValueFactory(new PropertyValueFactory<>("code"));
         article_check.setStyle("-fx-alignment: CENTER;");
-        tableView.getColumns().addAll(article_name,article_code,article_check);
+        tableView.getColumns().addAll(article_name,article_check);
         data = FXCollections.observableArrayList(getArticle());
         getArticle().removeAll(getArticle());
         tableView.setItems(data);
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-
+       // JournalTable.Insert(18361310,"Journal of Computer Science");
+        System.out.println((JournalTable.SelectISSN("Journal of Computer Science")));
+        treeVolume.refresh();
+        choicejournal();
+        name_of_journal = (String) journals.getValue();
     }
 
     // for adding treeitem
-    public void addTable(ActionEvent action){
-        if (l.getChildren().isEmpty()){
-            int i=Calendar.getInstance().get(Calendar.YEAR);
-            store [0] =i;
-            TreeItem r = new TreeItem(String.valueOf(i));
-            r.getChildren().addAll(one,two,three,four);
-            l.getChildren().add(r);
-       }
-        else if (!l.getChildren().isEmpty()) {
+    public void addTable(ActionEvent action) throws SQLException {
 
-            TreeItem r = new TreeItem(String.valueOf(store[0]+1));
-            r.setExpanded(true);
-            r.getChildren().addAll(one, two, three, four);
-            l.getChildren().add(r);
-            store[0] += 1;
-            treeVolume.refresh();
+        if (treeVolume.getSelectionModel().isEmpty()) {
+            conditionToTable();
         }
+        else
+            if (selectedNode().getParent() == null){
+                conditionToTable();
+            }
+            else if ((selectedNode().getParent().getParent()) != null){
+                // do nothing
+            }
+            else if (selectedNode().getParent() != null){
+                int month = Calendar.getInstance().get(Calendar.MONTH);
+                int volumeid = VolumeTable.SelectVolID(Integer.valueOf((String) selectedNode().getValue()));
+                EditionTable.Insert(volumeid,month);
+                selectedNode().getChildren().add(new TreeItem<String>(String.valueOf(month)));
+            }
 
     }
 
     public ObservableList<Article> getArticle(){
         articles = FXCollections.observableArrayList();
-        articles.add(new Article("Chicken","123"));
-        articles.add(new Article("Goat",null));
-        articles.add(new Article("Dog",null));
-        articles.add(new Article("Pig",null));
+        articles.add(new Article("Chicken"));
+        articles.add(new Article("Goat"));
+        articles.add(new Article("Dog"));
+        articles.add(new Article("Pig"));
         return articles;
     }
     // for discarding article
@@ -163,7 +180,7 @@ public class ControlEditor {
         for (Article t : data) {
             if (t.getCheckbox().isSelected()) {
                 art.add(t);
-                TreeItem y = new TreeItem(t.getName()+" "+t.getCode());
+                TreeItem y = new TreeItem(t.getName());
                // System.out.println(y.getValue());
                 items.add(y);
             }
@@ -221,15 +238,32 @@ public class ControlEditor {
         treeVolume.refresh();
     }
 
-    public void contexter(ContextMenuEvent context){
-        ObservableList<MenuItem>g=FXCollections.observableArrayList();
+    public void conditionToTable() throws SQLException {
+        if (l.getChildren().isEmpty()) {
+            int i = Calendar.getInstance().get(Calendar.YEAR);
+            store[0] = i;
+            VolumeTable.Insert(JournalTable.SelectISSN((String) journals.getValue()), i);
 
-        for (String m:n){
-            g.add(new MenuItem(m));
+            TreeItem r = new TreeItem(String.valueOf(VolumeTable.SelectPublicationYear(
+                    JournalTable.SelectISSN((String) journals.getValue()), i)));//
+
+            l.getChildren().add(r);
+        } else if (!l.getChildren().isEmpty()) {
+            Object[] b = VolumeTable.SelectVolumes(18361310).toArray();
+            store[0] = (Integer.valueOf((String) b[b.length - 1])) + 1;
+            VolumeTable.Insert(JournalTable.SelectISSN((String) journals.getValue()), store[0]);
+
+            TreeItem r = new TreeItem(String.valueOf(VolumeTable.SelectPublicationYear(
+                    JournalTable.SelectISSN((String) journals.getValue()), store[0])));//
+
+            l.getChildren().add(r);
+            treeVolume.refresh();
         }
-        contextMenu.getItems().addAll(g);
-        contextMenu.show(changejournal,context.getScreenX(),context.getScreenY());
+    }
 
+    public void choicejournal() throws SQLException {
+        journals.setValue(JournalTable.selectJournals().get(0));
+        journals.getItems().addAll(JournalTable.selectJournals());
     }
 
 }

@@ -186,7 +186,7 @@ public class VolumeTable {
         return fin;
     }
 
-    public int SelectPublicationYear(int id) throws SQLException {
+    public static int SelectPublicationYear(int id) throws SQLException {
         int fin = 0;
         Connection con = null; // connection to a database
         try {
@@ -198,7 +198,7 @@ public class VolumeTable {
                 String query = "SELECT PublicationYear FROM Volume WHERE VolumeID = " + id;
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
-                    fin = res.getInt("ISSN");
+                    fin = res.getInt("PublicationYear");
                 }
                 res.close();
             }
@@ -311,4 +311,34 @@ public class VolumeTable {
             if (con != null) con.close();
         }
     }
+
+    public static int SelectPublicationYear(int issn, int year) throws SQLException {
+        int fin = 0;
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String query = "SELECT PublicationYear FROM Volume WHERE (PublicationYear = '" + year + "' AND ISSN = '" + issn + "')";
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    fin = res.getInt("PublicationYear");
+                }
+                res.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            } finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (con != null) con.close();
+        }
+        return fin;
+    }
+
 }

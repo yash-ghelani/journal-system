@@ -328,7 +328,7 @@ public class EditorTable {
         }
         return fin;
     }
-    public String SelectName(int id) throws SQLException {
+    public static String SelectName(int id) throws SQLException {
         String fin = null;
         Connection con = null; // connection to a database
         try {
@@ -361,7 +361,7 @@ public class EditorTable {
         return fin;
     }
 
-    public String SelectSurname(int id) throws SQLException {
+    public static String SelectSurname(int id) throws SQLException {
         String fin = null;
         Connection con = null; // connection to a database
         try {
