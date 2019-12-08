@@ -63,7 +63,7 @@ public class JournalTable {
             try {
                 stmt = con.createStatement();
 
-                String journal = "INSERT INTO Journal (ISSN, Name) VALUES ('" + ISSN + "',  '" + name + "')";
+                String journal = "INSERT INTO Journal (ISSN, JournalName) VALUES ('" + ISSN + "',  '" + name + "')";
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
 
@@ -126,7 +126,7 @@ public class JournalTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String journal = "UPDATE Journal SET Name = " + name + " WHERE ISSN = " + issn;
+                String journal = "UPDATE Journal SET JournalName = " + name + " WHERE ISSN = " + issn;
                 stmt.executeUpdate(journal);
             }
             catch (SQLException ex) {
@@ -220,7 +220,7 @@ public class JournalTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "SELECT Name FROM Journal";
+                String query = "SELECT JournalName FROM Journal";
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     String fin = res.getString("Name");
