@@ -12,7 +12,6 @@ public class AddDeleteTables {
         ErrorTable.DeleteTable();
         ResponseTable.DeleteTable();
         QuestionTable.DeleteTable();
-        EditorInfoTable.DeleteTable();
         EditorTable.DeleteTable();
         AuthorTable.DeleteTable();
         ReviewTable.DeleteTable();
@@ -41,10 +40,9 @@ public class AddDeleteTables {
         ErrorTable.CreateErrorTable();
         QuestionTable.CreateQuestionTable();
         ResponseTable.CreateResponseTable();
-        EditorInfoTable.CreateEditorInfoTable();
     }
     public static void main (String args[]) throws SQLException {
-        AddDeleteTables.delete();
+//        AddDeleteTables.delete();
         AddDeleteTables.add();
     }
 }
