@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="507.0" prefWidth="1044.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controllers.NewSubmissionController">
+<BorderPane prefHeight="650.0" prefWidth="1030.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controllers.NewSubmissionController">
    <top>
       <VBox prefHeight="45.0" prefWidth="825.0" BorderPane.alignment="CENTER">
          <children>
@@ -26,21 +26,21 @@
       <VBox minHeight="-Infinity" prefHeight="499.0" prefWidth="1044.0" BorderPane.alignment="CENTER">
          <children>
             <Separator prefHeight="0.0" prefWidth="124.0" />
-            <HBox prefHeight="110.0" prefWidth="721.0">
+            <HBox prefHeight="65.0" prefWidth="1030.0">
                <children>
-                  <Region prefHeight="81.0" prefWidth="95.0" />
+                  <Region prefHeight="65.0" prefWidth="100.0" />
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="New Submission" wrappingWidth="288.2060546875">
                      <font>
                         <Font size="36.0" />
                      </font>
                      <HBox.margin>
-                        <Insets bottom="8.0" left="-8.0" top="6.0" />
+                        <Insets bottom="8.0" top="6.0" />
                      </HBox.margin>
                   </Text>
-                  <Region prefHeight="81.0" prefWidth="357.0" HBox.hgrow="ALWAYS" />
+                  <Region prefHeight="65.0" prefWidth="369.0" HBox.hgrow="ALWAYS" />
                   <VBox prefHeight="81.0" prefWidth="314.0">
                      <children>
-                        <Label prefHeight="17.0" prefWidth="201.0" text="Author ID: 523245641">
+                        <Label fx:id = "idLab" prefHeight="17.0" prefWidth="201.0" text="Author ID: 523245641">
                            <VBox.margin>
                               <Insets top="22.0" />
                            </VBox.margin>
@@ -59,7 +59,7 @@
             </Label>
             <HBox prefHeight="47.0" prefWidth="1044.0">
                <children>
-                  <Region prefHeight="100.0" prefWidth="86.0" />
+                  <Region prefHeight="47.0" prefWidth="95.0" />
                   <TextField fx:id="email" prefHeight="27.0" prefWidth="572.0" promptText="Co-Author Email" />
                   <Region prefHeight="38.0" prefWidth="79.0" />
                   <Button mnemonicParsing="false" onAction="#handleRegister" prefHeight="25.0" prefWidth="195.0" text="Register" />
@@ -69,15 +69,32 @@
                   <Insets top="12.0" />
                </VBox.margin>
             </HBox>
+            <HBox prefHeight="65.0" prefWidth="200.0">
+               <children>
+                  <Region prefHeight="65.0" prefWidth="95.0" />
+                  <VBox prefHeight="100.0" prefWidth="848.0">
+                     <children>
+                        <Label fx:id="coAuth1" prefHeight="17.0" prefWidth="570.0" text="Co-Author 1 Temporary Login:" />
+                        <Label fx:id="coAuth2" layoutX="10.0" layoutY="10.0" prefHeight="17.0" prefWidth="570.0" text="Co-Author 2 Temporary Login:">
+                           <VBox.margin>
+                              <Insets top="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label fx:id="coAuth3" layoutX="10.0" layoutY="27.0" prefHeight="17.0" prefWidth="570.0" text="Co-Author 3 Temporary Login:">
+                           <VBox.margin>
+                              <Insets top="5.0" />
+                           </VBox.margin>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <Region layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="100.0" />
+               </children>
+            </HBox>
             <HBox prefHeight="23.0" prefWidth="1044.0">
                <children>
-                  <Region minHeight="-Infinity" minWidth="-Infinity" prefHeight="61.0" prefWidth="88.0" />
+                  <Region minHeight="-Infinity" minWidth="-Infinity" prefHeight="253.0" prefWidth="90.0" />
                   <VBox minHeight="-Infinity" minWidth="-Infinity" prefHeight="253.0" prefWidth="845.0">
                      <children>
-                        <Label fx:id="idLab" text="Temporary Login: ">
-                           <VBox.margin>
-                              <Insets top="9.0" />
-                           </VBox.margin></Label>
                         <Label text="Article Information:">
                            <VBox.margin>
                               <Insets bottom="10.0" top="15.0" />
@@ -86,16 +103,16 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <TextField prefHeight="27.0" prefWidth="565.0" promptText="Title">
+                        <TextField fx:id="title" prefHeight="27.0" prefWidth="565.0" promptText="Title">
                            <VBox.margin>
                               <Insets bottom="15.0" />
                            </VBox.margin>
                         </TextField>
-                        <TextArea prefHeight="200.0" prefWidth="200.0" promptText="Include abstract here">
+                        <TextArea fx:id="abstractTA" prefHeight="200.0" prefWidth="200.0" promptText="Include abstract here" wrapText="true">
                            <VBox.margin>
                               <Insets bottom="15.0" />
                            </VBox.margin></TextArea>
-                        <TextField prefHeight="25.0" prefWidth="564.0" promptText="Link to PDF" />
+                        <TextField fx:id="pdf" prefHeight="25.0" prefWidth="564.0" promptText="Link to PDF" />
                      </children>
                      <HBox.margin>
                         <Insets />
@@ -104,10 +121,10 @@
                   <Region prefHeight="253.0" prefWidth="207.0" />
                </children>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="1044.0">
+            <HBox prefHeight="28.0" prefWidth="1030.0">
                <children>
-                  <Region prefHeight="71.0" prefWidth="225.0" HBox.hgrow="ALWAYS" />
-                  <Button mnemonicParsing="false" onAction="#handleSubmit" prefHeight="27.0" prefWidth="982.0" text="Submit " />
+                  <Region maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="28.0" prefWidth="246.0" HBox.hgrow="ALWAYS" />
+                  <Button maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#handleSubmit" prefHeight="27.0" prefWidth="1000.0" text="Submit " />
                   <Region prefHeight="71.0" prefWidth="249.0" HBox.hgrow="ALWAYS" />
                </children>
                <VBox.margin>

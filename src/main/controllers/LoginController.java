@@ -125,7 +125,7 @@ public class LoginController {
         Password.clear();
     }
 
-    public static void loadScene (ActionEvent action, String pathname) throws IOException {
+    public void loadScene (ActionEvent action, String pathname) throws IOException {
         URL url = new File(pathname).toURI().toURL();
         Parent view = FXMLLoader.load(url);
         Scene viewScene = new Scene(view);

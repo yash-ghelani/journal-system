@@ -25,7 +25,7 @@ public class ArticleInfoTable {
                                     "(ArticleInfoID         INT    NOT NULL     AUTO_INCREMENT, "+ //Creating the different fields
                                     "AuthorID               INT, "+
                                     "ArticleID              INT, " +
-                                    "AuthorType            TEXT,"+
+                                    "AuthorType             INT,"+
                                     "PRIMARY KEY (ArticleInfoID), "+
                                     "FOREIGN KEY (ArticleID) REFERENCES Articles(ArticleID), "+
                                     "FOREIGN KEY (AuthorID) REFERENCES Author(AuthorID))";
@@ -54,7 +54,7 @@ public class ArticleInfoTable {
 
     }
 
-    public static void Insert(int articleID, int authorID) throws SQLException {
+    public static void Insert(int articleID, int authorID, int type) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -62,8 +62,8 @@ public class ArticleInfoTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String newEdition = "INSERT INTO ArticleInfo (ArticleID, AuthorID) "+
-                                    "VALUES ('" + articleID + "',  '" + authorID + "')";
+                String newEdition = "INSERT INTO ArticleInfo (ArticleID, AuthorID, AuthorType) "+
+                                    "VALUES ('" + articleID + "',  '" + authorID + "',  '"+ type + "')";
                 stmt.executeUpdate(newEdition);
             }
             catch (SQLException ex) {

@@ -69,8 +69,6 @@ public class AuthorPanelController{
         window.setScene(viewScene);
     }
 
-
-
     public void handleLoadArticles (ActionEvent event) throws IOException, SQLException {
 
         List<Integer> submissions = ArticleInfoTable.SelectArticleIDs(Main.IDs[0]);

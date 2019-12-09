@@ -22,13 +22,15 @@ public class ArticleTable {
                 stmt = con.createStatement();
                 String initialise = "CREATE TABLE Articles " + //Creating the table
                                     "(ArticleID             INT    NOT NULL AUTO_INCREMENT, "+ //Creating the different fields
+                                    "ISSN                   INT, "+
                                     "EditionID              INT, "+
                                     "Title                  TEXT, "+
-                                    "PageRange              TEXT, "+
                                     "Abstract               TEXT, " +
                                     "PDF                    TEXT," +
+                                    "PageRange              TEXT, "+
                                     "Published              INT,"+
                                     "PRIMARY KEY (ArticleID), "+
+                                    "FOREIGN KEY (ISSN) REFERENCES Journal(ISSN), "+
                                     "FOREIGN KEY (EditionID) REFERENCES Edition(EditionID))";
 
                 stmt.executeUpdate(initialise);
@@ -55,7 +57,7 @@ public class ArticleTable {
 
     }
 
-    public static void Insert(int editionID, int submissionID, String title, String pageRange, String abstractText ) throws SQLException {
+    public static void Insert(int editionID, int issn, String title, String abstractText, String pdf, String pageRange,  int published) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -63,8 +65,8 @@ public class ArticleTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String newEdition = "INSERT INTO Articles (EditionID, SubmissionID, Title, PageRange, Abstract) "+
-                                    " VALUES ('" + editionID + "',  '" + submissionID + "',  '" + title + "',  '" + pageRange + "',  '" + abstractText + "')";
+                String newEdition = "INSERT INTO Articles (EditionID, Title, Abstract, PDF, PageRange, Published) "+
+                                    " VALUES ('" + editionID + "', '" + issn + "', '" + title + "',  '" + abstractText + "',  '" + pdf + "',  '"+ pageRange + "',  '" + published + "')";
                 stmt.executeUpdate(newEdition);
             }
             catch (SQLException ex) {
@@ -255,6 +257,39 @@ public class ArticleTable {
             if (con != null) con.close();
         }
 
+    }
+
+    public static int GetID() throws SQLException {
+        int id = 0;
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String query = "SELECT MAX(ArticleID) FROM Article";
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    id = res.getInt("MAX(ArticleID)");
+                }
+                res.close();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+        return id;
     }
 
     //=================================================================================================================
