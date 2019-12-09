@@ -25,7 +25,8 @@
             <Button fx:id="addingEditor" layoutX="14.0" layoutY="4.0" mnemonicParsing="false" onAction="#addEditors" text="Add Editor" />
             <Button layoutX="107.0" layoutY="4.0" mnemonicParsing="false" onAction="#retire" text="Editor" />
             <Label fx:id="editnames" layoutX="425.0" layoutY="7.0" prefHeight="17.0" prefWidth="77.0" text="editor name" AnchorPane.leftAnchor="425.0" AnchorPane.rightAnchor="99.0" />
-            <ChoiceBox fx:id="journals" layoutX="190.0" layoutY="4.0" prefWidth="150.0" />
+            <ChoiceBox fx:id="journals" layoutX="190.0" layoutY="4.0" prefHeight="27.0" prefWidth="120.0" />
+            <Button layoutX="325.0" layoutY="4.0" mnemonicParsing="false" onAction="#selector" prefHeight="27.0" prefWidth="89.0" text="select journal" />
             </children>
         </AnchorPane>
         <AnchorPane layoutX="215.0" layoutY="30.0" prefHeight="433.0" prefWidth="385.0">

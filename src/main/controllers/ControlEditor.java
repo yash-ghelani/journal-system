@@ -8,7 +8,6 @@ import javafx.scene.control.*;
 import javafx.event.ActionEvent;
 import javafx.scene.control.cell.*;
 import javafx.beans.value.*;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.*;
@@ -36,10 +35,6 @@ public class ControlEditor extends ClassLoader{
     int [] storem = {-1};
 
     static ObservableList<Article> articles;
-
-    ContextMenu meuProf = new ContextMenu();
-    Menu retire = new Menu("retire");
-    Menu board_of_editors = new Menu("board of editors");
 
     @FXML
     private Label editnames; // use to set the editorsname in the initialize method
@@ -80,10 +75,12 @@ public class ControlEditor extends ClassLoader{
 
    private TextField addJ;
 
+   @FXML
+
+   private ChoiceBox checker;
+
    static String name_of_journal;
 
-    public ControlEditor() throws MalformedURLException {
-    }
 
     public void initialize() throws SQLException, MalformedURLException {
         Main.IDs[1] = 1;
@@ -345,6 +342,17 @@ public class ControlEditor extends ClassLoader{
         JournalTable.Insert(Integer.valueOf(h),addJ.getText());
         addJ.clear();
         }
+    }
+
+    public void selector(ActionEvent actionEvent) throws IOException {
+        URL url = new File("src/resources/SelectJournal.fxml").toURI().toURL();
+        Parent view = FXMLLoader.load(url);
+        Scene viewScene = new Scene(view);
+        Stage window = new Stage();
+        window.setResizable(true);
+        window.setScene(viewScene);
+        window.initModality(Modality.APPLICATION_MODAL);
+        window.show();
     }
 
 }
