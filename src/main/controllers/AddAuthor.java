@@ -6,6 +6,7 @@ import javafx.scene.control.PasswordField;
 
 import javafx.scene.control.*;
 import javafx.event.*;
+import javafx.stage.Stage;
 import main.tables.*;
 
 import java.sql.SQLException;
@@ -13,33 +14,21 @@ import java.util.regex.Pattern;
 
 public class AddAuthor {
 
-    String[] editorn_p = {null,null,null,null};
-
-    @FXML
-
-    private TextField textName;
-
-    @FXML
-
-    private PasswordField passField;
-
-    @FXML
-
-    private TextField emailField;
-
-    @FXML
-
-    private ChoiceBox choice;
-
-    @FXML
-
-    private TextField affiliate;
+    public TextField surname;
+    public TextField affiliation;
+    public ChoiceBox title;
+    public TextField email;
+    public PasswordField password;
+    public TextField forename;
+    public Label sLab;
 
     String [] str = {"Mr.","Ms.","Dr.","Prof."};
 
+    int aCount = 1;
+
     public void initialize(){
-        choice.setValue("Mr.");
-        choice.getItems().addAll(FXCollections.observableArrayList(str));
+        title.setValue("Mr.");
+        title.getItems().addAll(FXCollections.observableArrayList(str));
         //System.out.println();
     }
 
@@ -47,67 +36,106 @@ public class AddAuthor {
 
     public void actionAdd(ActionEvent actionEvent) throws NullPointerException, SQLException {
 
-        if (textName.getText().isEmpty()) {
-            textName.setStyle("-fx-prompt-text-fill:red;");
+        boolean t = validTitle();
+        boolean fn = validFirstName();
+        boolean ln = validLastName();
+        boolean a = validAffiliation();
+        boolean em = validEmail();
+        boolean pw = validPassword();
 
-        } else if (!textName.getText().isEmpty()) {
-            editorn_p[0] = textName.getText();
+        Stage stage = (Stage) title.getScene().getWindow();
+
+        if (t && fn && ln && a && em && pw) {
+
+            if (NewSubmissionController.authCount == 1) {
+                insertCoAuthor();
+                sLab.setText("Co-author: "+ aCount +" added");
+                aCount += 1;
+            } else if (NewSubmissionController.authCount == 2) {
+                insertCoAuthor();
+                sLab.setText("Co-author: "+ aCount +" added");
+                aCount += 1;
+            } else if (NewSubmissionController.authCount == 3) {
+                insertCoAuthor();
+                sLab.setText("Co-author: "+ aCount +" added");
+                aCount += 1;
+            } else {
+                sLab.setText("You can only add 3 co-authors");
+                stage.close();
+            }
         }
+    }
 
-        if (passField.getText().isEmpty()) {
-            passField.clear();
-            passField.setStyle("-fx-prompt-text-fill:red;");
+    private void insertCoAuthor() throws SQLException {
+        UserTable.Insert((String) title.getValue(),forename.getText(),surname.getText(),affiliation.getText(), email.getText(), String.valueOf(password.getText().hashCode()));
+        int id = UserTable.ValidateEmailAndPassword(email.getText(), String.valueOf(Math.abs((email.getText()).hashCode())));
+        AuthorTable.Insert(id, 1);
+        NewSubmissionController.ids.add(AuthorTable.GetID(id));
+    }
+
+    // *************************************validation methods******************************************************
+    public boolean validTitle(){
+        if (title.getSelectionModel().isEmpty()) {
+            title.setStyle("-fx-border-color: red; -fx-border-width: 2px;-fx-prompt-text-fill : red;");
+            return false;
         } else {
-            editorn_p[1] = passField.getText();
+            return true;
         }
+    }
 
-        if (emailField.getText().isEmpty()){
-            emailField.setStyle("-fx-prompt-text-fill:red;");
+    public boolean validFirstName(){
+        // first name
+        if (forename.getText().isEmpty() || !forename.getText().chars().allMatch(Character::isLetter)) {
+            forename.setStyle("-fx-border-color: red; -fx-border-width: 2px;-fx-prompt-text-fill : red;");
+            forename.clear();
+            return false;
+        } else {
+            return true;
         }
-        else if (!Pattern.matches("[A-za-z]+[@]{1}[a-zA-Z]+[.]{1}[A-za-z.]+",emailField.getText())){
-            emailField.clear();
-            emailField.setPromptText("invalid email structure");
-            emailField.setStyle("-fx-prompt-text-fill:red;");
+    }
+
+    public boolean validLastName(){
+        // last name
+        if (surname.getText().isEmpty() || !surname.getText().chars().allMatch(Character::isLetter)) {
+            surname.setStyle("-fx-border-color: red; -fx-border-width: 2px;-fx-prompt-text-fill : red;");
+            surname.clear();
+            return false;
+        } else {
+            return true;
         }
-        else if (Pattern.matches("[A-za-z]+[@]{1}[a-zA-Z]+[.]{1}[A-za-z.]+",emailField.getText())){
-            editorn_p[2] = emailField.getText();
+    }
+
+    public boolean validEmail(){
+        //emailField
+        if (Pattern.matches("[0-9A-Za-z.]+[@][a-zA-z]+[.][A-Za-z.]+", email.getText())) {
+            return true;
+        } else {
+            email.setStyle("-fx-border-color: red; -fx-border-width: 2px;-fx-prompt-text-fill : red;");
+            email.clear();
+            email.setPromptText("Not valid email type");
+            return false;
         }
+    }
 
-        if (affiliate.getText().isEmpty()){
-            affiliate.setStyle("-fx-prompt-text-fill:red;");
+    public boolean validAffiliation(){
+        if (affiliation.getText().isEmpty() || !affiliation.getText().chars().allMatch(Character::isLetter)) {
+            affiliation.setStyle("-fx-border-color: red; -fx-border-width: 2px;-fx-prompt-text-fill : red;");
+            affiliation.clear();
+            return false;
+        } else {
+            return true;
         }
-        else {
-            editorn_p[3] = affiliate.getText();
+    }
+
+    public boolean validPassword(){
+        if (Pattern.matches("[a-zA-Z0-9[^\\dA-Za-zA-Za-z0-9]]{6,}", password.getText())) {
+            return true;
+        } else {
+            password.setStyle("-fx-border-color: red; -fx-border-width: 2px;-fx-prompt-text-fill : red;");
+            password.clear();
+            password.setPromptText("Password must be over 6 letters long");
+            return false;
         }
-
-        if (editorn_p[0] != null && editorn_p[1] != null && editorn_p[2] != null ){
-            String [] namespilt = editorn_p[0].split(" ");
-            System.out.println(namespilt[0]);
-            String l[] = new String[8];
-            l[0] =(String)choice.getValue();
-            l[1] = namespilt[0];
-            l[2] = namespilt[1];
-            l[3] = affiliate.getText();
-            l[4] = emailField.getText();
-            l[5] = passField.getText();
-
-            if (JournalInfoTable.SelectEditorID(JournalTable.SelectISSN(ControlEditor.name_of_journal)).length < 5) {
-
-                UserTable.Insert(l[0], l[1], l[2], l[3], l[4], l[5]);
-
-                EditorTable.Insert(UserTable.GetID(l[1], l[2], l[4]), 1);
-
-                JournalInfoTable.Insert(JournalTable.SelectISSN(
-                        ControlEditor.name_of_journal), EditorTable.GetID(UserTable.GetID(l[1], l[2], l[4])), "Editor");
-            }
-            else {
-                //nothing
-            }
-
-        }
-        else {
-        }
-
     }
 
 }

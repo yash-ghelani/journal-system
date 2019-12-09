@@ -12,6 +12,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import main.Main;
 import main.tables.*;
@@ -30,17 +31,14 @@ public class NewSubmissionController {
     @FXML
     public Label idLab;
     public TextField email;
-    public Label coAuth1;
-    public Label coAuth2;
-    public Label coAuth3;
     public TextField title;
     public TextArea abstractTA;
     public TextField pdf;
     public ChoiceBox journals;
 
 
-    ArrayList<Integer> ids = new  ArrayList<>();
-    int authCount = 1;
+    static ArrayList<Integer> ids = new  ArrayList<>();
+    static int authCount = 1;
 
     public void initialize () throws SQLException {
         idLab.setText("Author ID: "+Main.IDs[0]);
@@ -74,7 +72,9 @@ public class NewSubmissionController {
                 System.out.println("added co author "+ ids.get(i));
             }
 
+
             loadScene(event, "src/resources/AuthorPanel.fxml");
+
 
         } else {
 
@@ -94,48 +94,36 @@ public class NewSubmissionController {
         }
     }
 
-    public void handleRegister(ActionEvent actionEvent) throws SQLException {
+//    public void handleRegister(ActionEvent actionEvent) throws SQLException {
+//
+//        if (validEmail()) {
+//            if (authCount == 1) {
+//                coAuth1.setText("Co-Author 1 Temporary Login: " + email.getText()+ ", " + Math.abs((email.getText()).hashCode()));
+//                insertCoAuthor();
+//                authCount += 1;
+//            } else if (authCount == 2) {
+//                coAuth2.setText("Co-Author 2 Temporary Login: " + email.getText()+ ", " + Math.abs((email.getText()).hashCode()));
+//                insertCoAuthor();
+//                authCount += 1;
+//            } else if (authCount == 3) {
+//                coAuth3.setText("Co-Author 3 Temporary Login: " + email.getText()+ ", " + Math.abs((email.getText()).hashCode()));
+//                insertCoAuthor();
+//                authCount += 1;
+//            } else {
+//                email.clear();
+//                email.setStyle("-fx-border-color: red; -fx-border-width: 2px;-fx-prompt-text-fill : red;");
+//                email.setPromptText("You can only register a maximum of 3 authors");
+//            }
+//        }
+//    }
 
-        if (validEmail()) {
-            if (authCount == 1) {
-                coAuth1.setText("Co-Author 1 Temporary Login: " + email.getText()+ ", " + Math.abs((email.getText()).hashCode()));
-                insertCoAuthor();
-                authCount += 1;
-            } else if (authCount == 2) {
-                coAuth2.setText("Co-Author 2 Temporary Login: " + email.getText()+ ", " + Math.abs((email.getText()).hashCode()));
-                insertCoAuthor();
-                authCount += 1;
-            } else if (authCount == 3) {
-                coAuth3.setText("Co-Author 3 Temporary Login: " + email.getText()+ ", " + Math.abs((email.getText()).hashCode()));
-                insertCoAuthor();
-                authCount += 1;
-            } else {
-                email.clear();
-                email.setStyle("-fx-border-color: red; -fx-border-width: 2px;-fx-prompt-text-fill : red;");
-                email.setPromptText("You can only register a maximum of 3 authors");
-            }
-        }
-    }
-
-    private void insertCoAuthor() throws SQLException {
-        UserTable.Insert("temp","temp","user","temp", email.getText(), String.valueOf(Math.abs((email.getText()).hashCode())));
-        int id = UserTable.ValidateEmailAndPassword(email.getText(), String.valueOf(Math.abs((email.getText()).hashCode())));
-        AuthorTable.Insert(id, 1);
-        ids.add(AuthorTable.GetID(id));
-        email.clear();
-    }
-
-    public boolean validEmail(){
-        //emailField
-        if (Pattern.matches("[0-9A-Za-z.]+[@][a-zA-z]+[.][A-Za-z.]+", email.getText())) {
-            return true;
-        } else {
-            email.setStyle("-fx-prompt-text-fill : red;");
-            email.clear();
-            email.setPromptText("Not valid email type");
-            return false;
-        }
-    }
+//    private void insertCoAuthor() throws SQLException {
+//        UserTable.Insert("temp","temp","user","temp", email.getText(), String.valueOf(Math.abs((email.getText()).hashCode())));
+//        int id = UserTable.ValidateEmailAndPassword(email.getText(), String.valueOf(Math.abs((email.getText()).hashCode())));
+//        AuthorTable.Insert(id, 1);
+//        ids.add(AuthorTable.GetID(id));
+//        email.clear();
+//    }
 
     public void loadScene (ActionEvent action, String pathname) throws IOException {
         URL url = new File(pathname).toURI().toURL();
@@ -146,10 +134,14 @@ public class NewSubmissionController {
         window.setScene(viewScene);
     }
 
-    public void addExistingAuthor(ActionEvent actionEvent) {
-
-    }
-
-    public void addNewAuthor(ActionEvent actionEvent) {
+    public void addNewAuthor(ActionEvent actionEvent) throws IOException {
+        URL url = new File("src/resources/AddAuthor.fxml").toURI().toURL();
+        Parent view = FXMLLoader.load(url);
+        Scene viewScene = new Scene(view);
+        Stage window = new Stage();
+        window.setResizable(true);
+        window.setScene(viewScene);
+        window.initModality(Modality.APPLICATION_MODAL);
+        window.show();
     }
 }

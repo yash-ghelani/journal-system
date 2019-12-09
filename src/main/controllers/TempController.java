@@ -103,7 +103,7 @@ public class TempController extends Main {
         // last name
         if (lastName.getText().isEmpty() || !lastName.getText().chars().allMatch(Character::isLetter)) {
             lastName.setStyle("-fx-prompt-text-fill : red;");
-            firstName.clear();
+            lastName.clear();
             return false;
         } else {
             return true;
@@ -112,7 +112,7 @@ public class TempController extends Main {
 
     public boolean validEmail(){
         //emailField
-        if (Pattern.matches("[A-Za-z.]+[@][a-zA-z]+[.][A-Za-z.]+", emailField.getText())) {
+        if (Pattern.matches("[0-9A-Za-z.]+[@][a-zA-z]+[.][A-Za-z.]+", emailField.getText())) {
             return true;
         } else {
             emailField.setStyle("-fx-prompt-text-fill : red;");
@@ -125,7 +125,7 @@ public class TempController extends Main {
     public boolean validAffiliation(){
         if (university.getText().isEmpty() || !university.getText().chars().allMatch(Character::isLetter)) {
             university.setStyle("-fx-border-color: red; -fx-border-width: 2px;-fx-prompt-text-fill : red;");
-            firstName.clear();
+            university.clear();
             return false;
         } else {
             return true;

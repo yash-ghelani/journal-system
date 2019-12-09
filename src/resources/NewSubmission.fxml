@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="650.0" prefWidth="1030.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controllers.NewSubmissionController">
+<BorderPane prefHeight="546.0" prefWidth="1030.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controllers.NewSubmissionController">
    <top>
       <VBox prefHeight="45.0" prefWidth="825.0" BorderPane.alignment="CENTER">
          <children>
@@ -23,7 +23,7 @@
       </VBox>
    </top>
    <center>
-      <VBox minHeight="-Infinity" prefHeight="499.0" prefWidth="1044.0" BorderPane.alignment="CENTER">
+      <VBox minHeight="-Infinity" prefHeight="499.0" prefWidth="1030.0" BorderPane.alignment="CENTER">
          <children>
             <Separator prefHeight="0.0" prefWidth="124.0" />
             <HBox prefHeight="65.0" prefWidth="1030.0">
@@ -50,45 +50,20 @@
                   </VBox>
                </children>
             </HBox>
-            <Label text="Co-Authors:">
-               <VBox.margin>
-                  <Insets left="89.0" />
-               </VBox.margin>
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
             <HBox prefHeight="47.0" prefWidth="1044.0">
                <children>
-                  <Region prefHeight="47.0" prefWidth="89.0" />
-                  <Button mnemonicParsing="false" onAction="#addExistingAuthor" prefHeight="25.0" prefWidth="400.0" text="Add Existing Author" />
-                  <Region prefHeight="47.0" prefWidth="40.0" />
-                  <Button mnemonicParsing="false" onAction="#addNewAuthor" prefHeight="25.0" prefWidth="400.0" text="Register New Author" />
+                  <Region prefHeight="47.0" prefWidth="90.0" />
+                  <Label text="Co-Authors:">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Region prefHeight="47.0" prefWidth="195.0" />
+                  <Button mnemonicParsing="false" onAction="#addNewAuthor" prefHeight="25.0" prefWidth="265.0" text="Register New Author" />
                </children>
                <VBox.margin>
                   <Insets top="12.0" />
                </VBox.margin>
-            </HBox>
-            <HBox prefHeight="65.0" prefWidth="200.0">
-               <children>
-                  <Region prefHeight="65.0" prefWidth="95.0" />
-                  <VBox prefHeight="100.0" prefWidth="848.0">
-                     <children>
-                        <Label fx:id="coAuth1" prefHeight="17.0" prefWidth="570.0" text="Co-Author 1 Login:" />
-                        <Label fx:id="coAuth2" layoutX="10.0" layoutY="10.0" prefHeight="17.0" prefWidth="570.0" text="Co-Author 2 Login:">
-                           <VBox.margin>
-                              <Insets top="5.0" />
-                           </VBox.margin>
-                        </Label>
-                        <Label fx:id="coAuth3" layoutX="10.0" layoutY="27.0" prefHeight="17.0" prefWidth="570.0" text="Co-Author 3 Login:">
-                           <VBox.margin>
-                              <Insets top="5.0" />
-                           </VBox.margin>
-                        </Label>
-                     </children>
-                  </VBox>
-                  <Region layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="100.0" />
-               </children>
             </HBox>
             <HBox prefHeight="23.0" prefWidth="1044.0">
                <children>
