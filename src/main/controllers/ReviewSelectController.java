@@ -58,15 +58,14 @@ public class ReviewSelectController {
 
     public void handleLoadArticles(ActionEvent event) throws IOException, SQLException {
 
-        List<String> submissions = ArticleTable.SelectAllArticleTitles();
         List<Integer> ids = ArticleTable.SelectAllArticleIDs();
 
-        if (submissions.size() == 0) {
+        if (ids.size() == 0) {
             notify.setStyle("-fx-text-fill : red;");
             notify.setText("Currently there are no submissions");
         }
 
-        for(int i =0; i<submissions.size(); i++) {
+        for(int i =0; i<ids.size(); i++) {
 
             URL url = new File("src/resources/ReviewSelectBox.fxml").toURI().toURL();
 
@@ -78,7 +77,6 @@ public class ReviewSelectController {
             Label title = (Label)v.getChildren().get(0);
             Label articleID = (Label)v.getChildren().get(1);
             int s = ids.get(i);
-            //System.out.println(ArticleInfoTable.SelectAuthorID(s));
 
             if(ReviewTable.CheckReviewID(s) > 0){
                 VBox vButton = (VBox)child.get(2);
@@ -92,13 +90,13 @@ public class ReviewSelectController {
                 selector.setVisible(false);
             }
 
-//            if(UserTable.SelectAffiliation(AuthorTable.SelectUserID(ArticleInfoTable.SelectAuthorID(s))) == UserTable.SelectAffiliation(AuthorTable.SelectUserID(IDs[0]))){
-//                VBox vButton = (VBox)child.get(2);
-//                Button selector = (Button) vButton.getChildren().get(0);
-//                selector.setVisible(false);
-//            }
+            if(UserTable.SelectAffiliation(ReviewerTable.GetUserID(IDs[2])).equalsIgnoreCase(UserTable.SelectAffiliation(AuthorTable.SelectUserID(ArticleInfoTable.GetAuthorID(s))))){
+                VBox vButton = (VBox)child.get(2);
+                Button selector = (Button) vButton.getChildren().get(0);
+                selector.setVisible(false);
+            }
 
-            title.setText(submissions.get(i));
+            title.setText(ArticleTable.SelectTitle(ids.get(i)));
             articleID.setText("ArticleID: " + s);
 
             Insets padding = new Insets(10,0,0,0);

@@ -45,7 +45,7 @@
                         <Insets bottom="5.0" />
                     </VBox.margin>
                 </Button>
-                <Button mnemonicParsing="false"  prefHeight="27.0" prefWidth="148.0" text="View Response">
+                <Button mnemonicParsing="false"  onAction="#handleSubmitFinalVerdict" prefHeight="27.0" prefWidth="148.0" text="View Response">
                     <VBox.margin>
                         <Insets top="6.0" />
                     </VBox.margin>

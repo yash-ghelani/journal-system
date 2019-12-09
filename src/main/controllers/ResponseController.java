@@ -71,8 +71,16 @@ public class ResponseController {
     }
 
 
-    public void handleSubmit(ActionEvent actionEvent) throws SQLException {
+    public void handleSubmit(ActionEvent actionEvent) throws SQLException, IOException {
         ArticleTable.UpdatePDF(Main.ArticleIDForAuthor, updatedLink.getText());
+
+        URL url = new File("src/resources/AuthorPanel.fxml").toURI().toURL();
+        Parent view = FXMLLoader.load(url);
+        Scene viewScene = new Scene(view);
+
+        Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        window.setResizable(true);
+        window.setScene(viewScene);
 
     }
 

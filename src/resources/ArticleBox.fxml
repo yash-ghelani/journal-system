@@ -36,20 +36,13 @@
         </VBox>
         <VBox prefHeight="124.0" prefWidth="141.0">
             <children>
-<<<<<<< HEAD
                 <Button mnemonicParsing="false" onAction="#handleViewInitialVerdict" prefHeight="27.0" prefWidth="132.0" text="View Initial Verdict">
-=======
-                <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="132.0" text="View Initial Verdict" onAction="#handleViewInitialVerdict">
->>>>>>> frontend
                     <VBox.margin>
                         <Insets bottom="5.0" />
                     </VBox.margin>
                 </Button>
-<<<<<<< HEAD
-                <Button mnemonicParsing="false" onAction="#handleViewFinalVerdict" prefHeight="27.0" prefWidth="132.0" text="View Final Verdict">
-=======
                 <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="132.0" text="View Final Verdict" onAction="#handleViewFinalVerdict">
->>>>>>> frontend
+
                     <VBox.margin>
                         <Insets top="6.0" />
                     </VBox.margin>

@@ -144,6 +144,30 @@ public class ReviewTable {
         }
     }
 
+    public static void UpdateFinallVerdict( int reviewid, String verdict) throws SQLException {
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String journal = "UPDATE Review SET FinalVerdict = '" + verdict + "' WHERE ReviewID = " + reviewid;
+                //System.out.println(journal);
+                stmt.executeUpdate(journal);
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            } finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (con != null) con.close();
+        }
+    }
+
     public static void UpdateReviewerID(int id) throws SQLException {
         Connection con = null; // connection to a database
         try {
@@ -360,6 +384,158 @@ public class ReviewTable {
         return fin;
     }
 
+
+
+    public static int CheckArticleIDs(int id) throws SQLException {
+        int fin = 0;
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String query = "SELECT ReviewID FROM Review WHERE ArticleID = " + id + " AND Summary !='null'";
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    fin = res.getInt("ReviewID");
+                }
+                res.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            } finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (con != null) con.close();
+        }
+        return fin;
+    }
+
+    public static int CheckReviewIDsSum(int id) throws SQLException {
+        int fin = 0;
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String query = "SELECT ReviewID FROM Review WHERE Review.ReviewID = " + id + " AND Summary !='null'";
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    fin = res.getInt("ReviewID");
+                }
+                res.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            } finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (con != null) con.close();
+        }
+        return fin;
+    }
+
+
+
+
+    public static int SelectReviewID(int id) throws SQLException {
+        int fin = 0;
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String query = "SELECT ReviewID FROM Review WHERE ArticleID = " + id + "";
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    fin = res.getInt("ReviewID");
+                }
+                res.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            } finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (con != null) con.close();
+        }
+        return fin;
+    }
+
+    public static String SelectFinalVerdict(int id) throws SQLException {
+        String fin = "";
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String query = "SELECT FinalVerdict FROM Review WHERE Review.ArticleID = " + id + "";
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    fin = res.getString("FinalVerdict");
+                }
+                res.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            } finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (con != null) con.close();
+        }
+        return fin;
+    }
+
+    public static String RSelectFinalVerdict(int id) throws SQLException {
+        String fin = "";
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String query = "SELECT FinalVerdict FROM Review WHERE ReviewID = " + id + "";
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    fin = res.getString("FinalVerdict");
+                }
+                res.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            } finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (con != null) con.close();
+        }
+        return fin;
+    }
+
+
+
     public static ArrayList<Integer> SelectListOfArticleIDs(int id) throws SQLException {
         ArrayList<Integer> list = new ArrayList<Integer>();
         Connection con = null; // connection to a database
@@ -369,7 +545,7 @@ public class ReviewTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "SELECT ArticleID FROM Review WHERE ReviewerID = " + id + " AND Summary = 'null' AND InitialVerdict = 'null' AND FinalVerdict = 'null'";
+                String query = "SELECT ArticleID FROM Review WHERE ReviewerID = " + id + "";
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     int fin = res.getInt("ArticleID");
@@ -430,6 +606,36 @@ public class ReviewTable {
             try {
                 stmt = con.createStatement();
                 String query = "SELECT ReviewID FROM Review WHERE ArticleID = " + id + " AND Summary != 'null' AND InitialVerdict != 'null'";
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    int fin = res.getInt("ReviewID");
+                    list.add(fin);
+                }
+                res.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            } finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (con != null) con.close();
+        }
+        return list;
+    }
+
+    public static ArrayList<Integer> SelectFinalReviewsCompleted(int id) throws SQLException {
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String query = "SELECT ReviewID FROM Review WHERE ArticleID = " + id + " AND Summary != 'null' AND InitialVerdict != 'null' AND FinalVerdict != 'null'";
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     int fin = res.getInt("ReviewID");
