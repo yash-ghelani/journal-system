@@ -47,7 +47,7 @@ public class ReaderController {
         // add journals to tree
         for (int i = 0; i < journalList.size(); i++){
             TreeItem<String> journals = new TreeItem<>(journalList.get(i));
-            journals.setExpanded(false);
+            journals.setExpanded(true);
             root.getChildren().add(journals);
             //get volumes (years) of that journal using journal name to get issn, then using issn to get publication year
             ArrayList<String> volumeList = VolumeTable.SelectVolumes(JournalTable.SelectISSN((journalList.get(i))));
@@ -55,17 +55,24 @@ public class ReaderController {
             //add volumes to tree
             for (int j = 0; j < volumeList.size(); j++) {
                 TreeItem<String> volumes = new TreeItem<>(volumeList.get(j));
-                volumes.setExpanded(false);
+                volumes.setExpanded(true);
                 journals.getChildren().add(volumes);
                 //**************************************need to update column in editions table to store year instead of vol id**************************
                 //get editions of that volume using volume year
-                ArrayList<String> editionsList = EditionTable.selectEditions(VolumeTable.SelectVolID(Integer.valueOf(volumeList.get(j))));
+                int volID = VolumeTable.SelectVolID(Integer.valueOf(volumeList.get(j)));
+                ArrayList<String> editionsList = EditionTable.selectEditions(volID);
+
+                System.out.println("Vol list "+volumeList);
+                System.out.println("ed list "+editionsList);
 
                 //add volumes to tree
-                for (int k = 0; k < editionsList.size(); k++) {
-                    TreeItem<String> editions = new TreeItem<>(editionsList.get(k));
-                    editions.setExpanded(false);
+                for (int l = 0; l < editionsList.size(); l++) {
+                    TreeItem<String> editions = new TreeItem<>(editionsList.get(l));
+                    editions.setExpanded(true);
                     volumes.getChildren().add(editions);
+                    //get articles of that edition using month
+                    //ArrayList<String> articleList = ArticleTable.SelectTitles(EditionTable.SelectID(volID, editionsList.get(l)));
+                    System.out.println(editionsList);
 
                 }
 

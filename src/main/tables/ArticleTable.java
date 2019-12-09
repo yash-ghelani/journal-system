@@ -552,6 +552,40 @@ public class ArticleTable {
         return list;
     }
 
+    public static ArrayList<String> SelectTitles(int id) throws SQLException {
+        ArrayList<String> list = new ArrayList<String>();
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String query = "SELECT Title FROM Articles WHERE EditionID = '"+ id +"'";
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    String fin = res.getString("Title");
+                    list.add(fin);
+                }
+                res.close();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+        return list;
+    }
+
     public static ArrayList<Integer> SelectAllArticleIDs() throws SQLException {
         ArrayList<Integer> list = new ArrayList<Integer>();
         Connection con = null; // connection to a database
