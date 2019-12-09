@@ -10,13 +10,13 @@
          <font>
             <Font size="36.0" />
          </font></Label>
-        <TextField fx:id="forename" layoutX="78.0" layoutY="117.0" prefHeight="34.0" prefWidth="245.0" promptText="Name" AnchorPane.bottomAnchor="219.0" />
-        <PasswordField fx:id="password" layoutX="78.0" layoutY="285.0" prefHeight="35.0" prefWidth="245.0" promptText="Password" />
-        <Button layoutX="180.0" layoutY="331.0" mnemonicParsing="false" onAction="#actionAdd" text="ADD" />
-        <TextField fx:id="email" layoutX="78.0" layoutY="200.0" prefHeight="35.0" prefWidth="245.0" promptText="Email" />
-        <ChoiceBox fx:id="title" layoutX="78.0" layoutY="111.0" prefHeight="35.0" prefWidth="245.0" />
-        <TextField fx:id="affiliation" layoutX="78.0" layoutY="243.0" prefHeight="35.0" prefWidth="245.0" promptText="Affiliation" />
-      <TextField fx:id="surname" layoutX="78.0" layoutY="158.0" prefHeight="35.0" prefWidth="245.0" promptText="Surname" />
-      <Label fx:id="sLab" layoutX="167.0" layoutY="76.0" text="User Added!" />
+        <TextField fx:id="forename" layoutX="78.0" layoutY="147.0" prefHeight="34.0" prefWidth="245.0" promptText="Name" AnchorPane.bottomAnchor="231.0" />
+        <PasswordField fx:id="password" layoutX="78.0" layoutY="318.0" prefHeight="35.0" prefWidth="245.0" promptText="Password" />
+        <Button layoutX="180.0" layoutY="364.0" mnemonicParsing="false" onAction="#actionAdd" text="ADD" />
+        <TextField fx:id="email" layoutX="78.0" layoutY="233.0" prefHeight="35.0" prefWidth="245.0" promptText="Email" />
+        <ChoiceBox fx:id="title" layoutX="78.0" layoutY="104.0" prefHeight="35.0" prefWidth="245.0" />
+        <TextField fx:id="affiliation" layoutX="78.0" layoutY="276.0" prefHeight="35.0" prefWidth="245.0" promptText="Affiliation" />
+      <TextField fx:id="surname" layoutX="78.0" layoutY="189.0" prefHeight="35.0" prefWidth="245.0" promptText="Surname" />
+      <Label fx:id="sLab" layoutX="78.0" layoutY="76.0" prefHeight="17.0" prefWidth="245.0" />
     </children>
 </AnchorPane>
