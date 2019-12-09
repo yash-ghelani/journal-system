@@ -42,7 +42,7 @@ public class AddDeleteTables {
         ResponseTable.CreateResponseTable();
     }
     public static void main (String args[]) throws SQLException {
-       // AddDeleteTables.delete();
+        AddDeleteTables.delete();
         AddDeleteTables.add();
     }
 }
