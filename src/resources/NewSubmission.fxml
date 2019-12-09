@@ -40,16 +40,17 @@
                   <Region prefHeight="65.0" prefWidth="369.0" HBox.hgrow="ALWAYS" />
                   <VBox prefHeight="81.0" prefWidth="314.0">
                      <children>
-                        <Label fx:id="idLab" prefHeight="17.0" prefWidth="201.0" text="Author ID: 523245641">
+                        <Label fx:id="idLab" prefHeight="17.0" prefWidth="201.0" text="Author ID: ">
                            <VBox.margin>
                               <Insets top="22.0" />
                            </VBox.margin>
                         </Label>
+                        <Region prefHeight="47.0" prefWidth="100.0" />
                      </children>
                   </VBox>
                </children>
             </HBox>
-            <Label text="Register Co-Authors">
+            <Label text="Co-Authors:">
                <VBox.margin>
                   <Insets left="89.0" />
                </VBox.margin>
@@ -59,11 +60,10 @@
             </Label>
             <HBox prefHeight="47.0" prefWidth="1044.0">
                <children>
-                  <Region prefHeight="47.0" prefWidth="95.0" />
-                  <TextField fx:id="email" prefHeight="27.0" prefWidth="572.0" promptText="Co-Author Email" />
-                  <Region prefHeight="38.0" prefWidth="79.0" />
-                  <Button mnemonicParsing="false" onAction="#handleRegister" prefHeight="25.0" prefWidth="195.0" text="Register" />
-                  <Region layoutX="668.0" layoutY="10.0" prefHeight="25.0" prefWidth="109.0" />
+                  <Region prefHeight="47.0" prefWidth="89.0" />
+                  <Button mnemonicParsing="false" onAction="#addExistingAuthor" prefHeight="25.0" prefWidth="400.0" text="Add Existing Author" />
+                  <Region prefHeight="47.0" prefWidth="40.0" />
+                  <Button mnemonicParsing="false" onAction="#addNewAuthor" prefHeight="25.0" prefWidth="400.0" text="Register New Author" />
                </children>
                <VBox.margin>
                   <Insets top="12.0" />
@@ -74,13 +74,13 @@
                   <Region prefHeight="65.0" prefWidth="95.0" />
                   <VBox prefHeight="100.0" prefWidth="848.0">
                      <children>
-                        <Label fx:id="coAuth1" prefHeight="17.0" prefWidth="570.0" text="Co-Author 1 Temporary Login:" />
-                        <Label fx:id="coAuth2" layoutX="10.0" layoutY="10.0" prefHeight="17.0" prefWidth="570.0" text="Co-Author 2 Temporary Login:">
+                        <Label fx:id="coAuth1" prefHeight="17.0" prefWidth="570.0" text="Co-Author 1 Login:" />
+                        <Label fx:id="coAuth2" layoutX="10.0" layoutY="10.0" prefHeight="17.0" prefWidth="570.0" text="Co-Author 2 Login:">
                            <VBox.margin>
                               <Insets top="5.0" />
                            </VBox.margin>
                         </Label>
-                        <Label fx:id="coAuth3" layoutX="10.0" layoutY="27.0" prefHeight="17.0" prefWidth="570.0" text="Co-Author 3 Temporary Login:">
+                        <Label fx:id="coAuth3" layoutX="10.0" layoutY="27.0" prefHeight="17.0" prefWidth="570.0" text="Co-Author 3 Login:">
                            <VBox.margin>
                               <Insets top="5.0" />
                            </VBox.margin>

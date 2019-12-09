@@ -145,4 +145,11 @@ public class NewSubmissionController {
         window.setResizable(true);
         window.setScene(viewScene);
     }
+
+    public void addExistingAuthor(ActionEvent actionEvent) {
+
+    }
+
+    public void addNewAuthor(ActionEvent actionEvent) {
+    }
 }

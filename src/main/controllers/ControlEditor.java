@@ -11,7 +11,6 @@ import javafx.beans.value.*;
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.*;
-import javassist.util.HotSwapper;
 
 import java.sql.SQLException;
 import java.util.Calendar;
@@ -87,9 +86,9 @@ public class ControlEditor extends ClassLoader{
     public void initialize() throws SQLException {
        // JournalTable.Insert(18361310,"Journal of Computer Science");
        //System.out.println(VolumeTable.SelectVolID(1));
-        journals.getItems().addAll(JournalTable.selectJournals());
-        journals.setValue(JournalTable.selectJournals().get(Main.vave));
-        tt();
+        journals.getItems().addAll(JournalTable.SelectJournals());
+        journals.setValue(JournalTable.SelectJournals().get(Main.vave));
+        //tt();
         ObservableList<TreeItem> j = FXCollections.observableArrayList();
         article.getChildren().add(tableView);
         l.setExpanded(true);
