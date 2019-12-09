@@ -52,7 +52,6 @@ public class AddEditor {
 
         } else if (!textName.getText().isEmpty()) {
             editorn_p[0] = textName.getText();
-            textName.clear();
         }
 
         if (passField.getText().isEmpty()) {
@@ -60,7 +59,6 @@ public class AddEditor {
             passField.setStyle("-fx-prompt-text-fill:red;");
         } else {
             editorn_p[1] = passField.getText();
-            passField.clear();
         }
 
         if (emailField.getText().isEmpty()){
@@ -73,7 +71,6 @@ public class AddEditor {
         }
         else if (Pattern.matches("[A-za-z]+[@]{1}[a-zA-Z]+[.]{1}[A-za-z.]+",emailField.getText())){
             editorn_p[2] = emailField.getText();
-            emailField.clear();
         }
 
         if (affiliate.getText().isEmpty()){
@@ -81,7 +78,6 @@ public class AddEditor {
         }
         else {
             editorn_p[3] = affiliate.getText();
-            affiliate.clear();
         }
 
         if (editorn_p[0] != null && editorn_p[1] != null && editorn_p[2] != null ){

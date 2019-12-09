@@ -1,6 +1,5 @@
 package main.tables;
 import java.sql.*;
-import java.util.ArrayList;
 
 public class JournalInfoTable {
 
@@ -78,10 +77,10 @@ public class JournalInfoTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
-                String journal = "DELETE FROM Editor WHERE EditorID = " + id;
+
+                String journal = "DELETE FROM JournalInfo WHERE EditorID = " + id;
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
             }
@@ -162,9 +161,9 @@ public class JournalInfoTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
                 String journal = "UPDATE JournalInfo SET EditorType = '" + type + "' WHERE EditorID = " + id;
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
@@ -343,39 +342,5 @@ public class JournalInfoTable {
             if (con != null) con.close();
         }
         return fin;
-    }
-
-    public static ArrayList<Integer> SelectISSNFromEditor(int id) throws SQLException {
-        ArrayList<Integer> list = new ArrayList<Integer>();
-        Connection con = null; // connection to a database
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
-            // use the open connection
-            Statement stmt = null;
-            try {
-                stmt = con.createStatement();
-                String query = "SELECT ISSN FROM JournalInfo WHERE EditorID = " + id;
-                ResultSet res = stmt.executeQuery(query);
-                while (res.next()) {
-                    int fin = res.getInt("ISSN");
-                    list.add(fin);
-                }
-                res.close();
-            }
-            catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-            finally {
-                if (stmt != null)
-                    stmt.close();
-            }
-        }
-        catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        finally {
-            if (con != null) con.close();
-        }
-        return list;
     }
 }

@@ -100,15 +100,12 @@ public class Retire extends ClassLoader {
     }
 
     public void add_to_board() throws SQLException {
-        tableT.getItems().clear();
        int [] u = JournalInfoTable.SelectEditorID(JournalTable.SelectISSN(ControlEditor.name_of_journal));
-      //if (u)
-       for (int y :u){
+      for (int y :u){
          String l = UserTable.SelectName(EditorTable.SelectUserID(y));
          String h = UserTable.SelectSurName(EditorTable.SelectUserID(y));
          k.add(new EditorP(l+" "+h,JournalInfoTable.SelectEditorType(y)));
       }
-      tableT.refresh();
     }
 
 }

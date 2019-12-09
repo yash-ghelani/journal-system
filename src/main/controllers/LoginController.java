@@ -79,7 +79,7 @@ public class LoginController {
             } else if (Author && !Editor && !Reviewer) {
                 loadScene(event, "src/resources/AuthorPanel.fxml");
             } else if (!Author && Editor && !Reviewer) {
-                loadScene(event,"src/resources/Editor.fxml");
+                loadScene(event,"src/resources/EditorPanel.fxml");
             } else if (!Author && !Editor && Reviewer) {
                 loadScene(event, "src/resources/ReviewPanel.fxml");
             } else {

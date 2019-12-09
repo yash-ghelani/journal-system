@@ -1,8 +1,6 @@
 package main.tables;
-
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public class ArticleTable {
 
@@ -21,19 +19,19 @@ public class ArticleTable {
 
             PreparedStatement stmt = null;
             try {
-
+                
                 String initialise = "CREATE TABLE Articles " + //Creating the table
-                        "(ArticleID             INT    NOT NULL AUTO_INCREMENT, "+ //Creating the different fields
-                        "ISSN                   INT, "+
-                        "EditionID              INT, "+
-                        "Title                  TEXT, "+
-                        "Abstract               TEXT, " +
-                        "PDF                    TEXT," +
-                        "PageRange              TEXT, "+
-                        "Published              INT,"+
-                        "PRIMARY KEY (ArticleID), "+
-                        "FOREIGN KEY (ISSN) REFERENCES Journal(ISSN), "+
-                        "FOREIGN KEY (EditionID) REFERENCES Edition(EditionID))";
+                                    "(ArticleID             INT    NOT NULL AUTO_INCREMENT, "+ //Creating the different fields
+                                    "ISSN                   INT, "+
+                                    "EditionID              INT, "+
+                                    "Title                  TEXT, "+
+                                    "Abstract               TEXT, " +
+                                    "PDF                    TEXT," +
+                                    "PageRange              TEXT, "+
+                                    "Published              INT,"+
+                                    "PRIMARY KEY (ArticleID), "+
+                                    "FOREIGN KEY (ISSN) REFERENCES Journal(ISSN), "+
+                                    "FOREIGN KEY (EditionID) REFERENCES Edition(EditionID))";
 
                 stmt.executeUpdate(initialise);
             }
@@ -66,9 +64,9 @@ public class ArticleTable {
             // use the open connection
             PreparedStatement stmt = null;
             try {
-
+                
                 String newEdition = "INSERT INTO Articles (ISSN, Title, Abstract, PDF, PageRange, Published) "+
-                        " VALUES ('"+ issn + "', '" + title + "',  '" + abstractText + "',  '" + pdf + "',  '"+ pageRange + "',  '" + published + "')";
+                                    " VALUES ('"+ issn + "', '" + title + "',  '" + abstractText + "',  '" + pdf + "',  '"+ pageRange + "',  '" + published + "')";
                 stmt = con.prepareStatement(newEdition); stmt.executeUpdate();
             }
             catch (SQLException ex) {
@@ -96,7 +94,7 @@ public class ArticleTable {
             // use the open connection
             PreparedStatement stmt = null;
             try {
-
+                
                 String newEdition = "UPDATE Articles SET EditionID = '"+editionID+"' WHERE ArticleID = " + articleID;
                 stmt = con.prepareStatement(newEdition); stmt.executeUpdate();
             }
@@ -124,7 +122,7 @@ public class ArticleTable {
             // use the open connection
             PreparedStatement stmt = null;
             try {
-
+                
                 String newEdition = "UPDATE Articles SET SubmissionID = '"+submissionID+"' WHERE ArticleID = " + articleID;
                 stmt = con.prepareStatement(newEdition); stmt.executeUpdate();
             }
@@ -152,7 +150,7 @@ public class ArticleTable {
             // use the open connection
             PreparedStatement stmt = null;
             try {
-
+                
                 String newEdition = "UPDATE Articles SET PDF = '"+PDF+"' WHERE ArticleID = " + articleID;
                 System.out.println(newEdition);
                 stmt = con.prepareStatement(newEdition); stmt.executeUpdate();
@@ -181,7 +179,7 @@ public class ArticleTable {
             // use the open connection
             PreparedStatement stmt = null;
             try {
-
+                
                 String newEdition = "UPDATE Articles SET PageRange = '"+pageRange+"' WHERE ArticleID = " + articleID;
                 stmt = con.prepareStatement(newEdition); stmt.executeUpdate();
             }
@@ -209,7 +207,7 @@ public class ArticleTable {
             // use the open connection
             PreparedStatement stmt = null;
             try {
-
+                
                 String newEdition = "UPDATE Articles SET Abstract = '"+abstractText+"' WHERE ArticleID = " + articleID;
                 stmt = con.prepareStatement(newEdition); stmt.executeUpdate();
             }
@@ -239,7 +237,7 @@ public class ArticleTable {
             // use the open connection
             PreparedStatement stmt = null;
             try {
-
+                
                 String newEdition = "DELETE FROM Articles WHERE ArticleID = " + articleID;
                 stmt = con.prepareStatement(newEdition); stmt.executeUpdate();
             }
@@ -269,7 +267,7 @@ public class ArticleTable {
             // use the open connection
             PreparedStatement stmt = null;
             try {
-
+                
                 String query = "SELECT MAX(ArticleID) FROM Articles";
                 stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
                 while (res.next()) {
@@ -304,7 +302,7 @@ public class ArticleTable {
             // use the open connection
             PreparedStatement stmt = null;
             try {
-
+                
                 String query = "SELECT EditionID FROM Articles WHERE ArticleID = " + articleID;
                 stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
                 while (res.next()) {
@@ -337,7 +335,7 @@ public class ArticleTable {
             // use the open connection
             PreparedStatement stmt = null;
             try {
-
+                
                 String query = "SELECT SubmissionID FROM Articles WHERE ArticleID = " + articleID;
                 stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
                 while (res.next()) {
@@ -370,7 +368,7 @@ public class ArticleTable {
             // use the open connection
             PreparedStatement stmt = null;
             try {
-
+                
                 String query = "SELECT Title FROM Articles WHERE ArticleID = " + articleID;
                 stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
                 while (res.next()) {
@@ -403,7 +401,7 @@ public class ArticleTable {
             // use the open connection
             PreparedStatement stmt = null;
             try {
-
+                
                 String query = "SELECT PageRange FROM Articles WHERE ArticleID = " + articleID;
                 stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
                 while (res.next()) {
@@ -436,7 +434,7 @@ public class ArticleTable {
             // use the open connection
             PreparedStatement stmt = null;
             try {
-
+                
                 String query = "SELECT PDF FROM Articles WHERE ArticleID = " + articleID;
                 stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
                 while (res.next()) {
@@ -469,74 +467,8 @@ public class ArticleTable {
             // use the open connection
             PreparedStatement stmt = null;
             try {
-
+                
                 String query = "SELECT Abstract FROM Articles WHERE ArticleID = " + articleID;
-                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
-                while (res.next()) {
-                    fin = res.getString("Abstract");
-                }
-                res.close();
-            }
-            catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-            finally {
-                if (stmt != null)
-                    stmt.close();
-            }
-        }
-        catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        finally {
-            if (con != null) con.close();
-        }
-        return fin;
-    }
-
-    public static String SelectPDF(String title) throws SQLException {
-        String fin = null;
-        Connection con = null; // connection to a database
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
-            // use the open connection
-            PreparedStatement stmt = null;
-            try {
-
-                String query = "SELECT PDF FROM Articles WHERE Title = '" + title + "'";
-                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
-                while (res.next()) {
-                    fin = res.getString("PDF");
-                }
-                res.close();
-            }
-            catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-            finally {
-                if (stmt != null)
-                    stmt.close();
-            }
-        }
-        catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        finally {
-            if (con != null) con.close();
-        }
-        return fin;
-    }
-
-    public static String SelectAbstract(String title) throws SQLException {
-        String fin = null;
-        Connection con = null; // connection to a database
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
-            // use the open connection
-            PreparedStatement stmt = null;
-            try {
-
-                String query = "SELECT Abstract FROM Articles WHERE Title = '" + title + "'";
                 stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
                 while (res.next()) {
                     fin = res.getString("Abstract");
@@ -566,7 +498,7 @@ public class ArticleTable {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             PreparedStatement stmt = null;
             try {
-
+                
                 String newEdition = "DROP TABLE Articles";
                 stmt = con.prepareStatement(newEdition); stmt.executeUpdate();
             }
@@ -594,8 +526,42 @@ public class ArticleTable {
             // use the open connection
             PreparedStatement stmt = null;
             try {
-
+                
                 String query = "SELECT Title FROM Articles";
+                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
+                while (res.next()) {
+                    String fin = res.getString("Title");
+                    list.add(fin);
+                }
+                res.close();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+        return list;
+    }
+
+    public static ArrayList<String> SelectTitles(int id) throws SQLException {
+        ArrayList<String> list = new ArrayList<String>();
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            PreparedStatement stmt = null;
+            try {
+                
+                String query = "SELECT Title FROM Articles WHERE EditionID = '"+ id +"'";
                 stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
                 while (res.next()) {
                     String fin = res.getString("Title");
@@ -628,7 +594,7 @@ public class ArticleTable {
             // use the open connection
             PreparedStatement stmt = null;
             try {
-
+                
                 String query = "SELECT ArticleID FROM Articles";
                 stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
                 while (res.next()) {
@@ -652,136 +618,6 @@ public class ArticleTable {
             if (con != null) con.close();
         }
         return list;
-    }
-
-    public static ArrayList<Integer> SelectArticleIDS(int issn) throws SQLException {
-        ArrayList<Integer> list = new ArrayList<Integer>();
-        Connection con = null; // connection to a database
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
-            // use the open connection
-            Statement stmt = null;
-            try {
-                stmt = con.createStatement();
-                String query = "SELECT ArticleID FROM Articles WHERE ISSN = " + issn;
-                ResultSet res = stmt.executeQuery(query);
-                while (res.next()) {
-                    int fin = res.getInt("ArticleID");
-                    list.add(fin);
-                }
-                res.close();
-            }
-            catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-            finally {
-                if (stmt != null)
-                    stmt.close();
-            }
-        }
-        catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        finally {
-            if (con != null) con.close();
-        }
-        return list;
-    }
-
-    public static ArrayList<String> SelectTitles(int editorid) throws SQLException {
-        ArrayList<String> list = new ArrayList<String>();
-        Connection con = null; // connection to a database
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
-            // use the open connection
-            Statement stmt = null;
-            try {
-                stmt = con.createStatement();
-                String query = "SELECT Title FROM Articles WHERE EditionID = " + editorid + " AND Published = 1 ";
-                ResultSet res = stmt.executeQuery(query);
-                while (res.next()) {
-                    String fin = res.getString("Title");
-                    list.add(fin);
-                }
-                res.close();
-            }
-            catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-            finally {
-                if (stmt != null)
-                    stmt.close();
-            }
-        }
-        catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        finally {
-            if (con != null) con.close();
-        }
-        return list;
-    }
-
-    public static ArrayList<String> SelectTitles1(int editorid) throws SQLException {
-        ArrayList<String> list = new ArrayList<String>();
-        Connection con = null; // connection to a database
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
-            // use the open connection
-            Statement stmt = null;
-            try {
-                stmt = con.createStatement();
-                String query = "SELECT Title FROM Articles WHERE EditionID = " + editorid + "";
-                ResultSet res = stmt.executeQuery(query);
-                while (res.next()) {
-                    String fin = res.getString("Title");
-                    list.add(fin);
-                }
-                res.close();
-            }
-            catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-            finally {
-                if (stmt != null)
-                    stmt.close();
-            }
-        }
-        catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        finally {
-            if (con != null) con.close();
-        }
-        return list;
-    }
-
-    public static void UpdateToPublished(String title) throws SQLException {
-        Connection con = null; // connection to a database
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
-            // use the open connection
-            Statement stmt = null;
-            try {
-                stmt = con.createStatement();
-                String newEdition = "UPDATE Articles SET Published = 1 WHERE Title = " + title;
-                stmt.executeUpdate(newEdition);
-            }
-            catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-            finally {
-                if (stmt != null)
-                    stmt.close();
-            }
-
-        }
-        catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        finally {
-            if (con != null) con.close();
-        }
     }
 
 }

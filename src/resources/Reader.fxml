@@ -38,7 +38,7 @@
       </VBox>
    </top>
    <left>
-      <TreeView fx:id="selectionTreeView" onMouseClicked="#loadArticle" prefWidth="323.0" BorderPane.alignment="CENTER">
+      <TreeView fx:id="selectionTreeView" prefWidth="323.0" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets bottom="10.0" left="10.0" />
          </BorderPane.margin></TreeView>

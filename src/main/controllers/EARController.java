@@ -19,7 +19,7 @@ import java.net.URL;
 public class EARController {
 
     public void handleEAREditor(ActionEvent action) throws IOException{
-        URL url = new File("src/resources/Editor.fxml").toURI().toURL();
+        URL url = new File("src/resources/EditorPanel.fxml").toURI().toURL();
         Parent view = FXMLLoader.load(url);
         Scene viewScene = new Scene(view);
 

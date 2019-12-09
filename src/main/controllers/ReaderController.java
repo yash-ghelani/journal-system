@@ -7,7 +7,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import main.tables.ArticleTable;
@@ -20,8 +19,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class ReaderController {
 
@@ -36,22 +33,7 @@ public class ReaderController {
     TreeView selectionTreeView;
 
     public void initialize() throws SQLException {
-        createTree2();
-//        createTree();
-    }
-
-    private void createTree2(String... rootItems) throws SQLException {
-        TreeItem<String> root = new TreeItem<>("Articles");
-        root.setExpanded(true);
-        ArrayList<String> artList = ArticleTable.SelectAllArticleTitles();
-
-        for (int i = 0; i < artList.size(); i++) {
-            TreeItem<String> journals = new TreeItem<>(artList.get(i));
-            journals.setExpanded(true);
-            root.getChildren().add(journals);
-        }
-        selectionTreeView.setRoot(root);
-
+        createTree();
     }
 
     public void createTree(String... rootItems) throws SQLException {
@@ -84,26 +66,13 @@ public class ReaderController {
                 System.out.println("ed list "+editionsList);
 
                 //add volumes to tree
-                for (int k = 0; k < editionsList.size(); k++) {
-                    TreeItem<String> editions = new TreeItem<>(editionsList.get(k));
+                for (int l = 0; l < editionsList.size(); l++) {
+                    TreeItem<String> editions = new TreeItem<>(editionsList.get(l));
                     editions.setExpanded(true);
                     volumes.getChildren().add(editions);
                     //get articles of that edition using month
-                    int editionid = EditionTable.SelectID(volID, editionsList.get(k));
-                    ArrayList<String> articleList = null;
-                    if (editionid != -1){
-                        articleList = (ArrayList<String>) ArticleTable.SelectTitles(editionid);
-                    }
-                    System.out.println(articleList);
-
-                    if (articleList != null){
-                        for (int l = 0; l < articleList.size(); l++){
-                            TreeItem<String> articles = new TreeItem<>(articleList.get(l));
-                            editions.getChildren().add(articles);
-                        }
-                    }
-
-                    System.out.println("edlist 2 "+editionsList.get(k)+" volid "+volID);
+                    //ArrayList<String> articleList = ArticleTable.SelectTitles(EditionTable.SelectID(volID, editionsList.get(l)));
+                    System.out.println(editionsList);
 
                 }
 
@@ -114,6 +83,12 @@ public class ReaderController {
         selectionTreeView.setRoot(root);
     }
 
+    public void handleReadArticle (javafx.event.ActionEvent event) throws IOException, SQLException {
+        int articleid = 1;
+        titleLab.setText(ArticleTable.SelectTitle(articleid));
+        abstractArea.setText(ArticleTable.SelectAbstract(articleid));
+        pdfLink.setText(ArticleTable.SelectPDF(articleid));
+    }
 
     public void handleLogOut(javafx.event.ActionEvent event) throws IOException {
         URL url = new File("src/resources/Login.fxml").toURI().toURL();
@@ -123,22 +98,5 @@ public class ReaderController {
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setResizable(true);
         window.setScene(viewScene);
-    }
-
-    public void loadArticle(MouseEvent mouseEvent) throws SQLException {
-        String articleTitle = mouseEvent.getPickResult().toString();
-        Pattern p = Pattern.compile("\"([^\"]*)\"");
-        Matcher m = p.matcher(articleTitle);
-        String title = "";
-        while (m.find()) {
-            System.out.println(m.group(1));
-            title = m.group(1);
-
-        }
-        titleLab.setText(title);
-        abstractArea.setText(ArticleTable.SelectAbstract(title));
-        pdfLink.setText(ArticleTable.SelectPDF(title));
-//        System.out.println(articleTitle.substring(articleTitle.indexOf('\'', articleTitle.lastIndexOf('\''))));
-//
     }
 }

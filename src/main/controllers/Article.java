@@ -13,12 +13,9 @@ public class Article {
     private String name;
     private String code;
     private CheckBox checkbox;
-    private String verdict;
 
     public Article(String name){
         this.name=name;
-        this.verdict=verdict;
-
         this.checkbox = new CheckBox();
     }
 
@@ -34,14 +31,6 @@ public class Article {
 
     public void setName(String name){
         this.name = name;
-    }
-
-    public String getVerdict(){
-        return name;
-    }
-
-    public void setVerdict(String verdict){
-        this.name = verdict;
     }
 
     public void setCheckbox(CheckBox checkbox){
