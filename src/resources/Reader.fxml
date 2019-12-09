@@ -49,7 +49,7 @@
             <Separator prefHeight="0.0" prefWidth="124.0" />
             <HBox prefHeight="47.0" prefWidth="721.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Title" wrappingWidth="550.0">
+                  <Text fx:id="titleLab" strokeType="OUTSIDE" strokeWidth="0.0" text="Title" wrappingWidth="550.0">
                      <font>
                         <Font size="36.0" />
                      </font>
@@ -59,12 +59,12 @@
                   </Text>
                   <VBox prefHeight="91.0" prefWidth="501.0">
                      <children>
-                        <Label prefHeight="17.0" prefWidth="349.0" text="Author(s): Mike, Jane">
+                        <Label fx:id="authorLab" prefHeight="17.0" prefWidth="349.0" text="Author(s): Mike, Jane">
                            <VBox.margin>
                               <Insets top="15.0" />
                            </VBox.margin>
                         </Label>
-                        <Label layoutX="10.0" layoutY="37.0" prefHeight="21.0" prefWidth="357.0" text="Editor(s): Eddie, Tim" />
+                        <Label fx:id="editorLab" layoutX="10.0" layoutY="37.0" prefHeight="21.0" prefWidth="357.0" text="Editor(s): Eddie, Tim" />
                      </children>
                   </VBox>
                </children>
@@ -83,18 +83,14 @@
             <HBox prefHeight="294.0" prefWidth="721.0">
                <children>
                   <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                  <TextArea prefHeight="203.0" prefWidth="874.0" text="Each review follows a standard format. It comes from one reviewer, whose name is anonymised.The system keeps track of which reviewers have been assigned to a submission and gives eachreviewer an anonymous ID, styled as: “reviewer 1” … “reviewer 3” for that submission (these IDsrelate only to the current submission). The review form refers to the reviewer only by this ID andthe form itself is identified by reviewer ID and submission ID. The form contains a number ofstandard text fields including: a box containing the reviewer’s summary of the article (todemonstrate how they understood the article), a box containing a list of typographical errors to fix,and then a series of boxes listing 1..n major criticisms of the article, which indicate questions thatmust be addressed by the authors. The review is linked to an initial judgement about howacceptable the reviewer considers the article to be (see below).Each review follows a standard format. It comes from one reviewer, whose name is anonymised.The system keeps track of which reviewers have been assigned to a submission and gives eachreviewer an anonymous ID, styled as: “reviewer 1” … “reviewer 3” for that submission (these IDsrelate only to the current submission). The review form refers to the reviewer only by this ID andthe form itself is identified by reviewer ID and submission ID. The form contains a number ofstandard text fields including: a box containing the reviewer’s summary of the article (todemonstrate how they understood the article), a box containing a list of typographical errors to fix,and then a series of boxes listing 1..n major criticisms of the article, which indicate questions thatmust be addressed by the authors. The review is linked to an initial judgement about howacceptable the reviewer considers the article to be (see below)." wrapText="true" />
+                  <TextArea fx:id="abstractArea" editable="false" prefHeight="203.0" prefWidth="874.0" text="Each review follows a standard format. It comes from one reviewer, whose name is anonymised.The system keeps track of which reviewers have been assigned to a submission and gives eachreviewer an anonymous ID, styled as: “reviewer 1” … “reviewer 3” for that submission (these IDsrelate only to the current submission). The review form refers to the reviewer only by this ID andthe form itself is identified by reviewer ID and submission ID. The form contains a number ofstandard text fields including: a box containing the reviewer’s summary of the article (todemonstrate how they understood the article), a box containing a list of typographical errors to fix,and then a series of boxes listing 1..n major criticisms of the article, which indicate questions thatmust be addressed by the authors. The review is linked to an initial judgement about howacceptable the reviewer considers the article to be (see below).Each review follows a standard format. It comes from one reviewer, whose name is anonymised.The system keeps track of which reviewers have been assigned to a submission and gives eachreviewer an anonymous ID, styled as: “reviewer 1” … “reviewer 3” for that submission (these IDsrelate only to the current submission). The review form refers to the reviewer only by this ID andthe form itself is identified by reviewer ID and submission ID. The form contains a number ofstandard text fields including: a box containing the reviewer’s summary of the article (todemonstrate how they understood the article), a box containing a list of typographical errors to fix,and then a series of boxes listing 1..n major criticisms of the article, which indicate questions thatmust be addressed by the authors. The review is linked to an initial judgement about howacceptable the reviewer considers the article to be (see below)." wrapText="true" />
                   <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
             <HBox layoutX="10.0" layoutY="123.0" prefHeight="3.0" prefWidth="728.0">
                <children>
                   <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="695.0" text="View Article">
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </Button>
+                  <TextField fx:id="pdfLink" editable="false" prefHeight="25.0" prefWidth="871.0" promptText="Link to PDF" />
                   <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
                </children>
                <VBox.margin>

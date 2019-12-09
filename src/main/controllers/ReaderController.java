@@ -6,9 +6,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
+import javafx.scene.control.*;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import main.tables.ArticleTable;
 import main.tables.EditionTable;
 import main.tables.JournalTable;
 import main.tables.VolumeTable;
@@ -20,6 +21,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ReaderController {
+
+    @FXML
+    public TextArea abstractArea;
+    public Label editorLab;
+    public Label authorLab;
+    public Text titleLab;
+    public TextField pdfLink;
 
     @FXML
     TreeView selectionTreeView;
@@ -66,6 +74,13 @@ public class ReaderController {
         }
 
         selectionTreeView.setRoot(root);
+    }
+
+    public void handleReadArticle (javafx.event.ActionEvent event) throws IOException, SQLException {
+        int articleid = 1;
+        titleLab.setText(ArticleTable.SelectTitle(articleid));
+        abstractArea.setText(ArticleTable.SelectAbstract(articleid));
+        pdfLink.setText(ArticleTable.SelectPDF(articleid));
     }
 
     public void handleLogOut(javafx.event.ActionEvent event) throws IOException {
