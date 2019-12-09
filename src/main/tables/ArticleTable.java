@@ -57,7 +57,7 @@ public class ArticleTable {
 
     }
 
-    public static void Insert(int editionID, int issn, String title, String abstractText, String pdf, String pageRange,  int published) throws SQLException {
+    public static void Insert(int issn, String title, String abstractText, String pdf, String pageRange,  int published) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -65,8 +65,8 @@ public class ArticleTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String newEdition = "INSERT INTO Articles (EditionID, Title, Abstract, PDF, PageRange, Published) "+
-                                    " VALUES ('" + editionID + "', '" + issn + "', '" + title + "',  '" + abstractText + "',  '" + pdf + "',  '"+ pageRange + "',  '" + published + "')";
+                String newEdition = "INSERT INTO Articles (ISSN, Title, Abstract, PDF, PageRange, Published) "+
+                                    " VALUES ('"+ issn + "', '" + title + "',  '" + abstractText + "',  '" + pdf + "',  '"+ pageRange + "',  '" + published + "')";
                 stmt.executeUpdate(newEdition);
             }
             catch (SQLException ex) {

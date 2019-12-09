@@ -187,7 +187,7 @@ public class JournalTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "SELECT ISSN FROM Journal WHERE Name = '" + name +"'";
+                String query = "SELECT ISSN FROM Journal WHERE JournalName = '" + name +"'";
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     fin = res.getInt("ISSN");

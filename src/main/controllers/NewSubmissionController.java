@@ -56,19 +56,22 @@ public class NewSubmissionController {
 
     public void handleSubmit (ActionEvent event) throws IOException, SQLException {
 
-        if (!title.getText().isEmpty() && !abstractTA.getText().isEmpty() && (!pdf.getText().isEmpty() || !pdf.getText().endsWith(".pdf")) && journals.getSelectionModel().isEmpty()) {
+        if (!title.getText().isEmpty() && !abstractTA.getText().isEmpty() && (!pdf.getText().isEmpty() || !pdf.getText().endsWith(".pdf")) && !journals.getSelectionModel().isEmpty()) {
 
+            System.out.println("Passed basic validation");
             //creating article
-            ArticleTable.Insert(-1, JournalTable.SelectISSN((String) journals.getValue()), title.getText(), abstractTA.getText(), pdf.getText(), null, 0);
+            ArticleTable.Insert(JournalTable.SelectISSN((String) journals.getValue()), title.getText(), abstractTA.getText(), pdf.getText(), null, 0);
+            System.out.println("Inserted article");
             int articleID = ArticleTable.GetID();
             System.out.println(articleID);
 
             //adding main author
             ArticleInfoTable.Insert(articleID, Main.IDs[0], 0);
-
+            System.out.println("added author");
             //adding co authors
-            for (int i = 0; i > ids.size(); i++){
+            for (int i = 0; i < ids.size(); i++){
                 ArticleInfoTable.Insert(articleID, ids.get(i), 1);
+                System.out.println("added co author "+ ids.get(i));
             }
 
             loadScene(event, "src/resources/AuthorPanel.fxml");
