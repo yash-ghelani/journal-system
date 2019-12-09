@@ -124,7 +124,7 @@ public class AddAuthor {
     }
 
     public boolean validAffiliation(){
-        if (affiliation.getText().isEmpty() || !affiliation.getText().chars().allMatch(Character::isLetter)) {
+        if (affiliation.getText().isEmpty()) {
             affiliation.setStyle("-fx-border-color: red; -fx-border-width: 2px;-fx-prompt-text-fill : red;");
             affiliation.clear();
             return false;
