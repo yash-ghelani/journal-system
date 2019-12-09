@@ -48,17 +48,11 @@ public class AddAuthor {
         if (t && fn && ln && a && em && pw) {
 
             if (NewSubmissionController.authCount == 1) {
-                insertCoAuthor();
-                sLab.setText("Co-author: "+ aCount +" added");
-                aCount += 1;
+                addAuth();
             } else if (NewSubmissionController.authCount == 2) {
-                insertCoAuthor();
-                sLab.setText("Co-author: "+ aCount +" added");
-                aCount += 1;
+                addAuth();
             } else if (NewSubmissionController.authCount == 3) {
-                insertCoAuthor();
-                sLab.setText("Co-author: "+ aCount +" added");
-                aCount += 1;
+                addAuth();
             } else {
                 sLab.setText("You can only add 3 co-authors");
                 stage.close();
@@ -66,9 +60,21 @@ public class AddAuthor {
         }
     }
 
+    private void addAuth() throws SQLException {
+        insertCoAuthor();
+        sLab.setText("Co-author: "+ aCount +" added");
+        forename.setText("");
+        surname.setText("");
+        email.setText("");
+        affiliation.setText("");
+        password.setText("");
+        aCount += 1;
+    }
+
     private void insertCoAuthor() throws SQLException {
         UserTable.Insert((String) title.getValue(),forename.getText(),surname.getText(),affiliation.getText(), email.getText(), String.valueOf(password.getText().hashCode()));
-        int id = UserTable.ValidateEmailAndPassword(email.getText(), String.valueOf(Math.abs((email.getText()).hashCode())));
+        int id = UserTable.ValidateEmailAndPassword(email.getText(), String.valueOf(password.getText().hashCode()));
+        System.out.println(id);
         AuthorTable.Insert(id, 1);
         NewSubmissionController.ids.add(AuthorTable.GetID(id));
     }
