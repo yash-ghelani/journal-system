@@ -17,9 +17,9 @@ public class AuthorTable {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             //=========================================================================================================
 
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
                 String jtable = "CREATE TABLE Author " + //Creating the table "UserTable"
                         "(AuthorID               INT                 AUTO_INCREMENT, " +
                         "UserID                  INT," + //Creating the different fields
@@ -52,9 +52,9 @@ public class AuthorTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
                 String insert = "INSERT INTO Author (UserID, Temp) "+
                                 " VALUES ('" + userid + "','"+ temp+"')";
                 //System.out.println(journal);
@@ -79,9 +79,9 @@ public class AuthorTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
                 String journal = "DELETE FROM Author WHERE AuthorID = " + id;
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
@@ -103,9 +103,9 @@ public class AuthorTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
                 String journal = "UPDATE Author SET Title = '" + title + "'  WHERE AuthorID = " + id;
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
@@ -127,9 +127,9 @@ public class AuthorTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
                 String journal = "UPDATE Author SET Name = '" + name + "'  WHERE AuthorID = " + id;
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
@@ -151,9 +151,9 @@ public class AuthorTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
                 String journal = "UPDATE Author SET Surname = '" + surname + "' WHERE AuthorID = " + id;
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
@@ -175,9 +175,9 @@ public class AuthorTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
                 String journal = "UPDATE Author SET Affiliation = '" + affiliation + "' WHERE AuthorID = " + id;
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
@@ -199,9 +199,9 @@ public class AuthorTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
                 String journal = "UPDATE Author SET Email = '" + email + "' WHERE AuthorID=" + id;
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
@@ -223,9 +223,9 @@ public class AuthorTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
                 String journal = "UPDATE Author SET Password = '" + password + "'WHERE AuthorID=" + id;
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
@@ -247,9 +247,9 @@ public class AuthorTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
                 String journal = "UPDATE Author SET Temp = '"+ temp +"' WHERE AuthorID=" + id;
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
@@ -272,11 +272,11 @@ public class AuthorTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
                 String query = "SELECT Title FROM Author WHERE AuthorID = " + id;
-                ResultSet res = stmt.executeQuery(query);
+                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
                 while (res.next()) {
                     fin = res.getString("Title");
                 }
@@ -304,11 +304,11 @@ public class AuthorTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
                 String query = "SELECT Name FROM Author WHERE AuthorID = " + id;
-                ResultSet res = stmt.executeQuery(query);
+                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
                 while (res.next()) {
                     fin = res.getString("Name");
                 }
@@ -337,11 +337,11 @@ public class AuthorTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
                 String query = "SELECT Surname FROM Author WHERE AuthorID = " + id;
-                ResultSet res = stmt.executeQuery(query);
+                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
                 while (res.next()) {
                     fin = res.getString("Surname");
                 }
@@ -370,11 +370,11 @@ public class AuthorTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
                 String query = "SELECT Affiliation FROM Author WHERE AuthorID = " + id;
-                ResultSet res = stmt.executeQuery(query);
+                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
                 while (res.next()) {
                     fin = res.getString("Affiliation");
                 }
@@ -403,11 +403,11 @@ public class AuthorTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
                 String query = "SELECT Email FROM Author WHERE AuthorID = " + id;
-                ResultSet res = stmt.executeQuery(query);
+                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
                 while (res.next()) {
                     fin = res.getString("Email");
                 }
@@ -436,11 +436,11 @@ public class AuthorTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
                 String query = "SELECT Password FROM Author WHERE AuthorID = " + id;
-                ResultSet res = stmt.executeQuery(query);
+                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
                 while (res.next()) {
                     fin = res.getString("Password");
                 }
@@ -469,11 +469,11 @@ public class AuthorTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
                 String query = "SELECT Temp FROM Author WHERE AuthorID = " + id;
-                ResultSet res = stmt.executeQuery(query);
+                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
                 while (res.next()) {
                     fin = res.getBoolean("Temp");
                 }
@@ -502,11 +502,11 @@ public class AuthorTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
                 String query = "SELECT AuthorID FROM Author WHERE Email = '" + email + "' AND Password = '" + password + "'";
-                ResultSet res = stmt.executeQuery(query);
+                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
                 while (res.next()) {
                     id = res.getInt("AuthorID");
                 }
@@ -540,11 +540,11 @@ public class AuthorTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
                 String query = "SELECT AuthorID FROM Author WHERE UserID = '" +id+ "'";
-                ResultSet res = stmt.executeQuery(query);
+                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
                 while (res.next()) {
                     fin = res.getInt("AuthorID");
                 }
@@ -571,11 +571,11 @@ public class AuthorTable {
         Connection con = null;
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
                 String newEdition = "DROP TABLE Author";
-                stmt.executeUpdate(newEdition);
+                stmt = con.prepareStatement(newEdition); stmt.executeUpdate();
             }
             catch (SQLException ex) {
                 ex.printStackTrace();
@@ -599,11 +599,11 @@ public class AuthorTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
                 String query = "SELECT UserID FROM Author WHERE AuthorID = " + id;
-                ResultSet res = stmt.executeQuery(query);
+                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
                 while (res.next()) {
                     fin = res.getInt("UserID");
                 }

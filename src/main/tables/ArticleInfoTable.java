@@ -18,9 +18,9 @@ public class ArticleInfoTable {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             //=========================================================================================================
 
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
                 String initialise = "CREATE TABLE ArticleInfo " + //Creating the table
                                     "(ArticleInfoID         INT    NOT NULL     AUTO_INCREMENT, "+ //Creating the different fields
                                     "AuthorID               INT, "+
@@ -59,12 +59,12 @@ public class ArticleInfoTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
                 String newEdition = "INSERT INTO ArticleInfo (ArticleID, AuthorID, AuthorType) "+
                                     "VALUES ('" + articleID + "',  '" + authorID + "',  '"+ type + "')";
-                stmt.executeUpdate(newEdition);
+                stmt = con.prepareStatement(newEdition); stmt.executeUpdate();
             }
             catch (SQLException ex) {
                 ex.printStackTrace();
@@ -89,11 +89,11 @@ public class ArticleInfoTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
                 String newEdition = "UPDATE ArticleInfo SET ArticleID = '" + articleID + "' WHERE ArticleInfoID = " + articleInfoID;
-                stmt.executeUpdate(newEdition);
+                stmt = con.prepareStatement(newEdition); stmt.executeUpdate();
             }
             catch (SQLException ex) {
                 ex.printStackTrace();
@@ -117,11 +117,11 @@ public class ArticleInfoTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
                 String newEdition = "UPDATE ArticleInfo SET AuthorID = '" + authorID + "' WHERE ArticleInfoID = " + articleInfoID;
-                stmt.executeUpdate(newEdition);
+                stmt = con.prepareStatement(newEdition); stmt.executeUpdate();
             }
             catch (SQLException ex) {
                 ex.printStackTrace();
@@ -147,11 +147,11 @@ public class ArticleInfoTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
                 String newEdition = "DELETE FROM ArticleInfo WHERE ArticleInfoID = " + articleInfoID;
-                stmt.executeUpdate(newEdition);
+                stmt = con.prepareStatement(newEdition); stmt.executeUpdate();
             }
             catch (SQLException ex) {
                 ex.printStackTrace();
@@ -179,11 +179,11 @@ public class ArticleInfoTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
                 String query = "SELECT ArticleID FROM ArticleInfo WHERE ArticleInfoID = " + articleInfoID;
-                ResultSet res = stmt.executeQuery(query);
+                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
                 while (res.next()) {
                     fin = res.getInt("ArticleID");
                 }
@@ -212,11 +212,11 @@ public class ArticleInfoTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
                 String query = "SELECT ArticleID FROM ArticleInfo WHERE AuthorID = " + id;
-                ResultSet res = stmt.executeQuery(query);
+                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
                 while (res.next()) {
                     int in = res.getInt("ArticleID");
                     list.add(in);
@@ -244,11 +244,11 @@ public class ArticleInfoTable {
         Connection con = null;
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
                 String newEdition = "DROP TABLE ArticleInfo";
-                stmt.executeUpdate(newEdition);
+                stmt = con.prepareStatement(newEdition); stmt.executeUpdate();
             }
             catch (SQLException ex) {
                 ex.printStackTrace();
@@ -272,11 +272,11 @@ public class ArticleInfoTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
                 String query = "SELECT AuthorID FROM ArticleInfo WHERE ArticleInfoID = " + articleInfoID;
-                ResultSet res = stmt.executeQuery(query);
+                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
                 while (res.next()) {
                     fin = res.getInt("AuthorID");
                 }
@@ -305,11 +305,11 @@ public class ArticleInfoTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
                 String query = "SELECT AuthorID FROM ArticleInfo WHERE ArticleID = " + articleInfoID;
-                ResultSet res = stmt.executeQuery(query);
+                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
                 while (res.next()) {
                     fin = res.getInt("AuthorID");
                 }
@@ -338,11 +338,11 @@ public class ArticleInfoTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
                 String query = "SELECT AuthorType FROM ArticleInfo WHERE AuthorID = " + authorid + " AND ArticleID = " + articleid;
-                ResultSet res = stmt.executeQuery(query);
+                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
                 while (res.next()) {
                     fin = res.getString("AuthorType");
                 }

@@ -29,9 +29,9 @@ public class VolumeTable {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             //=========================================================================================================
 
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
                 String jtable = "CREATE TABLE Volume " + //Creating the table "UserTable"
                         "(VolumeID          INT     NOT NULL    AUTO_INCREMENT, "+ //Creating the different fields
                         "ISSN               INT     NOT NULL, "+
@@ -68,9 +68,9 @@ public class VolumeTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
 
                 String journal = "INSERT INTO Volume (ISSN, PublicationYear) VALUES (" + issn +"," + year+ ")";
                 stmt.executeUpdate(journal);
@@ -98,9 +98,9 @@ public class VolumeTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
                 String journal = "DELETE FROM Volume WHERE VolumeID = " + volumeid;
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
@@ -129,9 +129,9 @@ public class VolumeTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
 
                 String journal = "UPDATE Volume SET PublicationYear = " + year + " WHERE VolumeID= " + volumeid;
                 //System.out.println(journal);
@@ -159,11 +159,11 @@ public class VolumeTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
                 String query = "SELECT ISSN FROM Volume WHERE VolumeID = " + id;
-                ResultSet res = stmt.executeQuery(query);
+                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
                 while (res.next()) {
                     fin = res.getInt("ISSN");
                 }
@@ -192,11 +192,11 @@ public class VolumeTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
                 String query = "SELECT PublicationYear FROM Volume WHERE VolumeID = " + id;
-                ResultSet res = stmt.executeQuery(query);
+                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
                 while (res.next()) {
                     fin = res.getInt("PublicationYear");
                 }
@@ -225,11 +225,11 @@ public class VolumeTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
                 String query = "SELECT VolumeID FROM Volume WHERE PublicationYear = " + year;
-                ResultSet res = stmt.executeQuery(query);
+                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
                 while (res.next()) {
                     fin = res.getInt("VolumeID");
                 }
@@ -258,11 +258,11 @@ public class VolumeTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
                 String query = "SELECT PublicationYear FROM Volume WHERE ISSN = "+ issn;
-                ResultSet res = stmt.executeQuery(query);
+                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
                 while (res.next()) {
                     String fin =  String.valueOf(res.getInt("PublicationYear"));
                     list.add(fin);
@@ -290,11 +290,11 @@ public class VolumeTable {
         Connection con = null;
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
                 String newEdition = "DROP TABLE Volume";
-                stmt.executeUpdate(newEdition);
+                stmt = con.prepareStatement(newEdition); stmt.executeUpdate();
             }
             catch (SQLException ex) {
                 ex.printStackTrace();
@@ -318,11 +318,11 @@ public class VolumeTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
                 String query = "SELECT PublicationYear FROM Volume WHERE (PublicationYear = '" + year + "' AND ISSN = '" + issn + "')";
-                ResultSet res = stmt.executeQuery(query);
+                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
                 while (res.next()) {
                     fin = res.getInt("PublicationYear");
                 }
