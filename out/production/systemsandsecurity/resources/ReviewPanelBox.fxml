@@ -27,7 +27,7 @@
                 <Insets right="10.0" top="14.0" />
             </HBox.margin>
          <children>
-            <Label text="Label" />
+            <Label prefHeight="87.0" prefWidth="141.0" text="Label" wrapText="true" />
          </children>
         </VBox>
         <VBox prefHeight="94.0" prefWidth="166.0">
