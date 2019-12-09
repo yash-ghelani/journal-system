@@ -74,6 +74,10 @@ public class RegisterController extends Main {
 
         if (t && r && fn && ln && a && email && pw) {
 
+            if (UserTable.ValidateEmailAndPassword(emailField.getText(), String.valueOf(passWordField.getText().hashCode())) != -1){
+
+            }
+
             UserTable.Insert((String) prefix.getValue(), firstName.getText(), lastName.getText(), affiliation.getText(), emailField.getText(), String.valueOf(passWordField.getText().hashCode()));
             loadLogin(action);
 

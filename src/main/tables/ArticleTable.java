@@ -426,7 +426,40 @@ public class ArticleTable {
         return fin;
     }
 
-    public String SelectAbstract(int articleID) throws SQLException {
+    public static String SelectPDF(int articleID) throws SQLException {
+        String fin = null;
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String query = "SELECT PDF FROM Articles WHERE ArticleID = " + articleID;
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    fin = res.getString("PDF");
+                }
+                res.close();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+        return fin;
+    }
+
+    public static String SelectAbstract(int articleID) throws SQLException {
         String fin = null;
         Connection con = null; // connection to a database
         try {
