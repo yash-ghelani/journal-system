@@ -6,17 +6,17 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
 
-public class Main<IDs> extends Application {
+public class Main extends Application {
     public static int vave = 0;
     @Override
     public void start(Stage primaryStage) throws Exception{
-
-
-        URL url = new File("src/resources/Login.fxml").toURI().toURL();
-        Parent root = FXMLLoader.load(url);
+        Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
         primaryStage.setTitle("Publisher");
         primaryStage.setScene(new Scene(root, 710, 526));
         primaryStage.initStyle(StageStyle.DECORATED);

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<VBox prefHeight="526.0" prefWidth="710.0" spacing="100.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.LoginController">
+  <children>
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="539.0" prefWidth="710.0" style="-fx-background-color: #333639 #333639;" VBox.vgrow="ALWAYS">
+         <children>
+            <TextField fx:id="loginID" layoutX="92.0" layoutY="205.0" prefHeight="35.0" prefWidth="205.0" promptText="Login ID" style="-fx-background-color: #ffffff;" styleClass="login-input" />
+            <Text fill="WHITE" layoutX="92.0" layoutY="164.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login" wrappingWidth="133.76953125">
+               <font>
+                  <Font size="45.0" />
+               </font>
+            </Text>
+            <Button layoutX="92.0" layoutY="345.0" mnemonicParsing="false" onAction="#handleSignIn" prefHeight="55.0" prefWidth="205.0" style="-fx-background-color: rgb(73,90,246);" text="Sign In" textFill="WHITE">
+               <font>
+                  <Font size="20.0" />
+               </font></Button>
+            <Line endX="-100.0" endY="452.0" layoutX="455.0" layoutY="27.0" startX="-100.0" startY="71.0" stroke="#f8f8f8" />
+            <Button layoutX="412.0" layoutY="125.0" mnemonicParsing="false" onAction="#handleReader" prefHeight="55.0" prefWidth="236.0" style="-fx-background-color: rgb(73,90,246);" text="  I am a Reader" textAlignment="RIGHT" textFill="WHITE">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+            <Button layoutX="412.0" layoutY="235.0" mnemonicParsing="false" onAction="#handleRegister" prefHeight="55.0" prefWidth="236.0" style="-fx-background-color: rgb(73,90,246);" text="  Register" textFill="WHITE">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+            <PasswordField fx:id="Password" layoutX="92.0" layoutY="275.0" prefHeight="35.0" prefWidth="205.0" promptText="Password" style="-fx-background-color: #ffffff;" />
+            <Button layoutX="412.0" layoutY="345.0" mnemonicParsing="false" onAction="#handleChangePassword" prefHeight="55.0" prefWidth="236.0" style="-fx-background-color: rgb(73,90,246);" text="Change Password" textFill="WHITE">
+               <font>
+                  <Font size="20.0" />
+               </font></Button>
+            <Text fill="WHITE" layoutX="463.0" layoutY="430.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(for temporary users)" wrappingWidth="135.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Text>
+         </children>
+    </AnchorPane>
+  </children>
+</VBox>
