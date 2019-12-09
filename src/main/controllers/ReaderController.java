@@ -33,7 +33,11 @@ public class ReaderController {
     TreeView selectionTreeView;
 
     public void initialize() throws SQLException {
-        createTree();
+        createTree2();
+    }
+
+    private void createTree2(String... rootItems) throws SQLException {
+
     }
 
     public void createTree(String... rootItems) throws SQLException {
@@ -66,13 +70,26 @@ public class ReaderController {
                 System.out.println("ed list "+editionsList);
 
                 //add volumes to tree
-                for (int l = 0; l < editionsList.size(); l++) {
-                    TreeItem<String> editions = new TreeItem<>(editionsList.get(l));
+                for (int k = 0; k < editionsList.size(); k++) {
+                    TreeItem<String> editions = new TreeItem<>(editionsList.get(k));
                     editions.setExpanded(true);
                     volumes.getChildren().add(editions);
                     //get articles of that edition using month
-                    //ArrayList<String> articleList = ArticleTable.SelectTitles(EditionTable.SelectID(volID, editionsList.get(l)));
-                    System.out.println(editionsList);
+                    int editionid = EditionTable.SelectID(volID, editionsList.get(k));
+                    ArrayList<String> articleList = null;
+                    if (editionid != -1){
+                        articleList = (ArrayList<String>) ArticleTable.SelectTitles(editionid);
+                    }
+                    System.out.println(articleList);
+
+                    if (articleList != null){
+                        for (int l = 0; l < articleList.size(); l++){
+                            TreeItem<String> articles = new TreeItem<>(articleList.get(l));
+                            editions.getChildren().add(articles);
+                        }
+                    }
+
+                    System.out.println("edlist 2 "+editionsList.get(k)+" volid "+volID);
 
                 }
 

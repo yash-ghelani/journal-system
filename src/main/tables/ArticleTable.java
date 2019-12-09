@@ -1,6 +1,8 @@
 package main.tables;
+
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ArticleTable {
 
@@ -552,7 +554,7 @@ public class ArticleTable {
         return list;
     }
 
-    public static ArrayList<String> SelectTitles(int id) throws SQLException {
+    public static List<String> SelectTitles(int id) throws SQLException {
         ArrayList<String> list = new ArrayList<String>();
         Connection con = null; // connection to a database
         try {

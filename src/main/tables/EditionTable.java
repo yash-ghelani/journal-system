@@ -353,8 +353,8 @@ public class EditionTable {
         return list;
     }
 
-    public static ArrayList<String> SelectID(int volID, String editionID) throws SQLException {
-        ArrayList<String> list = new ArrayList<>();
+    public static int SelectID(int volID, String editionID) throws SQLException {
+        int fin = -1;
         String [] months = {"January","February","March","April","May","June","July","August","September","October","November","December"};
         Connection con = null; // connection to a database
         try {
@@ -366,8 +366,7 @@ public class EditionTable {
                 String query = "SELECT EditionID FROM Edition WHERE VolumeID = '"+ volID +"' AND PublicationMonth = '"+ editionID +"'";
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
-                    int fin = res.getInt("EditionID");
-                    list.add(months[fin-1]);
+                    fin = res.getInt("EditionID");
                 }
                 res.close();
             }
@@ -385,7 +384,7 @@ public class EditionTable {
         finally {
             if (con != null) con.close();
         }
-        return list;
+        return fin;
     }
 }
 
