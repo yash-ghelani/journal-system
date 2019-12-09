@@ -324,8 +324,8 @@ public class EditorTable {
         }
         return fin;
     }
-    public String SelectName(int id) throws SQLException {
-        String fin = null;
+    public static int SelectUserID(int id) throws SQLException {
+        int fin = 0;
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -333,10 +333,10 @@ public class EditorTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "SELECT Name FROM Editor WHERE EditorID = " + id;
+                String query = "SELECT UserID FROM Editor WHERE EditorID = " + id;
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
-                    fin = res.getString("Name");
+                    fin = res.getInt("UserID");
                 }
                 res.close();
             }
@@ -357,7 +357,7 @@ public class EditorTable {
         return fin;
     }
 
-    public String SelectSurname(int id) throws SQLException {
+    public static String SelectSurname(int id) throws SQLException {
         String fin = null;
         Connection con = null; // connection to a database
         try {
@@ -596,6 +596,32 @@ public class EditorTable {
             try {
                 stmt = con.createStatement();
                 String newEdition = "DROP TABLE Editor";
+                stmt.executeUpdate(newEdition);
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+    }
+
+    public static void DeleteEditor(int editorID) throws SQLException {
+        Connection con = null;
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String newEdition = "DELETE FROM Editor WHERE EditorID = '"+editorID+"'";
                 stmt.executeUpdate(newEdition);
             }
             catch (SQLException ex) {

@@ -56,8 +56,8 @@ public class JournalInfoTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String insert = "INSERT INTO Editor (ISSN, EditorID, EditorType) "+
-                                " VALUES ('"+ issn + "','" + editorID + "','" + type + "')";
+                String insert = "INSERT INTO JournalInfo (ISSN, EditorID, EditorType) "+
+                                " VALUES ("+ issn + "," + editorID + ",'" + type + "')";
                 //System.out.println(journal);
                 stmt.executeUpdate(insert);
             } catch (SQLException ex) {
@@ -80,7 +80,7 @@ public class JournalInfoTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String journal = "DELETE FROM Editor WHERE EditorID = " + id;
+                String journal = "DELETE FROM JournalInfo WHERE EditorID = " + id;
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
             }
@@ -156,6 +156,35 @@ public class JournalInfoTable {
         }
     }
 
+    public static void UpdateType(int id, String type) throws SQLException {
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String journal = "UPDATE JournalInfo SET EditorType = '" + type + "' WHERE EditorID = " + id;
+                //System.out.println(journal);
+                stmt.executeUpdate(journal);
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+    }
+
+
     public int SelectISSN(int id) throws SQLException {
         int fin = 0;
         Connection con = null; // connection to a database
@@ -222,6 +251,40 @@ public class JournalInfoTable {
         return fin;
     }
 
+    public static int[] SelectEditorID(int issn) throws SQLException {
+        int fin = 0;
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String query = "SELECT EditorID FROM JournalInfo WHERE ISSN = " + issn;
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    fin = res.getInt("EditorID");
+                }
+                res.close();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+        return new int[]{fin};
+    }
+
+
     public static void DeleteTable() throws SQLException {
         Connection con = null;
         try {
@@ -246,5 +309,38 @@ public class JournalInfoTable {
         finally {
             if (con != null) con.close();
         }
+    }
+
+    public static String SelectEditorType(int id) throws SQLException {
+        String fin = "0";
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String query = "SELECT EditorType FROM JournalInfo WHERE EditorID = " + id;
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    fin = res.getString("EditorType");
+                }
+                res.close();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+        return fin;
     }
 }

@@ -1,11 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="$CONTROLLER_NAME$">
-   <children>
-      <TextFlow layoutX="122.0" prefHeight="200.0" prefWidth="200.0" />
-   </children>
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="463.0" prefWidth="601.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controllers.ControlEditor">
+    <children>
+        <AnchorPane fx:id="anchor" layoutX="16.0" layoutY="30.0" prefHeight="433.0" prefWidth="183.0">
+            <children>
+            <Button layoutX="115.0" layoutY="392.0" mnemonicParsing="false" onAction="#addTable" prefHeight="27.0" prefWidth="65.0" text=" New" />
+            <TreeView fx:id="treeVolume" editable="true" layoutY="55.0" onMouseClicked="#selectedNode" prefHeight="332.0" prefWidth="200.0" />
+            <Button layoutX="14.0" layoutY="392.0" mnemonicParsing="false" onAction="#deletetreepaths" text="Delete" />
+            </children>
+        </AnchorPane>
+        <AnchorPane layoutY="-1.0" prefHeight="31.0" prefWidth="601.0" style="-fx-background-color: grey;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <children>
+                <Label fx:id="editertitle" alignment="CENTER" layoutX="502.0" layoutY="7.0" prefHeight="18.0" prefWidth="99.0" text="editor title" AnchorPane.leftAnchor="502.0" AnchorPane.rightAnchor="0.0" />
+            <Button fx:id="addingEditor" layoutX="14.0" layoutY="4.0" mnemonicParsing="false" onAction="#addEditors" text="Add Editor" />
+            <Button layoutX="107.0" layoutY="4.0" mnemonicParsing="false" onAction="#retire" text="Editor" />
+            <Label fx:id="editnames" layoutX="425.0" layoutY="7.0" prefHeight="17.0" prefWidth="77.0" text="editor name" AnchorPane.leftAnchor="425.0" AnchorPane.rightAnchor="99.0" />
+            <ChoiceBox fx:id="journals" layoutX="190.0" layoutY="4.0" prefWidth="150.0" />
+            <Button layoutX="346.0" layoutY="4.0" mnemonicParsing="false" onAction="#refresh" text="Refresh" />
+            </children>
+        </AnchorPane>
+        <AnchorPane layoutX="215.0" layoutY="30.0" prefHeight="433.0" prefWidth="385.0">
+            <children>
+                <Label layoutX="155.0" layoutY="14.0" text="Article to publish" />
+                <VBox fx:id="article" layoutX="62.0" layoutY="52.0" prefHeight="332.0" prefWidth="297.0" />
+            <Button layoutX="93.0" layoutY="384.0" mnemonicParsing="false" onAction="#addtoE" text="Accept" />
+            <Button layoutX="259.0" layoutY="384.0" mnemonicParsing="false" onAction="#removeArticles" text="Discard" />
+            </children>
+        </AnchorPane>
+    </children>
 </AnchorPane>

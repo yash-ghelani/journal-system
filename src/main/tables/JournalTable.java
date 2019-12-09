@@ -8,8 +8,8 @@ public class JournalTable {
 
         JournalTable jt = new JournalTable();
 
-        //jt.CreateJournalTable();
-        //jt.Insert(12345678, "test2");
+        jt.CreateJournalTable();
+        jt.Insert(12345678, "test2");
         //jt.Delete(12345678);
         //System.out.println(jt.SelectName(12345679));
 
@@ -26,7 +26,7 @@ public class JournalTable {
             try {
                 stmt = con.createStatement();
                 String jtable = "CREATE TABLE Journal " + //Creating the table "UserTable"
-                                "(ISSN              INT     NOT NULL, "+ //Creating the different fields
+                                "(ISSN      INT     NOT NULL, "+ //Creating the different fields
                                 "JournalName       TEXT    NOT NULL, " +
                                 "PRIMARY KEY (ISSN))";
 
@@ -62,7 +62,6 @@ public class JournalTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-
                 String journal = "INSERT INTO Journal (ISSN, JournalName) VALUES ('" + ISSN + "',  '" + name + "')";
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
@@ -187,7 +186,7 @@ public class JournalTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "SELECT ISSN FROM Journal WHERE JournalName = '" + name +"'";
+                String query = "SELECT ISSN FROM Journal WHERE JournalName = '"+name+"'";
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     fin = res.getInt("ISSN");
@@ -211,7 +210,7 @@ public class JournalTable {
         return fin;
     }
 
-    public static ArrayList<String> SelectJournals() throws SQLException {
+    public static ArrayList<String> selectJournals() throws SQLException {
         ArrayList<String> list = new ArrayList<>();
         Connection con = null; // connection to a database
         try {
