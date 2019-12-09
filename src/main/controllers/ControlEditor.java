@@ -86,7 +86,6 @@ public class ControlEditor extends ClassLoader{
     }
 
     public void initialize() throws SQLException, MalformedURLException {
-        Main.IDs[1] = 1;
         editnames.setText(UserTable.SelectName(EditorTable.SelectUserID(Main.IDs[2]))+" "+
                 UserTable.SelectSurName(EditorTable.SelectUserID(Main.IDs[2])));
         editertitle.setText(JournalInfoTable.SelectEditorType(Main.IDs[2]));
