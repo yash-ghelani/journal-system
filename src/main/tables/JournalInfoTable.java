@@ -16,9 +16,9 @@ public class JournalInfoTable {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             //=========================================================================================================
 
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
                 String jtable = "CREATE TABLE JournalInfo " + //Creating the table "UserTable"
                         "(JournalInfoID         INT     AUTO_INCREMENT, " + //Creating the different fields
                         "ISSN                   INT     NOT NULL, " +
@@ -53,9 +53,9 @@ public class JournalInfoTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
                 String insert = "INSERT INTO JournalInfo (ISSN, EditorID, EditorType) "+
                                 " VALUES ("+ issn + "," + editorID + ",'" + type + "')";
                 //System.out.println(journal);
@@ -77,9 +77,9 @@ public class JournalInfoTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
                 String journal = "DELETE FROM JournalInfo WHERE EditorID = " + id;
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
@@ -105,9 +105,9 @@ public class JournalInfoTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
                 String journal = "UPDATE JournalInfo SET ISSN = '" + issn + "' WHERE JournalInfoID = " + id;
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
@@ -133,9 +133,9 @@ public class JournalInfoTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
                 String journal = "UPDATE JournalInfo SET EditorID = '" + editorID + "' WHERE JournalInfoID = " + id;
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
@@ -161,9 +161,9 @@ public class JournalInfoTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
                 String journal = "UPDATE JournalInfo SET EditorType = '" + type + "' WHERE EditorID = " + id;
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
@@ -191,11 +191,11 @@ public class JournalInfoTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
                 String query = "SELECT ISSN FROM JournalInfo WHERE JournalInfoID = " + id;
-                ResultSet res = stmt.executeQuery(query);
+                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
                 while (res.next()) {
                     fin = res.getInt("ISSN");
                 }
@@ -224,11 +224,11 @@ public class JournalInfoTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
                 String query = "SELECT EditorID FROM JournalInfo WHERE JournalInfoID = " + id;
-                ResultSet res = stmt.executeQuery(query);
+                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
                 while (res.next()) {
                     fin = res.getInt("EditorID");
                 }
@@ -257,11 +257,11 @@ public class JournalInfoTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
                 String query = "SELECT EditorID FROM JournalInfo WHERE ISSN = " + issn;
-                ResultSet res = stmt.executeQuery(query);
+                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
                 while (res.next()) {
                     fin = res.getInt("EditorID");
                 }
@@ -289,11 +289,11 @@ public class JournalInfoTable {
         Connection con = null;
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
                 String newEdition = "DROP TABLE JournalInfo";
-                stmt.executeUpdate(newEdition);
+                stmt = con.prepareStatement(newEdition); stmt.executeUpdate();
             }
             catch (SQLException ex) {
                 ex.printStackTrace();
@@ -317,11 +317,11 @@ public class JournalInfoTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                stmt = con.createStatement();
+
                 String query = "SELECT EditorType FROM JournalInfo WHERE EditorID = " + id;
-                ResultSet res = stmt.executeQuery(query);
+                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
                 while (res.next()) {
                     fin = res.getString("EditorType");
                 }

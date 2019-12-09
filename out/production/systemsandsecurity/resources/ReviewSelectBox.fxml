@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<HBox fx:id="review" prefHeight="65.0" prefWidth="783.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.controllers.ReviewSelectController">
+    <children>
+        <VBox prefHeight="100.0" prefWidth="325.0">
+            <children>
+                <Label fx:id="title" text="Article 1">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                </Label>
+            <Label fx:id="finallabel" prefHeight="28.0" prefWidth="246.0" text="Label" />
+            </children>
+            <HBox.margin>
+                <Insets left="18.0" top="5.0" />
+            </HBox.margin>
+        </VBox>
+        <Region prefHeight="100.0" prefWidth="160.0" HBox.hgrow="ALWAYS" />
+        <VBox prefHeight="94.0" prefWidth="166.0">
+            <children>
+                <Button fx:id="select" mnemonicParsing="false" onAction="#handleSelectReview" prefHeight="27.0" prefWidth="148.0" text="Select Article">
+                    <VBox.margin>
+                        <Insets bottom="5.0" />
+                    </VBox.margin>
+                </Button>
+            </children>
+            <HBox.margin>
+                <Insets right="10.0" top="14.0" />
+            </HBox.margin>
+        </VBox>
+    </children>
+    <VBox.margin>
+        <Insets />
+    </VBox.margin>
+</HBox>
