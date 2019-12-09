@@ -92,6 +92,8 @@ public class ReviewPanelController {
 
         for (int i = 0; i < (submissionids).size(); i++) {
 
+            int reviewid = ReviewTable.SelectReviewID(Main.IDs[2], submissionids.get(i));
+
             pleaseselect.setText("");
             URL url = new File("src/resources/ReviewPanelBox.fxml").toURI().toURL();
 
@@ -100,18 +102,35 @@ public class ReviewPanelController {
             vboxpanel.getChildren().remove(clickToAdd);
 
             VBox v = (VBox) child.get(0);
+            VBox initialButtonBox = (VBox) child.get(3);
+            Button initialButton = (Button) initialButtonBox.getChildren().get(0);
+            Button finalButton = (Button) initialButtonBox.getChildren().get(1);
             Label title = (Label) v.getChildren().get(0);
             Label articleID = (Label) v.getChildren().get(1);
 
             title.setText(ArticleTable.SelectTitle(submissionids.get(i)));
             articleID.setText("ArticleID: " + submissionids.get(i));
 
+            if(ReviewTable.CheckReviewIDsSum(reviewid)>0){
+                initialButton.setVisible(false);
+            }
+            System.out.println(ReviewTable.SelectInitialVerdict(reviewid).equals("null"));
+
+            if(ReviewTable.SelectInitialVerdict(reviewid).equals("null")){
+                finalButton.setVisible(false);
+            }
+
             Insets padding = new Insets(10, 0, 0, 0);
             Separator sep = new Separator();
             sep.setPadding(padding);
 
-            vboxpanel.getChildren().add(box);
-            vboxpanel.getChildren().add(sep);
+
+
+            if(ReviewTable.SelectFinalVerdict(submissionids.get(i)).equalsIgnoreCase("null")){
+                vboxpanel.getChildren().add(box);
+                vboxpanel.getChildren().add(sep);
+                //System.out.
+            }
         }
     }
 
@@ -126,7 +145,18 @@ public class ReviewPanelController {
         Scene viewScene = new Scene(view);
         Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         window.setScene(viewScene);
+    }
 
-
+    public void handleSubmitFinalVerdict(ActionEvent actionEvent) throws IOException {
+        String text = submissionid.getText();
+        String id = text.substring(11);
+        int idtoint = Integer.parseInt(id);
+        ArticleIDForReview = idtoint;
+        //System.out.println(ArticleIDForReview);
+        URL url = new File("src/resources/FinalVerdict.fxml").toURI().toURL();
+        Parent view = FXMLLoader.load(url);
+        Scene viewScene = new Scene(view);
+        Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        window.setScene(viewScene);
     }
 }

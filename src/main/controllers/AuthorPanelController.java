@@ -14,8 +14,7 @@ import javafx.stage.Stage;
 
 import javafx.event.*;
 import main.Main;
-import main.tables.ArticleInfoTable;
-import main.tables.ArticleTable;
+import main.tables.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -54,6 +53,11 @@ public class AuthorPanelController{
     }
 
     public void handleViewFinalVerdict (ActionEvent event) throws IOException {
+        String text = submissionID.getText();
+        String subid = text.substring(11);
+        int id = Integer.parseInt(subid);
+        Main.ArticleIDForAuthor = id;
+
         URL url = new File("src/resources/FinalViewer.fxml").toURI().toURL();
         Parent view = FXMLLoader.load(url);
         Scene viewScene = new Scene(view);
@@ -86,10 +90,16 @@ public class AuthorPanelController{
             vBoxArticle.getChildren().remove(toRemove);
 
             VBox v = (VBox)child.get(0);
+            VBox v2 = (VBox)child.get(3);
             Label title = (Label)v.getChildren().get(0);
             Label submissionID = (Label)v.getChildren().get(1);
             Label role = (Label)v.getChildren().get(2);
+            Button initialbutton = (Button)v2.getChildren().get(0);
             //Label status = (Label)v.getChildren().get(3);
+
+            if(ResponseTable.SelectResponseID(QuestionTable.GetQuestionID(ReviewTable.SelectReviewID(submissions.get(i))))>0){
+                initialbutton.setVisible(false);
+            }
 
             title.setText(currentTitle);
             submissionID.setText("ArticleID: " + (submissions.get(i)));

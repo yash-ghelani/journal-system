@@ -201,7 +201,40 @@ public class ResponseTable {
         return fin;
     }
 
-    public String SelectResponseText(int id) throws SQLException {
+    public static int SelectResponseID(int id) throws SQLException {
+        int fin = 0;
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String query = "SELECT ResponseID FROM Response WHERE QuestionID = " + id;
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    fin = res.getInt("ResponseID");
+                }
+                res.close();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+        return fin;
+    }
+
+    public static String SelectResponseText(int id) throws SQLException {
         String fin = null;
         Connection con = null; // connection to a database
         try {
@@ -210,7 +243,7 @@ public class ResponseTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "SELECT ResponseText FROM Response WHERE ResponseID = " + id;
+                String query = "SELECT ResponseText FROM Response WHERE QuestionID = " + id;
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     fin = res.getString("ResponseText");

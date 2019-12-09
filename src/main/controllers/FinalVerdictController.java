@@ -8,16 +8,23 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import javafx.event.*;
+import main.Main;
+import main.tables.ErrorTable;
+import main.tables.QuestionTable;
+import main.tables.ResponseTable;
+import main.tables.ReviewTable;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,17 +37,32 @@ public class FinalVerdictController {
     @FXML
     private ChoiceBox verdictChoiceBox;
 
-    public void initialize() {
-        List<String> list = new ArrayList<String>();
-        list.add("Champion");
-        list.add("Detractor");
-        ObservableList obList = FXCollections.observableList(list);
-        verdictChoiceBox.setItems(obList);
+    @FXML
+    private Label question;
 
-    }
+    @FXML
+    private Label response;
 
-    public void handleSubmit(ActionEvent action) throws IOException{
-        String rs = reviewSummary.getText();
+    @FXML
+    private Button loadresponse;
+
+    @FXML
+    private VBox vbox;
+
+
+
+
+    public void handleSubmit(ActionEvent action) throws IOException, SQLException {
+        int reviewID = ReviewTable.SelectReviewID(Main.IDs[2],Main.ArticleIDForReview);
+        System.out.println(verdictChoiceBox.getValue());
+        ReviewTable.UpdateFinallVerdict(reviewID,(String)verdictChoiceBox.getValue());
+
+        URL url = new File("src/resources/ReviewPanel.fxml").toURI().toURL();
+        Parent view = FXMLLoader.load(url);
+        Scene viewScene = new Scene(view);
+        Stage window = (Stage)((Node)action.getSource()).getScene().getWindow();
+        window.setScene(viewScene);
+
     }
 
     public void handleLogOut(ActionEvent actionEvent) throws IOException {
@@ -57,5 +79,57 @@ public class FinalVerdictController {
         Scene viewScene = new Scene(view);
         Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         window.setScene(viewScene);
+    }
+
+    public void handleLoadResponse(ActionEvent actionEvent) throws IOException, SQLException {
+        URL url = new File("src/resources/FinalVerdictMainBox.fxml").toURI().toURL();
+
+        VBox box = FXMLLoader.load(url);
+        vbox.getChildren().remove(loadresponse);
+        vbox.getChildren().add(box);
+
+        int reviewID = ReviewTable.SelectReviewID(Main.IDs[2],Main.ArticleIDForReview);
+
+        HBox reviewsummary = (HBox) box.getChildren().get(3);
+        Label summary = (Label) reviewsummary.getChildren().get(1);
+        summary.setText(ReviewTable.SelectSummary(reviewID));
+
+        HBox reviewsummary2 = (HBox) box.getChildren().get(10);
+        ChoiceBox choiceBox = (ChoiceBox) reviewsummary2.getChildren().get(3);
+
+        List<String> list = new ArrayList<String>();
+        list.add("Champion");
+        list.add("Detractor");
+
+        ObservableList obList = FXCollections.observableList(list);
+        choiceBox.setItems(obList);
+
+        ArrayList<Integer> questions = QuestionTable.SelectQuestionID(reviewID);
+
+        HBox h = (HBox) box.getChildren().get(9);
+        ScrollPane scroll =(ScrollPane) h.getChildren().get(1);
+        VBox addv = (VBox) scroll.getContent();
+
+
+        for (int i = 0; i < (questions).size(); i++) {
+            URL url1 = new File("src/resources/FinalVerdictBox.fxml").toURI().toURL();
+
+            HBox box1 = FXMLLoader.load(url1);
+            Label question = (Label)box1.getChildren().get(0);
+            question.setText(QuestionTable.GetQuestionText(questions.get(i))+": "+ ResponseTable.SelectResponseText(questions.get(i)));
+            addv.getChildren().add(box1);
+        }
+
+        String errorsstring = "";
+        ArrayList<String> lister = ErrorTable.SelectError(reviewID);
+        for (int i = 0 ; i < lister.size() ; i++) {
+            errorsstring += lister.get(i) + "\n";
+        }
+
+        HBox errors = (HBox) box.getChildren().get(6);
+        ScrollPane errorscroll = (ScrollPane) errors.getChildren().get(1);
+        VBox errorvbox = (VBox) errorscroll.getContent();
+        Text errortext = (Text) errorvbox.getChildren().get(0);
+        errortext.setText(errorsstring);
     }
 }
