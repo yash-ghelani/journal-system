@@ -62,6 +62,7 @@ public class NewSubmissionController {
             System.out.println("Inserted article");
             int articleID = ArticleTable.GetID();
             System.out.println(articleID);
+            ReviewerTable.Insert(Main.IDs[0],1, 0);
 
             //adding main author
             ArticleInfoTable.Insert(articleID, Main.IDs[0], 0);
@@ -71,6 +72,7 @@ public class NewSubmissionController {
                 ArticleInfoTable.Insert(articleID, ids.get(i), 1);
                 System.out.println("added co author "+ ids.get(i));
             }
+
 
 
             loadScene(event, "src/resources/AuthorPanel.fxml");

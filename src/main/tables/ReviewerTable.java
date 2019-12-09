@@ -48,7 +48,7 @@ public class ReviewerTable {
 
     }
 
-    public static void Insert(int userid, int temp) throws SQLException {
+    public static void Insert(int userid, int temp, int count) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -57,7 +57,7 @@ public class ReviewerTable {
             try {
                 stmt = con.createStatement();
                 String insert = "INSERT INTO Reviewer (UserID, Temp, Count) "+
-                        " VALUES ('" + userid + "','"+ temp +"', '0')";
+                        " VALUES ('" + userid + "','"+ temp +"', '"+ count +"')";
                 //System.out.println(journal);
                 stmt.executeUpdate(insert);
             } catch (SQLException e) {

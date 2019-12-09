@@ -86,7 +86,7 @@ public class RegisterController extends Main {
             } else if (roles.getValue() == "Editor"){
                 EditorTable.Insert(UserTable.ValidateEmailAndPassword(emailField.getText(), String.valueOf(passWordField.getText().hashCode())), 0);
             } else {
-                ReviewerTable.Insert(UserTable.ValidateEmailAndPassword(emailField.getText(), String.valueOf(passWordField.getText().hashCode())), 0);
+                ReviewerTable.Insert(UserTable.ValidateEmailAndPassword(emailField.getText(), String.valueOf(passWordField.getText().hashCode())), 0, 0);
             }
 
         }
