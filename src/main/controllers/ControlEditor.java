@@ -1,43 +1,38 @@
 package main.controllers;
 
-import javafx.beans.Observable;
-import javafx.event.EventHandler;
+import com.sun.jdi.connect.IllegalConnectorArgumentsException;
 import javafx.fxml.*;
-import javafx.util.*;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
 import javafx.scene.control.*;
 import javafx.event.ActionEvent;
 import javafx.scene.control.cell.*;
 import javafx.beans.value.*;
-import javafx.scene.image.*;
-import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.*;
+import javassist.util.HotSwapper;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.io.*;;
 import java.net.MalformedURLException;
 import java.net.*;
-import java.util.ResourceBundle;
-
 import javafx.collections.*;
+import main.Main;
 import main.TreeCellTextField;
 import main.tables.*;
 
 
-public class ControlEditor {
+public class ControlEditor extends ClassLoader{
 
     ObservableList<Article> data;
 
-    static String ename; // editors anme for the retire Stage
+    static String ename; // editors name for the retire Stage
+    static String enameTitle;
 
     int [] store=new int[1];
+    int [] storem = {-1};
 
     static ObservableList<Article> articles;
 
@@ -90,12 +85,15 @@ public class ControlEditor {
     }
 
     public void initialize() throws SQLException {
-    //  VolumeTable.Delete(4);
+       // JournalTable.Insert(18361310,"Journal of Computer Science");
        //System.out.println(VolumeTable.SelectVolID(1));
+        journals.getItems().addAll(JournalTable.selectJournals());
+        journals.setValue(JournalTable.selectJournals().get(Main.vave));
+        tt();
         ObservableList<TreeItem> j = FXCollections.observableArrayList();
         article.getChildren().add(tableView);
         l.setExpanded(true);
-        for (String r : VolumeTable.SelectVolumes(JournalTable.SelectISSN("Journal of Computer Science"))){
+        for (String r : VolumeTable.SelectVolumes(JournalTable.SelectISSN((String) journals.getValue()))){
          j.add(new TreeItem<String>(r));
         }
 
@@ -124,7 +122,6 @@ public class ControlEditor {
        // JournalTable.Insert(18361310,"Journal of Computer Science");
         System.out.println((JournalTable.SelectISSN("Journal of Computer Science")));
         treeVolume.refresh();
-        choicejournal();
         name_of_journal = (String) journals.getValue();
     }
 
@@ -142,10 +139,16 @@ public class ControlEditor {
                 // do nothing
             }
             else if (selectedNode().getParent() != null){
-                int month = Calendar.getInstance().get(Calendar.MONTH);
+                if (storem[0] == -1){
+                    storem[0] = Calendar.getInstance().get(Calendar.MONTH);
+                }
+                else
+                {
+                    storem[0]+=1;
+                }
                 int volumeid = VolumeTable.SelectVolID(Integer.valueOf((String) selectedNode().getValue()));
-                EditionTable.Insert(volumeid,month);
-                selectedNode().getChildren().add(new TreeItem<String>(String.valueOf(month)));
+                EditionTable.Insert(volumeid,storem[0]);
+                selectedNode().getChildren().add(new TreeItem<String>(String.valueOf(storem[0])));
             }
 
     }
@@ -211,7 +214,8 @@ public class ControlEditor {
     }
 
     public void retire(ActionEvent action) throws IOException {
-       ename = editnames.getText();
+        ename = editnames.getText();
+        enameTitle = editertitle.getText();
         URL url = new File("src/resources/RetireEditor.fxml").toURI().toURL();
         Parent view = FXMLLoader.load(url);
         Scene viewScene = new Scene(view);
@@ -261,10 +265,7 @@ public class ControlEditor {
         }
     }
 
-    public void choicejournal() throws SQLException {
-        journals.setValue(JournalTable.selectJournals().get(0));
-        journals.getItems().addAll(JournalTable.selectJournals());
-    }
+
 
 }
 

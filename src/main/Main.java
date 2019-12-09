@@ -10,7 +10,7 @@ import java.io.File;
 import java.net.URL;
 
 public class Main<IDs> extends Application {
-
+    public static int vave = 0;
     @Override
     public void start(Stage primaryStage) throws Exception{
 

@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 import main.tables.EditorTable;
 import main.tables.JournalInfoTable;
 import main.tables.JournalTable;
+import main.tables.UserTable;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -61,7 +62,7 @@ public class Retire extends ClassLoader {
         return tableT.getSelectionModel().getSelectedItem();
     }
 
-    public void retired(ActionEvent actionEvent) throws ClassNotFoundException, IOException {
+    public void retired(ActionEvent actionEvent) throws ClassNotFoundException, IOException, SQLException {
         ObservableList<EditorP> p = FXCollections.observableArrayList();
         ObservableList<EditorP> d = FXCollections.observableArrayList();
 
@@ -69,32 +70,44 @@ public class Retire extends ClassLoader {
             tableT.getSelectionModel().clearSelection();
         }
         else {
-
-            for (EditorP g : k) {
-                if (g.equals(selectedNode())) {
-                    if (selectedNode().getTitle().equals("Chief Editor")) {
-                        g.setTitle("Chief Editor");
-                        m.add(g);
-                    } else {
-                        d.addAll(g);
-                    }
+            String [] nameofedit = selectedNode().getName().split(" ");
+            String [] splitchiefname = ControlEditor.ename.split(" ");
+            int a = EditorTable.GetID(UserTable.GetID(nameofedit[0],nameofedit[1]));
+            if (ControlEditor.enameTitle == "Chief Editor"){
+                int sob =JournalInfoTable.SelectEditorID(JournalTable.SelectISSN(ControlEditor.name_of_journal)).length;
+                if (sob>1){
+                    JournalInfoTable.UpdateType(a,"Chief Editor");
                 }
+                else if (ControlEditor.enameTitle == "Editor"){
+                    tableT.getSelectionModel().clearSelection();
+                }
+
             }
+            JournalInfoTable.Delete(a);
+            EditorTable.Delete(a);
+            UserTable.DeleteUser(splitchiefname[0],splitchiefname[1]);
+            k.removeAll(p);
+            tableT.getSelectionModel().clearSelection();
+            tableT.refresh();
+            URL url = new File("src/resources/Login.fxml").toURI().toURL();
+            Parent view = FXMLLoader.load(url);
+            Scene viewScene = new Scene(view);
+            Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            window.setResizable(true);
+            window.setScene(viewScene);
         }
-        k.removeAll(p);
-        k.removeAll(d);
-        tableT.getSelectionModel().clearSelection();
-        tableT.refresh();
+
     }
 
     public void add_to_board() throws SQLException {
        int [] u = JournalInfoTable.SelectEditorID(JournalTable.SelectISSN(ControlEditor.name_of_journal));
       for (int y :u){
-         String l = EditorTable.SelectName(y);
-         String h = EditorTable.SelectSurname(y);
-        // k.add(new EditorP(l+" "+h,JournalInfoTable.));
+         String l = UserTable.SelectName(EditorTable.SelectUserID(y));
+         String h = UserTable.SelectSurName(EditorTable.SelectUserID(y));
+         k.add(new EditorP(l+" "+h,JournalInfoTable.SelectEditorType(y)));
       }
     }
+
 }
 
 

@@ -6,10 +6,7 @@ import javafx.scene.control.PasswordField;
 
 import javafx.scene.control.*;
 import javafx.event.*;
-import main.tables.EditionTable;
-import main.tables.EditorTable;
-import main.tables.JournalInfoTable;
-import main.tables.JournalTable;
+import main.tables.*;
 
 import java.sql.SQLException;
 import java.util.regex.Pattern;
@@ -83,9 +80,9 @@ public class AddEditor {
             editorn_p[3] = affiliate.getText();
         }
 
-        if (editorn_p[0] != null && editorn_p[1] != null && editorn_p[2] == null ){
+        if (editorn_p[0] != null && editorn_p[1] != null && editorn_p[2] != null ){
             String [] namespilt = editorn_p[0].split(" ");
-           // System.out.println(namespilt[0]);
+            System.out.println(namespilt[0]);
             String l[] = new String[8];
             l[0] =(String)choice.getValue();
             l[1] = namespilt[0];
@@ -94,12 +91,19 @@ public class AddEditor {
             l[4] = emailField.getText();
             l[5] = passField.getText();
 
-            EditorTable.Insert(l[0],l[1],l[2],l[3],l[4],l[5],1);
+            if (JournalInfoTable.SelectEditorID(JournalTable.SelectISSN(ControlEditor.name_of_journal)).length < 5) {
 
-            JournalInfoTable.Insert(JournalTable.SelectISSN(
-                    ControlEditor.name_of_journal),EditorTable.getID(l[4],l[5]));
+                UserTable.Insert(l[0], l[1], l[2], l[3], l[4], l[5]);
 
-            Retire.k.add(new EditorP(editorn_p[0], "Editor"));
+                EditorTable.Insert(UserTable.GetID(l[1], l[2], l[4]), 1);
+
+                JournalInfoTable.Insert(JournalTable.SelectISSN(
+                        ControlEditor.name_of_journal), EditorTable.GetID(UserTable.GetID(l[1], l[2], l[4])), "Editor");
+            }
+            else {
+                //nothing
+            }
+
         }
         else {
         }
