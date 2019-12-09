@@ -90,12 +90,13 @@ public class AuthorPanelController{
             vBoxArticle.getChildren().remove(toRemove);
 
             VBox v = (VBox)child.get(0);
+            VBox v1 = (VBox)child.get(2);
             VBox v2 = (VBox)child.get(3);
             Label title = (Label)v.getChildren().get(0);
             Label submissionID = (Label)v.getChildren().get(1);
             Label role = (Label)v.getChildren().get(2);
             Button initialbutton = (Button)v2.getChildren().get(0);
-            //Label status = (Label)v.getChildren().get(3);
+            Label status = (Label)v1.getChildren().get(0);
 
             if(ResponseTable.SelectResponseID(QuestionTable.GetQuestionID(ReviewTable.SelectReviewID(submissions.get(i))))>0){
                 initialbutton.setVisible(false);
@@ -104,7 +105,7 @@ public class AuthorPanelController{
             title.setText(currentTitle);
             submissionID.setText("ArticleID: " + (submissions.get(i)));
             role.setText("Role: " + currentRole);
-            //status.setText("Status: "+currentStatus);
+            status.setText("PDF Link: "+ArticleTable.SelectPDF(submissions.get(i)));
 
             Insets padding = new Insets(10,0,0,0);
             Separator sep = new Separator();

@@ -102,12 +102,15 @@ public class ReviewPanelController {
             vboxpanel.getChildren().remove(clickToAdd);
 
             VBox v = (VBox) child.get(0);
+            VBox pdfBox = (VBox) child.get(2);
             VBox initialButtonBox = (VBox) child.get(3);
             Button initialButton = (Button) initialButtonBox.getChildren().get(0);
             Button finalButton = (Button) initialButtonBox.getChildren().get(1);
             Label title = (Label) v.getChildren().get(0);
             Label articleID = (Label) v.getChildren().get(1);
+            Label pdf = (Label)pdfBox.getChildren().get(0);
 
+            pdf.setText("PDF Link: "+ArticleTable.SelectPDF(submissionids.get(i)));
             title.setText(ArticleTable.SelectTitle(submissionids.get(i)));
             articleID.setText("ArticleID: " + submissionids.get(i));
 
