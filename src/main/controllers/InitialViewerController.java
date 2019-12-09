@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 
 import javafx.event.*;
 import main.Main;
+import main.tables.ArticleInfoTable;
 import main.tables.ReviewTable;
 
 import java.io.File;
@@ -51,11 +52,16 @@ public class InitialViewerController {
     public void handleInitialViewer1(ActionEvent actionEvent) throws IOException, SQLException {
 
         ArrayList<Integer> timesReviewed = ReviewTable.SelectReviewsCompleted(Main.ArticleIDForAuthor);
-        System.out.println(timesReviewed);
+
+        String authortype = ArticleInfoTable.SelectAuthorType(Main.IDs[0], Main.ArticleIDForAuthor);
+        int i = Integer.parseInt(authortype);
 
         if (timesReviewed.size() == 0) {
             review1.setText("Not completed yet");
-        } else {
+        } else if (i == 1){
+            Main.AuthorCurrentReviewID = timesReviewed.get(0);
+            quickLink("CoAuthorInitialVerdict", actionEvent);
+        }else {
             Main.AuthorCurrentReviewID = timesReviewed.get(0);
             quickLink("Respond", actionEvent);
         }

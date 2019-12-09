@@ -34,6 +34,8 @@ public class AuthorPanelController{
 
     @FXML
     private Label submissionID;
+    @FXML
+    private Label title;
 
 
 
@@ -44,7 +46,7 @@ public class AuthorPanelController{
         int id = Integer.parseInt(subid);
         Main.ArticleIDForAuthor = id;
         //System.out.println(Main.ArticleIDForAuthor);
-
+        Main.CurrentTitleBeingLookedAt = title.getText();
         URL url = new File("src/resources/InitialViewer.fxml").toURI().toURL();
         Parent view = FXMLLoader.load(url);
         Scene viewScene = new Scene(view);

@@ -38,26 +38,12 @@ public class ResponseController {
     private Button response;
     @FXML
     private Label question;
-
     @FXML
     private TextField updatedLink;
     @FXML
     private TextField responsetext;
-
-
     @FXML
     private VBox vboxpanel1;
-
-    public void init() throws SQLException, IOException {
-        reviewsummaryinfo.setText(ReviewTable.SelectSummary(Main.AuthorCurrentReviewID));
-        String errors = "";
-        ArrayList<String> list = ErrorTable.SelectError(Main.AuthorCurrentReviewID);
-        for (int i = 0 ; i < list.size() ; i++) {
-            errors += list.get(i) + "\n";
-        }
-        text.setText(errors);
-        verdict.setText(ReviewTable.SelectInitialVerdict(Main.AuthorCurrentReviewID));
-    }
 
     public void handleLogOut(ActionEvent actionEvent) throws IOException {
         URL url = new File("src/resources/InitialViewer.fxml").toURI().toURL();

@@ -9,7 +9,7 @@
     <children>
         <VBox id="infoBox" prefHeight="100.0" prefWidth="325.0">
             <children>
-                <Label text="Article 3">
+                <Label text="Article 3" fx:id = "title">
                     <font>
                         <Font size="18.0" />
                     </font>
