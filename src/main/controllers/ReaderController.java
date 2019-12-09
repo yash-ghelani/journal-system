@@ -42,7 +42,7 @@ public class ReaderController {
         root.setExpanded(true);
         //create child
         //get list of journals
-        ArrayList<String> journalList = JournalTable.selectJournals();
+        ArrayList<String> journalList = JournalTable.SelectJournals();
 
         // add journals to tree
         for (int i = 0; i < journalList.size(); i++){
