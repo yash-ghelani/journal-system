@@ -176,7 +176,6 @@ public class RegisterController extends Main {
         URL url = new File("src/resources/login.fxml").toURI().toURL();
         Parent view = FXMLLoader.load(url);
         Scene viewScene = new Scene(view);
-
         Stage window = (Stage) ((Node) action.getSource()).getScene().getWindow();
         window.setResizable(true);
         window.setScene(viewScene);
