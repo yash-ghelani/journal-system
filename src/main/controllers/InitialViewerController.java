@@ -40,13 +40,7 @@ public class InitialViewerController {
     }
 
     public void handleInitialCancel(ActionEvent action) throws IOException{
-        URL url = new File("src/resources/AuthorPanel.fxml").toURI().toURL();
-        Parent view = FXMLLoader.load(url);
-        Scene viewScene = new Scene(view);
-
-        Stage window = (Stage)((Node)action.getSource()).getScene().getWindow();
-        window.setResizable(true);
-        window.setScene(viewScene);
+        quickLink("AuthorPanel", action);
     }
 
     public void handleInitialViewer1(ActionEvent actionEvent) throws IOException, SQLException {
@@ -55,14 +49,13 @@ public class InitialViewerController {
 
         String authortype = ArticleInfoTable.SelectAuthorType(Main.IDs[0], Main.ArticleIDForAuthor);
         int i = Integer.parseInt(authortype);
-
+        Main.AuthorCurrentReviewID = timesReviewed.get(0);
         if (timesReviewed.size() == 0) {
             review1.setText("Not completed yet");
         } else if (i == 1){
-            Main.AuthorCurrentReviewID = timesReviewed.get(0);
             quickLink("CoAuthorInitialVerdict", actionEvent);
         }else {
-            Main.AuthorCurrentReviewID = timesReviewed.get(0);
+
             quickLink("Respond", actionEvent);
         }
 
@@ -71,10 +64,16 @@ public class InitialViewerController {
     public void handleInitialViewer2(ActionEvent actionEvent) throws IOException, SQLException {
         ArrayList<Integer> timesReviewed = ReviewTable.SelectReviewsCompleted(Main.ArticleIDForAuthor);
 
+        String authortype = ArticleInfoTable.SelectAuthorType(Main.IDs[0], Main.ArticleIDForAuthor);
+        int i = Integer.parseInt(authortype);
+        Main.AuthorCurrentReviewID = timesReviewed.get(1);
         if (timesReviewed.size() <= 2 ) {
             review2.setText("Not completed yet");
-        } else {
-            Main.AuthorCurrentReviewID = timesReviewed.get(1);
+        } else if (i == 1){
+
+            quickLink("CoAuthorInitialVerdict", actionEvent);
+        }else {
+
             quickLink("Respond", actionEvent);
         }
     }
@@ -82,10 +81,16 @@ public class InitialViewerController {
     public void handleInitialViewer3(ActionEvent actionEvent) throws IOException, SQLException {
         ArrayList<Integer> timesReviewed = ReviewTable.SelectReviewsCompleted(Main.ArticleIDForAuthor);
 
+        String authortype = ArticleInfoTable.SelectAuthorType(Main.IDs[0], Main.ArticleIDForAuthor);
+        int i = Integer.parseInt(authortype);
+        Main.AuthorCurrentReviewID = timesReviewed.get(2);
         if (timesReviewed.size() <= 3) {
             review3.setText("Not completed yet");
-        } else {
-            Main.AuthorCurrentReviewID = timesReviewed.get(2);
+        } else if (i == 1){
+
+            quickLink("CoAuthorInitialVerdict", actionEvent);
+        }else {
+
             quickLink("Respond", actionEvent);
         }
     }
