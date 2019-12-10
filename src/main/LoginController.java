@@ -94,7 +94,7 @@ public class LoginController {
                 window.setResizable(true);
                 window.setScene(viewScene);
             }  else if (Author && !Editor && Reviewer) {
-                Parent view = FXMLLoader.load(getClass().getResource("../../../../Desktop/d/RA.fxml"));
+                Parent view = FXMLLoader.load(getClass().getResource("RA.fxml"));
                 Scene viewScene = new Scene(view);
                 Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 window.setResizable(true);
@@ -118,11 +118,12 @@ public class LoginController {
                 window.setResizable(true);
                 window.setScene(viewScene);
             } else {
-                System.out.println("Not a user");
+                System.out.println("No role");
                 error();
             }
 
         } else {
+            System.out.println("Not a user");
             error();
         }
     }
