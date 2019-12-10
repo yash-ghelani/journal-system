@@ -3,61 +3,62 @@ import javafx.collections.ObservableList;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ArticleTable {
 
     public static void main (String args[]) throws SQLException {
 
         ArticleTable at = new ArticleTable();
-        at.CreateArticleTable();
+        //at.CreateArticleTable();
     }
 
-    public static void CreateArticleTable() throws SQLException {
-
-        Connection con = null; // a Connection object
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
-            //=========================================================================================================
-
-            Statement stmt = null;
-            try {
-                stmt = con.createStatement();
-                String initialise = "CREATE TABLE Articles " + //Creating the table
-                                    "(ArticleID             INT    NOT NULL AUTO_INCREMENT, "+ //Creating the different fields
-                                    "ISSN                   INT, "+
-                                    "EditionID              INT, "+
-                                    "Title                  TEXT, "+
-                                    "Abstract               TEXT, " +
-                                    "PDF                    TEXT," +
-                                    "PageRange              TEXT, "+
-                                    "Published              INT,"+
-                                    "PRIMARY KEY (ArticleID), "+
-                                    "FOREIGN KEY (ISSN) REFERENCES Journal(ISSN), "+
-                                    "FOREIGN KEY (EditionID) REFERENCES Edition(EditionID))";
-
-                stmt.executeUpdate(initialise);
-            }
-            catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-            finally {
-                if (stmt != null)
-                    stmt.close();
-            }
-
-
-            //=========================================================================================================
-        }
-        catch (Exception e) {
-            //e.printStackTrace();
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-
-        }
-        finally {
-            if (con != null) con.close();
-        }
-
-    }
+//    public static void CreateArticleTable() throws SQLException {
+//
+//        Connection con = null; // a Connection object
+//        try {
+//            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+//            //=========================================================================================================
+//
+//            Statement stmt = null;
+//            try {
+//                stmt = con.createStatement();
+//                String initialise = "CREATE TABLE Articles " + //Creating the table
+//                                    "(ArticleID             INT    NOT NULL AUTO_INCREMENT, "+ //Creating the different fields
+//                                    "ISSN                   INT, "+
+//                                    "EditionID              INT, "+
+//                                    "Title                  TEXT, "+
+//                                    "Abstract               TEXT, " +
+//                                    "PDF                    TEXT," +
+//                                    "PageRange              TEXT, "+
+//                                    "Published              INT,"+
+//                                    "PRIMARY KEY (ArticleID), "+
+//                                    "FOREIGN KEY (ISSN) REFERENCES Journal(ISSN), "+
+//                                    "FOREIGN KEY (EditionID) REFERENCES Edition(EditionID))";
+//
+//                stmt.executeUpdate(initialise);
+//            }
+//            catch (SQLException ex) {
+//                ex.printStackTrace();
+//            }
+//            finally {
+//                if (stmt != null)
+//                    stmt.close();
+//            }
+//
+//
+//            //=========================================================================================================
+//        }
+//        catch (Exception e) {
+//            //e.printStackTrace();
+//            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+//
+//        }
+//        finally {
+//            if (con != null) con.close();
+//        }
+//
+//    }
 
     public static void Insert(int issn, String title, String abstractText, String pdf, String pageRange,  int published) throws SQLException {
         Connection con = null; // connection to a database
@@ -247,34 +248,42 @@ public class ArticleTable {
 
     //==================================================================================================================
 
-    public static void DeleteByName(ObservableList<String> name) throws SQLException {
-        Connection con = null; // connection to a database
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
-            // use the open connection
-            Statement stmt = null;
-            try {
-                stmt = con.createStatement();
-                String newEdition = "DELETE FROM Articles WHERE Title IN (SELECT value FROM STRING_SPLIT('"+name+"',','))";
-                stmt.executeUpdate(newEdition);
-            }
-            catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-            finally {
-                if (stmt != null)
-                    stmt.close();
-            }
+//    public static void DeleteByName(String name) throws SQLException {
+//        Connection con = null; // connection to a database
+//        try {
+//            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+//            // use the open connection
+//            PreparedStatement stmt = null;
+//            try {
+//<<<<<<< HEAD
+//
+//
+//                String newEdition = "DELETE FROM Articles WHERE Title IN ('"+name+"')";
+//                stmt = con.prepareStatement(newEdition); stmt.executeUpdate();
+//
+//=======
+//                stmt = con.createStatement();
+//                String newEdition = "DELETE FROM Articles WHERE Title IN (SELECT value FROM STRING_SPLIT('"+name+"',','))";
+//                stmt.executeUpdate(newEdition);
+//>>>>>>> 2ec0e43701dea9049acc9f4ab37a1ec40f4f3d83
+//            }
+//            catch (SQLException ex) {
+//                ex.printStackTrace();
+//            }
+//            finally {
+//                if (stmt != null)
+//                    stmt.close();
+//            }
+//
+//        }
+//        catch (SQLException ex) {
+//            ex.printStackTrace();
+//        }
+//        finally {
+//            if (con != null) con.close();
+//        }
 
-        }
-        catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        finally {
-            if (con != null) con.close();
-        }
-
-    }
+//    }
 
     public static int GetID() throws SQLException {
         int id = 0;
@@ -611,9 +620,10 @@ public class ArticleTable {
             // use the open connection
             Statement stmt = null;
             try {
-                stmt = con.createStatement();
-                String query = "SELECT Title FROM Articles WHERE EditionID = '"+ id +"'";
+
+                String query = "SELECT Title FROM Articles WHERE EditionID =  '"+id+"' AND Published = 1";
                 ResultSet res = stmt.executeQuery(query);
+
                 while (res.next()) {
                     String fin = res.getString("Title");
                     list.add(fin);
@@ -731,6 +741,73 @@ public class ArticleTable {
         } else {
             return false;
         }
+    }
+
+    public static String SelectName(String name) throws SQLException {
+        String fin = "0";
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            PreparedStatement stmt = null;
+            try {
+
+                String query = "SELECT Title FROM Articles WHERE Title = '"+name+"' ";
+                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
+                while (res.next()) {
+                    fin = res.getString("Title");
+                }
+                res.close();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+        return fin;
+    }
+
+
+    public static String GetArticleID(String name) throws SQLException {
+        String id = "0";
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            PreparedStatement stmt = null;
+            try {
+
+                String query = "SELECT ArticleID FROM Articles WHERE Title = '"+name+"'";
+                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
+                while (res.next()) {
+                    id = res.getString("ArticleID");
+                }
+                res.close();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+        return id;
     }
 
 }

@@ -77,24 +77,34 @@ public class Retire extends ClassLoader {
                 int sob =JournalInfoTable.SelectEditorID(JournalTable.SelectISSN(ControlEditor.name_of_journal)).length;
                 if (sob>1){
                     JournalInfoTable.UpdateType(a,"Chief Editor");
+                    JournalInfoTable.Delete(a);
+                    EditorTable.Delete(a);
+                    UserTable.DeleteUser(splitchiefname[0],splitchiefname[1]);
+                    URL url = new File("src/main/Login.fxml").toURI().toURL();
+                    Parent view = FXMLLoader.load(url);
+                    Scene viewScene = new Scene(view);
+                    Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                    window.setResizable(true);
+                    window.setScene(viewScene);
+                    k.removeAll(p);
                 }
                 else if (ControlEditor.enameTitle == "Editor"){
                     tableT.getSelectionModel().clearSelection();
+                    JournalInfoTable.Delete(a);
+                    EditorTable.Delete(a);
+                    UserTable.DeleteUser(splitchiefname[0],splitchiefname[1]);
+                    URL url = new File("src/main/Login.fxml").toURI().toURL();
+                    Parent view = FXMLLoader.load(url);
+                    Scene viewScene = new Scene(view);
+                    Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                    window.setResizable(true);
+                    window.setScene(viewScene);
+                    k.removeAll(p);
                 }
 
             }
-            JournalInfoTable.Delete(a);
-            EditorTable.Delete(a);
-            UserTable.DeleteUser(splitchiefname[0],splitchiefname[1]);
-            k.removeAll(p);
             tableT.getSelectionModel().clearSelection();
             tableT.refresh();
-            URL url = new File("src/resources/Login.fxml").toURI().toURL();
-            Parent view = FXMLLoader.load(url);
-            Scene viewScene = new Scene(view);
-            Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            window.setResizable(true);
-            window.setScene(viewScene);
         }
 
     }
