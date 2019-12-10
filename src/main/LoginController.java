@@ -26,7 +26,7 @@ public class LoginController {
     private PasswordField Password;
 
     public void handleRegister(javafx.event.ActionEvent event) throws IOException {
-        Parent view = FXMLLoader.load(getClass().getResource("../../../../Desktop/d/Register.fxml"));
+        Parent view = FXMLLoader.load(getClass().getResource("Register.fxml"));
         Scene viewScene = new Scene(view);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setResizable(true);
