@@ -157,9 +157,9 @@ public class ReviewTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String journal = "UPDATE Review SET FinalVerdict = '" + verdict + "' WHERE ReviewID = " + reviewid;
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
@@ -553,7 +553,7 @@ public class ReviewTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "SELECT ArticleID FROM Review WHERE ReviewerID = " + id + "";
+                String query = "SELECT ArticleID FROM Review WHERE ReviewerID = " + id + " AND FinalVerdict = 'null'";
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     int fin = res.getInt("ArticleID");
@@ -610,11 +610,11 @@ public class ReviewTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String query = "SELECT ReviewID FROM Review WHERE ArticleID = " + id + " AND Summary != 'null' AND InitialVerdict != 'null'";
-                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
+                ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     int fin = res.getInt("ReviewID");
                     list.add(fin);

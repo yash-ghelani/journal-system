@@ -341,7 +341,7 @@ public class EditorTable {
             // use the open connection
             Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String query = "SELECT UserID FROM Editor WHERE EditorID = " + id;
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {

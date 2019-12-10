@@ -61,10 +61,10 @@ public class ReviewPanelController {
         String text = submissionid.getText();
         String id = text.substring(11);
         int idtoint = Integer.parseInt(id);
-        Main.ResponseArticleID = idtoint;
-        if ((ReviewTable.SelectReviewsCompleted(Main.ResponseArticleID).size() > 0)) {
+        Main.ArticleIDForReview = idtoint;
+        if ((ReviewTable.SelectReviewsCompleted(Main.ArticleIDForReview).size() > 0)) {
 
-            Parent view = FXMLLoader.load(getClass().getResource("Respond.fxml"));
+            Parent view = FXMLLoader.load(getClass().getResource("FinalVerdict.fxml"));
             Scene viewScene = new Scene(view);
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.setScene(viewScene);
@@ -72,7 +72,7 @@ public class ReviewPanelController {
         } else {
             viewresponse.setStyle("-fx-text-fill : red;");
             viewresponse.setText("No response yet");
-            //viewresponse.setStyle("-fx-text-fill : black;");
+
         }
 
 
