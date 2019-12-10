@@ -37,6 +37,8 @@ public class ControlEditor extends ClassLoader {
 
     ObservableList<Article> data = FXCollections.observableArrayList();
 
+   static ObservableList<Article> king = FXCollections.observableArrayList();
+
     static ObservableList<Article> articles;
 
     ContextMenu meuProf = new ContextMenu();
@@ -178,6 +180,7 @@ public class ControlEditor extends ClassLoader {
             article_check.setStyle("-fx-alignment: CENTER;");
             tableView.getColumns().addAll(article_name, article_check);
             data = FXCollections.observableArrayList();
+            data.addAll(king);
             //getArticle().removeAll(getArticle());
             tableView.setItems(data);
             tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -195,6 +198,7 @@ public class ControlEditor extends ClassLoader {
                 }
             });
         }
+        king.clear();
     }
 
 
@@ -362,7 +366,7 @@ public class ControlEditor extends ClassLoader {
 
     public void refresh(String journ) throws MalformedURLException, SQLException {
         data.clear();
-        data.addAll(getArticle(journ));
+       king =  getArticle(journ);
         l.getChildren().clear();
         System.out.println(getArticle(journ));
         Main.currentJournalName = journ;
