@@ -149,7 +149,7 @@ public class JournalTable {
         }
     }
 
-    public String SelectName(int issn) throws SQLException {
+    public static String SelectName(int issn) throws SQLException {
         String fin = null;
         Connection con = null; // connection to a database
         try {

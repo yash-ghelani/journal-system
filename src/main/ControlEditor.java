@@ -95,7 +95,7 @@ public class ControlEditor extends ClassLoader{
         }
 
         //journals.getItems().addAll(JournalTable.selectJournals());
-        journals.setValue(JournalTable.selectJournals().get(Main.vave));
+        journals.setValue(JournalTable.SelectJournals().get(Main.vave));
         article.getChildren().add(tableView);
         l.setExpanded(true);
         treeVolume.setRoot(l);
@@ -114,11 +114,11 @@ public class ControlEditor extends ClassLoader{
         tableView.setItems(data);
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         treeVolume.refresh();
-        refresh(JournalTable.selectJournals().get(0));
+        refresh(JournalTable.SelectJournals().get(0));
         journals.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue ov,Number old_val, Number new_val) {
                 try {
-                    refresh(JournalTable.selectJournals().get((Integer) new_val));
+                    refresh(JournalTable.SelectJournals().get((Integer) new_val));
                     System.out.println(journals.getSelectionModel().isSelected(0));
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
