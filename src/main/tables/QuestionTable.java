@@ -17,9 +17,9 @@ public class QuestionTable {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             //=========================================================================================================
 
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String jtable = "CREATE TABLE Question " + //Creating the table "UserTable"
                         "(QuestionID               INT     NOT NULL    AUTO_INCREMENT, "+ //Creating the different fields
                         "ReviewID                  INT     NOT NULL, "+

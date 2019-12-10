@@ -29,9 +29,9 @@ public class EditionTable {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             //=========================================================================================================
 
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String initialise = "CREATE TABLE Edition " + //Creating the table
                                     "(EditionID             INT    NOT NULL AUTO_INCREMENT, "+ //Creating the different fields
                                     "PublicationMonth       INT    NOT NULL, " +

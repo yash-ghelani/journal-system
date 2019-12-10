@@ -7,8 +7,8 @@ public class ArticleInfoTable {
     public static void main (String args[]) throws SQLException {
 
         ArticleInfoTable ait = new ArticleInfoTable();
-       // ait.CreateArticleInfoTable();
-        Insert(1,1,1);
+        ait.CreateArticleInfoTable();
+        //Insert(1,1,1);
     }
 
     public static void CreateArticleInfoTable() throws SQLException {
@@ -18,9 +18,9 @@ public class ArticleInfoTable {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             //=========================================================================================================
 
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String initialise = "CREATE TABLE ArticleInfo " + //Creating the table
                                     "(ArticleInfoID         INT    NOT NULL     AUTO_INCREMENT, "+ //Creating the different fields
                                     "AuthorID               INT, "+

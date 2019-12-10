@@ -19,9 +19,10 @@ public class JournalTable {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             //=========================================================================================================
 
-            PreparedStatement stmt = null;
-            try {
+            Statement stmt = null;
 
+            try {
+                stmt = con.createStatement();
                 String jtable = "CREATE TABLE Journal " + //Creating the table "UserTable"
                                 "(ISSN      INT     NOT NULL, "+ //Creating the different fields
                                 "JournalName       TEXT    NOT NULL, " +

@@ -18,7 +18,8 @@ public class ErrorTable {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             //=========================================================================================================
 
-            PreparedStatement stmt = null;
+            Statement stmt = null;
+            stmt = con.createStatement();
             try {
 
                 String jtable = "CREATE TABLE Errors " + //Creating the table "UserTable"

@@ -2,6 +2,7 @@ package main;
 
 import com.sun.jdi.connect.IllegalConnectorArgumentsException;
 import javafx.fxml.*;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -109,7 +110,6 @@ public class ControlEditor extends ClassLoader{
     private Button selectedJ;
 
    static String name_of_journal;
-
 
 
     public void initialize() throws SQLException, MalformedURLException {
@@ -378,9 +378,10 @@ public class ControlEditor extends ClassLoader{
         Stage window = new Stage();
         window.setResizable(true);
         window.setScene(viewScene);
-        window.initModality(Modality.APPLICATION_MODAL);
         main.SelectControl.closer = window;
         window.show();
+        Stage stage = (Stage) disart.getScene().getWindow();
+        stage.close();
     }
 
     public void kjsa() throws SQLException {

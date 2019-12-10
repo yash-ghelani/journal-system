@@ -16,9 +16,9 @@ public class UserTable {
         Connection con = null; // a Connection object
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String query = "CREATE TABLE User " + //Creating the table "UserTable"
                         "(UserID                     INT     AUTO_INCREMENT, "+ //Creating the different fields
                         "Title                       TEXT, "+

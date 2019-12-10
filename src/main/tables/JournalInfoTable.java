@@ -17,9 +17,9 @@ public class JournalInfoTable {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             //=========================================================================================================
 
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String jtable = "CREATE TABLE JournalInfo " + //Creating the table "UserTable"
                         "(JournalInfoID         INT     AUTO_INCREMENT, " + //Creating the different fields
                         "ISSN                   INT     NOT NULL, " +
@@ -59,8 +59,6 @@ public class JournalInfoTable {
 
                 String insert = "INSERT INTO JournalInfo (ISSN, EditorID, EditorType) "+
                                 " VALUES (?,?,?)";
-                //System.out.println(journal);
-                stmt.executeUpdate(insert);
                 con.setAutoCommit(false);
                 stmt = con.prepareStatement(insert);
                 stmt.setInt(1, issn);

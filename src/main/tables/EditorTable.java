@@ -16,9 +16,9 @@ public class EditorTable {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             //=========================================================================================================
 
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String jtable = "CREATE TABLE Editor " + //Creating the table "UserTable"
                         "(EditorID               INT             AUTO_INCREMENT, " +
                         "UserID                  INT          NOT NULL, " + //Creating the different fields

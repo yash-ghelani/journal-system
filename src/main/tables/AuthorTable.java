@@ -17,9 +17,9 @@ public class AuthorTable {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             //=========================================================================================================
 
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String jtable = "CREATE TABLE Author " + //Creating the table "UserTable"
                         "(AuthorID               INT                 AUTO_INCREMENT, " +
                         "UserID                  INT," + //Creating the different fields
