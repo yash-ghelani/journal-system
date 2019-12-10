@@ -8,7 +8,7 @@ public class ArticleInfoTable {
 
         ArticleInfoTable ait = new ArticleInfoTable();
        // ait.CreateArticleInfoTable();
-//        ait.Insert(1,1);
+        Insert(1,1,1);
     }
 
     public static void CreateArticleInfoTable() throws SQLException {
@@ -56,15 +56,23 @@ public class ArticleInfoTable {
 
     public static void Insert(int articleID, int authorID, int type) throws SQLException {
         Connection con = null; // connection to a database
+        String newEdition = "INSERT INTO ArticleInfo (ArticleID, AuthorID, AuthorType) "+
+                "VALUES (?,?,?)";
+        PreparedStatement stmt = null;
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+
             try {
 
-                String newEdition = "INSERT INTO ArticleInfo (ArticleID, AuthorID, AuthorType) "+
-                                    "VALUES ('" + articleID + "',  '" + authorID + "',  '"+ type + "')";
-                stmt = con.prepareStatement(newEdition); stmt.executeUpdate();
+                //stmt = con.prepareStatement(newEdition); stmt.executeUpdate();
+                con.setAutoCommit(false);
+                stmt = con.prepareStatement(newEdition);
+                stmt.setInt(1, articleID);
+                stmt.setInt(2, authorID);
+                stmt.setInt(3, type);
+                stmt.execute();
+                con.commit();
             }
             catch (SQLException ex) {
                 ex.printStackTrace();
@@ -78,7 +86,10 @@ public class ArticleInfoTable {
             ex.printStackTrace();
         }
         finally {
-            if (con != null) con.close();
+            if (newEdition != null || stmt != null) {
+                stmt.close();
+            }
+            con.setAutoCommit(true);
         }
     }
 

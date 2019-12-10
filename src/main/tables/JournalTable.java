@@ -62,9 +62,13 @@ public class JournalTable {
             PreparedStatement stmt = null;
             try {
 
-                String journal = "INSERT INTO Journal (ISSN, JournalName) VALUES ('" + ISSN + "',  '" + name + "')";
-                //System.out.println(journal);
-                stmt.executeUpdate(journal);
+                String journal = "INSERT INTO Journal (ISSN, JournalName) VALUES (?,?)";
+                con.setAutoCommit(false);
+                stmt = con.prepareStatement(journal);
+                stmt.setInt(1, ISSN);
+                stmt.setString(2, name);
+                stmt.execute();
+                con.commit();
 
             }
             catch (SQLException ex) {
@@ -81,6 +85,7 @@ public class JournalTable {
         }
         finally {
             if (con != null) con.close();
+            con.setAutoCommit(true);
         }
 
     }
