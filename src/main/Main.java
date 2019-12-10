@@ -25,6 +25,8 @@ public class Main extends Application {
 
     }
 
+    public static String currentJournalName;
+
     public static int IDs[] = new int[3];
 
     public static int ArticleIDForReview;
