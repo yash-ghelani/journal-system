@@ -56,8 +56,7 @@ public class ArticleInfoTable {
 
     public static void Insert(int articleID, int authorID, int type) throws SQLException {
         Connection con = null; // connection to a database
-        String newEdition = "INSERT INTO ArticleInfo (ArticleID, AuthorID, AuthorType) "+
-                "VALUES (?,?,?)";
+        String newEdition = "INSERT INTO ArticleInfo (ArticleID, AuthorID, AuthorType) "+"VALUES (?,?,?)";
         PreparedStatement stmt = null;
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
