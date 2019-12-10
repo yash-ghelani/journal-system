@@ -6,13 +6,10 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.URL;
 
-public class Main extends Application {
+public class Main<IDs> extends Application {
     public static int vave = 0;
     @Override
     public void start(Stage primaryStage) throws Exception{

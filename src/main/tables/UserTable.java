@@ -4,6 +4,13 @@ import java.sql.*;
 
 public class UserTable {
 
+    public static void main (String args[]) throws SQLException {
+        String pw = String.valueOf("kingjames".hashCode());
+        //Insert("Dr.", "Yash", "Ghelani", "Sheffield", "yash@a.com", pw);
+        //Update(1,"Mr.", "Yash", "Ghelani", "Cambridge", "yash@a.com", pw);
+        System.out.println(ValidateEmailAndPassword("as@gmail.com", pw));
+    }
+
     public static void CreateUserTable() throws SQLException {
 
         Connection con = null; // a Connection object
@@ -15,11 +22,11 @@ public class UserTable {
                 String query = "CREATE TABLE User " + //Creating the table "UserTable"
                         "(UserID                     INT     AUTO_INCREMENT, "+ //Creating the different fields
                         "Title                       TEXT, "+
-                        "Name                        TEXT,"+
+                        "Name                        TEXT, "+
                         "Surname                     TEXT, "+
                         "Affiliation                 TEXT, " +
                         "Email                       TEXT, " +
-                        "Password                    TEXT," +
+                        "Password                    TEXT, " +
                         "PRIMARY KEY (UserID))";
 
                 stmt.executeUpdate(query);
@@ -42,92 +49,124 @@ public class UserTable {
     }
 
     public static void Insert(String title, String name, String surname, String affiliation, String email, String password) throws SQLException {
-        Connection con = null; // connection to a database
+
+        Connection con = null; // a Connection object
+        PreparedStatement insertString = null;
+        String insert = "INSERT INTO User (Title, Name, Surname, Affiliation, Email, Password) "+ " VALUES (?,?,?,?,?,?)";
+
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
-            // use the open connection
-            PreparedStatement stmt = null;
-            try {
+            con.setAutoCommit(false);
+            insertString = con.prepareStatement(insert);
+            insertString.setString(1,title);
+            insertString.setString(2,name);
+            insertString.setString(3,surname);
+            insertString.setString(4,affiliation);
+            insertString.setString(5,email);
+            insertString.setString(6,password);
+            insertString.execute();
+            con.commit();
 
-                String query = "INSERT INTO User (Title, Name, Surname, Affiliation, Email, Password) "+
-                        " VALUES ('" + title + "', '" + name + "', '" + surname + "', '" + affiliation + "', '" + email + "', '" + password + "')";
-                //System.out.println(journal);
-                stmt.executeUpdate(query);
-            } catch (SQLException e) {
-                e.printStackTrace();
-                System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-                System.out.println("Insert failed");
-            } finally {
-                if (stmt != null)
-                    stmt.close();
-            }
-        } catch (SQLException e) {
+        } catch (SQLException e ) {
             e.printStackTrace();
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-            System.out.println("Something else failed");
-        } finally {
-            if (con != null) con.close();
-        }
-    }
-
-    public static void Update (int id, String title, String name, String surname, String affiliation, String email, String password) throws SQLException {
-        Connection con = null; // connection to a database
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
-            // use the open connection
-            PreparedStatement stmt = null;
-            try {
-
-                String query = "UPDATE User SET Title = '"+title+"', Name = '"+name+"', Surname = '"+surname+"', Affiliation = '"+affiliation+"', Email = '"+email+"', Password = '" + password +"' WHERE UserID = " + id;
-                stmt.executeUpdate(query);
-            } catch (SQLException e) {
-                e.printStackTrace();
-                System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-                System.out.println("Selection failed");
-            } finally {
-                if (stmt != null)
-                    stmt.close();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-            System.out.println("Something else failed");
-        } finally {
-            if (con != null) con.close();
-        }
-    }
-
-    public static int ValidateEmailAndPassword(String email, String password) throws SQLException {
-        int id = -1;
-        Connection con = null; // connection to a database
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
-            // use the open connection
-            PreparedStatement stmt = null;
-            try {
-
-                String query = "SELECT UserID FROM User WHERE Email = '" + email + "' AND Password = '" + password + "'";
-                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
-                while (res.next()) {
-                    id = res.getInt("UserID");
+            if (con != null) {
+                try {
+                    System.err.print("Transaction is being rolled back");
+                    con.rollback();
+                } catch(SQLException excep) {
+                    e.printStackTrace();
+                    System.err.println( e.getClass().getName() + ": " + e.getMessage() );
                 }
-                res.close();
             }
-            catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-            finally {
-                if (stmt != null)
-                    stmt.close();
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
         } finally {
-            if (con != null) con.close();
+            if (insertString != null) {
+                insertString.close();
+            }
+            con.setAutoCommit(true);
         }
+    }
 
+    public static void Update(int id, String title, String name, String surname, String affiliation, String email, String password) throws SQLException {
+
+        Connection con = null; // a Connection object
+        PreparedStatement updateString = null;
+        String update = "UPDATE User SET Title = ?, Name = ?, Surname = ?, Affiliation = ?, Email = ?, Password = ? WHERE UserID = ?";
+
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            con.setAutoCommit(false);
+            updateString = con.prepareStatement(update);
+            updateString.setString(1,title);
+            updateString.setString(2,name);
+            updateString.setString(3,surname);
+            updateString.setString(4,affiliation);
+            updateString.setString(5,email);
+            updateString.setString(6,password);
+            updateString.setInt(7,id);
+            updateString.execute();
+            con.commit();
+
+        } catch (SQLException e ) {
+            e.printStackTrace();
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            if (con != null) {
+                try {
+                    System.err.print("Transaction is being rolled back");
+                    con.rollback();
+                } catch(SQLException excep) {
+                    e.printStackTrace();
+                    System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+                }
+            }
+        } finally {
+            if (updateString != null) {
+                updateString.close();
+            }
+            con.setAutoCommit(true);
+        }
+    }
+
+    public static int ValidateEmailAndPassword (String email, String password) throws SQLException {
+        int id = -1;
+        Connection con = null; // a Connection object
+        PreparedStatement selectString = null;
+        String query = "SELECT UserID FROM User WHERE Email = ? AND Password = ?";
+
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            con.setAutoCommit(false);
+            selectString = con.prepareStatement(query);
+            selectString.setString(1,email);
+            selectString.setString(2,password);
+            ResultSet res = selectString.executeQuery();
+            while (res.next()) {
+                id = res.getInt("UserID");
+            }
+            res.close();
+            con.commit();
+
+        } catch (SQLException e ) {
+            e.printStackTrace();
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            if (con != null) {
+                try {
+                    System.err.print("Transaction is being rolled back");
+                    con.rollback();
+                } catch(SQLException excep) {
+                    e.printStackTrace();
+                    System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+                }
+            }
+        } finally {
+            if (selectString != null) {
+                selectString.close();
+            }
+            con.setAutoCommit(true);
+        }
         return id;
     }
+
 
     public static String SelectAffiliation(int id) throws SQLException {
         String fin = null;
@@ -186,39 +225,6 @@ public class UserTable {
         finally {
             if (con != null) con.close();
         }
-    }
-
-    public static int GetID() throws SQLException {
-        int id = 0;
-        Connection con = null; // connection to a database
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
-            // use the open connection
-            PreparedStatement stmt = null;
-            try {
-
-                String query = "SELECT last_insert_id()";
-                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
-                while (res.next()) {
-                    id = res.getInt("last_insert_id()");
-                }
-                res.close();
-            }
-            catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-            finally {
-                if (stmt != null)
-                    stmt.close();
-            }
-        }
-        catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        finally {
-            if (con != null) con.close();
-        }
-        return id;
     }
 
     public static int GetID(String name,String surname,String email) throws SQLException {
@@ -361,7 +367,7 @@ public class UserTable {
             PreparedStatement stmt = null;
             try {
 
-                String newEdition = "DELETE FROM User WHERE (Name = '"+name+"' AND SurName = '"+surname+"')";
+                String newEdition = "DELETE FROM User WHERE (Name = '"+name+"' AND Surname = '"+surname+"')";
                 stmt = con.prepareStatement(newEdition); stmt.executeUpdate();
             }
             catch (SQLException ex) {
