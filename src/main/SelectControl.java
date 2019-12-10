@@ -1,4 +1,4 @@
-package main;
+package main.controllers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,7 +26,7 @@ public class SelectControl {
 
     public void initialize() throws SQLException {
 
-        for (String v : JournalTable.SelectJournals()){
+        for (String v : JournalTable.selectJournals()){
             zv.add(v);
         }
         vthings.getItems().setAll(zv);
@@ -35,12 +35,12 @@ public class SelectControl {
 
 
     public void selected(MouseEvent mouseEvent) throws SQLException {
-        String journalSel= (String) vthings.getSelectionModel().getSelectedItems().get(0);
-        System.out.println(journalSel);
-        String [] vf = name.split(" ");
-        int kl =  UserTable.GetID(vf[0],vf[1]);
-        int lk = EditorTable.GetID(kl);
-        //JournalInfoTable.Insert(issn,lk,"Chief Editor");
-        //closer.close();
+     String journalSel= (String) vthings.getSelectionModel().getSelectedItems().get(0);
+     System.out.println(journalSel);
+     String [] vf = name.split(" ");
+      int kl =  UserTable.GetID(vf[0],vf[1]);
+      int lk = EditorTable.GetID(kl);
+     //JournalInfoTable.Insert(issn,lk,"Chief Editor");
+     //closer.close();
     }
 }
