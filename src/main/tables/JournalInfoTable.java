@@ -58,9 +58,17 @@ public class JournalInfoTable {
             try {
 
                 String insert = "INSERT INTO JournalInfo (ISSN, EditorID, EditorType) "+
-                                " VALUES ("+ issn + "," + editorID + ",'" + type + "')";
+                                " VALUES (?,?,?)";
                 //System.out.println(journal);
                 stmt.executeUpdate(insert);
+                con.setAutoCommit(false);
+                stmt = con.prepareStatement(insert);
+                stmt.setInt(1, issn);
+                stmt.setInt(2, editorID);
+                stmt.setString(3, type);
+                stmt.execute();
+                con.commit();
+
             } catch (SQLException ex) {
                 ex.printStackTrace();
             } finally {
@@ -71,7 +79,9 @@ public class JournalInfoTable {
             ex.printStackTrace();
         } finally {
             if (con != null) con.close();
+            con.setAutoCommit(true);
         }
+
     }
     public static void Delete(int id) throws SQLException {
         Connection con = null; // connection to a database

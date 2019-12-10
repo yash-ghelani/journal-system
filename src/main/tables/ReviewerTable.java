@@ -57,9 +57,14 @@ public class ReviewerTable {
             try {
 
                 String insert = "INSERT INTO Reviewer (UserID, Temp, Count) "+
-                        " VALUES ('" + userid + "','"+ temp +"', '"+ count +"')";
-                //System.out.println(journal);
-                stmt.executeUpdate(insert);
+                        " VALUES (?,?,?)";
+                con.setAutoCommit(false);
+                stmt = con.prepareStatement(insert);
+                stmt.setInt(1, userid);
+                stmt.setInt(2, temp);
+                stmt.setInt(3, count);
+                stmt.execute();
+                con.commit();
             } catch (SQLException e) {
                 System.err.println( e.getClass().getName() + ": " + e.getMessage() );
                 System.out.println("Selection failed");
@@ -72,6 +77,7 @@ public class ReviewerTable {
             System.out.println("Selection failed");
         } finally {
             if (con != null) con.close();
+            con.setAutoCommit(true);
         }
     }
 

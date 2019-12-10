@@ -55,9 +55,15 @@ public class EditorTable {
             try {
 
                 String insert = "INSERT INTO Editor (UserID, Temp) "+
-                        " VALUES ('" + userid + "','"+ temp+"')";
+                        " VALUES (?,?)";
                 //System.out.println(journal);
-                stmt.executeUpdate(insert);
+                con.setAutoCommit(false);
+                stmt = con.prepareStatement(insert);
+                stmt.setInt(1, userid);
+                stmt.setInt(2, temp);
+
+                stmt.execute();
+                con.commit();
             } catch (SQLException e) {
                 System.err.println( e.getClass().getName() + ": " + e.getMessage() );
                 System.out.println("Selection failed");
@@ -69,7 +75,10 @@ public class EditorTable {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.out.println("Selection failed");
         } finally {
-            if (con != null) con.close();
+            if (con != null) {
+                con.close();
+            }
+            con.setAutoCommit(true);
         }
     }
 

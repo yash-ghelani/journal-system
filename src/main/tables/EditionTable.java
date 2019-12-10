@@ -65,15 +65,23 @@ public class EditionTable {
 
     public static void Insert(int volumeID, int month ) throws SQLException {
         Connection con = null; // connection to a database
+        PreparedStatement stmt = null;
+
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+
             try {
 
                 if (month<12 || month>0) {
-                    String newEdition = "INSERT INTO Edition (VolumeID, PublicationMonth) VALUES ('" + volumeID + "',  '" + month + "')";
-                    stmt = con.prepareStatement(newEdition); stmt.executeUpdate();
+                    String newEdition = "INSERT INTO Edition (VolumeID, PublicationMonth) VALUES (?,?)";
+                    con.setAutoCommit(false);
+                    stmt = con.prepareStatement(newEdition);
+                    stmt.setInt(1, volumeID);
+                    stmt.setInt(2, month);
+
+                    stmt.execute();
+                    con.commit();
                 } else {
                     System.out.println("Invalid Month");
                 }
@@ -82,9 +90,12 @@ public class EditionTable {
                 ex.printStackTrace();
             }
             finally {
-                if (stmt != null)
+                if (stmt != null) {
                     stmt.close();
+                }
+                con.setAutoCommit(true);
             }
+
 
         }
         catch (SQLException ex) {

@@ -59,11 +59,13 @@ public class ErrorTable {
             // use the open connection
             PreparedStatement stmt = null;
             try {
-
-
-                String journal = "INSERT INTO Errors (ReviewID, Error) VALUES (" + reviewid +",'" + error + "')";
-                System.out.println(journal);
-                stmt.executeUpdate(journal);
+                String journal = "INSERT INTO Errors (ReviewID, Error) VALUES (?,?)";
+                con.setAutoCommit(false);
+                stmt = con.prepareStatement(journal);
+                stmt.setInt(1, reviewid);
+                stmt.setString(2, error);
+                stmt.execute();
+                con.commit();
 
             }
             catch (SQLException ex) {
@@ -81,6 +83,7 @@ public class ErrorTable {
         finally {
             if (con != null) con.close();
         }
+        con.setAutoCommit(true);
     }
 
     public static void Delete(int id) throws SQLException {

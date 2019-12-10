@@ -59,15 +59,24 @@ public class ArticleTable {
 
     public static void Insert(int issn, String title, String abstractText, String pdf, String pageRange,  int published) throws SQLException {
         Connection con = null; // connection to a database
+        PreparedStatement stmt = null;
+        String newEdition = "INSERT INTO Articles (ISSN, Title, Abstract, PDF, PageRange, Published) "+
+                " VALUES (?,?,?,?,?,?)";
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+
             try {
-                
-                String newEdition = "INSERT INTO Articles (ISSN, Title, Abstract, PDF, PageRange, Published) "+
-                                    " VALUES ('"+ issn + "', '" + title + "',  '" + abstractText + "',  '" + pdf + "',  '"+ pageRange + "',  '" + published + "')";
-                stmt = con.prepareStatement(newEdition); stmt.executeUpdate();
+                con.setAutoCommit(false);
+                stmt = con.prepareStatement(newEdition);
+                stmt.setInt(1,issn);
+                stmt.setString(2,title);
+                stmt.setString(3,abstractText);
+                stmt.setString(3, pdf);
+                stmt.setString(4,pageRange);
+                stmt.setInt(5,published);
+                stmt.execute();
+                con.commit();
             }
             catch (SQLException ex) {
                 ex.printStackTrace();
@@ -75,6 +84,11 @@ public class ArticleTable {
             finally {
                 if (stmt != null)
                     stmt.close();
+
+                if (newEdition != null) {
+                    stmt.close();
+                }
+
             }
         }
         catch (SQLException ex) {
@@ -82,6 +96,7 @@ public class ArticleTable {
         }
         finally {
             if (con != null) con.close();
+            con.setAutoCommit(true);
         }
     }
 

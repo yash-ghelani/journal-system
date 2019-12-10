@@ -54,8 +54,15 @@ public class ReviewTable {
             try {
 
                 String journal = "INSERT INTO Review (ReviewerID, ArticleID, Summary, InitialVerdict, FinalVerdict) VALUES (" + reviewerid + "," + articleid + ", '" + Summary + "', '" + initialverdict + "', '" + finalverdict + "')";
-                System.out.println(journal);
-                stmt.executeUpdate(journal);
+                con.setAutoCommit(false);
+                stmt = con.prepareStatement(journal);
+                stmt.setInt(1, reviewerid);
+                stmt.setInt(2, articleid);
+                stmt.setString(3, Summary);
+                stmt.setString(4, initialverdict);
+                stmt.setString(5, finalverdict);
+                stmt.execute();
+                con.commit();
 
             } catch (SQLException ex) {
                 ex.printStackTrace();
@@ -68,6 +75,7 @@ public class ReviewTable {
             ex.printStackTrace();
         } finally {
             if (con != null) con.close();
+            con.setAutoCommit(true);
         }
     }
 
