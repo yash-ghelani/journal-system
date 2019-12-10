@@ -106,7 +106,7 @@ public class LoginController {
                 window.setResizable(true);
                 window.setScene(viewScene);
             } else if (!Author && Editor && !Reviewer) {
-                Parent view = FXMLLoader.load(getClass().getResource("EditorPanel.fxml"));
+                Parent view = FXMLLoader.load(getClass().getResource("Editor.fxml"));
                 Scene viewScene = new Scene(view);
                 Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 window.setResizable(true);

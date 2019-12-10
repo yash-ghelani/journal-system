@@ -71,9 +71,13 @@ public class VolumeTable {
             PreparedStatement stmt = null;
             try {
 
-
-                String journal = "INSERT INTO Volume (ISSN, PublicationYear) VALUES (" + issn +"," + year+ ")";
-                stmt.executeUpdate(journal);
+                String journal = "INSERT INTO Volume (ISSN, PublicationYear) VALUES (?,?)";
+                con.setAutoCommit(false);
+                stmt = con.prepareStatement(journal);
+                stmt.setInt(1, issn);
+                stmt.setInt(2, year);
+                stmt.execute();
+                con.commit();
 
             }
             catch (SQLException ex) {
@@ -90,7 +94,9 @@ public class VolumeTable {
         }
         finally {
             if (con != null) con.close();
+            con.setAutoCommit(true);
         }
+
     }
 
     public static void Delete(int volumeid) throws SQLException {
@@ -336,6 +342,39 @@ public class VolumeTable {
         } catch (SQLException ex) {
             ex.printStackTrace();
         } finally {
+            if (con != null) con.close();
+        }
+        return fin;
+    }
+    public static int SelectVolumeID(int issn,int year) throws SQLException {
+        int fin = 0;
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String query = "SELECT VolumeID FROM Volume WHERE ISSN = "+ issn + " AND PublicationYear = "+year;
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    fin =  res.getInt("VolumeID");
+
+                }
+                res.close();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
             if (con != null) con.close();
         }
         return fin;

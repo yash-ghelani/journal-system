@@ -60,9 +60,13 @@ public class QuestionTable {
             try {
 
 
-                String journal = "INSERT INTO Question ( ReviewID, QuestionText) VALUES (" + reviewid +",'" + question + "')";
-                System.out.println(journal);
-                stmt.executeUpdate(journal);
+                String journal = "INSERT INTO Question ( ReviewID, QuestionText) VALUES (?,?)";
+                con.setAutoCommit(false);
+                stmt = con.prepareStatement(journal);
+                stmt.setInt(1, reviewid);
+                stmt.setString(2, question);
+                stmt.execute();
+                con.commit();
 
             }
             catch (SQLException ex) {
@@ -79,7 +83,9 @@ public class QuestionTable {
         }
         finally {
             if (con != null) con.close();
+            con.setAutoCommit(true);
         }
+
     }
 
     public static void Delete(int id) throws SQLException {

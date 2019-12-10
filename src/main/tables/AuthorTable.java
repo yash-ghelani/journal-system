@@ -49,16 +49,22 @@ public class AuthorTable {
 
     public static void Insert(int userid, int temp) throws SQLException {
         Connection con = null; // connection to a database
+        PreparedStatement stmt = null;
+        String insert = "INSERT INTO Author (UserID, Temp) "+
+                " VALUES (?,?)";
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+
             try {
 
-                String insert = "INSERT INTO Author (UserID, Temp) "+
-                                " VALUES ('" + userid + "','"+ temp+"')";
-                //System.out.println(journal);
-                stmt.executeUpdate(insert);
+                con.setAutoCommit(false);
+                stmt = con.prepareStatement(insert);
+                stmt.setInt(1,userid);
+                stmt.setInt(2,temp);
+                stmt.execute();
+                con.commit();
+
             } catch (SQLException e) {
                 System.err.println( e.getClass().getName() + ": " + e.getMessage() );
                 System.out.println("Selection failed");
@@ -70,8 +76,10 @@ public class AuthorTable {
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
             System.out.println("Selection failed");
         } finally {
-            if (con != null) con.close();
+            if (con != null) {con.close();}
+            con.setAutoCommit(true);
         }
+
     }
 
     public static void Delete(int id) throws SQLException {

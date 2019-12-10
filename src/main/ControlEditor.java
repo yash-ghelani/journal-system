@@ -1,4 +1,4 @@
-package main.controllers;
+package main;
 
 import com.sun.jdi.connect.IllegalConnectorArgumentsException;
 import javafx.fxml.*;
@@ -68,70 +68,93 @@ public class ControlEditor extends ClassLoader{
 
     private VBox article;
 
-    TreeItem one = new TreeItem("Edition1");
-
-    TreeItem two = new TreeItem("Edition2");
-
-    TreeItem three = new TreeItem("Edition3");
-
-    TreeItem four = new TreeItem("Edition4");
-
    @FXML
 
    private TextField addJ;
 
+   @FXML
+
+   private ChoiceBox checker;
+
+   @FXML
+
+   private Button addingEditor;
+
+   @FXML
+
+    private Button addingJor;
+
+    @FXML
+
+    private Button treepath;
+
+    @FXML
+
+    private Button newtree;
+
+    @FXML
+
+    private Button artA;
+
+    @FXML
+
+    private Button disart;
+
+    @FXML
+
+    private Button editretire;
+
+    @FXML
+
+    private Button selectedJ;
+
    static String name_of_journal;
 
-    public ControlEditor() throws MalformedURLException {
-    }
+
 
     public void initialize() throws SQLException, MalformedURLException {
-        Main.IDs[1] = 1;
-        editnames.setText(UserTable.SelectName(EditorTable.SelectUserID(Main.IDs[2]))+" "+
-                UserTable.SelectSurName(EditorTable.SelectUserID(Main.IDs[2])));
-        editertitle.setText(JournalInfoTable.SelectEditorType(Main.IDs[2]));
-       // JournalTable.Insert(18361310,"Journal of Computer Science");
-       //System.out.println(VolumeTable.SelectVolID(1));
-        ArrayList<Integer> issns = JournalInfoTable.SelectISSNFromEditor(Main.IDs[1]);
-        for (int i = 0 ; i < issns.size() ; i++) {
-            journals.getItems().add(JournalTable.SelectName(issns.get(i)));
-        }
+        editnames.setText(UserTable.SelectName(EditorTable.SelectUserID(Main.IDs[1])) + " " +
+                UserTable.SelectSurName(EditorTable.SelectUserID(Main.IDs[1])));
+        editertitle.setText(JournalInfoTable.SelectEditorType(Main.IDs[1]));
+        SelectControl.name = editnames.getText();
+        SelectControl.issn = JournalTable.SelectISSN((String) journals.getValue());
+        kjsa();
+            // JournalTable.Insert(18361310,"Journal of Computer Science");
+            //System.out.println(VolumeTable.SelectVolID(1));
 
-        //journals.getItems().addAll(JournalTable.selectJournals());
-        journals.setValue(JournalTable.selectJournals().get(Main.vave));
+
+            //journals.getItems().addAll(JournalTable.selectJournals());
+        journals.setValue(JournalTable.SelectJournals().get(Main.vave));
         article.getChildren().add(tableView);
         l.setExpanded(true);
         treeVolume.setRoot(l);
         treeVolume.setCellFactory((TreeView<String> p) -> new TreeCellTextField());
-        one.setExpanded(false);
-        two.setExpanded(true);
-        three.setExpanded(true);
-        four.setExpanded(true);
         article_name.setCellValueFactory(new PropertyValueFactory<>("name"));
         article_name.setStyle("-fx-alignment: CENTER;");
         article_check.setCellValueFactory(new PropertyValueFactory<>("checkbox"));
         article_check.setStyle("-fx-alignment: CENTER;");
-        tableView.getColumns().addAll(article_name,article_check);
+        tableView.getColumns().addAll(article_name, article_check);
         data = FXCollections.observableArrayList();
         //getArticle().removeAll(getArticle());
         tableView.setItems(data);
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         treeVolume.refresh();
-        refresh(JournalTable.selectJournals().get(0));
+        refresh(JournalTable.SelectJournals().get(0));
         journals.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-            public void changed(ObservableValue ov,Number old_val, Number new_val) {
+            public void changed(ObservableValue ov, Number old_val, Number new_val) {
                 try {
-                    refresh(JournalTable.selectJournals().get((Integer) new_val));
+                    refresh(JournalTable.SelectJournals().get((Integer) new_val));
                     System.out.println(journals.getSelectionModel().isSelected(0));
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
-                } catch (SQLException e) {
-                    e.printStackTrace();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                 }
-            }
-        });
+            });
+        }
 
-    }
+
 
     // for adding treeitem
     public void addTable(ActionEvent action) throws SQLException {
@@ -277,7 +300,8 @@ public class ControlEditor extends ClassLoader{
 
             l.getChildren().add(r);
         } else if (!l.getChildren().isEmpty()) {
-            Object[] b = VolumeTable.SelectVolumes(18361310).toArray();
+            int o= JournalTable.SelectISSN((String) journals.getValue());
+            Object[] b = VolumeTable.SelectVolumes(o).toArray();
             store[0] = (Integer.valueOf((String) b[b.length - 1])) + 1;
             VolumeTable.Insert(JournalTable.SelectISSN((String) journals.getValue()), store[0]);
 
@@ -344,6 +368,61 @@ public class ControlEditor extends ClassLoader{
         String h = String.valueOf(addJ.getText().hashCode()).substring(0,8);
         JournalTable.Insert(Integer.valueOf(h),addJ.getText());
         addJ.clear();
+        }
+    }
+
+    public void selector(ActionEvent actionEvent) throws IOException {
+        URL url = new File("src/resources/SelectJournal.fxml").toURI().toURL();
+        Parent view = FXMLLoader.load(url);
+        Scene viewScene = new Scene(view);
+        Stage window = new Stage();
+        window.setResizable(true);
+        window.setScene(viewScene);
+        window.initModality(Modality.APPLICATION_MODAL);
+        SelectControl.closer = window;
+        window.show();
+    }
+
+    public void kjsa() throws SQLException {
+        String [] vm =  editnames.getText().split(" ");
+        ArrayList<Integer> ik = JournalInfoTable.SelectISSNFromEditor(EditorTable.GetID(UserTable.GetID(vm[0],vm[1])));
+        ArrayList<Integer> issns = JournalInfoTable.SelectISSNFromEditor(Main.IDs[1]);
+        for (int i = 0; i < issns.size(); i++) {
+            journals.getItems().add(JournalTable.SelectName(issns.get(i)));
+        }
+
+        if (JournalTable.SelectJournals().isEmpty() && ik.isEmpty() ){
+            addingEditor.setDisable(true);
+            journals.setDisable(true);
+            //addingJor.setDisable(true);
+            treepath.setDisable(true);
+            newtree.setDisable(true);
+            artA.setDisable(true);
+            disart.setDisable(true);
+            editretire.setDisable(true);
+            selectedJ.setDisable(true);
+        }
+        else if (!JournalTable.SelectJournals().isEmpty() && ik.isEmpty()){
+            addingEditor.setDisable(true);
+            journals.setDisable(true);
+            //addingJor.setDisable(true);
+            treepath.setDisable(true);
+            newtree.setDisable(true);
+            artA.setDisable(true);
+            disart.setDisable(true);
+            editretire.setDisable(true);
+           //selectedJ.setDisable(true);
+        }
+        else {
+            addingEditor.setDisable(false);
+            journals.setDisable(false);
+            addingJor.setDisable(true);
+            treepath.setDisable(false);
+            newtree.setDisable(false);
+            artA.setDisable(false);
+            disart.setDisable(false);
+            editretire.setDisable(false);
+            selectedJ.setDisable(false);
         }
     }
 

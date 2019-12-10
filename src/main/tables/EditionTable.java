@@ -65,15 +65,23 @@ public class EditionTable {
 
     public static void Insert(int volumeID, int month ) throws SQLException {
         Connection con = null; // connection to a database
+        PreparedStatement stmt = null;
+
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+
             try {
 
                 if (month<12 || month>0) {
-                    String newEdition = "INSERT INTO Edition (VolumeID, PublicationMonth) VALUES ('" + volumeID + "',  '" + month + "')";
-                    stmt = con.prepareStatement(newEdition); stmt.executeUpdate();
+                    String newEdition = "INSERT INTO Edition (VolumeID, PublicationMonth) VALUES (?,?)";
+                    con.setAutoCommit(false);
+                    stmt = con.prepareStatement(newEdition);
+                    stmt.setInt(1, volumeID);
+                    stmt.setInt(2, month);
+
+                    stmt.execute();
+                    con.commit();
                 } else {
                     System.out.println("Invalid Month");
                 }
@@ -82,9 +90,12 @@ public class EditionTable {
                 ex.printStackTrace();
             }
             finally {
-                if (stmt != null)
+                if (stmt != null) {
                     stmt.close();
+                }
+                con.setAutoCommit(true);
             }
+
 
         }
         catch (SQLException ex) {
@@ -351,6 +362,74 @@ public class EditionTable {
             if (con != null) con.close();
         }
         return list;
+    }
+
+    public static ArrayList<String> selectMonth(int volID) throws SQLException {
+        ArrayList<String> list = new ArrayList<String>();
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String query = "SELECT PublicationMonth FROM Edition WHERE VolumeID = "+ volID;
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    int fin = res.getInt("PublicationMonth");
+                    list.add(String.valueOf(fin));
+                }
+                res.close();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+        return list;
+    }
+
+    public static int selectArticles(int month, int volid) throws SQLException {
+        int fin = 0;
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String query = "SELECT EditionID FROM Edition WHERE VolumeID = "+ volid + " AND PublicationMonth = " + month;
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    fin = res.getInt("EditionID");
+                    //list.add(String.valueOf(fin));
+                }
+                res.close();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+        return fin;
     }
 
     public static ArrayList<String> SelectID(int volID, String editionID) throws SQLException {

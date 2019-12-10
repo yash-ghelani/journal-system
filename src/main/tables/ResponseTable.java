@@ -59,9 +59,13 @@ public class ResponseTable {
             PreparedStatement stmt = null;
             try {
 
-                String journal = "INSERT INTO Response (QuestionID, ResponseText) VALUES (" + questionid  + ",'" + response + "')";
-                System.out.println(journal);
-                stmt.executeUpdate(journal);
+                String journal = "INSERT INTO Response (QuestionID, ResponseText) VALUES (?,?)";
+                con.setAutoCommit(false);
+                stmt = con.prepareStatement(journal);
+                stmt.setInt(1, questionid);
+                stmt.setString(2, response);
+                stmt.execute();
+                con.commit();
             }
             catch (SQLException ex) {
                 ex.printStackTrace();
@@ -76,7 +80,9 @@ public class ResponseTable {
         }
         finally {
             if (con != null) con.close();
+            con.setAutoCommit(true);
         }
+
     }
 
     public static void Delete(int id) throws SQLException {
