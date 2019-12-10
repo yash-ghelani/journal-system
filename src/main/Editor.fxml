@@ -23,7 +23,6 @@
             <Button layoutX="107.0" layoutY="4.0" mnemonicParsing="false" onAction="#retire" text="Editor" />
             <Label fx:id="editnames" layoutX="425.0" layoutY="7.0" prefHeight="17.0" prefWidth="77.0" text="editor name" AnchorPane.leftAnchor="425.0" AnchorPane.rightAnchor="99.0" />
             <ChoiceBox fx:id="journals" layoutX="190.0" layoutY="4.0" prefWidth="150.0" />
-            <Button layoutX="346.0" layoutY="4.0" mnemonicParsing="false" onAction="#refresh" text="Refresh" />
             </children>
         </AnchorPane>
         <AnchorPane layoutX="215.0" layoutY="30.0" prefHeight="433.0" prefWidth="385.0">
