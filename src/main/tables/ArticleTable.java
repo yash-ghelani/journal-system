@@ -13,52 +13,52 @@ public class ArticleTable {
         //at.CreateArticleTable();
     }
 
-//    public static void CreateArticleTable() throws SQLException {
-//
-//        Connection con = null; // a Connection object
-//        try {
-//            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
-//            //=========================================================================================================
-//
-//            Statement stmt = null;
-//            try {
-//                stmt = con.createStatement();
-//                String initialise = "CREATE TABLE Articles " + //Creating the table
-//                                    "(ArticleID             INT    NOT NULL AUTO_INCREMENT, "+ //Creating the different fields
-//                                    "ISSN                   INT, "+
-//                                    "EditionID              INT, "+
-//                                    "Title                  TEXT, "+
-//                                    "Abstract               TEXT, " +
-//                                    "PDF                    TEXT," +
-//                                    "PageRange              TEXT, "+
-//                                    "Published              INT,"+
-//                                    "PRIMARY KEY (ArticleID), "+
-//                                    "FOREIGN KEY (ISSN) REFERENCES Journal(ISSN), "+
-//                                    "FOREIGN KEY (EditionID) REFERENCES Edition(EditionID))";
-//
-//                stmt.executeUpdate(initialise);
-//            }
-//            catch (SQLException ex) {
-//                ex.printStackTrace();
-//            }
-//            finally {
-//                if (stmt != null)
-//                    stmt.close();
-//            }
-//
-//
-//            //=========================================================================================================
-//        }
-//        catch (Exception e) {
-//            //e.printStackTrace();
-//            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-//
-//        }
-//        finally {
-//            if (con != null) con.close();
-//        }
-//
-//    }
+    public static void CreateArticleTable() throws SQLException {
+
+        Connection con = null; // a Connection object
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            //=========================================================================================================
+
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String initialise = "CREATE TABLE Articles " + //Creating the table
+                                    "(ArticleID             INT    NOT NULL AUTO_INCREMENT, "+ //Creating the different fields
+                                    "ISSN                   INT, "+
+                                    "EditionID              INT, "+
+                                    "Title                  TEXT, "+
+                                    "Abstract               TEXT, " +
+                                    "PDF                    TEXT," +
+                                    "PageRange              TEXT, "+
+                                    "Published              INT,"+
+                                    "PRIMARY KEY (ArticleID), "+
+                                    "FOREIGN KEY (ISSN) REFERENCES Journal(ISSN), "+
+                                    "FOREIGN KEY (EditionID) REFERENCES Edition(EditionID))";
+
+                stmt.executeUpdate(initialise);
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+
+
+            //=========================================================================================================
+        }
+        catch (Exception e) {
+            //e.printStackTrace();
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+
+        }
+        finally {
+            if (con != null) con.close();
+        }
+
+    }
 
     public static void Insert(int issn, String title, String abstractText, String pdf, String pageRange,  int published) throws SQLException {
         Connection con = null; // connection to a database

@@ -569,7 +569,7 @@ public class AuthorTable {
     }
 
     public static int GetUserID(int id) throws SQLException {
-        int fin = -1;
+        int fin = 0;
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
@@ -577,10 +577,10 @@ public class AuthorTable {
             Statement stmt = null;
             try {
                 stmt = con.createStatement();
-                String query = "SELECT UserID FROM Author WHERE AuthorID = '" +id+ "'";
+                String query = "SELECT UserID FROM Author WHERE AuthorID = " + id;
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
-                    fin = res.getInt("AuthorID");
+                    fin = res.getInt("UserID");
                 }
                 res.close();
             }

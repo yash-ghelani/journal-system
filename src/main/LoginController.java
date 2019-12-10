@@ -49,6 +49,19 @@ public class LoginController {
         String login = loginID.getText();
         String password = Integer.toString(Password.getText().hashCode());
         int userID = UserTable.ValidateEmailAndPassword(login, password);
+//        System.out.println(userID);
+//        ArrayList<Integer> list = UserTable.GetID1(login, password);
+//        System.out.println(list);
+//
+//        if (list.size() > 0) {
+//            for (int i = 0 ; i < list.size(); i++) {
+//                int a = AuthorTable.GetID(list.get(i));
+//                int e = EditorTable.GetID(list.get(i));
+//                int r = ReviewerTable.GetID(list.get(i));
+//                System.out.println(a + " " + e + " " + r);
+//            }
+//        }
+
 
         // if user exists
         if(userID != -1) {
@@ -58,20 +71,18 @@ public class LoginController {
             Main.IDs[0] = AuthorTable.GetID(userID);
             Main.IDs[1] = EditorTable.GetID(userID);
             Main.IDs[2] = ReviewerTable.GetID(userID);
-
-
-
+            //System.out.println(AuthorTable.GetUserID(Main.IDs[0]));
             boolean Author = false;
             boolean Editor = false;
             boolean Reviewer = false;
 
-//            if (Main.IDs[0] != -1) {
-//                Author = true;
-//            } else if (Main.IDs[1] != -1) {
-//                Editor = true;
-//            } if (Main.IDs[2] != -1) {
-//                Reviewer = true;
-//            }
+            if (Main.IDs[0] != -1) {
+                Author = true;
+            } else if (Main.IDs[1] != -1) {
+                Editor = true;
+            } if (Main.IDs[2] != -1) {
+                Reviewer = true;
+            }
 
             if (Main.IDs[0] != -1) {
                 Author = true;

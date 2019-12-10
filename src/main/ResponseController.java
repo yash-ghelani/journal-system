@@ -115,7 +115,7 @@ public class ResponseController {
         for (int i = 0; i < (questions).size(); i++) {
 
 
-            VBox box1 = FXMLLoader.load(getClass().getResource("ResponseBox.fxml"));
+            VBox box1 = FXMLLoader.load(getClass().getResource("RespondBox.fxml"));
             HBox box2 = (HBox) box1.getChildren().get(0);
             VBox box3 = (VBox) box2.getChildren().get(0);
 

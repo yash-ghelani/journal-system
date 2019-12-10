@@ -32,6 +32,8 @@ public class Main<IDs> extends Application {
 
     public static int AuthorCurrentReviewID;
 
+    public static int ResponseArticleID;
+
 
     public static void main(String[] args) {
         launch(args);

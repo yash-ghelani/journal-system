@@ -27,6 +27,8 @@ import static main.Main.ArticleIDForReview;
 
 
 public class ReviewPanelController {
+    @FXML
+    private Button viewresponse;
 
     @FXML
     private Button clickToAdd;
@@ -55,11 +57,25 @@ public class ReviewPanelController {
         window.setScene(viewScene);
     }
 
-    public void handleViewResponse(ActionEvent event) throws IOException {
-        Parent view = FXMLLoader.load(getClass().getResource("FinalVerdict.fxml"));
-        Scene viewScene = new Scene(view);
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(viewScene);
+    public void handleViewResponse(ActionEvent event) throws IOException, SQLException {
+        String text = submissionid.getText();
+        String id = text.substring(11);
+        int idtoint = Integer.parseInt(id);
+        Main.ResponseArticleID = idtoint;
+        if ((ReviewTable.SelectReviewsCompleted(Main.ResponseArticleID).size() > 0)) {
+
+            Parent view = FXMLLoader.load(getClass().getResource("Respond.fxml"));
+            Scene viewScene = new Scene(view);
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            window.setScene(viewScene);
+
+        } else {
+            viewresponse.setStyle("-fx-text-fill : red;");
+            viewresponse.setText("No response yet");
+            //viewresponse.setStyle("-fx-text-fill : black;");
+        }
+
+
     }
 
     public void handleLogOut(ActionEvent event) throws IOException {
@@ -86,6 +102,7 @@ public class ReviewPanelController {
             HBox box = FXMLLoader.load(getClass().getResource("ReviewPanelBox.fxml"));
             ObservableList<Node> child = box.getChildren();
             vboxpanel.getChildren().remove(clickToAdd);
+            vboxpanel.getChildren().add(box);
 
             VBox v = (VBox) child.get(0);
             VBox pdfBox = (VBox) child.get(2);
@@ -105,7 +122,7 @@ public class ReviewPanelController {
             }
             //System.out.println(ReviewTable.SelectInitialVerdict(reviewid).equals("null"));
 
-            if(ReviewTable.SelectInitialVerdict(reviewid).equals(null)){
+            if(ReviewTable.SelectInitialVerdict(reviewid) == "null"){
                 finalButton.setVisible(false);
             }
 
@@ -114,8 +131,7 @@ public class ReviewPanelController {
             sep.setPadding(padding);
 
 
-
-            if(ReviewTable.SelectFinalVerdict(submissionids.get(i)).equalsIgnoreCase("null")){
+            if(ReviewTable.SelectFinalVerdict(submissionids.get(i)) == ("null")){
                 vboxpanel.getChildren().add(box);
                 vboxpanel.getChildren().add(sep);
                 //System.out.

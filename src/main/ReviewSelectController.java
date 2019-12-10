@@ -87,11 +87,11 @@ public class ReviewSelectController {
                 selector.setVisible(false);
             }
 
-            if(UserTable.SelectAffiliation(ReviewerTable.GetUserID(IDs[2])).equalsIgnoreCase(UserTable.SelectAffiliation(AuthorTable.SelectUserID(ArticleInfoTable.GetAuthorID(s))))){
-                VBox vButton = (VBox)child.get(2);
-                Button selector = (Button) vButton.getChildren().get(0);
-                selector.setVisible(false);
-            }
+//            if(UserTable.SelectAffiliation(ReviewerTable.GetUserID(IDs[2])).equalsIgnoreCase(UserTable.SelectAffiliation(AuthorTable.SelectUserID(ArticleInfoTable.GetAuthorID(s))))){
+//                VBox vButton = (VBox)child.get(2);
+//                Button selector = (Button) vButton.getChildren().get(0);
+//                selector.setVisible(false);
+//            }
 
             title.setText(ArticleTable.SelectTitle(ids.get(i)));
             articleID.setText("ArticleID: " + s);

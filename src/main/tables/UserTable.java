@@ -1,6 +1,7 @@
 package main.tables;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class UserTable {
 
@@ -384,6 +385,40 @@ public class UserTable {
         finally {
             if (con != null) con.close();
         }
+    }
+
+    public static ArrayList<Integer> GetID1(String name, String surname) throws SQLException {
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String query = "SELECT UserID FROM User WHERE Email = '"+name+"' AND Password = '"+surname+"'";
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    int id = res.getInt("UserID");
+                    list.add(id);
+                }
+                res.close();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+        return list;
     }
 
 }
