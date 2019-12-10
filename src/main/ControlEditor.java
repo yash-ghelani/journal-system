@@ -1,4 +1,4 @@
-package main.controllers;
+package main;
 
 import com.sun.jdi.connect.IllegalConnectorArgumentsException;
 import javafx.fxml.*;
@@ -8,7 +8,6 @@ import javafx.scene.control.*;
 import javafx.event.ActionEvent;
 import javafx.scene.control.cell.*;
 import javafx.beans.value.*;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Modality;
 import javafx.stage.*;
@@ -20,8 +19,6 @@ import java.io.*;;
 import java.net.MalformedURLException;
 import java.net.*;
 import javafx.collections.*;
-import main.Main;
-import main.TreeCellTextField;
 import main.tables.*;
 
 

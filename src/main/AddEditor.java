@@ -1,4 +1,4 @@
-package main.controllers;
+package main;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
