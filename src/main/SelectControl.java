@@ -35,11 +35,23 @@ public class SelectControl {
     private ListView vthings;
 
     public void initialize() throws SQLException {
+        zv.clear();
         for (String v : JournalTable.SelectJournals()){
-            zv.add(v);
+            String [] hf = name.split(" ");
+        Integer[] isss =((Integer [])JournalInfoTable.SelectISSNFromEditor
+                (EditorTable.GetID(UserTable.GetID(hf[0],hf[1]))).toArray());
+        for (int f : isss){
+           String j = JournalTable.SelectName(f);
+           if (j == v){
+               continue;
+           }
+           else {
+               zv.add(v);
+           }
+        }
+
         }
         vthings.getItems().setAll(zv);
-
     }
 
 

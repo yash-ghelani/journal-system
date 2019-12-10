@@ -359,7 +359,7 @@ public class ControlEditor extends ClassLoader{
         }
     }
 
-    public void addJournal(ActionEvent actionEvent) throws SQLException {
+    public void addJournal(ActionEvent actionEvent) throws SQLException, MalformedURLException,IOException {
         if (addJ.getText().isEmpty()){
             addJ.setStyle("-fx-prompt-text-fill:red");
         }
@@ -368,6 +368,12 @@ public class ControlEditor extends ClassLoader{
         String h = String.valueOf(addJ.getText().hashCode()).substring(0,8);
         JournalTable.Insert(Integer.valueOf(h),addJ.getText());
         addJ.clear();
+        URL url = new File("src/main/Editor.fxml").toURI().toURL();
+        Parent view = FXMLLoader.load(url);
+        Scene viewScene = new Scene(view);
+        Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        window.setResizable(true);
+        window.setScene(viewScene);
         }
     }
 
