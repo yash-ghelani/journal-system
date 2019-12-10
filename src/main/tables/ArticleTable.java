@@ -697,5 +697,39 @@ public class ArticleTable {
         }
     }
 
+    public static boolean isPublished(int id) throws SQLException {
+        int fin = 0;
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String query = "SELECT Published FROM Articles WHERE ArticleID = " + id;
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    fin = res.getInt("Published");
+                }
+                res.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            } finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (con != null) con.close();
+        }
+
+        if (fin > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }
 
