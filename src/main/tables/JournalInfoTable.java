@@ -79,7 +79,7 @@ public class JournalInfoTable {
             ex.printStackTrace();
         } finally {
             if (con != null) con.close();
-            con.setAutoCommit(true);
+
         }
 
     }

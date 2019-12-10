@@ -83,7 +83,7 @@ public class ErrorTable {
         finally {
             if (con != null) con.close();
         }
-        con.setAutoCommit(true);
+
     }
 
     public static void Delete(int id) throws SQLException {

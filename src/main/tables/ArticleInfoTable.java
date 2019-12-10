@@ -89,7 +89,7 @@ public class ArticleInfoTable {
             if (newEdition != null || stmt != null) {
                 stmt.close();
             }
-            con.setAutoCommit(true);
+
         }
     }
 

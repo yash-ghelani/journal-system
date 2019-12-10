@@ -80,7 +80,7 @@ public class ResponseTable {
         }
         finally {
             if (con != null) con.close();
-            con.setAutoCommit(true);
+
         }
 
     }

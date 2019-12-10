@@ -83,7 +83,7 @@ public class QuestionTable {
         }
         finally {
             if (con != null) con.close();
-            con.setAutoCommit(true);
+
         }
 
     }

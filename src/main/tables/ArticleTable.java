@@ -96,7 +96,7 @@ public class ArticleTable {
         }
         finally {
             if (con != null) con.close();
-            con.setAutoCommit(true);
+
         }
     }
 

@@ -77,7 +77,7 @@ public class ReviewerTable {
             System.out.println("Selection failed");
         } finally {
             if (con != null) con.close();
-            con.setAutoCommit(true);
+
         }
     }
 

@@ -78,7 +78,7 @@ public class EditorTable {
             if (con != null) {
                 con.close();
             }
-            con.setAutoCommit(true);
+
         }
     }
 

@@ -94,7 +94,7 @@ public class VolumeTable {
         }
         finally {
             if (con != null) con.close();
-            con.setAutoCommit(true);
+
         }
 
     }

@@ -93,7 +93,7 @@ public class EditionTable {
                 if (stmt != null) {
                     stmt.close();
                 }
-                con.setAutoCommit(true);
+
             }
 
 

@@ -82,7 +82,7 @@ public class JournalTable {
         }
         finally {
             if (con != null) con.close();
-            con.setAutoCommit(true);
+
         }
 
     }

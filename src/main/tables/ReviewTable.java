@@ -75,7 +75,7 @@ public class ReviewTable {
             ex.printStackTrace();
         } finally {
             if (con != null) con.close();
-            con.setAutoCommit(true);
+
         }
     }
 

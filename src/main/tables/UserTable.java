@@ -83,7 +83,7 @@ public class UserTable {
             if (insertString != null) {
                 insertString.close();
             }
-            con.setAutoCommit(true);
+
         }
     }
 
