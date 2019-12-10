@@ -78,11 +78,11 @@ public class RegisterController extends Main {
             loadLogin(action);
 
             if (roles.getValue() == "Author"){
-                AuthorTable.Insert(UserTable.ValidateEmailAndPassword(emailField.getText(), String.valueOf(passWordField.getText().hashCode())), 0);
+                AuthorTable.Insert(UserTable.ValidateEmailAndPassword(emailField.getText().trim(), String.valueOf(passWordField.getText().trim().hashCode())), 0);
             } else if (roles.getValue() == "Editor"){
-                EditorTable.Insert(UserTable.ValidateEmailAndPassword(emailField.getText(), String.valueOf(passWordField.getText().hashCode())), 0);
+                EditorTable.Insert(UserTable.ValidateEmailAndPassword(emailField.getText().trim(), String.valueOf(passWordField.getText().trim().hashCode())), 0);
             } else {
-                ReviewerTable.Insert(UserTable.ValidateEmailAndPassword(emailField.getText(), String.valueOf(passWordField.getText().hashCode())), 0, 0);
+                ReviewerTable.Insert(UserTable.ValidateEmailAndPassword(emailField.getText().trim(), String.valueOf(passWordField.getText().trim().hashCode())), 0, 0);
             }
 
         }
@@ -123,7 +123,7 @@ public class RegisterController extends Main {
         // last name
         if (lastName.getText().isEmpty() || !lastName.getText().chars().allMatch(Character::isLetter)) {
             lastName.setStyle("-fx-prompt-text-fill : red;");
-            firstName.clear();
+            lastName.clear();
             return false;
         } else {
             return true;
@@ -145,7 +145,7 @@ public class RegisterController extends Main {
     public boolean validAffiliation(){
         if (affiliation.getText().isEmpty()) {
             affiliation.setStyle("-fx-border-color: red; -fx-border-width: 2px;-fx-prompt-text-fill : red;");
-            firstName.clear();
+            affiliation.clear();
             return false;
         } else {
             return true;
@@ -157,8 +157,9 @@ public class RegisterController extends Main {
             return true;
         } else {
             passWordField.setStyle("-fx-prompt-text-fill : red;");
-            passWordField.clear();
             passWordField.setPromptText("Password must be over 6 letters long");
+            passWordField.clear();
+
             return false;
         }
     }
