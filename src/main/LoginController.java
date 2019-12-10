@@ -194,6 +194,7 @@ public class LoginController {
     public boolean checkReviewer(int reviewerid) throws SQLException {
         int count = 0;
         ArrayList<Integer> articleid = ReviewTable.SelectArticleIDFromReviewerID(reviewerid);
+        int istemp = ReviewerTable.SelectTemp(Main.IDs[2]);
 
         for (int i = 0 ; i < articleid.size() ; i++) {
             boolean ispublished = ArticleTable.isPublished(articleid.get(i));
@@ -203,7 +204,7 @@ public class LoginController {
             }
         }
 
-        if (count > 3 && articleid.size() == 3) {
+        if (count > 3 && articleid.size() == 3 && istemp == 0) {
             return true;
         } else {
             return false;

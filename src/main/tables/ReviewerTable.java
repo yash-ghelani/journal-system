@@ -497,7 +497,7 @@ public class ReviewerTable {
         return fin;
     }
 
-    public int SelectTemp(int id) throws SQLException {
+    public static int SelectTemp(int id) throws SQLException {
         int fin = 0;
         Connection con = null; // connection to a database
         try {
