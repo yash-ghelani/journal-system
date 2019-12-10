@@ -1,4 +1,4 @@
-package main.controllers;
+package main;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,7 +26,7 @@ public class SelectControl {
 
     public void initialize() throws SQLException {
 
-        for (String v : JournalTable.selectJournals()){
+        for (String v : JournalTable.SelectJournals()){
             zv.add(v);
         }
         vthings.getItems().setAll(zv);

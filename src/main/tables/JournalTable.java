@@ -6,10 +6,7 @@ public class JournalTable {
 
     public static void main (String args[]) throws SQLException {
 
-        JournalTable jt = new JournalTable();
-
-        jt.CreateJournalTable();
-        jt.Insert(12345678, "test2");
+        Insert(12345678, "test2");
         //jt.Delete(12345678);
         //System.out.println(jt.SelectName(12345679));
 
