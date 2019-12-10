@@ -62,11 +62,21 @@ public class LoginController {
             boolean Reviewer = false;
 
 
+//            if (Main.IDs[0] != -1) {
+//                Author = true;
+//            } else if (Main.IDs[1] != -1) {
+//                Editor = true;
+//            } if (Main.IDs[2] != -1) {
+//                Reviewer = true;
+//            }
+
             if (Main.IDs[0] != -1) {
                 Author = true;
-            } else if (Main.IDs[1] != -1) {
+            }
+            if (Main.IDs[1] != -1) {
                 Editor = true;
-            } if (Main.IDs[2] != -1) {
+            }
+            if (Main.IDs[2] != -1) {
                 Reviewer = true;
             }
 
