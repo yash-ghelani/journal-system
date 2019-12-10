@@ -27,22 +27,22 @@ public class AddDeleteTables {
     public static void add() throws SQLException {
 //        //Creates all tables
         CreateUserTable();
-//        EditorTable.CreateEditorTable();
-//        ReviewerTable.CreateReviewerTable();
-//        JournalTable.CreateJournalTable();
-//        JournalInfoTable.CreateJournalInfoTable();
-//        VolumeTable.CreateVolumeTable();
-//        EditionTable.CreateEditionTable();
-//        AuthorTable.CreateAuthorTable();
-//        ArticleTable.CreateArticleTable();
-//        ArticleInfoTable.CreateArticleInfoTable();
-//        ReviewTable.CreateReviewTable();
-//        ErrorTable.CreateErrorTable();
-//        QuestionTable.CreateQuestionTable();
-//        ResponseTable.CreateResponseTable();
+        EditorTable.CreateEditorTable();
+        ReviewerTable.CreateReviewerTable();
+        JournalTable.CreateJournalTable();
+        JournalInfoTable.CreateJournalInfoTable();
+        VolumeTable.CreateVolumeTable();
+        EditionTable.CreateEditionTable();
+        AuthorTable.CreateAuthorTable();
+        ArticleTable.CreateArticleTable();
+        ArticleInfoTable.CreateArticleInfoTable();
+        ReviewTable.CreateReviewTable();
+        ErrorTable.CreateErrorTable();
+        QuestionTable.CreateQuestionTable();
+        ResponseTable.CreateResponseTable();
     }
     public static void main (String args[]) throws SQLException {
-        //AddDeleteTables.delete();
+        AddDeleteTables.delete();
         AddDeleteTables.add();
     }
 }

@@ -81,7 +81,7 @@ public class FinalVerdictController {
 
     public void handleLoadResponse(ActionEvent actionEvent) throws IOException, SQLException {
 
-        VBox box = FXMLLoader.load(getClass().getResource("../../../../Desktop/d/FinalVerdictMainBox.fxml"));
+        VBox box = FXMLLoader.load(getClass().getResource("FinalVerdictMainBox.fxml"));
         vbox.getChildren().remove(loadresponse);
         vbox.getChildren().add(box);
 

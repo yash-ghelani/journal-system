@@ -39,9 +39,11 @@ public class NewSubmissionController {
 
     static ArrayList<Integer> ids = new  ArrayList<>();
     static int authCount = 1;
+    public Label authLab;
 
     public void initialize () throws SQLException {
         idLab.setText("Author ID: "+Main.IDs[0]);
+
         // getting list of journals
         List<String> journalList = JournalTable.SelectJournals();
         ObservableList jList = FXCollections.observableList(journalList);
@@ -69,11 +71,14 @@ public class NewSubmissionController {
             System.out.println("added author");
             //adding co authors
             for (int i = 0; i < ids.size(); i++){
+
                 ArticleInfoTable.Insert(articleID, ids.get(i), 1);
                 System.out.println("added co author "+ ids.get(i));
             }
 
-            loadScene(event, "AuthorPanel.fxml");
+            ReviewerTable.Insert(Main.IDs[0],1,0);
+
+            loadScene(event, "ReviewPanel.fxml");
 
 
         } else {
@@ -95,8 +100,7 @@ public class NewSubmissionController {
     }
 
     public void loadScene (ActionEvent action, String pathname) throws IOException {
-        URL url = new File(pathname).toURI().toURL();
-        Parent view = FXMLLoader.load(url);
+        Parent view = FXMLLoader.load(getClass().getResource(pathname));
         Scene viewScene = new Scene(view);
         Stage window = (Stage) ((Node) action.getSource()).getScene().getWindow();
         window.setResizable(true);
@@ -104,8 +108,7 @@ public class NewSubmissionController {
     }
 
     public void addNewAuthor(ActionEvent actionEvent) throws IOException {
-        URL url = new File("AddAuthor.fxml").toURI().toURL();
-        Parent view = FXMLLoader.load(url);
+        Parent view = FXMLLoader.load(getClass().getResource("AddAuthor.fxml"));
         Scene viewScene = new Scene(view);
         Stage window = new Stage();
         window.setResizable(true);

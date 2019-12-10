@@ -46,14 +46,18 @@ public class AddAuthor {
 
         if (t && fn && ln && a && em && pw) {
 
-            if (NewSubmissionController.authCount == 1) {
+            if (aCount == 1) {
                 addAuth();
-            } else if (NewSubmissionController.authCount == 2) {
+                aCount += 1;
+            } else if (aCount == 2) {
                 addAuth();
-            } else if (NewSubmissionController.authCount == 3) {
+                aCount += 1;
+            } else if (aCount == 3) {
                 addAuth();
+                aCount += 1;
             } else {
                 sLab.setText("You can only add 3 co-authors");
+                NewSubmissionController.authCount = aCount;
                 stage.close();
             }
         }
