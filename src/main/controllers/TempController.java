@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.*;
 
-public class TempController extends Main {
+public class TempController {
 
     @FXML
     private TextField firstName;

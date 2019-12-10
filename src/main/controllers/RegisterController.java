@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.*;
 
-public class RegisterController extends Main {
+public class RegisterController {
 
     @FXML
     private TextField firstName;
