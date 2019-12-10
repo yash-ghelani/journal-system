@@ -103,9 +103,9 @@ public class ReviewPanelController {
             if(ReviewTable.CheckReviewIDsSum(reviewid)>0){
                 initialButton.setVisible(false);
             }
-            System.out.println(ReviewTable.SelectInitialVerdict(reviewid).equals("null"));
+            //System.out.println(ReviewTable.SelectInitialVerdict(reviewid).equals("null"));
 
-            if(ReviewTable.SelectInitialVerdict(reviewid).equals("null")){
+            if(ReviewTable.SelectInitialVerdict(reviewid).equals(null)){
                 finalButton.setVisible(false);
             }
 
