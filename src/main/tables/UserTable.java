@@ -174,11 +174,11 @@ public class UserTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String query = "SELECT Affiliation FROM User WHERE UserID = " + id;
-                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
+                ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     fin = res.getString("Affiliation");
                 }
@@ -205,11 +205,11 @@ public class UserTable {
         Connection con = null;
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String newEdition = "DROP TABLE User";
-                stmt = con.prepareStatement(newEdition); stmt.executeUpdate();
+                stmt.executeUpdate(newEdition);
             }
             catch (SQLException ex) {
                 ex.printStackTrace();
@@ -233,11 +233,11 @@ public class UserTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String query = "SELECT UserID FROM User WHERE (Name = '"+name+"' AND Surname = '"+surname+"' AND Email = '"+email+"')";
-                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
+                ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     id = res.getInt("UserID");
                 }
