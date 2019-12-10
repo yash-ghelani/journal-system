@@ -375,6 +375,31 @@ public class ArticleInfoTable {
         return fin;
     }
 
+    public static void DeleteArticleID(String name) throws SQLException {
+        Connection con = null;
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            PreparedStatement stmt = null;
+            try {
+
+                String newEdition = "DELETE FROM ArticleInfo WHERE ArticleID IN ('"+name+"')";
+                stmt = con.prepareStatement(newEdition); stmt.executeUpdate();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+    }
 
 }
 

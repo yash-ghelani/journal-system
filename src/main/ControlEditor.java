@@ -16,6 +16,7 @@ import javafx.stage.*;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.io.*;;
 import java.net.MalformedURLException;
@@ -234,7 +235,7 @@ public class ControlEditor extends ClassLoader {
             if (ReviewTable.CheckIfReviewed(articleids.get(i))) {
                 int articleid = articleids.get(i);
                 if (UserTable.SelectAffiliation(EditorTable.SelectUserID(Main.IDs[1])).equalsIgnoreCase(UserTable.SelectAffiliation(AuthorTable.SelectUserID(ArticleInfoTable.GetAuthorID(articleid))))) {
-                    System.out.println("not affiliated");
+                   // System.out.println("not affiliated");
                 } else {
                     articles.add(new Article(ArticleTable.SelectTitle(articleid)));
 
@@ -250,7 +251,7 @@ public class ControlEditor extends ClassLoader {
     // for discarding article
     public void removeArticles(ActionEvent actionEvent) throws SQLException {
         ObservableList<Article> art = FXCollections.observableArrayList();
-        ObservableList<String> ar = FXCollections.observableArrayList();
+        ObservableList<String>ar = FXCollections.observableArrayList();
 
         for (Article t : data) {
             if (t.getCheckbox().isSelected()) {
@@ -259,8 +260,16 @@ public class ControlEditor extends ClassLoader {
 
             }
         }
-        ArticleTable.DeleteByName(ar);
-        data.removeAll(art);
+        String [] jk = Arrays.copyOf(ar.toArray(), ar.toArray().length, String[].class);
+
+        String con = null;
+        for (String k :jk){
+            con += ","+k;
+        }
+        int po = con.length();
+        ArticleInfoTable.DeleteArticleID(ArticleTable.GetArticleID(con.substring(5,po)));
+      // ArticleTable.DeleteByName(con.substring(5,po));
+       System.out.println(ArticleInfoTable.G);
 
     }
 
@@ -303,7 +312,7 @@ public class ControlEditor extends ClassLoader {
     }
 
     public void addEditors(ActionEvent action) throws IOException {
-        URL url = new File("src/resources/ADDEditor.fxml").toURI().toURL();
+        URL url = new File("src/main/ADDEditor.fxml").toURI().toURL();
         Parent view = FXMLLoader.load(url);
         Scene viewScene = new Scene(view);
         Stage window = new Stage();
@@ -316,7 +325,7 @@ public class ControlEditor extends ClassLoader {
     public void retire(ActionEvent action) throws IOException {
         ename = editnames.getText();
         enameTitle = editertitle.getText();
-        URL url = new File("src/resources/RetireEditor.fxml").toURI().toURL();
+        URL url = new File("src/main/RetireEditor.fxml").toURI().toURL();
         Parent view = FXMLLoader.load(url);
         Scene viewScene = new Scene(view);
         Stage window = new Stage();
@@ -388,10 +397,12 @@ public class ControlEditor extends ClassLoader {
 
 
             for (String e : EditionTable.selectMonth(volid)) {
+                a.clear();
                 a.add(new TreeItem(e));
             }
 
             for (TreeItem b : a) {
+                n.getChildren().clear();
                 n.getChildren().add(b);
                 int month = EditionTable.selectArticles(Integer.valueOf((String) b.getValue()), volid);
 
@@ -400,13 +411,16 @@ public class ControlEditor extends ClassLoader {
 
 
                 for (String title : dc) {
+                    w.clear();
                     w.add(new TreeItem(title));
                 }
 
                 for (TreeItem ti : w) {
+                    b.getChildren().clear();
                     b.getChildren().add(ti);
                 }
             }
+            l.getChildren().clear();
             l.getChildren().add(n);
         }
     }

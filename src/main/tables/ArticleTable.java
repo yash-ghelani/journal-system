@@ -3,6 +3,7 @@ import javafx.collections.ObservableList;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ArticleTable {
 
@@ -247,16 +248,18 @@ public class ArticleTable {
 
     //==================================================================================================================
 
-    public static void DeleteByName(ObservableList<String> name) throws SQLException {
+    public static void DeleteByName(String name) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            Statement stmt = null;
+            PreparedStatement stmt = null;
             try {
-                
-                String newEdition = "DELETE FROM Articles WHERE Title IN (SELECT value FROM STRING_SPLIT('"+name+"',','))";
-                stmt.executeUpdate(newEdition);
+
+
+                String newEdition = "DELETE FROM Articles WHERE Title IN ('"+name+"')";
+                stmt = con.prepareStatement(newEdition); stmt.executeUpdate();
+
             }
             catch (SQLException ex) {
                 ex.printStackTrace();
@@ -612,7 +615,7 @@ public class ArticleTable {
             PreparedStatement stmt = null;
             try {
                 
-                String query = "SELECT Title FROM Articles WHERE EditionID = '"+ id +"'";
+                String query = "SELECT Title FROM Articles WHERE EditionID =  '"+id+"' AND Published = 1";
                 stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
                 while (res.next()) {
                     String fin = res.getString("Title");
@@ -731,6 +734,73 @@ public class ArticleTable {
         } else {
             return false;
         }
+    }
+
+    public static String SelectName(String name) throws SQLException {
+        String fin = "0";
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            PreparedStatement stmt = null;
+            try {
+
+                String query = "SELECT Title FROM Articles WHERE Title = '"+name+"' ";
+                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
+                while (res.next()) {
+                    fin = res.getString("Title");
+                }
+                res.close();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+        return fin;
+    }
+
+
+    public static String GetArticleID(String name) throws SQLException {
+        String id = "0";
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            PreparedStatement stmt = null;
+            try {
+
+                String query = "SELECT ArticleID FROM Articles WHERE Title = '"+name+"'";
+                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
+                while (res.next()) {
+                    id = res.getString("ArticleID");
+                }
+                res.close();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+        return id;
     }
 
 }

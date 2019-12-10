@@ -11,7 +11,6 @@ import javafx.scene.control.CheckBox;
 public class Article {
 
     private String name;
-    private String code;
     private CheckBox checkbox;
     private String verdict;
 
