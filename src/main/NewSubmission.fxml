@@ -50,16 +50,16 @@
                   </VBox>
                </children>
             </HBox>
-            <HBox prefHeight="47.0" prefWidth="1044.0">
+            <HBox prefHeight="6.0" prefWidth="1030.0">
                <children>
                   <Region prefHeight="47.0" prefWidth="90.0" />
-                  <Label text="Co-Authors:">
+                  <Label fx:id="authLab" prefHeight="27.0" prefWidth="484.0" text="Number of authors: 1">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
                   <Region prefHeight="47.0" prefWidth="195.0" />
-                  <Button mnemonicParsing="false" onAction="#addNewAuthor" prefHeight="25.0" prefWidth="265.0" text="Register New Author" />
+                  <Button mnemonicParsing="false" onAction="#addNewAuthor" prefHeight="25.0" prefWidth="165.0" text="Register New Author" />
                </children>
                <VBox.margin>
                   <Insets top="12.0" />
