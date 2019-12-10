@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class LoginController {
 
@@ -62,13 +63,29 @@ public class LoginController {
             boolean Reviewer = false;
 
 
+//            if (Main.IDs[0] != -1) {
+//                Author = true;
+//            } else if (Main.IDs[1] != -1) {
+//                Editor = true;
+//            } if (Main.IDs[2] != -1) {
+//                Reviewer = true;
+//            }
+
             if (Main.IDs[0] != -1) {
                 Author = true;
-            } else if (Main.IDs[1] != -1) {
+            }
+            if (Main.IDs[1] != -1) {
                 Editor = true;
-            } if (Main.IDs[2] != -1) {
+            }
+            if (Main.IDs[2] != -1) {
                 Reviewer = true;
             }
+
+            if (checkReviewer(Main.IDs[2])) {
+                Reviewer = false;
+            }
+
+            System.out.println("check: " + checkReviewer(Main.IDs[2]));
 
             System.out.println(Main.IDs[0] +" "+ Author);
             System.out.println(Main.IDs[1] +" "+ Editor);
@@ -172,5 +189,25 @@ public class LoginController {
         Stage window = (Stage) ((Node) action.getSource()).getScene().getWindow();
         window.setResizable(true);
         window.setScene(viewScene);
+    }
+
+    public boolean checkReviewer(int reviewerid) throws SQLException {
+        int count = 0;
+        ArrayList<Integer> articleid = ReviewTable.SelectArticleIDFromReviewerID(reviewerid);
+        int istemp = ReviewerTable.SelectTemp(Main.IDs[2]);
+
+        for (int i = 0 ; i < articleid.size() ; i++) {
+            boolean ispublished = ArticleTable.isPublished(articleid.get(i));
+            System.out.println(ispublished);
+            if (ispublished) {
+                count++;
+            }
+        }
+
+        if (count > 3 && articleid.size() == 3 && istemp == 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
