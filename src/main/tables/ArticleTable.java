@@ -74,9 +74,9 @@ public class ArticleTable {
                 stmt.setInt(1,issn);
                 stmt.setString(2,title);
                 stmt.setString(3,abstractText);
-                stmt.setString(3, pdf);
-                stmt.setString(4,pageRange);
-                stmt.setInt(5,published);
+                stmt.setString(4, pdf);
+                stmt.setString(5,pageRange);
+                stmt.setInt(6,published);
                 stmt.execute();
                 con.commit();
             }

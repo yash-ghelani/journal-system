@@ -53,15 +53,17 @@ public class LoginController {
         // if user exists
         if(userID != -1) {
 
+
             // check what roles the user has
             Main.IDs[0] = AuthorTable.GetID(userID);
             Main.IDs[1] = EditorTable.GetID(userID);
             Main.IDs[2] = ReviewerTable.GetID(userID);
 
+
+
             boolean Author = false;
             boolean Editor = false;
             boolean Reviewer = false;
-
 
 //            if (Main.IDs[0] != -1) {
 //                Author = true;
@@ -78,14 +80,8 @@ public class LoginController {
                 Editor = true;
             }
             if (Main.IDs[2] != -1) {
-                Reviewer = true;
+                Reviewer = checkReviewer(ReviewerTable.GetID(userID));
             }
-
-            if (checkReviewer(Main.IDs[2])) {
-                Reviewer = false;
-            }
-
-            System.out.println("check: " + checkReviewer(Main.IDs[2]));
 
             System.out.println(Main.IDs[0] +" "+ Author);
             System.out.println(Main.IDs[1] +" "+ Editor);
@@ -205,9 +201,10 @@ public class LoginController {
         }
 
         if (count > 3 && articleid.size() == 3 && istemp == 0) {
-            return true;
-        } else {
+            ReviewerTable.Delete(reviewerid);
             return false;
+        } else {
+            return true;
         }
     }
 }
