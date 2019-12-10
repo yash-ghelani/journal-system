@@ -23,6 +23,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 
 public class NewSubmissionController {
@@ -48,11 +49,7 @@ public class NewSubmissionController {
     }
 
     public void handleCancel (ActionEvent event) throws IOException {
-        Parent view = FXMLLoader.load(getClass().getResource("AuthorPanel.fxml"));
-        Scene viewScene = new Scene(view);
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setResizable(true);
-        window.setScene(viewScene);
+        loadScene(event, "AuthorPanel.fxml");
     }
 
     public void handleSubmit (ActionEvent event) throws IOException, SQLException {
@@ -76,13 +73,7 @@ public class NewSubmissionController {
                 System.out.println("added co author "+ ids.get(i));
             }
 
-
-
-            Parent view = FXMLLoader.load(getClass().getResource("AuthorPanel.fxml"));
-            Scene viewScene = new Scene(view);
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            window.setResizable(true);
-            window.setScene(viewScene);
+            loadScene(event, "AuthorPanel.fxml");
 
 
         } else {
@@ -103,37 +94,6 @@ public class NewSubmissionController {
         }
     }
 
-//    public void handleRegister(ActionEvent actionEvent) throws SQLException {
-//
-//        if (validEmail()) {
-//            if (authCount == 1) {
-//                coAuth1.setText("Co-Author 1 Temporary Login: " + email.getText()+ ", " + Math.abs((email.getText()).hashCode()));
-//                insertCoAuthor();
-//                authCount += 1;
-//            } else if (authCount == 2) {
-//                coAuth2.setText("Co-Author 2 Temporary Login: " + email.getText()+ ", " + Math.abs((email.getText()).hashCode()));
-//                insertCoAuthor();
-//                authCount += 1;
-//            } else if (authCount == 3) {
-//                coAuth3.setText("Co-Author 3 Temporary Login: " + email.getText()+ ", " + Math.abs((email.getText()).hashCode()));
-//                insertCoAuthor();
-//                authCount += 1;
-//            } else {
-//                email.clear();
-//                email.setStyle("-fx-border-color: red; -fx-border-width: 2px;-fx-prompt-text-fill : red;");
-//                email.setPromptText("You can only register a maximum of 3 authors");
-//            }
-//        }
-//    }
-
-//    private void insertCoAuthor() throws SQLException {
-//        UserTable.Insert("temp","temp","user","temp", email.getText(), String.valueOf(Math.abs((email.getText()).hashCode())));
-//        int id = UserTable.ValidateEmailAndPassword(email.getText(), String.valueOf(Math.abs((email.getText()).hashCode())));
-//        AuthorTable.Insert(id, 1);
-//        ids.add(AuthorTable.GetID(id));
-//        email.clear();
-//    }
-
     public void loadScene (ActionEvent action, String pathname) throws IOException {
         URL url = new File(pathname).toURI().toURL();
         Parent view = FXMLLoader.load(url);
@@ -144,7 +104,7 @@ public class NewSubmissionController {
     }
 
     public void addNewAuthor(ActionEvent actionEvent) throws IOException {
-        URL url = new File("src/resources/AddAuthor.fxml").toURI().toURL();
+        URL url = new File("AddAuthor.fxml").toURI().toURL();
         Parent view = FXMLLoader.load(url);
         Scene viewScene = new Scene(view);
         Stage window = new Stage();
