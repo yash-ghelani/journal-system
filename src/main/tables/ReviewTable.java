@@ -18,9 +18,9 @@ public class ReviewTable {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             //=========================================================================================================
 
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String jtable = "CREATE TABLE Review " + //Creating the table "UserTable"
                         "(ReviewID              INT     AUTO_INCREMENT, " + //Creating the different fields
                         "ReviewerID             INT, " +

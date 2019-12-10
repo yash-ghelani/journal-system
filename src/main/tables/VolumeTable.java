@@ -29,9 +29,9 @@ public class VolumeTable {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             //=========================================================================================================
 
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String jtable = "CREATE TABLE Volume " + //Creating the table "UserTable"
                         "(VolumeID          INT     NOT NULL    AUTO_INCREMENT, "+ //Creating the different fields
                         "ISSN               INT     NOT NULL, "+

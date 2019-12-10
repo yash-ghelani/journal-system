@@ -17,9 +17,9 @@ public class ResponseTable {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             //=========================================================================================================
 
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String jtable = "CREATE TABLE Response " + //Creating the table "UserTable"
                         "(ResponseID               INT     NOT NULL    AUTO_INCREMENT, "+ //Creating the different fields
                         "QuestionID                INT     NOT NULL, "+
