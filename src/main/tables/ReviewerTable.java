@@ -86,9 +86,9 @@ public class ReviewerTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String journal = "DELETE FROM Reviewer WHERE ReviewerID = " + reviewerid;
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
@@ -114,9 +114,9 @@ public class ReviewerTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String journal = "UPDATE Reviewer SET Title = '" + title + "' WHERE ReviewerID = " + id;
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
@@ -142,9 +142,9 @@ public class ReviewerTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String journal = "UPDATE Reviewer SET Name = '" + name + "' WHERE ReviewerID = " + id;
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
@@ -169,9 +169,9 @@ public class ReviewerTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String journal = "UPDATE Reviewer SET Surname = '" + surname + "' WHERE ReviewerID = " + id;
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
@@ -197,9 +197,9 @@ public class ReviewerTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String journal = "UPDATE Reviewer SET Affiliation = '" + affiliation + "' WHERE ReviewerID = " + id;
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
@@ -225,9 +225,9 @@ public class ReviewerTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String journal = "UPDATE Reviewer SET Email = '" + email + "' WHERE ReviewerID = " + id;
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
@@ -253,9 +253,9 @@ public class ReviewerTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String journal = "UPDATE Reviewer SET Password = '" + password + "' WHERE ReviewerID = " + id;
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
@@ -281,9 +281,9 @@ public class ReviewerTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String journal = "UPDATE Reviewer SET Temp = "+ temp +" WHERE ReviewerID=" + id;
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
@@ -306,11 +306,11 @@ public class ReviewerTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String query = "SELECT Title FROM Reviewer WHERE ReviewerID = " + id;
-                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
+                ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     fin = res.getString("Title");
                 }
@@ -338,11 +338,11 @@ public class ReviewerTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String query = "SELECT Name FROM Reviewer WHERE ReviewerID = " + id;
-                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
+                ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     fin = res.getString("Name");
                 }
@@ -371,11 +371,11 @@ public class ReviewerTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String query = "SELECT Surname FROM Reviewer WHERE ReviewerID = " + id;
-                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
+                ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     fin = res.getString("Surname");
                 }
@@ -404,11 +404,11 @@ public class ReviewerTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String query = "SELECT Affiliation FROM Reviewer WHERE ReviewerID = " + id;
-                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
+                ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     fin = res.getString("Affiliation");
                 }
@@ -437,11 +437,11 @@ public class ReviewerTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String query = "SELECT Email FROM Reviewer WHERE ReviewerID = " + id;
-                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
+                ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     fin = res.getString("Email");
                 }
@@ -470,11 +470,11 @@ public class ReviewerTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String query = "SELECT Password FROM Reviewer WHERE ReviewerID = " + id;
-                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
+                ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     fin = res.getString("Password");
                 }
@@ -503,11 +503,11 @@ public class ReviewerTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String query = "SELECT Temp FROM Reviewer WHERE ReviewerID = " + id;
-                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
+                ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     fin = res.getInt("Temp");
                 }
@@ -536,11 +536,11 @@ public class ReviewerTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String query = "SELECT ReviewerID FROM Reviewer WHERE Email = '" + email + "' AND Password = '" + password + "'";
-                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
+                ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     id = res.getInt("ReviewerID");
                 }
@@ -574,11 +574,11 @@ public class ReviewerTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String query = "SELECT ReviewerID FROM Reviewer WHERE UserID = '" +id+ "'";
-                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
+                ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     fin = res.getInt("ReviewerID");
                 }
@@ -666,11 +666,11 @@ public class ReviewerTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String query = "SELECT Count FROM Reviewer WHERE ReviewerID = " + id;
-                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
+                ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     fin = res.getInt("Count");
                 }
@@ -698,9 +698,9 @@ public class ReviewerTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String journal = "UPDATE Reviewer SET Count = Count + 1 WHERE ReviewerID = " + id;
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);

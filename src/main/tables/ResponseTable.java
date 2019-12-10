@@ -80,9 +80,7 @@ public class ResponseTable {
         }
         finally {
             if (con != null) con.close();
-
         }
-
     }
 
     public static void Delete(int id) throws SQLException {
@@ -90,9 +88,9 @@ public class ResponseTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String journal = "DELETE FROM Response WHERE ResponseID = " + id;
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
@@ -121,9 +119,9 @@ public class ResponseTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
 
                 String journal = "UPDATE Response SET QuestionID = " + questionid + " WHERE ResponseID= " + responseid;
                 //System.out.println(journal);
@@ -150,9 +148,9 @@ public class ResponseTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
 
                 String journal = "UPDATE Response SET ResponseText = '" + response + "' WHERE ResponseID= " + id;
                 //System.out.println(journal);
@@ -180,11 +178,11 @@ public class ResponseTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String query = "SELECT QuestionID FROM Response WHERE ResponseID = " + id;
-                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
+                ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     fin = res.getInt("QuestionID");
                 }
@@ -246,11 +244,11 @@ public class ResponseTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String query = "SELECT ResponseText FROM Response WHERE QuestionID = " + id;
-                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
+                ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     fin = res.getString("ResponseText");
                 }

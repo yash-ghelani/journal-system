@@ -6,7 +6,7 @@ public class JournalTable {
 
     public static void main (String args[]) throws SQLException {
 
-        Insert(12345678, "test2");
+        //Insert(12345678, "test2");
         //jt.Delete(12345678);
         //System.out.println(jt.SelectName(12345679));
 
@@ -93,9 +93,9 @@ public class JournalTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
 
                 String journal = "DELETE FROM Journal WHERE ISSN = " + issn;
                 //System.out.println(journal);
@@ -125,9 +125,9 @@ public class JournalTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String journal = "UPDATE Journal SET JournalName = " + name + " WHERE ISSN = " + issn;
                 stmt.executeUpdate(journal);
             }
@@ -153,11 +153,11 @@ public class JournalTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String query = "SELECT JournalName FROM Journal WHERE ISSN = " + issn;
-                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
+                ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     fin = res.getString("JournalName");
                 }
@@ -186,11 +186,11 @@ public class JournalTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String query = "SELECT ISSN FROM Journal WHERE JournalName = '"+name+"'";
-                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
+                ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     fin = res.getInt("ISSN");
                 }
@@ -219,11 +219,11 @@ public class JournalTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String query = "SELECT JournalName FROM Journal";
-                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
+                ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     String fin = res.getString("JournalName");
                     list.add(fin);

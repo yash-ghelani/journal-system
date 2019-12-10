@@ -269,7 +269,7 @@ public class ControlEditor extends ClassLoader {
         int po = con.length();
         ArticleInfoTable.DeleteArticleID(ArticleTable.GetArticleID(con.substring(5,po)));
       // ArticleTable.DeleteByName(con.substring(5,po));
-       System.out.println(ArticleInfoTable.G);
+       //System.out.println(ArticleInfoTable.G);
 
     }
 

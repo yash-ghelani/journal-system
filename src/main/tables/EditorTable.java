@@ -87,9 +87,9 @@ public class EditorTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String journal = "DELETE FROM Editor WHERE EditorID = " + id;
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
@@ -115,9 +115,9 @@ public class EditorTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String journal = "UPDATE Editor SET Title = '" + title + "' WHERE EditorID = " + id;
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
@@ -143,9 +143,9 @@ public class EditorTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String journal = "UPDATE Editor SET Name = '" + name + "' WHERE EditorID = " + id;
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
@@ -198,9 +198,9 @@ public class EditorTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String journal = "UPDATE Editor SET Affiliation = '" + affiliation + "' WHERE EditorID = " + id;
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
@@ -333,19 +333,19 @@ public class EditorTable {
         }
         return fin;
     }
-    public static int SelectUserID(int id) throws SQLException {
-        int fin = 0;
+    public String SelectName(int id) throws SQLException {
+        String fin = null;
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
-                String query = "SELECT UserID FROM Editor WHERE EditorID = " + id;
-                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
+                stmt = con.createStatement();
+                String query = "SELECT Name FROM Editor WHERE EditorID = " + id;
+                ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
-                    fin = res.getInt("UserID");
+                    fin = res.getString("Name");
                 }
                 res.close();
             }
@@ -575,11 +575,11 @@ public class EditorTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String query = "SELECT EditorID FROM Editor WHERE UserID = '" +id+ "'";
-                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
+                ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     fin = res.getInt("EditorID");
                 }
@@ -601,11 +601,11 @@ public class EditorTable {
         Connection con = null;
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String newEdition = "DROP TABLE Editor";
-                stmt = con.prepareStatement(newEdition); stmt.executeUpdate();
+                stmt.executeUpdate(newEdition);
             }
             catch (SQLException ex) {
                 ex.printStackTrace();
@@ -627,11 +627,11 @@ public class EditorTable {
         Connection con = null;
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String newEdition = "DELETE FROM Editor WHERE EditorID = '"+editorID+"'";
-                stmt = con.prepareStatement(newEdition); stmt.executeUpdate();
+                stmt.executeUpdate(newEdition);
             }
             catch (SQLException ex) {
                 ex.printStackTrace();
@@ -647,5 +647,38 @@ public class EditorTable {
         finally {
             if (con != null) con.close();
         }
+    }
+
+    public static int SelectUserID(int id) throws SQLException {
+        int fin = 0;
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+
+                String query = "SELECT UserID FROM Editor WHERE EditorID = " + id;
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    fin = res.getInt("UserID");
+                }
+                res.close();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+        return fin;
     }
 }
