@@ -76,7 +76,8 @@ public class NewSubmissionController {
                 System.out.println("added co author "+ ids.get(i));
             }
 
-            ReviewerTable.Insert(Main.IDs[0],1,0);
+
+            ReviewerTable.Insert(AuthorTable.GetUserID(Main.IDs[0]),1,0);
 
             loadScene(event, "ReviewPanel.fxml");
 

@@ -41,43 +41,31 @@ public class ReviewPanelController {
     private Label pleaseselect;
 
     public void handleNewReview(ActionEvent event) throws IOException {
-        URL url = new File("src/resources/ReviewSelect.fxml").toURI().toURL();
-        Parent view = FXMLLoader.load(url);
+        Parent view = FXMLLoader.load(getClass().getResource("ReviewSelect.fxml"));
         Scene viewScene = new Scene(view);
-
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
         window.setScene(viewScene);
     }
 
 
     public void handleViewArticle(ActionEvent event) throws IOException {
-        URL url = new File("src/resources/ReviewPanel.fxml").toURI().toURL();
-        Parent view = FXMLLoader.load(url);
+        Parent view = FXMLLoader.load(getClass().getResource("ReviewPanel.fxml"));
         Scene viewScene = new Scene(view);
-
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
         window.setScene(viewScene);
     }
 
     public void handleViewResponse(ActionEvent event) throws IOException {
-        URL url = new File("src/resources/FinalVerdict.fxml").toURI().toURL();
-        Parent view = FXMLLoader.load(url);
+        Parent view = FXMLLoader.load(getClass().getResource("FinalVerdict.fxml"));
         Scene viewScene = new Scene(view);
-
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
         window.setScene(viewScene);
     }
 
     public void handleLogOut(ActionEvent event) throws IOException {
-        URL url = new File("src/resources/Login.fxml").toURI().toURL();
-        Parent view = FXMLLoader.load(url);
+        Parent view = FXMLLoader.load(getClass().getResource("Login.fxml"));
         Scene viewScene = new Scene(view);
-
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
         window.setScene(viewScene);
     }
 
@@ -95,9 +83,7 @@ public class ReviewPanelController {
             int reviewid = ReviewTable.SelectReviewID(Main.IDs[2], submissionids.get(i));
 
             pleaseselect.setText("");
-            URL url = new File("src/resources/ReviewPanelBox.fxml").toURI().toURL();
-
-            HBox box = FXMLLoader.load(url);
+            HBox box = FXMLLoader.load(getClass().getResource("ReviewPanelBox.fxml"));
             ObservableList<Node> child = box.getChildren();
             vboxpanel.getChildren().remove(clickToAdd);
 
@@ -143,8 +129,7 @@ public class ReviewPanelController {
         int idtoint = Integer.parseInt(id);
         ArticleIDForReview = idtoint;
         //System.out.println(ArticleIDForReview);
-        URL url = new File("src/resources/InitialVerdict.fxml").toURI().toURL();
-        Parent view = FXMLLoader.load(url);
+        Parent view = FXMLLoader.load(getClass().getResource("InitialVerdict.fxml"));
         Scene viewScene = new Scene(view);
         Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         window.setScene(viewScene);
@@ -156,8 +141,7 @@ public class ReviewPanelController {
         int idtoint = Integer.parseInt(id);
         ArticleIDForReview = idtoint;
         //System.out.println(ArticleIDForReview);
-        URL url = new File("src/resources/FinalVerdict.fxml").toURI().toURL();
-        Parent view = FXMLLoader.load(url);
+        Parent view = FXMLLoader.load(getClass().getResource("FinalVerdict.fxml"));
         Scene viewScene = new Scene(view);
         Stage window = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         window.setScene(viewScene);
