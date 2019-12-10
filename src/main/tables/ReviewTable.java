@@ -53,7 +53,7 @@ public class ReviewTable {
             PreparedStatement stmt = null;
             try {
 
-                String journal = "INSERT INTO Review (ReviewerID, ArticleID, Summary, InitialVerdict, FinalVerdict) VALUES (" + reviewerid + "," + articleid + ", '" + Summary + "', '" + initialverdict + "', '" + finalverdict + "')";
+                String journal = "INSERT INTO Review (ReviewerID, ArticleID, Summary, InitialVerdict, FinalVerdict) VALUES (?,?,?,?,?)";
                 con.setAutoCommit(false);
                 stmt = con.prepareStatement(journal);
                 stmt.setInt(1, reviewerid);
