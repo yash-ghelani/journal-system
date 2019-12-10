@@ -372,7 +372,7 @@ public class ControlEditor extends ClassLoader{
     }
 
     public void selector(ActionEvent actionEvent) throws IOException {
-        URL url = new File("src/resources/SelectJournal.fxml").toURI().toURL();
+        URL url = new File("src/main/SelectJournal.fxml").toURI().toURL();
         Parent view = FXMLLoader.load(url);
         Scene viewScene = new Scene(view);
         Stage window = new Stage();

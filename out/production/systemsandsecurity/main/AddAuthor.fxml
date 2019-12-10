@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="412.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.AddAuthor">
+    <children>
+        <Label alignment="CENTER" layoutX="85.0" layoutY="14.0" prefHeight="17.0" prefWidth="231.0" text="Author ">
+         <font>
+            <Font size="36.0" />
+         </font></Label>
+        <TextField fx:id="forename" layoutX="78.0" layoutY="147.0" prefHeight="34.0" prefWidth="245.0" promptText="Name" AnchorPane.bottomAnchor="231.0" />
+        <PasswordField fx:id="password" layoutX="78.0" layoutY="318.0" prefHeight="35.0" prefWidth="245.0" promptText="Password" />
+        <Button layoutX="180.0" layoutY="364.0" mnemonicParsing="false" onAction="#actionAdd" text="ADD" />
+        <TextField fx:id="email" layoutX="78.0" layoutY="233.0" prefHeight="35.0" prefWidth="245.0" promptText="Email" />
+        <ChoiceBox fx:id="title" layoutX="78.0" layoutY="104.0" prefHeight="35.0" prefWidth="245.0" />
+        <TextField fx:id="affiliation" layoutX="78.0" layoutY="276.0" prefHeight="35.0" prefWidth="245.0" promptText="Affiliation" />
+      <TextField fx:id="surname" layoutX="78.0" layoutY="189.0" prefHeight="35.0" prefWidth="245.0" promptText="Surname" />
+      <Label fx:id="sLab" layoutX="78.0" layoutY="76.0" prefHeight="17.0" prefWidth="245.0" />
+    </children>
+</AnchorPane>
