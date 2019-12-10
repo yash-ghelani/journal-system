@@ -698,9 +698,9 @@ public class ReviewerTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String journal = "UPDATE Reviewer SET Count = Count + 1 WHERE ReviewerID = " + id;
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);

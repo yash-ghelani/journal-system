@@ -165,12 +165,12 @@ public class ArticleTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-                
+                stmt = con.createStatement();
                 String newEdition = "UPDATE Articles SET PDF = '"+PDF+"' WHERE ArticleID = " + articleID;
                 System.out.println(newEdition);
-                stmt = con.prepareStatement(newEdition); stmt.executeUpdate();
+                stmt.executeUpdate(newEdition);
             }
             catch (SQLException ex) {
                 ex.printStackTrace();
@@ -254,7 +254,7 @@ public class ArticleTable {
             // use the open connection
             Statement stmt = null;
             try {
-                
+                stmt = con.createStatement();
                 String newEdition = "DELETE FROM Articles WHERE Title IN (SELECT value FROM STRING_SPLIT('"+name+"',','))";
                 stmt.executeUpdate(newEdition);
             }
@@ -282,11 +282,11 @@ public class ArticleTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-                
+                stmt = con.createStatement();
                 String query = "SELECT MAX(ArticleID) FROM Articles";
-                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
+                ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     id = res.getInt("MAX(ArticleID)");
                 }
@@ -383,11 +383,11 @@ public class ArticleTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-                
+                stmt = con.createStatement();
                 String query = "SELECT Title FROM Articles WHERE ArticleID = " + articleID;
-                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
+                ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     fin = res.getString("Title");
                 }
@@ -449,11 +449,11 @@ public class ArticleTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-                
+                stmt = con.createStatement();
                 String query = "SELECT PDF FROM Articles WHERE ArticleID = " + articleID;
-                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
+                ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     fin = res.getString("PDF");
                 }
@@ -482,11 +482,11 @@ public class ArticleTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-                
+                stmt = con.createStatement();
                 String query = "SELECT Abstract FROM Articles WHERE ArticleID = " + articleID;
-                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
+                ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     fin = res.getString("Abstract");
                 }
@@ -547,11 +547,11 @@ public class ArticleTable {
         Connection con = null;
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-                
+                stmt = con.createStatement();
                 String newEdition = "DROP TABLE Articles";
-                stmt = con.prepareStatement(newEdition); stmt.executeUpdate();
+                stmt.executeUpdate(newEdition);
             }
             catch (SQLException ex) {
                 ex.printStackTrace();
@@ -609,11 +609,11 @@ public class ArticleTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-                
+                stmt = con.createStatement();
                 String query = "SELECT Title FROM Articles WHERE EditionID = '"+ id +"'";
-                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
+                ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     String fin = res.getString("Title");
                     list.add(fin);
@@ -643,11 +643,11 @@ public class ArticleTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-                
+                stmt = con.createStatement();
                 String query = "SELECT ArticleID FROM Articles";
-                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
+                ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     int fin = res.getInt("ArticleID");
                     list.add(fin);
