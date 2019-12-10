@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="463.0" prefWidth="601.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.ControlEditor">
+<AnchorPane fx:id="anchorer" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="463.0" prefWidth="601.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.ControlEditor">
     <children>
         <AnchorPane fx:id="anchor" layoutX="16.0" layoutY="30.0" prefHeight="433.0" prefWidth="183.0">
             <children>
@@ -27,6 +27,7 @@
             <Label fx:id="editnames" layoutX="425.0" layoutY="7.0" prefHeight="17.0" prefWidth="77.0" text="editor name" AnchorPane.leftAnchor="425.0" AnchorPane.rightAnchor="99.0" />
             <ChoiceBox fx:id="journals" layoutX="190.0" layoutY="4.0" prefHeight="27.0" prefWidth="120.0" />
             <Button fx:id="selectedJ" layoutX="325.0" layoutY="4.0" mnemonicParsing="false" onAction="#selector" prefHeight="27.0" prefWidth="89.0" text="select journal" />
+
             </children>
         </AnchorPane>
         <AnchorPane layoutX="215.0" layoutY="30.0" prefHeight="433.0" prefWidth="385.0">
@@ -35,6 +36,7 @@
                 <VBox fx:id="article" layoutX="62.0" layoutY="52.0" prefHeight="332.0" prefWidth="297.0" />
             <Button fx:id="artA" layoutX="93.0" layoutY="384.0" mnemonicParsing="false" onAction="#addtoE" text="Accept" />
             <Button fx:id="disart" layoutX="259.0" layoutY="384.0" mnemonicParsing="false" onAction="#removeArticles" text="Discard" />
+                <Button fx:id="logout" layoutX="300.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleLogOut" text="Log Out" />
             </children>
         </AnchorPane>
     </children>

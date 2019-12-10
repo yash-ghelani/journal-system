@@ -1,4 +1,6 @@
 package main.tables;
+import javafx.collections.ObservableList;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -245,16 +247,16 @@ public class ArticleTable {
 
     //==================================================================================================================
 
-    public static void Delete(int articleID) throws SQLException {
+    public static void DeleteByName(ObservableList<String> name) throws SQLException {
         Connection con = null; // connection to a database
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
                 
-                String newEdition = "DELETE FROM Articles WHERE ArticleID = " + articleID;
-                stmt = con.prepareStatement(newEdition); stmt.executeUpdate();
+                String newEdition = "DELETE FROM Articles WHERE Title IN (SELECT value FROM STRING_SPLIT('"+name+"',','))";
+                stmt.executeUpdate(newEdition);
             }
             catch (SQLException ex) {
                 ex.printStackTrace();

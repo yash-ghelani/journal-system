@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class SelectControl {
     static int issn;
@@ -36,23 +37,29 @@ public class SelectControl {
 
     public void initialize() throws SQLException {
         zv.clear();
-        for (String v : JournalTable.SelectJournals()){
-            String [] hf = name.split(" ");
-        Integer[] isss =((Integer [])JournalInfoTable.SelectISSNFromEditor
-                (EditorTable.GetID(UserTable.GetID(hf[0],hf[1]))).toArray());
-        for (int f : isss){
-           String j = JournalTable.SelectName(f);
-           if (j == v){
-               continue;
-           }
-           else {
-               zv.add(v);
-           }
+        vthings.getItems().clear();
+        ArrayList<Integer> l1 = JournalInfoTable.CheckList(Main.IDs[1]);
+        for (Integer v : l1){
+            //int issn = JournalTable.SelectISSN(v);
+            //int editorid = JournalInfoTable.CheckList(issn);
+            System.out.println(JournalTable.ShowName(v));
         }
+//            String [] hf = name.split(" ");
+//            ArrayList<Integer> isss = JournalInfoTable.SelectISSNFromEditor
+//                    (EditorTable.GetID(UserTable.GetID(hf[0],hf[1])));
+//            if (isss.isEmpty()){
+//                zv.add(v);
+//            }
+//            else {
+//                for (Integer f : isss) {
+//                    System.out.println(JournalTable.SelectName(f) + " " + v);
+//                    }
+//                }
+//            }
 
         }
-        vthings.getItems().setAll(zv);
-    }
+   // vthings.getItems().setAll(zv);
+
 
 
     public void selected(MouseEvent mouseEvent) throws SQLException,IOException {
@@ -74,6 +81,7 @@ public class SelectControl {
         window.setScene(viewScene);
         main.SelectControl.closer = window;
         window.show();
+        closer.close();
     }
 
 }

@@ -255,7 +255,38 @@ public class JournalTable {
             try {
 
                 String newEdition = "DROP TABLE Journal";
-                stmt = con.prepareStatement(newEdition); stmt.executeUpdate();
+                stmt = con.prepareStatement(newEdition);
+                stmt.executeUpdate();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            } finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (con != null) con.close();
+        }
+    }
+
+    public static String ShowName(int issn) throws SQLException {
+        String fin = null;
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String query = "SELECT JournalName FROM Journal WHERE ISSN = " + issn;
+                //tmt = con.prepareStatement(query);
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    fin = res.getString("JournalName");
+
+                }
+                res.close();
             }
             catch (SQLException ex) {
                 ex.printStackTrace();
@@ -271,5 +302,7 @@ public class JournalTable {
         finally {
             if (con != null) con.close();
         }
+        return fin;
+
     }
 }
