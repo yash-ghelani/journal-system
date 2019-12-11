@@ -1,6 +1,6 @@
 package main.tables;
 
-import java.sql.SQLException;
+import java.sql.*;
 
 import static main.tables.UserTable.*;
 
@@ -46,3 +46,4 @@ public class AddDeleteTables {
         AddDeleteTables.add();
     }
 }
+

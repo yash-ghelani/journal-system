@@ -58,7 +58,7 @@ public class JournalInfoTable {
             try {
 
                 String insert = "INSERT INTO JournalInfo (ISSN, EditorID, EditorType) "+
-                                " VALUES (?,?,?)";
+                        " VALUES (?,?,?)";
                 con.setAutoCommit(false);
                 stmt = con.prepareStatement(insert);
                 stmt.setInt(1, issn);
@@ -400,6 +400,40 @@ public class JournalInfoTable {
                 ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     int fin = res.getInt("ISSN");
+                    list.add(fin);
+                }
+                res.close();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+        return list;
+    }
+
+    public static ArrayList<Integer> SelectAllE() throws SQLException {
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            Statement stmt = null;
+            try {
+                stmt = con.createStatement();
+                String query = "SELECT EditorID FROM JournalInfo";
+                ResultSet res = stmt.executeQuery(query);
+                while (res.next()) {
+                    int fin = res.getInt("EditorID");
                     list.add(fin);
                 }
                 res.close();

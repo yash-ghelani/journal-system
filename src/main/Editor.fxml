@@ -14,7 +14,6 @@
             <children>
             <Button fx:id="newtree" layoutX="115.0" layoutY="392.0" mnemonicParsing="false" onAction="#addTable" prefHeight="27.0" prefWidth="65.0" text=" New" />
             <TreeView fx:id="treeVolume" editable="true" layoutY="55.0" onMouseClicked="#selectedNode" prefHeight="332.0" prefWidth="200.0" />
-            <Button fx:id="treepath" layoutX="14.0" layoutY="392.0" mnemonicParsing="false" onAction="#deletetreepaths" text="Delete" />
             <TextField fx:id="addJ" layoutX="17.0" layoutY="1.0" promptText="Add Journals" />
             <Button fx:id="addingJor" layoutX="55.0" layoutY="28.0" mnemonicParsing="false" onAction="#addJournal" prefHeight="18.0" prefWidth="77.0" text="Add Journals" />
             </children>

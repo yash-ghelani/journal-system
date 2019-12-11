@@ -112,7 +112,7 @@ public class ArticleTable {
             // use the open connection
             PreparedStatement stmt = null;
             try {
-                
+
                 String newEdition = "UPDATE Articles SET EditionID = '"+editionID+"' WHERE ArticleID = " + articleID;
                 stmt = con.prepareStatement(newEdition); stmt.executeUpdate();
             }
@@ -140,7 +140,7 @@ public class ArticleTable {
             // use the open connection
             PreparedStatement stmt = null;
             try {
-                
+
                 String newEdition = "UPDATE Articles SET SubmissionID = '"+submissionID+"' WHERE ArticleID = " + articleID;
                 stmt = con.prepareStatement(newEdition); stmt.executeUpdate();
             }
@@ -197,7 +197,7 @@ public class ArticleTable {
             // use the open connection
             PreparedStatement stmt = null;
             try {
-                
+
                 String newEdition = "UPDATE Articles SET PageRange = '"+pageRange+"' WHERE ArticleID = " + articleID;
                 stmt = con.prepareStatement(newEdition); stmt.executeUpdate();
             }
@@ -225,7 +225,7 @@ public class ArticleTable {
             // use the open connection
             PreparedStatement stmt = null;
             try {
-                
+
                 String newEdition = "UPDATE Articles SET Abstract = '"+abstractText+"' WHERE ArticleID = " + articleID;
                 stmt = con.prepareStatement(newEdition); stmt.executeUpdate();
             }
@@ -328,7 +328,7 @@ public class ArticleTable {
             // use the open connection
             PreparedStatement stmt = null;
             try {
-                
+
                 String query = "SELECT EditionID FROM Articles WHERE ArticleID = " + articleID;
                 stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
                 while (res.next()) {
@@ -361,7 +361,7 @@ public class ArticleTable {
             // use the open connection
             PreparedStatement stmt = null;
             try {
-                
+
                 String query = "SELECT SubmissionID FROM Articles WHERE ArticleID = " + articleID;
                 stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
                 while (res.next()) {
@@ -427,7 +427,7 @@ public class ArticleTable {
             // use the open connection
             PreparedStatement stmt = null;
             try {
-                
+
                 String query = "SELECT PageRange FROM Articles WHERE ArticleID = " + articleID;
                 stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
                 while (res.next()) {
@@ -808,6 +808,41 @@ public class ArticleTable {
             if (con != null) con.close();
         }
         return id;
+    }
+
+    public static int Tablesize() throws SQLException {
+        int fin = 0;
+        int num = 0;
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            PreparedStatement stmt = null;
+            try {
+
+                String query = "SELECT Title FROM Articles";
+                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
+                while (res.next()) {
+                    fin = res.getInt("Title");
+                    num += 1;
+                }
+                res.close();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+        return num;
     }
 
 }

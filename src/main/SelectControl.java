@@ -25,63 +25,71 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class SelectControl {
     static int issn;
     static String name;
     static Stage closer;
     ObservableList<String> zv = FXCollections.observableArrayList();
+    ArrayList<Integer>av=new ArrayList<>();
+    ArrayList<Integer>jv=new ArrayList<>();
     @FXML
 
     private ListView vthings;
 
     public void initialize() throws SQLException {
         zv.clear();
-        vthings.getItems().clear();
-        ArrayList<Integer> l1 = JournalInfoTable.CheckList(Main.IDs[1]);
-        for (Integer v : l1){
-            //int issn = JournalTable.SelectISSN(v);
-            //int editorid = JournalInfoTable.CheckList(issn);
-            System.out.println(JournalTable.ShowName(v));
+        for (Integer k :JournalInfoTable.SelectAllE()){
+            av.addAll(JournalInfoTable.SelectISSNFromEditor(k));
         }
-//            String [] hf = name.split(" ");
-//            ArrayList<Integer> isss = JournalInfoTable.SelectISSNFromEditor
-//                    (EditorTable.GetID(UserTable.GetID(hf[0],hf[1])));
-//            if (isss.isEmpty()){
-//                zv.add(v);
-//            }
-//            else {
-//                for (Integer f : isss) {
-//                    System.out.println(JournalTable.SelectName(f) + " " + v);
-//                    }
-//                }
-//            }
+        jv.addAll(JournalTable.SelectISSNs());
+        Set<Integer> set =new HashSet<>(av);
 
+        Set<Integer> setall = new HashSet<>(jv);
+        setall.removeAll(set);
+        av.clear();
+        av.addAll(setall);
+        for (Integer n : av){
+            zv.add(JournalTable.SelectName(n));
         }
-   // vthings.getItems().setAll(zv);
+        vthings.getItems().setAll(zv);
+    }
+
 
 
 
     public void selected(MouseEvent mouseEvent) throws SQLException,IOException {
-        String journalSel= (String) vthings.getSelectionModel().getSelectedItems().get(0);
-        System.out.println(journalSel);
-        String [] vf = name.split(" ");
-        int kl =  UserTable.GetID(vf[0],vf[1]);
-        int lk = EditorTable.GetID(kl);
-        issn = JournalTable.SelectISSN(journalSel);
-        JournalInfoTable.Insert(issn,lk,"Chief Editor");
-
         URL url = null;
         url = new File("src/main/Editor.fxml").toURI().toURL();
         Parent view = null;
         view = FXMLLoader.load(url);
-        Scene viewScene = new Scene(view);
-        Stage window = new Stage();
-        window.setResizable(true);
-        window.setScene(viewScene);
-        main.SelectControl.closer = window;
-        window.show();
-        closer.close();
+        if (vthings.getSelectionModel().isEmpty()){
+            closer.close();
+            Scene viewScene = new Scene(view);
+            Stage window = new Stage();
+            window.setResizable(true);
+            window.setScene(viewScene);
+            main.SelectControl.closer = window;
+            window.show();
+        }
+        else {
+            closer.close();
+            String journalSel = (String) vthings.getSelectionModel().getSelectedItems().get(0);
+            System.out.println(journalSel);
+            String[] vf = name.split(" ");
+            int kl = UserTable.GetID(vf[0], vf[1]);
+            int lk = EditorTable.GetID(kl);
+            issn = JournalTable.SelectISSN(journalSel);
+            JournalInfoTable.Insert(issn, lk, "Chief Editor");
+            Scene viewScene = new Scene(view);
+            Stage window = new Stage();
+            window.setResizable(true);
+            window.setScene(viewScene);
+            main.SelectControl.closer = window;
+            window.show();
+        }
     }
 
 }

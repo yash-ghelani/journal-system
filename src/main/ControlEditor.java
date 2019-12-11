@@ -127,7 +127,6 @@ public class ControlEditor extends ClassLoader {
         String[] vm = editnames.getText().split(" ");
         ArrayList<Integer> ik = JournalInfoTable.SelectISSNFromEditor(EditorTable.GetID(UserTable.GetID(vm[0], vm[1])));
         ArrayList<Integer> issns = JournalInfoTable.SelectISSNFromEditor(Main.IDs[1]);
-        journals.setValue(JournalTable.SelectName(issns.get(0)));
         for (int i = 0; i < issns.size(); i++) {
             journals.getItems().add(JournalTable.SelectName(issns.get(i)));
         }
@@ -302,9 +301,14 @@ public class ControlEditor extends ClassLoader {
                 for (TreeItem x : items) {
                     title = x.getValue().toString();
                 }
-                ArticleTable.UpdateToPublished(title);
-                selectedNode().getChildren().addAll(items);
-                data.removeAll(art);
+                if (ArticleTable.Tablesize()<9) {
+                    ArticleTable.UpdateToPublished(title);
+                    selectedNode().getChildren().addAll(items);
+                    data.removeAll(art);
+                }
+                else {
+                    //nothing
+                }
             }
             treeVolume.getSelectionModel().clearSelection();
         }
@@ -335,20 +339,6 @@ public class ControlEditor extends ClassLoader {
         window.show();
     }
 
-    public void deletetreepaths(ActionEvent actionEvent) {
-        if (treeVolume.getSelectionModel().isEmpty()) {
-
-        } else {
-            if (selectedNode().getParent() == null) {
-
-            } else {
-                selectedNode().getParent().getChildren().remove(selectedNode());
-            }
-
-        }
-        treeVolume.refresh();
-    }
-
     public void conditionToTable() throws SQLException {
         if (l.getChildren().isEmpty()) {
             int i = Calendar.getInstance().get(Calendar.YEAR);
@@ -375,7 +365,7 @@ public class ControlEditor extends ClassLoader {
 
     public void refresh(String journ) throws MalformedURLException, SQLException {
         data.clear();
-       king =  getArticle(journ);
+        king =  getArticle(journ);
         l.getChildren().clear();
         System.out.println(getArticle(journ));
         Main.currentJournalName = journ;
@@ -409,28 +399,29 @@ public class ControlEditor extends ClassLoader {
                 ArrayList<String> dc = ArticleTable.SelectTitles(month);
                 ObservableList<TreeItem> w = FXCollections.observableArrayList();
 
-
                 for (String title : dc) {
                     w.clear();
                     w.add(new TreeItem(title));
-                }
+               }
 
                 for (TreeItem ti : w) {
-                    b.getChildren().clear();
+                   b.getChildren().clear();
                     b.getChildren().add(ti);
                 }
-            }
+           }
             l.getChildren().clear();
             l.getChildren().add(n);
-        }
+       }
     }
+
+
 
     public void addJournal(ActionEvent actionEvent) throws SQLException, MalformedURLException, IOException {
         if (addJ.getText().isEmpty()) {
             addJ.setStyle("-fx-prompt-text-fill:red");
         } else {
-            String h = String.valueOf(addJ.getText().hashCode()).substring(0, 8);
-            JournalTable.Insert(Integer.valueOf(h), addJ.getText());
+            String h = String.valueOf((addJ.getText()+"0000000000").hashCode()).substring(0, 8);
+            JournalTable.Insert(Math.abs(Integer.valueOf(h)), addJ.getText());
             addJ.clear();
             URL url = new File("src/main/Editor.fxml").toURI().toURL();
             Parent view = FXMLLoader.load(url);
@@ -453,11 +444,6 @@ public class ControlEditor extends ClassLoader {
         Stage stage = (Stage) disart.getScene().getWindow();
         stage.close();
     }
-
-    public void kjsa() throws SQLException, MalformedURLException {
-
-    }
-
 
     public void handleLogOut(ActionEvent actionEvent) throws IOException {
         Parent view = FXMLLoader.load(getClass().getResource("Login.fxml"));
