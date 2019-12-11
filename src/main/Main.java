@@ -13,10 +13,7 @@ public class Main extends Application {
     public static int vave = 0;
     @Override
     public void start(Stage primaryStage) throws Exception{
-
-
-        URL url = new File("src/resources/Login.fxml").toURI().toURL();
-        Parent root = FXMLLoader.load(url);
+        Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
         primaryStage.setTitle("Publisher");
         primaryStage.setScene(new Scene(root, 710, 526));
         primaryStage.initStyle(StageStyle.DECORATED);
@@ -34,6 +31,8 @@ public class Main extends Application {
     public static int ArticleIDForAuthor;
 
     public static int AuthorCurrentReviewID;
+
+    public static int ResponseArticleID;
 
 
     public static void main(String[] args) {

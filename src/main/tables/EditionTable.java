@@ -29,9 +29,9 @@ public class EditionTable {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             //=========================================================================================================
 
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String initialise = "CREATE TABLE Edition " + //Creating the table
                                     "(EditionID             INT    NOT NULL AUTO_INCREMENT, "+ //Creating the different fields
                                     "PublicationMonth       INT    NOT NULL, " +
@@ -65,15 +65,23 @@ public class EditionTable {
 
     public static void Insert(int volumeID, int month ) throws SQLException {
         Connection con = null; // connection to a database
+        PreparedStatement stmt = null;
+
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+
             try {
 
                 if (month<12 || month>0) {
-                    String newEdition = "INSERT INTO Edition (VolumeID, PublicationMonth) VALUES ('" + volumeID + "',  '" + month + "')";
-                    stmt = con.prepareStatement(newEdition); stmt.executeUpdate();
+                    String newEdition = "INSERT INTO Edition (VolumeID, PublicationMonth) VALUES (?,?)";
+                    con.setAutoCommit(false);
+                    stmt = con.prepareStatement(newEdition);
+                    stmt.setInt(1, volumeID);
+                    stmt.setInt(2, month);
+
+                    stmt.execute();
+                    con.commit();
                 } else {
                     System.out.println("Invalid Month");
                 }
@@ -82,9 +90,12 @@ public class EditionTable {
                 ex.printStackTrace();
             }
             finally {
-                if (stmt != null)
+                if (stmt != null) {
                     stmt.close();
+                }
+
             }
+
 
         }
         catch (SQLException ex) {
@@ -101,12 +112,12 @@ public class EditionTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 if (month<12 || month>0) {
                     String newEdition = "UPDATE Edition SET PublicationMonth = '"+month+"' WHERE EditionID = " + editionID;
-                    stmt = con.prepareStatement(newEdition); stmt.executeUpdate();
+                    stmt.executeUpdate(newEdition);
                 } else {
                     System.out.println("Invalid Month");
                 }
@@ -134,11 +145,11 @@ public class EditionTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String newEdition = "UPDATE Edition SET VolumeID = '"+volumeID+"' WHERE EditionID = " + editionID;
-                stmt = con.prepareStatement(newEdition); stmt.executeUpdate();
+                stmt.executeUpdate(newEdition);
             }
             catch (SQLException ex) {
                 ex.printStackTrace();
@@ -163,11 +174,11 @@ public class EditionTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String newEdition = "DELETE FROM Edition WHERE EditionID = " + editionID;
-                stmt = con.prepareStatement(newEdition); stmt.executeUpdate();
+                stmt.executeUpdate(newEdition);
             }
             catch (SQLException ex) {
                 ex.printStackTrace();
@@ -195,11 +206,11 @@ public class EditionTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String query = "SELECT VolumeID FROM Edition WHERE EditionID = " + editionID;
-                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
+                ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     fin = res.getInt("VolumeID");
                 }
@@ -228,11 +239,11 @@ public class EditionTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String query = "SELECT PublicationMonth FROM Edition WHERE EditionID = " + editionID;
-                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
+                ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     fin = res.getString("PublicationMonth");
                 }
@@ -259,11 +270,11 @@ public class EditionTable {
         Connection con = null;
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String newEdition = "DROP TABLE Edition";
-                stmt = con.prepareStatement(newEdition); stmt.executeUpdate();
+                stmt.executeUpdate(newEdition);
             }
             catch (SQLException ex) {
                 ex.printStackTrace();
@@ -289,11 +300,11 @@ public class EditionTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String query = "SELECT PublicationMonth FROM Edition WHERE VolumeID = "+ volID;
-                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
+                ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     int fin = res.getInt("PublicationMonth");
                     list.add(months[fin-1]);
@@ -353,40 +364,6 @@ public class EditionTable {
         return list;
     }
 
-    public static int SelectID(int volID, String editionID) throws SQLException {
-        int fin = -1;
-        String [] months = {"January","February","March","April","May","June","July","August","September","October","November","December"};
-        Connection con = null; // connection to a database
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
-            // use the open connection
-            PreparedStatement stmt = null;
-            try {
-
-                String query = "SELECT EditionID FROM Edition WHERE VolumeID = '"+ volID +"' AND PublicationMonth = '"+ editionID +"'";
-                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
-                while (res.next()) {
-                    fin = res.getInt("EditionID");
-                }
-                res.close();
-            }
-            catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-            finally {
-                if (stmt != null)
-                    stmt.close();
-            }
-        }
-        catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        finally {
-            if (con != null) con.close();
-        }
-        return fin;
-    }
-
     public static ArrayList<String> selectMonth(int volID) throws SQLException {
         ArrayList<String> list = new ArrayList<String>();
         Connection con = null; // connection to a database
@@ -421,7 +398,7 @@ public class EditionTable {
         return list;
     }
 
-    public static int selectArticles(int month, int volid) throws SQLException {
+    public static int selectEditions(int month, int volid) throws SQLException {
         int fin = 0;
         Connection con = null; // connection to a database
         try {
@@ -453,6 +430,41 @@ public class EditionTable {
             if (con != null) con.close();
         }
         return fin;
+    }
+
+    public static ArrayList<String> SelectID(int volID, String editionID) throws SQLException {
+        ArrayList<String> list = new ArrayList<>();
+        String [] months = {"January","February","March","April","May","June","July","August","September","October","November","December"};
+        Connection con = null; // connection to a database
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
+            // use the open connection
+            PreparedStatement stmt = null;
+            try {
+
+                String query = "SELECT EditionID FROM Edition WHERE VolumeID = '"+ volID +"' AND PublicationMonth = '"+ editionID +"'";
+                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
+                while (res.next()) {
+                    int fin = res.getInt("EditionID");
+                    list.add(months[fin-1]);
+                }
+                res.close();
+            }
+            catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            finally {
+                if (stmt != null)
+                    stmt.close();
+            }
+        }
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (con != null) con.close();
+        }
+        return list;
     }
 }
 

@@ -18,7 +18,8 @@ public class ErrorTable {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             //=========================================================================================================
 
-            PreparedStatement stmt = null;
+            Statement stmt = null;
+            stmt = con.createStatement();
             try {
 
                 String jtable = "CREATE TABLE Errors " + //Creating the table "UserTable"
@@ -59,11 +60,13 @@ public class ErrorTable {
             // use the open connection
             PreparedStatement stmt = null;
             try {
-
-
-                String journal = "INSERT INTO Errors (ReviewID, Error) VALUES (" + reviewid +",'" + error + "')";
-                System.out.println(journal);
-                stmt.executeUpdate(journal);
+                String journal = "INSERT INTO Errors (ReviewID, Error) VALUES (?,?)";
+                con.setAutoCommit(false);
+                stmt = con.prepareStatement(journal);
+                stmt.setInt(1, reviewid);
+                stmt.setString(2, error);
+                stmt.execute();
+                con.commit();
 
             }
             catch (SQLException ex) {
@@ -81,6 +84,7 @@ public class ErrorTable {
         finally {
             if (con != null) con.close();
         }
+
     }
 
     public static void Delete(int id) throws SQLException {
@@ -88,9 +92,9 @@ public class ErrorTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String journal = "DELETE FROM Errors WHERE ErrorID = " + id;
                 //System.out.println(journal);
                 stmt.executeUpdate(journal);
@@ -211,11 +215,11 @@ public class ErrorTable {
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
             // use the open connection
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String query = "SELECT Error FROM Errors WHERE ReviewID = " + id;
-                stmt = con.prepareStatement(query); ResultSet res = stmt.executeQuery();
+                ResultSet res = stmt.executeQuery(query);
                 while (res.next()) {
                     String fin = res.getString("Error");
                     list.add(fin);
@@ -243,11 +247,11 @@ public class ErrorTable {
         Connection con = null;
         try {
             con = DriverManager.getConnection("jdbc:mysql://stusql.dcs.shef.ac.uk/team044", "team044", "f1e121fa");
-            PreparedStatement stmt = null;
+            Statement stmt = null;
             try {
-
+                stmt = con.createStatement();
                 String newEdition = "DROP TABLE Errors";
-                stmt = con.prepareStatement(newEdition); stmt.executeUpdate();
+                stmt.executeUpdate(newEdition);
             }
             catch (SQLException ex) {
                 ex.printStackTrace();
